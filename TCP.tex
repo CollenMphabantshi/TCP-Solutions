@@ -27,7 +27,7 @@ GitHub:\\[0.01cm]
 Authors:\\
 \texttt{Mr Mphambantshi C (10404687)\\
         Mr Legodi PT (29302732)\\
-        Ms Sikhitha TP  (10404687)}\\[1cm]
+        Miss Sikhitha TP  (10346504)}\\[1cm]
         
 May 22, 2014
 
@@ -36,6 +36,7 @@ Name   & Date	& Changes	\\\hline
 TP Solutions	& 14 May 2014	& Vision and Scope\\\hline
 TP Solutions	& 15 May 2014	& Addition to vision and scope and quality requirements.\\\hline
 TP Solutions	& 16 May 2014	& Software Architecture\\\hline
+TP Solutions	& 23 May 2014	& Final Version\\\hline
 \end{tabular}
 
 \end{center}
@@ -56,8 +57,10 @@ This document provides the overall vision and scope of the Forensic Medicine Mob
 
 \section{Vision and Scope}
 
+
+\includegraphics[scale=0.4]{DRUC.jpg}
 \begin{center}
-\includegraphics[scale=0.5]{DRUC.jpg}
+
 \textbf{Figure 1: The Scope of the system}
 \end{center}
 
@@ -99,29 +102,235 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 \subsection{Quality requirements}
 \begin{itemize}
 \item\textbf{Performace}
-
+\begin{itemize}
+	\item The system should process all the reports within 10 seconds.
+	\item It should send the information to the server within seconds.
+\end{itemize}
                
 \item\textbf{Reliability}
-  
+  \begin{itemize}
+  	\item The system should be up and running all the time.
+  	\item Easy and fast access to the database.
+  \end{itemize}
 \item\textbf{Scalability}
-
- 
+\begin{itemize}
+  	\item The system should be able to handle all death scenes captured information.
+  	\item It should allow additional templates.
+  \end{itemize}
 \item\textbf{Security}
-
+\begin{itemize}
+  	\item The system is accessible to users who are authorized.
+  	\item System users will have different permission.
+  	\item Information about death scenes will be encrypted.
+  	\item Information stored by forensic officers will not be edited after the submission.
+  \end{itemize}
 \item\textbf{Flexibility} 
-
+\begin{itemize}
+  	\item If something happen when the forensic officer is capturing information, it should automatically be stored in the server.
+  \end{itemize}
 \item\textbf{Maintanability}					
-                         
+ \begin{itemize}
+   	\item The system will be maintained every time the client needs new changes.
+   \end{itemize}        
 \item\textbf{Auditability}         
-          
+      \begin{itemize}
+        	\item The system should record all the changes made to the data stored, by showing whom, when and what was changed.
+        	\item It will also show old and new values.
+        	
+        \end{itemize} 
 \item\textbf{Usability}
-                                                              
+\begin{itemize}
+     \item Users should be able to use the system without prior
+      training.                                                       \item The system will be in English.   
  \end{itemize}
-\subsection{Integration requirements}
-                
-\subsection{Architecture constraint}                       
+ 
+\end{itemize}
 
+\subsection{Integration requirements}
+\begin{itemize} 
+\item Database will be created from scratch.
+\item The android application will be connected to the web service and the web service connected to the server.
+\end{itemize}
+   
+\subsection{Architecture constraint}                       
+\begin{itemize}
+\item The device that will be used is Asus nexus 7
+\item Android SDK
+\item MySQL
+\item HTML5,PHP,apache(Afrihost)
+\item Java, JavaScript
+\item Ajax, jQuery
+\item The mobile client must be running on an android application.
+\end{itemize}
 \pagebreak
+
+\section{Software Architecture Documentation}
+\subsection{Architecture requirements}
+\begin{enumerate}
+\item Architectural scope
+\begin{description}
+\item The database will run on Afrihost
+\begin{center}
+\includegraphics[scale=0.4]{Architecture-scope.png}
+\textbf{Figure 2:Architectural Scope}
+\end{center}
+\item [Android app]
+
+\begin{itemize}
+\item The android application will be used to capture information on death scenes.
+\item View information based on clearance.
+\end{itemize}
+
+\item [Web app]
+
+\begin{itemize}
+\item will be used for data management.
+\item Report generation.
+\item System administration.
+\end{itemize}
+
+\item [Infrastructure]
+
+\begin{itemize}
+\item Data storage, MySQL database on Afrihost.
+\end{itemize}
+
+\end{description}
+
+
+\item Quality requirements
+
+\begin{description}
+\item [Security]
+
+\begin{itemize}
+\item Only authorised people should be able to have access to the system.
+\item Only administrator should register people.
+\end{itemize}
+
+\item [Auditability]
+
+\begin{itemize}
+\item Any change made to data stored should be recorded.
+\item Record what, who and when changes were made.
+\end{itemize}
+
+\item [Performance]
+
+\begin{itemize}
+\item Data should be sent in real time e.g. from forensic officer to forensic practitioner should receive it within 10 seconds.
+\end{itemize}
+
+\item [Reliability]
+
+\begin{itemize}
+\item The server should run all the time (24/7 - 365) and the connection should always be active.
+\item Only administrator should register users.
+\end{itemize}
+
+\item [Usability]
+
+\begin{itemize}
+\item All the users should be able to use the system without any prior training.
+\end{itemize}
+
+\end{description}
+
+\item Integration and Access channel
+\begin{description}
+\item [Access Channel]
+
+\begin{itemize}
+\item Accessible by humans through the following channels:	Admin – the access it through web application and FO, FP and students – they show access the system through mobile application.
+\end{itemize}
+
+\item [Integration Channel]
+
+\begin{itemize}
+\item The new SQL database will be created in Afrihost.
+\end{itemize}
+\end{description}
+
+\item Architectural constraints
+\begin{description}
+\item [The system will use the following constraints]
+
+\begin{itemize}
+\item Android SDK
+\item REST web services
+\item The system will be deployed in Asus Nexus 7 OS Android 4.1 jelly bean.
+\end{itemize}
+
+\item [Technologies to be used]
+
+\begin{itemize}
+\item Java, PHP, HTML, JavaScript, MySQL,  JQuery, CSS
+\end{itemize}
+\end{description}
+
+\end{enumerate}
+\subsection{Architectural Pattern}
+
+
+\begin{center}
+\includegraphics[scale=0.4]{Architectural-Pattern.png}
+
+\textbf{Figure 3: Architectural layered pattern}
+\end{center}
+
+\begin{description}
+\item [The Architectural pattern]
+
+\begin{itemize}
+\item Provides access to humans  - Client
+\item Provides Functionality  and objects required to client layer -> Web service
+\item Host database - Backend layer
+\end{itemize}
+
+\item [The communication protocol are also shown. They include]
+
+\begin{itemize}
+\item HTTP/HTTPS from the browser to the web module.
+\item Provides Functionality  and objects required to client layer - Web service
+\item JSON/REST/HTTP/HTTPS for the web services between the Android application and the database.
+\end{itemize}
+
+\end{description}
+
+\subsection{Use of reference architectures and frameworks}
+
+\begin{center}
+\includegraphics[scale=0.4]{Framework.png}
+\textbf{Figure 4: Three Layer Architecture}
+\end{center}
+
+
+\begin{description}
+\item [Presentation Layer]
+
+\begin{itemize}
+\item This User interface Layer. The UI is responsible for creating and displaying the user interface and handling user interaction. It’s going to be in Android App and Web App. It gets data from Domain layer.
+\end{itemize}
+
+\item [Service Layer]
+
+\begin{itemize}
+\item This is the Web Service Layer. Responsible for showing web service API and returning method results as JSON. It gets data from Domain Layer.
+\end{itemize}
+
+\item [Domain Layer]
+
+\begin{itemize}
+\item This is the Business logic, it is responsible for business logic of the application. All functions and objects used are going to be modelled here. It gets data from Infrastructure layer.
+\end{itemize}
+
+\item [Infrastructure Layer]
+
+\begin{itemize}
+\item It responsible for querying database, calling web service and send emails.
+\end{itemize}
+\end{description}
+
 
 \section{Functional Requirements}
 \subsection{Introduction}
