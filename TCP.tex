@@ -37,6 +37,8 @@ TP Solutions	& 14 May 2014	& Vision and Scope\\\hline
 TP Solutions	& 15 May 2014	& Addition to vision and scope and quality requirements.\\\hline
 TP Solutions	& 16 May 2014	& Software Architecture\\\hline
 TP Solutions	& 23 May 2014	& Final Version\\\hline
+TP Solutions	& 26 June 2014	& Functional Requirements\\\hline
+TP Solutions	& 27 June 2014	& Domain Objects\\\hline
 \end{tabular}
 
 \end{center}
@@ -337,16 +339,132 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 
 
 \subsection{Required functionality}
-
+\begin{enumerate}
+	\item User Management functionality
+	\begin{center}
+		\includegraphics[scale=0.4]{UserManagementRequirementFunctionality.png}
+		
+		\textbf{Figure 5: User Management Use Case}
+	\end{center}
+	\begin{itemize}
+		\item The user management functionality allows the administrator to assign cases to students.
+		\item Allows the administrator to add new users.
+		\item Allows the administrator to modify user information.
+		\item Allows the administrator to remove users.
+	\end{itemize}
+	\item Case Management functionality
+	\begin{center}
+		\includegraphics[scale=0.4]{CaseManagementUseCase.png}
+		
+		\textbf{Figure 6: Case Management Use Case}
+	\end{center}
+	\begin{itemize}
+		\item The case management functionality allows the Forensic Officers to create new cases.
+		\item Allows the Forensic Officers to view basic information of the case they created after submission.
+		\item Allows the Forensic Practitioner to modify/add additional information on the case.
+		\item Allows the Forensic Practitioner to view all cases.
+		\item Allows the Forensic Practitioner to assign a death register to non-natural cases.
+		\item Allows Masters and Honours students to view all cases they are assigned to.
+	\end{itemize}
+	\item Reporting functionality
+		\begin{center}
+			\includegraphics[scale=0.4]{caseGeneratorReport.jpg}
+			
+			\textbf{Figure 7: Case Report Generator Use Case}
+		\end{center}
+		\begin{itemize}
+			\item The reporting functionality allows different users to generate reports about cases, users and audit logs.
+			\item It allows users to generate a report rendered on the web.
+			\item It allows users to generate a report rendered on the android device.
+			\item It allows users to generate a report rendered to pdf file.
+		\end{itemize}
+	\item Domain Objects
+	\begin{enumerate}
+		\item Overview
+		\begin{description}
+			\item The main domain objects are
+		
+			\item Persons – This may be assigned forensic officers, forensic practitioner, administrator and students with respect to different responsibilities and access level.
+			\item Cases - it can be aggregated into different type of scenes and different type of cases (e.g. natural and un-natural)
+			
+		\end{description}
+		\begin{center}
+			\includegraphics[scale=0.4]{ClassDiagram1.jpg}
+			
+			\textbf{Figure 8: Overview of data structures and relationships for the core domain objects}
+		\end{center}
+		
+		\item Users
+		\begin{description}
+			\item All users are going to be registered in the database and authentication will be done against the database.
+			\item The registered user’s information will include the name, surname, portfolio and its details, roles and responsibility, personnel ID and access rights.
+			\item The user class will be identified by a unique role of a user.
+			\item The administrator will be able to add, remove and edit the users in the system. Every change that is made will be recorded in the audit log. The administrator should also be able to assign cases to user in the system e.g. assign 50 students to a hanging case for research. 
+		\end{description}
+		\item Cases
+		\begin{description}
+			\item Cases can be either natural or un-natural. Forensic officer can decide whether the case is natural or un-natural. And for unnatural case, every case will be assigned a different death registry and will be stored in a special registry of un-natural cases.
+			\item Every case has a scene and scenes are divided as follows:
+			\begin{itemize}
+				\item Sudden and unexpected death
+					\begin{itemize}
+						\item Sudden unexpected death of an infant (SUDI)
+						\item Sudden unexpected death of a child  (1 – 18 years)
+						\item Sudden unexpected death of an adult/found dead
+					\end{itemize}
+				\item Foetus / Abandoned baby
+				\item Section 48  death –surgical case
+				\item Road traffic accidents
+					\begin{itemize}
+						\item Pedestrian vehicle accident
+						\item Bicycle accident
+						\item Motorbike accident
+						\item Motor vehicle accident
+					\end{itemize}
+				\item Railway accident
+				\item Aviation accident
+				\item Fall/push/jump from height
+				\item Crush injury
+				\item Firearm discharge/gunshot wound
+				\item Sharp force injury/stab injury
+				\item Blunt force injury/assault
+				\item Drowning
+				\item Gassing
+				\item Hanging
+				\item Ingestion/overdose/poisoning
+				\item Burns
+				\item Lightning/electrocution
+			\end{itemize}
+		\end{description}
+	\end{enumerate}
+\end{enumerate}
 
 
 
 \subsection{Use case prioritization}
-
+\begin{enumerate}
+	\item Login(critical)
+		All the system functionality should be accessible by users who are logged in.
+	\item Case management(critical)
+		The system should be able to create a case, modify, view and assign a death register number; because this are the core functionalities of the system. 
+	\item User management(important )
+		The system must be able to allow only specific users to view specific information, this will ensure that the system is secured and privacy is maintained.
+	\item Reporting
+		It will be useful for accountability and auditability.
+\end{enumerate}  
 
 \subsection{Use case/Services contracts}
 
-               
+   \begin{center}
+   	\includegraphics[scale=0.4]{LoginServiceContract.png}
+   	
+   	\textbf{Figure 9: Login Service Contract}
+   \end{center}
+\subsection{Process Specification}
+\begin{center}
+	\includegraphics[scale=0.4]{loginActivity.jpg}
+	\textbf{Figure 10: Login Activity Diagram}
+\end{center}
 \pagebreak
 
 \section{Open Issues}
