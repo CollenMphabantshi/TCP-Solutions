@@ -196,4 +196,106 @@ CREATE TABLE IF NOT EXISTS `blunt` (
 --
 -- Dumping data for table `blunt`
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bluntinput`
+--
+
+CREATE TABLE IF NOT EXISTS `bluntinput` (
+  `BluntType` text NOT NULL,
+  `BluntDoor` varchar(5) NOT NULL,
+  `BluntWindowsClosed` varchar(5) NOT NULL,
+  `BluntWindowsBroken` varchar(5) NOT NULL,
+  `BluntVictionAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bluntinput`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bluntoutput`
+--
+
+CREATE TABLE IF NOT EXISTS `bluntoutput` (
+  `BluntOutside` text NOT NULL,
+  `BluntStuggle` varchar(5) NOT NULL,
+  `BluntAlcohol` varchar(5) NOT NULL,
+  `BluntDrug` varchar(5) NOT NULL,
+  `BluntComAssult` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bluntoutput`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `burn`
+--
+
+CREATE TABLE IF NOT EXISTS `burn` (
+  `BurnBody` text NOT NULL,
+  `BurnBodyDecompose` varchar(5) NOT NULL,
+  `BurnMedicalIntervention` varchar(5) NOT NULL,
+  `BurnFoundBody` text NOT NULL,
+  `BurnCloseWater` varchar(5) NOT NULL,
+  `BurnRapeHomicide` varchar(5) NOT NULL,
+  `BurnSuspicionSuicide` varchar(5) NOT NULL,
+  `BurnPreviousTempts` varchar(5) NOT NULL,
+  `BurnIO` text NOT NULL,
+  `BurnSuspicion` varchar(5) NOT NULL,
+  `BurnSuicideNote` varchar(5) NOT NULL,
+  `BurnGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `burn`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `burninside`
+--
+
+CREATE TABLE IF NOT EXISTS `burninside` (
+  `BurnType` text NOT NULL,
+  `BurnFoundBody` varchar(5) NOT NULL,
+  `BurnWindowsClosed` varchar(5) NOT NULL,
+  `BurnWindowsBroken` varchar(5) NOT NULL,
+  `BurnVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `burninside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `burnoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `burnoutside` (
+  `BurnType` text NOT NULL,
+  `BurnStruggle` varchar(5) NOT NULL,
+  `BurnAlcohol` varchar(5) NOT NULL,
+  `BurnDrug` varchar(5) NOT NULL,
+  `BurnAccelerants` varchar(5) NOT NULL,
+  `BurnIgniter` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `burnoutside`
+--
+
 
