@@ -110,31 +110,14 @@ create table if not exists victims
     primary key(victimID)
 );
 
-/*insert into users values(0,'aaa','aa@aa.com','open',0);*/
+create table if not exists photos
+(
+    photoID int not null auto_increment,
+    victimID int not null,
+    photoFilename text not null,
+    primary key(photoID)
+);
 
-
-select * from users;
-
--- phpMyAdmin SQL Dump
--- version 3.2.0.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jul 01, 2014 at 01:12 PM
--- Server version: 5.1.37
--- PHP Version: 5.3.0
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Database: `Scenes`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `aviation`
---
 
 CREATE TABLE IF NOT EXISTS `aviation` (
   `Photo` text NOT NULL,
