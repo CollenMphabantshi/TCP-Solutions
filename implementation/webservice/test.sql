@@ -646,6 +646,23 @@ CREATE TABLE IF NOT EXISTS `firearmoutside` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Foetusabandonedbaby`
+--
+
+CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
+  `babyBodyDecompose` varchar(5) NOT NULL,
+  `babyMedicalIntervention` varchar(5) NOT NULL,
+  `babyFoundBody` text NOT NULL,
+  `babyCloseWater` varchar(5) NOT NULL,
+  `babyInside` text NOT NULL,
+  `babyOutside` text NOT NULL,
+  `babyGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
