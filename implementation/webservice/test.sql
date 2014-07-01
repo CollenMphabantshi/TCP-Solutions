@@ -84,11 +84,6 @@ create table if not exists scene
     sceneInvestigatingOfficerCellNumber int not null,
     firstOfficerOnSceneName varchar(200) not null,
     firstOfficerOnSceneRank varchar(200) not null,
-    sceneVictimGender text not null,
-    sceneVictimRace text not null,
-    sceneVictimID text not null,
-    sceneVictimName text not null,
-    sceneVictimSurname text not null,
     primary key(sceneID)
 ); 
 
@@ -97,16 +92,28 @@ create table if not exists scenevVictims
     id int not null auto_increment,
     sceneID int not null,
     victimID int not null,
+    `aviationVictimType` varchar(200) NULL,
     primary key(id)
 ); 
 
 create table if not exists victims
 (
-    victimID int not null auto_increment,
+    victimID int not null,
     victimGender varchar(10) not null,
     victimRace int not null,
     victimName varchar(200) not null,
     victimSurname varchar(200) not null,
+    bodyDecompose varchar(10) NOT NULL,
+    medicalIntervention varchar(10) NOT NULL,
+    bodyBurned varchar(10) NOT NULL,
+    bodyIntact varchar(10) NOT NULL,
+    `victimInside` varchar(10) NOT NULL,
+    `victimOutside` varchar(10) NOT NULL,
+    `victimFoundCloseToWater` varchar(10) NOT NULL,
+    `victimSuicideNote` varchar(10) NOT NULL,
+    `victimGeneralHistory` text NOT NULL,
+    `isRapeHomicide` varchar(10) NOT NULL,
+    `suspicionSuicide` varchar(5) NOT NULL,
     primary key(victimID)
 );
 
@@ -118,23 +125,18 @@ create table if not exists photos
     primary key(photoID)
 );
 
+create TABLE IF NOT EXISTS `aviationOutsideType` (
+   aviationOutsideTypeID int not null auto_increnment primary key,
+   aviationOutsideType varchar(200) not null
+);
 
 CREATE TABLE IF NOT EXISTS `aviation` (
-  `Photo` text NOT NULL,
-  `BodyDecompose` text NOT NULL,
-  `MedicalIntervention` text NOT NULL,
-  `BodyBurned` text NOT NULL,
-  `BodyIntact` text NOT NULL,
-  `CloseToWater` text NOT NULL,
-  `AviationOutside` text NOT NULL,
-  `AircraftType` text NOT NULL,
-  `AircraftNumPeople` text NOT NULL,
-  `Victim` text NOT NULL,
-  `VictiomIO` text NOT NULL,
-  `WeatherCondition` text NOT NULL,
-  `WeatherType` text NOT NULL,
-  `SuicideNote` text NOT NULL,
-  `GeneralHistory` text NOT NULL
+   aviationID int not null auto_increnment primary key,
+  `aviationOutsideType` int NOT NULL,
+  `aircraftType` text NOT NULL,
+  `aircraftNumPeople` text NOT NULL,
+  `weatherCondition` text NOT NULL,
+  `weatherType` text NOT NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -148,20 +150,26 @@ CREATE TABLE IF NOT EXISTS `aviation` (
 -- Table structure for table `bicycle`
 --
 
+CREATE TABLE IF NOT EXISTS `weatherConditions` (
+    weatherConditionID int not null auto_increment primary key,
+    weatherConditionDescription text not null
+);
+
+CREATE TABLE IF NOT EXISTS `bicycleType` (
+    bicycleTypeID int not null auto_increment primary key,
+    bicycleTypeDescription text not null
+);
+
+
 CREATE TABLE IF NOT EXISTS `bicycle` (
-  `BicyclePhoto` text NOT NULL,
-  `BicycleBodyDecompose` varchar(5) NOT NULL,
-  `BicycleMedicalIntervention` varchar(5) NOT NULL,
-  `BicycleFoundBoby` text NOT NULL,
-  `BicycleBodyIntact` varchar(5) NOT NULL,
-  `BicycleOutside` text NOT NULL,
-  `BicycleNumPeople` text NOT NULL,
-  `BicycleHit` text NOT NULL,
-  `BicycleType` text NOT NULL,
-  `BicycleWeatherCondition` text NOT NULL,
-  `BicycleSuicideNote` varchar(5) NOT NULL,
-  `BicycleGeneralHistory` text NOT NULL
+   bicycleID int not null auto_increment primary key, 
+  `whoFoundVictimBody` text NOT NULL,
+  `bicycleNumPeople` text NOT NULL,
+  `bicycleHit` text NOT NULL,
+  `bicycleTypeID` int NOT NULL,
+  `bicycleWeatherConditionID` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 --
 -- Dumping data for table `bicycle`
@@ -175,13 +183,7 @@ CREATE TABLE IF NOT EXISTS `bicycle` (
 --
 
 CREATE TABLE IF NOT EXISTS `blunt` (
-  `BluntPhoto` text NOT NULL,
-  `BluntBodyDecompose` varchar(5) NOT NULL,
-  `BluntMedicalIntervention` varchar(5) NOT NULL,
-  `BluntFoundBody` text NOT NULL,
-  `BluntCloseWater` varchar(5) NOT NULL,
-  `BluntRapeHomicide` varchar(5) NOT NULL,
-  `BluntSuspicionSuicide` varchar(5) NOT NULL,
+  `bluntID` int NOT NULL auto_increment primary key,
   `BluntPreviousTempts` varchar(5) NOT NULL,
   `BluntIO` text NOT NULL,
   `BluntForceObjectSuspected` text NOT NULL,
