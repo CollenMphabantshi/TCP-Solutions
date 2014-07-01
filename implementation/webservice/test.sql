@@ -314,5 +314,126 @@ CREATE TABLE IF NOT EXISTS `burnoutside` (
 --
 -- Dumping data for table `burnoutside`
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crushinjury`
+--
+
+CREATE TABLE IF NOT EXISTS `crushinjury` (
+  `crushPhoto` text NOT NULL,
+  `crushBodyDecompose` varchar(5) NOT NULL,
+  `crushMedicalIntervention` varchar(5) NOT NULL,
+  `crushBodyFound` text NOT NULL,
+  `crushCloseWater` varchar(5) NOT NULL,
+  `crushRapeHomicide` varchar(5) NOT NULL,
+  `crushIO` varchar(5) NOT NULL,
+  `crushGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `crushinjury`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crushinjuryinside`
+--
+
+CREATE TABLE IF NOT EXISTS `crushinjuryinside` (
+  `crushInsideType` text NOT NULL,
+  `crushDoor` varchar(5) NOT NULL,
+  `crushWindowsClosed` varchar(5) NOT NULL,
+  `crushWindowsBroken` varchar(5) NOT NULL,
+  `crushVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `crushinjuryinside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crushinjuryoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `crushinjuryoutside` (
+  `crushOutsideType` text NOT NULL,
+  `crushStruggle` varchar(5) NOT NULL,
+  `crushAlcohol` varchar(5) NOT NULL,
+  `crushDrug` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `crushinjuryoutside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drowning`
+--
+
+CREATE TABLE IF NOT EXISTS `drowning` (
+  `drowningBody` text NOT NULL,
+  `drowningBodyDecompose` varchar(5) NOT NULL,
+  `drowningMedicalIntervention` varchar(5) NOT NULL,
+  `drowningFoundBody` text NOT NULL,
+  `drowningIO` text NOT NULL,
+  `drowningType` text NOT NULL,
+  `drowningWaterType` text NOT NULL,
+  `drowningSuspicionStrangulation` varchar(5) NOT NULL,
+  `drowningSuspicionSmothering` varchar(5) NOT NULL,
+  `drowningSuspicionChocking` varchar(5) NOT NULL,
+  `drowningSuicideNote` varchar(5) NOT NULL,
+  `drowningGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `drowning`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drowninginside`
+--
+
+CREATE TABLE IF NOT EXISTS `drowninginside` (
+  `drowningInsideType` text NOT NULL,
+  `drowningDoor` varchar(5) NOT NULL,
+  `drowningWindowsClosed` varchar(5) NOT NULL,
+  `drowningWindowsBroken` varchar(5) NOT NULL,
+  `drowningVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `drowninginside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drowningoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `drowningoutside` (
+  `drowningOutsideType` text NOT NULL,
+  `drowningStruggle` varchar(5) NOT NULL,
+  `drowningAlcohol` varchar(5) NOT NULL,
+  `drowningDrug` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `drowningoutside`
+--
+
 
 
