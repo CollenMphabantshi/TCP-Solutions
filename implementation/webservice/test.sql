@@ -584,6 +584,69 @@ CREATE TABLE IF NOT EXISTS `electrocutionlightningoutside` (
   `electrocutionlightningTrees` varchar(5) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `firearm`
+--
+
+CREATE TABLE IF NOT EXISTS `firearm` (
+  `firearmPhoto` text NOT NULL,
+  `firearmBodyDecompose` varchar(5) NOT NULL,
+  `firearmMedicalIntervention` varchar(5) NOT NULL,
+  `firearmFoundBody` text NOT NULL,
+  `firearmCloseWater` varchar(5) NOT NULL,
+  `firearmRapeHomicide` varchar(5) NOT NULL,
+  `firearmSuspicionSuicide` varchar(5) NOT NULL,
+  `firearmPreviousTempts` varchar(5) NOT NULL,
+  `firearmGunshot` text NOT NULL,
+  `firearmWonds` text NOT NULL,
+  `firearmWondsArea` text NOT NULL,
+  `firearmInScene` varchar(5) NOT NULL,
+  `firearmCalibre` text NOT NULL,
+  `firearmSuicideNote` varchar(5) NOT NULL,
+  `firearmGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `firearm`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `firearminside`
+--
+
+CREATE TABLE IF NOT EXISTS `firearminside` (
+  `fireInsideType` text NOT NULL,
+  `fireDoor` varchar(5) NOT NULL,
+  `fireWindowsClosed` varchar(5) NOT NULL,
+  `fireWindowsBroken` varchar(5) NOT NULL,
+  `fireVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `firearminside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `firearmoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `firearmoutside` (
+  `firearmOutsideType` text NOT NULL,
+  `firearmStruggle` varchar(5) NOT NULL,
+  `firearmAlcohol` varchar(5) NOT NULL,
+  `firearmDrug` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
