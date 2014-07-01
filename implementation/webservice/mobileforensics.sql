@@ -1,142 +1,9 @@
-<<<<<<< HEAD
-create database if not exists mobileForensics;
-use mobileForensics;
-
-
-create table if not exists userType
-(
-    userTypeID int not null auto_increment,
-    userTypeDescription varchar(100) not null,
-    primary key(userTypeID)
-);
-
-CREATE TABLE IF NOT EXISTS `users`
-(
-`userID` int NOT NULL AUTO_INCREMENT,
-`firstname` varchar(200) NOT NULL,
-`surname` varchar(200) NOT NULL,
-`userTypeID` int NOT NULL,
-userActive tinyint not null,
-PRIMARY KEY (`userID`)
-);
-
-create table if not exists forensicOfficer
-(
-    personelNumber varchar(100) not null,
-    userID int not null,
-    cellphoneNumber int not null,
-    primary key(personelNumber)
-);
-
-create table if not exists forensicPractitioner
-(
-    personelNumber varchar(100) not null,
-    userID int not null,
-    cellphoneNumber int not null,
-    primary key(personelNumber)
-);
-
-create table if not exists student
-(
-    studentNumber varchar(100) not null,
-    userID int not null,
-    cellphoneNumber int not null,
-    primary key(studentNumber)
-);
-
-create table if not exists administrator
-(
-    personelNumber varchar(100) not null,
-    userID int not null,
-    primary key(personelNumber)
-);
-
-create table if not exists cases
-(
-    caseNumber int not null auto_increment,
-    sceneID int not null,
-    FOPersonelNumber int not null,
-    primary key(caseNumber)
-);
-
-create table if not exists deathRegister
-(
-    deathRegisterNumber int not null auto_increment,
-    caseNumber int not null,
-    primary key(deathRegisterNumber)
-);
-
-create table if not exists sceneType
-(
-    sceneTypeID int not null auto_increment,
-    sceneTypeDescription text not null,
-    primary key(sceneTypeID)
-);
-create table if not exists scene
-(
-    sceneID int not null auto_increment,
-    sceneTypeID int not null,
-    sceneTime time not null,
-    sceneDate date not null,
-    sceneLocation text not null,
-    sceneTemparature text not null,
-    sceneInvestigatingOfficerName varchar(200) not null,
-    sceneInvestigatingOfficerRank varchar(200) not null,
-    sceneInvestigatingOfficerCellNumber int not null,
-    firstOfficerOnSceneName varchar(200) not null,
-    firstOfficerOnSceneRank varchar(200) not null,
-    primary key(sceneID)
-); 
-
-create table if not exists scenevVictims
-(
-    id int not null auto_increment,
-    sceneID int not null,
-    victimID int not null,
-    `aviationVictimType` varchar(200) NULL,
-    primary key(id)
-); 
-
-create table if not exists victims
-(
-    victimID int not null,
-    victimGender varchar(10) not null,
-    victimRace int not null,
-    victimName varchar(200) not null,
-    victimSurname varchar(200) not null,
-    bodyDecompose varchar(10) NOT NULL,
-    medicalIntervention varchar(10) NOT NULL,
-    bodyBurned varchar(10) NOT NULL,
-    bodyIntact varchar(10) NOT NULL,
-    `victimInside` varchar(10) NOT NULL,
-    `victimOutside` varchar(10) NOT NULL,
-    `victimFoundCloseToWater` varchar(10) NOT NULL,
-    `victimSuicideNote` varchar(10) NOT NULL,
-    `victimGeneralHistory` text NOT NULL,
-    `isRapeHomicide` varchar(10) NOT NULL,
-    `suspicionSuicide` varchar(5) NOT NULL,
-    primary key(victimID)
-);
-
-create table if not exists photos
-(
-    photoID int not null auto_increment,
-    victimID int not null,
-    photoFilename text not null,
-    primary key(photoID)
-);
-
-create TABLE IF NOT EXISTS `aviationOutsideType` (
-   aviationOutsideTypeID int not null auto_increnment primary key,
-   aviationOutsideType varchar(200) not null
-);
-=======
 -- phpMyAdmin SQL Dump
 -- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 01, 2014 at 02:37 PM
+-- Generation Time: Jul 01, 2014 at 02:35 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -174,15 +41,23 @@ CREATE TABLE IF NOT EXISTS `administrator` (
 --
 -- Table structure for table `aviation`
 --
->>>>>>> 8fe534ca3c33ed7014c20bbb55a7c71f5ccff3d9
 
 CREATE TABLE IF NOT EXISTS `aviation` (
-   aviationID int not null auto_increnment primary key,
-  `aviationOutsideType` int NOT NULL,
-  `aircraftType` text NOT NULL,
-  `aircraftNumPeople` text NOT NULL,
-  `weatherCondition` text NOT NULL,
-  `weatherType` text NOT NULL,
+  `Photo` text NOT NULL,
+  `BodyDecompose` text NOT NULL,
+  `MedicalIntervention` text NOT NULL,
+  `BodyBurned` text NOT NULL,
+  `BodyIntact` text NOT NULL,
+  `CloseToWater` text NOT NULL,
+  `AviationOutside` text NOT NULL,
+  `AircraftType` text NOT NULL,
+  `AircraftNumPeople` text NOT NULL,
+  `Victim` text NOT NULL,
+  `VictiomIO` text NOT NULL,
+  `WeatherCondition` text NOT NULL,
+  `WeatherType` text NOT NULL,
+  `SuicideNote` text NOT NULL,
+  `GeneralHistory` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -196,26 +71,20 @@ CREATE TABLE IF NOT EXISTS `aviation` (
 -- Table structure for table `bicycle`
 --
 
-CREATE TABLE IF NOT EXISTS `weatherConditions` (
-    weatherConditionID int not null auto_increment primary key,
-    weatherConditionDescription text not null
-);
-
-CREATE TABLE IF NOT EXISTS `bicycleType` (
-    bicycleTypeID int not null auto_increment primary key,
-    bicycleTypeDescription text not null
-);
-
-
 CREATE TABLE IF NOT EXISTS `bicycle` (
-   bicycleID int not null auto_increment primary key, 
-  `whoFoundVictimBody` text NOT NULL,
-  `bicycleNumPeople` text NOT NULL,
-  `bicycleHit` text NOT NULL,
-  `bicycleTypeID` int NOT NULL,
-  `bicycleWeatherConditionID` int NOT NULL
+  `BicyclePhoto` text NOT NULL,
+  `BicycleBodyDecompose` varchar(5) NOT NULL,
+  `BicycleMedicalIntervention` varchar(5) NOT NULL,
+  `BicycleFoundBoby` text NOT NULL,
+  `BicycleBodyIntact` varchar(5) NOT NULL,
+  `BicycleOutside` text NOT NULL,
+  `BicycleNumPeople` text NOT NULL,
+  `BicycleHit` text NOT NULL,
+  `BicycleType` text NOT NULL,
+  `BicycleWeatherCondition` text NOT NULL,
+  `BicycleSuicideNote` varchar(5) NOT NULL,
+  `BicycleGeneralHistory` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 
 --
 -- Dumping data for table `bicycle`
@@ -229,7 +98,13 @@ CREATE TABLE IF NOT EXISTS `bicycle` (
 --
 
 CREATE TABLE IF NOT EXISTS `blunt` (
-  `bluntID` int NOT NULL auto_increment primary key,
+  `BluntPhoto` text NOT NULL,
+  `BluntBodyDecompose` varchar(5) NOT NULL,
+  `BluntMedicalIntervention` varchar(5) NOT NULL,
+  `BluntFoundBody` text NOT NULL,
+  `BluntCloseWater` varchar(5) NOT NULL,
+  `BluntRapeHomicide` varchar(5) NOT NULL,
+  `BluntSuspicionSuicide` varchar(5) NOT NULL,
   `BluntPreviousTempts` varchar(5) NOT NULL,
   `BluntIO` text NOT NULL,
   `BluntForceObjectSuspected` text NOT NULL,
@@ -650,143 +525,6 @@ CREATE TABLE IF NOT EXISTS `victims` (
 
 --
 -- Dumping data for table `victims`
---
--- --------------------------------------------------------
-
---
--- Table structure for table `electrocutionlightning`
---
-
-CREATE TABLE IF NOT EXISTS `electrocutionlightning` (
-  `electrocutionlightningPhoto` text NOT NULL,
-  `electrocutionlightningBodyDecompose` varchar(5) NOT NULL,
-  `electrocutionlightningMedicalInverntion` varchar(5) NOT NULL,
-  `electrocutionlightningFoundBody` text NOT NULL,
-  `electrocutionlightningCloseWater` varchar(5) NOT NULL,
-  `electrocutionlightningBodyBurnt` varchar(5) NOT NULL,
-  `electrocutionlightningIO` text NOT NULL,
-  `electrocutionlightningOpenWire` varchar(5) NOT NULL,
-  `electrocutionlightningSceneWet` varchar(5) NOT NULL,
-  `electrocutionlightningSuicideNote` varchar(5) NOT NULL,
-  `electrocutionlightningGeneralHistory` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `electrocutionlightning`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `electrocutionlightninginside`
---
-
-CREATE TABLE IF NOT EXISTS `electrocutionlightninginside` (
-  `electrocutionlightningInsideType` text NOT NULL,
-  `electrocutionlightningDoor` varchar(5) NOT NULL,
-  `electrocutionlightningWindowsClosed` varchar(5) NOT NULL,
-  `electrocutionlightningWindowsBroken` varchar(5) NOT NULL,
-  `electrocutionlightningVictimAlone` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `electrocutionlightninginside`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `electrocutionlightningoutside`
---
-
-CREATE TABLE IF NOT EXISTS `electrocutionlightningoutside` (
-  `electrocutionlightningOutsideType` text NOT NULL,
-  `electrocutionlightningStruggle` varchar(5) NOT NULL,
-  `electrocutionlightningAlcohol` varchar(5) NOT NULL,
-  `electrocutionlightningDrug` varchar(5) NOT NULL,
-  `electrocutionlightningTrees` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `firearm`
---
-
-CREATE TABLE IF NOT EXISTS `firearm` (
-  `firearmPhoto` text NOT NULL,
-  `firearmBodyDecompose` varchar(5) NOT NULL,
-  `firearmMedicalIntervention` varchar(5) NOT NULL,
-  `firearmFoundBody` text NOT NULL,
-  `firearmCloseWater` varchar(5) NOT NULL,
-  `firearmRapeHomicide` varchar(5) NOT NULL,
-  `firearmSuspicionSuicide` varchar(5) NOT NULL,
-  `firearmPreviousTempts` varchar(5) NOT NULL,
-  `firearmGunshot` text NOT NULL,
-  `firearmWonds` text NOT NULL,
-  `firearmWondsArea` text NOT NULL,
-  `firearmInScene` varchar(5) NOT NULL,
-  `firearmCalibre` text NOT NULL,
-  `firearmSuicideNote` varchar(5) NOT NULL,
-  `firearmGeneralHistory` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `firearm`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `firearminside`
---
-
-CREATE TABLE IF NOT EXISTS `firearminside` (
-  `fireInsideType` text NOT NULL,
-  `fireDoor` varchar(5) NOT NULL,
-  `fireWindowsClosed` varchar(5) NOT NULL,
-  `fireWindowsBroken` varchar(5) NOT NULL,
-  `fireVictimAlone` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `firearminside`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `firearmoutside`
---
-
-CREATE TABLE IF NOT EXISTS `firearmoutside` (
-  `firearmOutsideType` text NOT NULL,
-  `firearmStruggle` varchar(5) NOT NULL,
-  `firearmAlcohol` varchar(5) NOT NULL,
-  `firearmDrug` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- --------------------------------------------------------
-
---
--- Table structure for table `Foetusabandonedbaby`
---
-
-CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
-  `babyBodyDecompose` varchar(5) NOT NULL,
-  `babyMedicalIntervention` varchar(5) NOT NULL,
-  `babyFoundBody` text NOT NULL,
-  `babyCloseWater` varchar(5) NOT NULL,
-  `babyInside` text NOT NULL,
-  `babyOutside` text NOT NULL,
-  `babyGeneralHistory` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 --
 
 
