@@ -5,17 +5,18 @@ use mobileForensics;
 create table if not exists userType
 (
     userTypeID int not null auto_increment,
-    userTypeDescription varchar(100) not null
+    userTypeDescription varchar(100) not null,
+    primary key(userTypeID)
 );
 
 CREATE TABLE IF NOT EXISTS `users`
 (
-`userId` int NOT NULL AUTO_INCREMENT,
+`userID` int NOT NULL AUTO_INCREMENT,
 `firstname` varchar(200) NOT NULL,
 `surname` varchar(200) NOT NULL,
 `userTypeID` int NOT NULL,
 userActive tinyint not null,
-PRIMARY KEY (`user_id`)
+PRIMARY KEY (`userID`)
 );
 
 create table if not exists forensicOfficer
@@ -61,6 +62,7 @@ create table if not exists deathRegister
 (
     deathRegisterNumber int not null auto_increment,
     caseNumber int not null,
+    primary key(deathRegisterNumber)
 );
 
 create table if not exists sceneType
@@ -92,10 +94,22 @@ create table if not exists scene
 
 create table if not exists scenevVictims
 (
-    sceneVictimsID int not null auto_increment,
+    id int not null auto_increment,
     sceneID int not null,
-    victimID int not null
+    victimID int not null,
+    primary key(id)
 ); 
+
+create table if not exists victims
+(
+    victimID int not null auto_increment,
+    victimGender varchar(10) not null,
+    victimRace int not null,
+    victimName varchar(200) not null,
+    victimSurname varchar(200) not null,
+    primary key(victimID)
+);
+
 /*insert into users values(0,'aaa','aa@aa.com','open',0);*/
 
 
