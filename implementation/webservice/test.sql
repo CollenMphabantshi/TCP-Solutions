@@ -526,6 +526,63 @@ CREATE TABLE IF NOT EXISTS `victims` (
 --
 -- Dumping data for table `victims`
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `electrocutionlightning`
+--
+
+CREATE TABLE IF NOT EXISTS `electrocutionlightning` (
+  `electrocutionlightningPhoto` text NOT NULL,
+  `electrocutionlightningBodyDecompose` varchar(5) NOT NULL,
+  `electrocutionlightningMedicalInverntion` varchar(5) NOT NULL,
+  `electrocutionlightningFoundBody` text NOT NULL,
+  `electrocutionlightningCloseWater` varchar(5) NOT NULL,
+  `electrocutionlightningBodyBurnt` varchar(5) NOT NULL,
+  `electrocutionlightningIO` text NOT NULL,
+  `electrocutionlightningOpenWire` varchar(5) NOT NULL,
+  `electrocutionlightningSceneWet` varchar(5) NOT NULL,
+  `electrocutionlightningSuicideNote` varchar(5) NOT NULL,
+  `electrocutionlightningGeneralHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `electrocutionlightning`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `electrocutionlightninginside`
+--
+
+CREATE TABLE IF NOT EXISTS `electrocutionlightninginside` (
+  `electrocutionlightningInsideType` text NOT NULL,
+  `electrocutionlightningDoor` varchar(5) NOT NULL,
+  `electrocutionlightningWindowsClosed` varchar(5) NOT NULL,
+  `electrocutionlightningWindowsBroken` varchar(5) NOT NULL,
+  `electrocutionlightningVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `electrocutionlightninginside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `electrocutionlightningoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `electrocutionlightningoutside` (
+  `electrocutionlightningOutsideType` text NOT NULL,
+  `electrocutionlightningStruggle` varchar(5) NOT NULL,
+  `electrocutionlightningAlcohol` varchar(5) NOT NULL,
+  `electrocutionlightningDrug` varchar(5) NOT NULL,
+  `electrocutionlightningTrees` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
