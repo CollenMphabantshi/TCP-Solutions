@@ -747,3 +747,293 @@ CREATE TABLE IF NOT EXISTS `gassingoutside` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+--
+-- Table structure for table `sec48`
+--
+
+CREATE TABLE IF NOT EXISTS `sec48` (
+  `sec48ID` int(11) NOT NULL AUTO_INCREMENT,
+  `photo` text NOT NULL,
+  `victimHospitalized` text NOT NULL,
+  `medicalEquipmentInSitu` varchar(5) NOT NULL,
+  `gw7/14file` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL,
+  PRIMARY KEY (`sec48ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `sec48`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sharp`
+--
+
+CREATE TABLE IF NOT EXISTS `sharp` (
+  `sharpID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `closeWater` varchar(5) NOT NULL,
+  `rapeHomicideSuspected` varchar(5) NOT NULL,
+  `suspicionOfSuicide` varchar(5) NOT NULL,
+  `previousTempts` varchar(5) NOT NULL,
+  `sharpIO` text NOT NULL,
+  `sharpObjectAtScene` varchar(5) NOT NULL,
+  `sharpForceInjuries` text NOT NULL,
+  `theInjury` text NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sharp`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sharpinside`
+--
+
+CREATE TABLE IF NOT EXISTS `sharpinside` (
+  `location` text NOT NULL,
+  `wasDoorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sharpinside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sharpoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `sharpoutside` (
+  `location` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sharpoutside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sid`
+--
+
+CREATE TABLE IF NOT EXISTS `sid` (
+  `sidID` int(11) NOT NULL AUTO_INCREMENT,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `resuscitationAttemped` varchar(5) NOT NULL,
+  `infantSickLately` varchar(5) NOT NULL,
+  `wasIt` text NOT NULL,
+  `infantOnMedication` varchar(5) NOT NULL,
+  `fallsOrInjuryExperience` varchar(5) NOT NULL,
+  `infantWearing` varchar(5) NOT NULL,
+  `infantTightlyWrapped` varchar(5) NOT NULL,
+  `beddingOverInfant` text NOT NULL,
+  `sidIO` text NOT NULL,
+  `bodyFound` varchar(5) NOT NULL,
+  `dateAndTimeLastPlaced` varchar(5) NOT NULL,
+  `dateAndTimeDeathDiscovered` varchar(5) NOT NULL,
+  `dateAndTimeLastSeenAlive` varchar(5) NOT NULL,
+  `anySIDSdeeaths` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL,
+  `photoAfterBodyRemoved` text NOT NULL,
+  PRIMARY KEY (`sidID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `sid`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sidinside`
+--
+
+CREATE TABLE IF NOT EXISTS `sidinside` (
+  `location` text NOT NULL,
+  `infantLastPlaced` text NOT NULL,
+  `infantLastSeenAlive` text NOT NULL,
+  `whereInfantFoundDead` varchar(5) NOT NULL,
+  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `wierdSmellInAir` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sidinside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
+--
+
+CREATE TABLE IF NOT EXISTS `student` (
+  `studentNumber` varchar(100) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `cellphoneNumber` int(11) NOT NULL,
+  PRIMARY KEY (`studentNumber`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `student`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suda`
+--
+
+CREATE TABLE IF NOT EXISTS `suda` (
+  `sudaID` int(11) NOT NULL AUTO_INCREMENT,
+  `photo` int(11) NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `closeWater` varchar(5) NOT NULL,
+  `sudaIO` text NOT NULL,
+  `suspicionStrangulation` varchar(5) NOT NULL,
+  `suspicionSmothering` varchar(5) NOT NULL,
+  `suspicionChocking` varchar(5) NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL,
+  PRIMARY KEY (`sudaID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `suda`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudainside`
+--
+
+CREATE TABLE IF NOT EXISTS `sudainside` (
+  `location` text NOT NULL,
+  `wasDoorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL,
+  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `wierdSmellInAir` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sudainside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudaoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `sudaoutside` (
+  `location` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sudaoutside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudc`
+--
+
+CREATE TABLE IF NOT EXISTS `sudc` (
+  `sudcID` int(11) DEFAULT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `closeWater` varchar(5) NOT NULL,
+  `sudcIO` text NOT NULL,
+  `suspicionStrangulation` varchar(5) NOT NULL,
+  `suspicionSmothering` varchar(5) NOT NULL,
+  `suspicionChocking` varchar(5) NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sudc`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudcinside`
+--
+
+CREATE TABLE IF NOT EXISTS `sudcinside` (
+  `location` text NOT NULL,
+  `wasDoorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL,
+  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `wierdSmellInAir` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sudcinside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudcoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `sudcoutside` (
+  `location` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sudcoutside`
+--
+
+
+-- --------------------------------------------------------
