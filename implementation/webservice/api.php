@@ -7,7 +7,7 @@ public $data = "";
 const DB_SERVER = "localhost";
 const DB_USER = "root";
 const DB_PASSWORD = "latitude@mysql";
-const DB = "coffee_table";
+const DB = "mobileForensics";
 
 private $db = NULL;
 
@@ -114,6 +114,19 @@ private function deleteUser()
         $this->response('',204); // If no records "No Content" status
     }
 }
+
+private function viewCases() {
+    
+}
+
+private function viewCase() {
+    
+}
+
+private function assignDR() {
+    
+}
+
 
 //Encode array into JSON
 private function json($data)
