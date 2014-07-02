@@ -564,33 +564,27 @@ CREATE TABLE IF NOT EXISTS `student` (
 
 CREATE TABLE IF NOT EXISTS `suda` (
   `sudaID` int(11) NOT NULL AUTO_INCREMENT,
-  `photo` int(11) NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `closeWater` varchar(5) NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `sudaIO` text NOT NULL,
-  `suspicionStrangulation` varchar(5) NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
   `suspicionSmothering` varchar(5) NOT NULL,
   `suspicionChocking` varchar(5) NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL,
   PRIMARY KEY (`sudaID`)
 );
 
 CREATE TABLE IF NOT EXISTS `sudainside` (
-  `location` text NOT NULL,
+  `sudainsidelocation` text NOT NULL,
   `wasDoorLocked` varchar(5) NOT NULL,
   `windowsClosed` varchar(5) NOT NULL,
   `windowsBroken` varchar(5) NOT NULL,
   `victimAlone` varchar(5) NOT NULL,
-  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `sudaAppliances` varchar(5) NOT NULL,
   `wierdSmellInAir` varchar(5) NOT NULL
 );
 
 
 CREATE TABLE IF NOT EXISTS `sudaoutside` (
-  `location` text NOT NULL,
+  `sudaoutsidelocation` text NOT NULL,
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL
@@ -599,32 +593,28 @@ CREATE TABLE IF NOT EXISTS `sudaoutside` (
 
 CREATE TABLE IF NOT EXISTS `sudc` (
   `sudcID` int(11) DEFAULT NULL,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `closeWater` varchar(5) NOT NULL,
   `sudcIO` text NOT NULL,
   `suspicionStrangulation` varchar(5) NOT NULL,
   `suspicionSmothering` varchar(5) NOT NULL,
-  `suspicionChocking` varchar(5) NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `suspicionChocking` varchar(5) NOT NULL
+  
 );
 
 
 CREATE TABLE IF NOT EXISTS `sudcinside` (
-  `location` text NOT NULL,
+  `sudcinsidelocation` text NOT NULL,
   `wasDoorLocked` varchar(5) NOT NULL,
   `windowsClosed` varchar(5) NOT NULL,
   `windowsBroken` varchar(5) NOT NULL,
   `victimAlone` varchar(5) NOT NULL,
-  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `sudcAppliances` varchar(5) NOT NULL,
   `wierdSmellInAir` varchar(5) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `sudcoutside` (
-  `location` text NOT NULL,
+  `sudcoutsidelocation` text NOT NULL,
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL
