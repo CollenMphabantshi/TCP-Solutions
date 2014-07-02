@@ -13,4 +13,15 @@
  */
 class Victims {
     //put your code here
+    private  $victimID;
+    private $victimGender;
+    private $victimRace;
+    private  $victimName;
+    private $victimSurname;
+    
+    
+    function __construct(){
+        
+        
+    }
 }

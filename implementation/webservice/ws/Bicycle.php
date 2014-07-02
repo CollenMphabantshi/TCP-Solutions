@@ -11,6 +11,6 @@
  *
  * @author BANCHI
  */
-class Bicycle {
+class Bicycle extends Scene {
     //put your code here
 }
