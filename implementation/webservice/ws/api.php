@@ -81,19 +81,22 @@ private function users()
     // Cross validation if the request method is GET else it will return "Not Acceptable" status
     if($this->get_request_method() != "GET")
     {
-    $this->response('',406);
+        $this->response('',406);
     }
-    $sql = mysql_query("SELECT user_id, user_fullname, user_email FROM users WHERE user_status = 1", $this->db);
+    
+    $sql = mysql_query("SELECT userID, userFirstname, userSurname FROM users", $this->db);
+    
     if(mysql_num_rows($sql) > 0)
     {
-    $result = array();
-    while($rlt = mysql_fetch_array($sql,MYSQL_ASSOC))
-    {
-    $result[] = $rlt;
+        $result = array();
+        while($rlt = mysql_fetch_array($sql,MYSQL_ASSOC))
+        {
+            $result[] = $rlt;
+        }
+        // If success everythig is good send header as "OK" and return list of users in JSON format
+        $this->response($this->json($result), 200);
     }
-    // If success everythig is good send header as "OK" and return list of users in JSON format
-    $this->response($this->json($result), 200);
-    }
+    
     $this->response('',204); // If no records "No Content" status
 }
 

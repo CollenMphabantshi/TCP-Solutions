@@ -14,8 +14,8 @@ create table if not exists userType
 CREATE TABLE IF NOT EXISTS `users`
 (
 `userID` int NOT NULL AUTO_INCREMENT,
-`firstname` varchar(200) NOT NULL,
-`surname` varchar(200) NOT NULL,
+`userFirstname` varchar(200) NOT NULL,
+`userSurname` varchar(200) NOT NULL,
 `userTypeID` int NOT NULL,
 userActive tinyint not null,
 PRIMARY KEY (`userID`)
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `firearmOutside` (
 
 CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `foetusabandonedbabyID` int NOT NULL AUTO_INCREMENT primary key,    
-  `babyFoundBody` text NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `babyInside` text NOT NULL,
   `babyOutside` text NOT NULL
 ) ;
