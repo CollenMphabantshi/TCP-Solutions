@@ -14,6 +14,8 @@ create table if not exists userType
 CREATE TABLE IF NOT EXISTS `users`
 (
 `userID` int NOT NULL AUTO_INCREMENT,
+ userName varchar(200) not null,
+ userPassword varchar(200) not null,
 `userFirstname` varchar(200) NOT NULL,
 `userSurname` varchar(200) NOT NULL,
 `userTypeID` int NOT NULL,
