@@ -75,6 +75,11 @@ create table if not exists sceneType
     sceneTypeDescription text not null,
     primary key(sceneTypeID)
 );
+create table if not exists victimType`(
+	victimTypeID int not null auto_increment,
+	victimTypeDiscription text not null,
+	primary key(victimTypeID)
+);
 create table if not exists scene
 (
     sceneID int not null auto_increment,
@@ -96,7 +101,7 @@ create table if not exists scenevVictims
     id int not null auto_increment,
     sceneID int not null,
     victimID int not null,
-    `aviationVictimType` varchar(200) NULL,
+    `victimType` text NULL,
     primary key(id)
 ); 
 
@@ -410,79 +415,47 @@ CREATE TABLE IF NOT EXISTS `ingestionoverdosepoisoningoutside` (
   `drugParaphernalia` varchar(5) NOT NULL
 );
 
-
+----------------------------------------------
 CREATE TABLE IF NOT EXISTS `mba` (
   `mbaID` int(11) NOT NULL,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `bodyBurnt` varchar(5) NOT NULL,
-  `bodyIntact` varchar(5) NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `victimWearingProtectiveClothing` varchar(5) NOT NULL,
-  `mbaOutside` text NOT NULL,
+  `mbaOutsideID` text NOT NULL,
   `victimsOnMotorcycle` text NOT NULL,
   `motorbikeHitFrom` text NOT NULL,
-  `typeOfAccident` text NOT NULL,
-  `weatherCondition` text NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `typeOfAccident` text NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `mva` (
   `mvaID` int(11) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `bodyBurnt` varchar(5) NOT NULL,
-  `bodyIntact` varchar(5) NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `victimFoundInCar` varchar(5) NOT NULL,
-  `mvaOutside` text NOT NULL,
+  `mvaOutsideID` text NOT NULL,
   `occupants` text NOT NULL,
   `numberOfOccupants` int(11) NOT NULL,
   `victimWas` text NOT NULL,
   `carWasHitFrom` text NOT NULL,
-  `wasIt` text NOT NULL,
-  `carBurnt` varchar(5) NOT NULL,
-  `alcoholBottlesInCars` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `weatherCondition` text NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `victimType` text NOT NULL,
+  `carBurnt` varchar(5) NOT NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS `pedestrian` (
   `perdestrianID` int(11) NOT NULL,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `perdestrianOutside` text NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
+  `perdestrianOutsideID` text NOT NULL,
   `hitAndRun` varchar(5) NOT NULL,
-  `outsideWas` text NOT NULL,
-  `wasIt` text NOT NULL,
-  `numberOfCarsDroveOverBody` int(11) NOT NULL,
-  `weatherCondition` text NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `numberOfCarsDroveOverBody` int(11) NOT NULL
+
 );
 
 
 CREATE TABLE IF NOT EXISTS `railway` (
   `railwayID` int(11) NOT NULL,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `bodyBurnt` varchar(5) NOT NULL,
-  `bodyIntact` varchar(5) NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `sceneOfInjury` text NOT NULL,
-  `victimWas` text NOT NULL,
-  `wasIt` text NOT NULL,
-  `alocoholBottlesIfPedestrian` varchar(5) NOT NULL,
-  `drugParaphernaliaIfPedestian` varchar(5) NOT NULL,
-  `weatherCondition` text NOT NULL,
-  `suicedNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `victimTpye` text NOT NULL,
+  `railwayType` text NOT NULL
+ 
 );
 
 
@@ -518,44 +491,32 @@ CREATE TABLE IF NOT EXISTS `gassingoutside` (
 
 CREATE TABLE IF NOT EXISTS `sec48` (
   `sec48ID` int(11) NOT NULL AUTO_INCREMENT,
-  `photo` text NOT NULL,
   `victimHospitalized` text NOT NULL,
   `medicalEquipmentInSitu` varchar(5) NOT NULL,
-  `gw7/14file` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL,
+  `gw714file` varchar(5) NOT NULL,
   PRIMARY KEY (`sec48ID`)
 );
 
 CREATE TABLE IF NOT EXISTS `sharp` (
   `sharpID` int(11) NOT NULL,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
-  `bodyFound` text NOT NULL,
-  `closeWater` varchar(5) NOT NULL,
-  `rapeHomicideSuspected` varchar(5) NOT NULL,
-  `suspicionOfSuicide` varchar(5) NOT NULL,
-  `previousTempts` varchar(5) NOT NULL,
+  `whoFoundVictimBody` text NOT NULL,
   `sharpIO` text NOT NULL,
   `sharpObjectAtScene` varchar(5) NOT NULL,
   `sharpForceInjuries` text NOT NULL,
-  `theInjury` text NOT NULL,
-  `suicideNote` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL
+  `theInjury` text NOT NULL
+  
 );
 
-
 CREATE TABLE IF NOT EXISTS `sharpinside` (
-  `location` text NOT NULL,
+  `sharpinsidelocation` text NOT NULL,
   `wasDoorLocked` varchar(5) NOT NULL,
   `windowsClosed` varchar(5) NOT NULL,
   `windowsBroken` varchar(5) NOT NULL,
   `victimAlone` varchar(5) NOT NULL
 );
 
-
 CREATE TABLE IF NOT EXISTS `sharpoutside` (
-  `location` text NOT NULL,
+  `sharpoutsidelocation` text NOT NULL,
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL
@@ -564,35 +525,31 @@ CREATE TABLE IF NOT EXISTS `sharpoutside` (
 
 CREATE TABLE IF NOT EXISTS `sid` (
   `sidID` int(11) NOT NULL AUTO_INCREMENT,
-  `photo` text NOT NULL,
-  `bodyDecomposed` varchar(5) NOT NULL,
-  `medicalInterverntion` varchar(5) NOT NULL,
   `resuscitationAttemped` varchar(5) NOT NULL,
   `infantSickLately` varchar(5) NOT NULL,
-  `wasIt` text NOT NULL,
+  `infantSickLatelyDescription` text NOT NULL,
   `infantOnMedication` varchar(5) NOT NULL,
   `fallsOrInjuryExperience` varchar(5) NOT NULL,
   `infantWearing` varchar(5) NOT NULL,
   `infantTightlyWrapped` varchar(5) NOT NULL,
   `beddingOverInfant` text NOT NULL,
   `sidIO` text NOT NULL,
-  `bodyFound` varchar(5) NOT NULL,
+  `whoFoundVictimBody`varchar(5) NOT NULL,
   `dateAndTimeLastPlaced` varchar(5) NOT NULL,
   `dateAndTimeDeathDiscovered` varchar(5) NOT NULL,
   `dateAndTimeLastSeenAlive` varchar(5) NOT NULL,
   `anySIDSdeeaths` varchar(5) NOT NULL,
-  `generalHistory` text NOT NULL,
   `photoAfterBodyRemoved` text NOT NULL,
   PRIMARY KEY (`sidID`)
 );
 
 
 CREATE TABLE IF NOT EXISTS `sidinside` (
-  `location` text NOT NULL,
+  `sidinsidelocation` text NOT NULL,
   `infantLastPlaced` text NOT NULL,
   `infantLastSeenAlive` text NOT NULL,
   `whereInfantFoundDead` varchar(5) NOT NULL,
-  `Heater/OpenFire/gasHeater/galleyBlik` varchar(5) NOT NULL,
+  `sidAppliances` varchar(5) NOT NULL,
   `wierdSmellInAir` varchar(5) NOT NULL
 );
 
