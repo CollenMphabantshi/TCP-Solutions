@@ -413,6 +413,283 @@ CREATE TABLE IF NOT EXISTS `heightoutside` (
 
 -- --------------------------------------------------------
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hanging`
+--
+
+CREATE TABLE IF NOT EXISTS `hanging` (
+  `hangingID` int(11) NOT NULL AUTO_INCREMENT,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `closeWater` varchar(5) NOT NULL,
+  `suspicionSuicide` varchar(5) NOT NULL,
+  `previousAttepts` varchar(5) NOT NULL,
+  `hangingIO` text NOT NULL,
+  `autoeroticAsphyxia` varchar(5) NOT NULL,
+  `partialHanging` int(11) NOT NULL,
+  `completeHanging` text NOT NULL,
+  `ligatureAroundNeck` varchar(5) NOT NULL,
+  `ligatureType` int(11) NOT NULL,
+  `suspicionOfStrangulation` varchar(5) NOT NULL,
+  `suspicionOfSmothering` varchar(5) NOT NULL,
+  `suspicionOfChocking` varchar(5) NOT NULL,
+  `suicedNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL,
+  PRIMARY KEY (`hangingID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `hanging`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hanginginside`
+--
+
+CREATE TABLE IF NOT EXISTS `hanginginside` (
+  `location` text NOT NULL,
+  `wasDoorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hanginginside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hangingoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `hangingoutside` (
+  `location` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hangingoutside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingestionoverdosepoisoning`
+--
+
+CREATE TABLE IF NOT EXISTS `ingestionoverdosepoisoning` (
+  `ingestionoverdosepoisoningID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `closeWater` varchar(5) NOT NULL,
+  `suspicionSuicide` varchar(5) NOT NULL,
+  `previousAttepts` varchar(5) NOT NULL,
+  `hingestionoverdosepoisoningIO` text NOT NULL,
+  `suspectedSubstance` text NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ingestionoverdosepoisoning`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingestionoverdosepoisoninginside`
+--
+
+CREATE TABLE IF NOT EXISTS `ingestionoverdosepoisoninginside` (
+  `location` text NOT NULL,
+  `wasDoorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ingestionoverdosepoisoninginside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingestionoverdosepoisoningoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `ingestionoverdosepoisoningoutside` (
+  `location` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ingestionoverdosepoisoningoutside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mba`
+--
+
+CREATE TABLE IF NOT EXISTS `mba` (
+  `mbaID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `bodyBurnt` varchar(5) NOT NULL,
+  `bodyIntact` varchar(5) NOT NULL,
+  `victimWearingProtectiveClothing` varchar(5) NOT NULL,
+  `mbaOutside` text NOT NULL,
+  `victimsOnMotorcycle` text NOT NULL,
+  `motorbikeHitFrom` text NOT NULL,
+  `typeOfAccident` text NOT NULL,
+  `weatherCondition` text NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mba`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mva`
+--
+
+CREATE TABLE IF NOT EXISTS `mva` (
+  `mvaID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `bodyBurnt` varchar(5) NOT NULL,
+  `bodyIntact` varchar(5) NOT NULL,
+  `victimFoundInCar` varchar(5) NOT NULL,
+  `mvaOutside` text NOT NULL,
+  `occupants` text NOT NULL,
+  `numberOfOccupants` int(11) NOT NULL,
+  `victimWas` text NOT NULL,
+  `carWasHitFrom` text NOT NULL,
+  `wasIt` text NOT NULL,
+  `carBurnt` varchar(5) NOT NULL,
+  `alcoholBottlesInCars` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL,
+  `weatherCondition` text NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mva`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partialhanging`
+--
+
+CREATE TABLE IF NOT EXISTS `partialhanging` (
+  `partialHangingID` int(11) NOT NULL AUTO_INCREMENT,
+  `sitting` text NOT NULL,
+  `kneeling` text NOT NULL,
+  `halfLying` text NOT NULL,
+  `FeetOnFloor` text NOT NULL,
+  `other` text NOT NULL,
+  PRIMARY KEY (`partialHangingID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `partialhanging`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pedestrian`
+--
+
+CREATE TABLE IF NOT EXISTS `pedestrian` (
+  `perdestrianID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `perdestrianOutside` text NOT NULL,
+  `hitAndRun` varchar(5) NOT NULL,
+  `outsideWas` text NOT NULL,
+  `wasIt` text NOT NULL,
+  `numberOfCarsDroveOverBody` int(11) NOT NULL,
+  `weatherCondition` text NOT NULL,
+  `suicideNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pedestrian`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `railway`
+--
+
+CREATE TABLE IF NOT EXISTS `railway` (
+  `railwayID` int(11) NOT NULL,
+  `photo` text NOT NULL,
+  `bodyDecomposed` varchar(5) NOT NULL,
+  `medicalInterverntion` varchar(5) NOT NULL,
+  `bodyFound` text NOT NULL,
+  `bodyBurnt` varchar(5) NOT NULL,
+  `bodyIntact` varchar(5) NOT NULL,
+  `sceneOfInjury` text NOT NULL,
+  `victimWas` text NOT NULL,
+  `wasIt` text NOT NULL,
+  `alocoholBottlesIfPedestrian` varchar(5) NOT NULL,
+  `drugParaphernaliaIfPedestian` varchar(5) NOT NULL,
+  `weatherCondition` text NOT NULL,
+  `suicedNote` varchar(5) NOT NULL,
+  `generalHistory` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `railway`
+--
+
+
+-- --------------------------------------------------------
+
+
 --
 -- Table structure for table `gassing`
 --
