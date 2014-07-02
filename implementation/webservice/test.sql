@@ -353,3 +353,63 @@ CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `babyOutside` text NOT NULL
 ) ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `height`
+--
+
+CREATE TABLE IF NOT EXISTS `height` (
+  `heightBodyDecompose` varchar(5) NOT NULL,
+  `heightMedicalIntervention` varchar(5) NOT NULL,
+  `heightFoundBody` text NOT NULL,
+  `heightCloseWater` varchar(5) NOT NULL,
+  `heightRapeHomicide` varchar(5) NOT NULL,
+  `heightSuspicion` varchar(5) NOT NULL,
+  `heightPreviousTempts` varchar(5) NOT NULL,
+  `fromWhat` text NOT NULL,
+  `heightHigh` text NOT NULL,
+  `heightLand` int(11) NOT NULL,
+  `heightSuicideNote` int(11) NOT NULL,
+  `heightGeneralHistory` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `height`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `heightinside`
+--
+
+CREATE TABLE IF NOT EXISTS `heightinside` (
+  `heightInsideType` text NOT NULL,
+  `heightDoor` varchar(5) NOT NULL,
+  `heightWindowsClosed` varchar(5) NOT NULL,
+  `heightWindowsBroken` varchar(5) NOT NULL,
+  `heightVictimAlone` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `heightinside`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `heightoutside`
+--
+
+CREATE TABLE IF NOT EXISTS `heightoutside` (
+  `heightOutsideType` text NOT NULL,
+  `heightStuggle` varchar(5) NOT NULL,
+  `heightAlcohol` varchar(5) NOT NULL,
+  `heightDrug` varchar(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
