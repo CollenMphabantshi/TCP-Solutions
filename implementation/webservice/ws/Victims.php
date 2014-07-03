@@ -20,8 +20,7 @@ class Victims {
     private $victimSurname;
     
     
-    function __construct(){
-        
-        
+   public function __construct($formData){
+	
     }
 }

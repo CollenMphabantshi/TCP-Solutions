@@ -13,4 +13,7 @@
  */
 class MotorVehicleAccident extends Scene{
     //put your code here
+     public function __construct($formData){
+	
+    }
 }

@@ -13,4 +13,14 @@
  */
 class Student {
     //put your code here
+    private $studentNumber;
+    private $cellPhoneNumber;
+    
+     public function __construct(){
+	
+    }
+    
+    public function viewAssignedCases($param) {
+        
+    }
 }

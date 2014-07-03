@@ -13,4 +13,15 @@
  */
 class DeathRegister {
     //put your code here
+    private  $deathRegisterNumber;
+    private $caseNumber;
+
+
+    public function __construct(){
+	
+    }
+    
+    public function getCase($param) {
+        
+    }
 }

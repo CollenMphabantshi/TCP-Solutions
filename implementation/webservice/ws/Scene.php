@@ -1,5 +1,5 @@
 <?php
-
+include("connect.php");
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,5 +13,20 @@
  */
 class Scene {
     //put your code here
+    private $time;
+    private  $date;
+    private $location;
+    private $temperature;
+    private $investigatingOfficerName;
+    private $investigatingOfficerRank;
+    private $investigatingOfficerCellNo;
+    private $firstOfficerOnSceneName;
+    private $firstOfficerOnSceneRank;
+    
+    public function __construct($formData){
+	
+    }
+    
+    
     
 }

@@ -13,4 +13,18 @@
  */
 class ForensicOfficer {
     //put your code here
+    private $personalNumber;
+    private $cellPhoneNumber;
+    
+     public function __construct(){
+	
+    }
+    
+    public function createCase($param) {
+        
+    }
+    
+    public function ViewBasicCaseInformation($param) {
+        
+    }
 }

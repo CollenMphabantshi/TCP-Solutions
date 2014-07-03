@@ -14,6 +14,12 @@
  */
 class Cases {
 //put your code here
+    private $caseNumber;
+    private $scene;
+    private $FOPersonalNumber;
+    
+    
+    
     public function __construct(){
 	
     }

@@ -13,4 +13,10 @@
  */
 class SceneVictims {
     //put your code here
+    private $sceneID;
+    private $victimID;
+    
+     public function __construct(){
+	
+    }
 }

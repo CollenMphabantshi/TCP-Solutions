@@ -13,6 +13,14 @@
  */
 class User {
     //put your code here
+    private $userID;
+    private $firstName;
+    private $surname;
+    
+     public function __construct(){
+	
+    }
+    
     public function getAllUsers() {
         return null;
     }

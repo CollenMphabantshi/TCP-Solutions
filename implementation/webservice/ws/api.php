@@ -6,7 +6,7 @@ class API extends REST
 public $data = "";
 const DB_SERVER = "localhost";
 const DB_USER = "root";
-const DB_PASSWORD = "latitude@mysql";
+const DB_PASSWORD = "";
 const DB = "mobileForensics";
 
 private $db = NULL;

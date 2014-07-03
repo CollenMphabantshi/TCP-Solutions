@@ -13,4 +13,26 @@
  */
 class ForensicPractitioner {
     //put your code here
+    private $PersonalNumber;
+    private $CellPhoneNumber;
+    
+     public function __construct(){
+	
+    }
+    
+    public function viewAllCases($param) {
+        
+    }
+    
+    public function viewCase($param) {
+        
+    }
+    
+    public function modifyCase($param) {
+        
+    }
+    
+    public function assignDeathRegister($param) {
+        
+    }
 }
