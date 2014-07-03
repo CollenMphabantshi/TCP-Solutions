@@ -1,5 +1,39 @@
 <?php
 require_once("Rest.inc.php");
+require_once("Administrator.php");
+require_once("Aviation.php");
+require_once("Bicycle.php");
+require_once("Blunt.php");
+require_once("Burn.php");
+require_once("Cases.php");
+require_once("CrushInjury.php");
+require_once("DeathRegister.php");
+require_once("Drowning.php");
+require_once("ElectrocutionLightning.php");
+require_once("Firearm.php");
+require_once("FoetusabandonedBaby.php");
+require_once("ForensicOfficer.php");
+require_once("ForensicPractitioner.php");
+require_once("FromHeight.php");
+require_once("Gassing.php");
+require_once("Hanging.php");
+require_once("IngestionOverdosePoisoning.php");
+require_once("MotorVehicleAccident.php");
+require_once("MotorbikeAccident.php");
+require_once("Perdestrian.php");
+require_once("Railway.php");
+require_once("Scene.php");
+require_once("SceneVictims.php");
+require_once("SharpForceInjury.php");
+require_once("Sid.php");
+require_once("Student.php");
+require_once("Suda.php");
+require_once("Sudc.php");
+require_once("User.php");
+require_once("Validations.inc.php");
+require_once("Victims.php");
+require_once("section48.php");
+
 
 class API extends REST
 {
@@ -37,6 +71,8 @@ public function processApi()
     else
     {$this->response('',404);}
 // If the method not exist with in this class, response would be "Page not found".
+    
+    
 }
 
 private function login()

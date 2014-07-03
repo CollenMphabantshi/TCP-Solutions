@@ -13,7 +13,12 @@ require_once("Scene.php");
  */
 class Aviation extends Scene{
     //put your code here
+    var $name;
      public function __construct($formData){
-	
+         $this->$name = $formData;
+    }
+    
+    public function getName() {
+        return $this->$name;
     }
 }
