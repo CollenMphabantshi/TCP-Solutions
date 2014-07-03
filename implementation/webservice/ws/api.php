@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 require_once("Rest.inc.php");
 require_once("Administrator.php");
 require_once("Aviation.php");
@@ -49,6 +50,8 @@ public function __construct()
 {
     parent::__construct();// Init parent contructor
     $this->dbConnect();// Initiate Database connection
+    $this->every();
+    
 }
 
 //Database connection
@@ -155,6 +158,13 @@ private function deleteUser()
     }
 }
 
+private function every() {
+    
+$test = new Aviation("Collen");
+$test->setName("Collen");
+$test->printF();
+}
+
 private function viewCases() {
     
 }
@@ -177,8 +187,11 @@ private function json($data)
 }
 }
 
+
 // Initiiate Library
 $api = new API;
 $api->processApi();
+
+
 ?>
 ?>

@@ -14,11 +14,25 @@ require_once("Scene.php");
 class Aviation extends Scene{
     //put your code here
     var $name;
-     public function __construct($formData){
-         $this->$name = $formData;
+     public function __construct(){
+         
+    }
+    
+    public function setName($param) {
+        $this->name = $param;
     }
     
     public function getName() {
-        return $this->$name;
+        return $this->name;
     }
+    
+    public function testInsertFunction() {
+        $strn = "INSERT INTO aviation (aviationOutsideType, aircraftType, aircraftNumPeople, weatherCondition, weatherType)
+        VALUES (15,'jetta', '25','35 c','rainy')";
+        return $strn;
+    }
+    
+    public function printF() {
+        print "My name is ".$this->getName(). "\n\n\n\n";
+        }
 }

@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,9 +23,12 @@ class Scene {
     private $firstOfficerOnSceneName;
     private $firstOfficerOnSceneRank;
     
-    public function __construct($formData){
+    private $name;
+    
+    public function __construct(){
 	
     }
+    
     
     
     
