@@ -119,6 +119,13 @@ insert into weatherconditions values(0,'Snowy');
 insert into weatherconditions values(0,'Thunderstorm');
 insert into weatherconditions values(0,'Hail');
 
+insert into bicycletype values(0,'Bicycle only accident');
+insert into bicycletype values(0,'Bicycle- motorcycle accident');
+insert into bicycletype values(0,'Bicycle- car accident');
+insert into bicycletype values(0,'Bicycle- truck accident');
+insert into bicycletype values(0,'Bicycle- still standing object accident');
+insert into bicycletype values(0,'Bicycle- train accident');
+
 
 
 
