@@ -105,26 +105,6 @@ insert into ligaturetype values( 0,'Material/fabric/towel/bedding');
 insert into ligaturetype values( 0,'other');
 
 
-insert into partialhanging values( 0,'Sitting');
-insert into partialhanging values( 0,'Kneeling');
-insert into partialhanging values( 0,'Half-lying');
-insert into partialhanging values( 0,'Feet still touching the floor');
-insert into partialhanging values(0,'other');
-
-insert into weatherconditions values(0,'Sunny');
-insert into weatherconditions values(0,'Misty');
-insert into weatherconditions values(0,'Rainy');
-insert into weatherconditions values(0,'Cloudy');
-insert into weatherconditions values(0,'Snowy');
-insert into weatherconditions values(0,'Thunderstorm');
-insert into weatherconditions values(0,'Hail');
-
-insert into bicycletype values(0,'Bicycle only accident');
-insert into bicycletype values(0,'Bicycle- motorcycle accident');
-insert into bicycletype values(0,'Bicycle- car accident');
-insert into bicycletype values(0,'Bicycle- truck accident');
-insert into bicycletype values(0,'Bicycle- still standing object accident');
-insert into bicycletype values(0,'Bicycle- train accident');
 
 
 
