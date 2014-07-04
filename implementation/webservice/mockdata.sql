@@ -111,7 +111,13 @@ insert into partialhanging values( 0,'Feet still touching the floor');
 insert into partialhanging values(0,'other');
 
 
-
+insert into weatherconditions values(0,'Sunny');
+insert into weatherconditions values(0,'Misty');
+insert into weatherconditions values(0,'Rainy');
+insert into weatherconditions values(0,'Cloudy');
+insert into weatherconditions values(0,'Snowy');
+insert into weatherconditions values(0,'Thunderstorm');
+insert into weatherconditions values(0,'Hail');
 
 
 
