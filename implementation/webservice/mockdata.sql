@@ -104,6 +104,11 @@ insert into ligaturetype values( 0,'Hosepipe');
 insert into ligaturetype values( 0,'Material/fabric/towel/bedding');
 insert into ligaturetype values( 0,'other');
 
+insert into partialhanging values( 0,'Sitting');
+insert into partialhanging values( 0,'Kneeling');
+insert into partialhanging values( 0,'Half-lying');
+insert into partialhanging values( 0,'Feet still touching the floor');
+insert into partialhanging values(0,'other');
 
 
 
