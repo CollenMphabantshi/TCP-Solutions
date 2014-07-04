@@ -16,9 +16,6 @@ $DB_NAME = "mobileForensics";
 		
 	if ( !mysql_select_db( $DB_NAME) ){
 		die( "Could not open database" );
-        }else{
-            
-        echo "<br>connected to ".$DB_NAME." DataBase";
-        
         }
        
+?>

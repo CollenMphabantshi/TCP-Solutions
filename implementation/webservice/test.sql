@@ -28,7 +28,7 @@ create table if not exists forensicOfficer
 (
     personelNumber varchar(100) not null,
     userID int not null,
-    cellphoneNumber int not null,
+    cellphoneNumber varchar(15) not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(personelNumber)
 );
@@ -37,7 +37,7 @@ create table if not exists forensicPractitioner
 (
     personelNumber varchar(100) not null,
     userID int not null,
-    cellphoneNumber int not null,
+    cellphoneNumber varchar(15) not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(personelNumber)
 );
@@ -46,7 +46,7 @@ create table if not exists student
 (
     studentNumber varchar(100) not null,
     userID int not null,
-    cellphoneNumber int not null,
+    cellphoneNumber varchar(15) not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(studentNumber)
 );
@@ -76,7 +76,7 @@ create table if not exists scene
     sceneTemparature text not null,
     sceneInvestigatingOfficerName varchar(200) not null,
     sceneInvestigatingOfficerRank varchar(200) not null,
-    sceneInvestigatingOfficerCellNumber int not null,
+    sceneInvestigatingOfficerCellNumber varchar(15) not null,
     firstOfficerOnSceneName varchar(200) not null,
     firstOfficerOnSceneRank varchar(200) not null,
     FOREIGN KEY (sceneTypeID) REFERENCES sceneType(sceneTypeID),

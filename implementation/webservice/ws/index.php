@@ -19,14 +19,14 @@ and open the template in the editor.
     //var reqObj = {"email":"aa@aa.com","pwd":"open"};
     
     query.append("rquest","login");
-    query.append("email","aa@aa.com");
+    query.append("email","u11111111");
     query.append("pwd","open");
     
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(){if(request.readyState == 4)
     {
         
-        $("body").html(request.responseText);
+        //$("body").html(request.responseText);
     }};
     request.open("POST","api.php");request.send(query);
         </script>
@@ -34,6 +34,7 @@ and open the template in the editor.
     <body>
         <?php
         // put your code here
+            echo md5("open");
         ?>
         <form>
             

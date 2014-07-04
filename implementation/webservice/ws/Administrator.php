@@ -11,6 +11,9 @@
  *
  * @author Latitude
  */
+
+require_once './connect.php';
+
 class Administrator {
     //put your code here
     public function addUser($formData) {

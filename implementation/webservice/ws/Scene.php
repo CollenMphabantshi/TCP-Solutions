@@ -11,6 +11,8 @@
  *
  * @author BANCHI
  */
+
+require_once './connect.php';
 class Scene {
     //put your code here
     private $time;
