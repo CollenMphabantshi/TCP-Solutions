@@ -39,27 +39,14 @@ require_once("section48.php");
 class API extends REST
 {
 public $data = "";
-const DB_SERVER = "localhost";
-const DB_USER = "root";
-const DB_PASSWORD = "";
-const DB = "mobileForensics";
+
 
 private $db = NULL;
 
 public function __construct()
 {
     parent::__construct();// Init parent contructor
-    $this->dbConnect();// Initiate Database connection
-    $this->every();
     
-}
-
-//Database connection
-private function dbConnect()
-{
-    $this->db = mysql_connect(self::DB_SERVER,self::DB_USER,self::DB_PASSWORD);
-    if($this->db)
-        mysql_select_db(self::DB,$this->db);
 }
 
 //Public method for access api.
@@ -110,7 +97,7 @@ private function login()
             $this->response('', 204); // If no records "No Content" status
         }
     }
-
+    
     // If invalid inputs "Bad Request" status message and reason
     $error = array('status' => "Failed", "msg" => "Invalid username or Password");
     $this->response($this->json($error), 400);
@@ -158,12 +145,6 @@ private function deleteUser()
     }
 }
 
-private function every() {
-    
-$test = new Aviation("Collen");
-$test->setName("Collen");
-$test->printF();
-}
 
 private function viewCases() {
     
@@ -176,7 +157,6 @@ private function viewCase() {
 private function assignDR() {
     
 }
-
 
 //Encode array into JSON
 private function json($data)
@@ -191,7 +171,6 @@ private function json($data)
 // Initiiate Library
 $api = new API;
 $api->processApi();
-
 
 ?>
 ?>
