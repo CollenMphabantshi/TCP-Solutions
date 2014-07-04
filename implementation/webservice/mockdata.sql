@@ -96,4 +96,17 @@ insert into aviationOutsideType values(0,"Commercial aircraft");
 insert into aviationOutsideType values(0,"Light aircraft");
 insert into aviationOutsideType values(0,"Helicopter");
 
+
+INSERT INTO `scene` (`sceneID`, `sceneTypeID`, `sceneTime`, `sceneDate`, `sceneLocation`, `sceneTemparature`, `sceneInvestigatingOfficerName`, `sceneInvestigatingOfficerRank`, `sceneInvestigatingOfficerCellNumber`, `firstOfficerOnSceneName`, `firstOfficerOnSceneRank`) VALUES
+(1, 1, '10:00:00', '2014-06-10', 'Steve Biko Hospital', '18 C', 'Pulle Legodi', 'Constable', '078886895', 'Collen Mphabantshi', 'Traineer');
+
+INSERT INTO `sec48` (`sec48ID`, `sceneID`, `victimHospitalized`, `medicalEquipmentInSitu`, `gw714file`, `DrNames`, `DrCellNumber`, `NurseNames`, `NurseCellNumber`) VALUES
+(2, 1, 'victim hospitalized for 20 years', 'yes', 'yes', 'Dr Sekoaere Malatji', '0468889999', 'Aluwani Bege', '0124457887');
+
+INSERT INTO `victims` (`victimID`, `victimGender`, `victimRace`, `victimName`, `victimSurname`, `IDnumber`, `bodyDecompose`, `medicalIntervention`, `bodyBurned`, `bodyIntact`, `victimInside`, `victimOutside`, `victimFoundCloseToWater`, `victimSuicideNoteFound`, `victimGeneralHistory`, `rapeHomicideSuspected`, `suicideSuspected`, `previousAttempts`, `numberOfPreviousAttempts`) VALUES
+(1, 'male', 'Asian', 'Ashim', 'Khali', '89658971524552', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 0);
+
+INSERT INTO `victimscenephotos` (`photoID`, `victimID`, `photoFilename`) VALUES
+(1, 1, 'photo/pic.jpg');
+
 select * from users;
