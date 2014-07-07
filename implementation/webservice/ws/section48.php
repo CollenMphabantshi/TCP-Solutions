@@ -32,7 +32,7 @@ class parameters {
     public $firstOfficerOnSceneName ;
     public $firstOfficerOnSceneRank ;
     private $caseNumber;
-    private $sceneID;
+    //private $sceneID;
     private $FOPersonalNumber;
     
 
@@ -46,6 +46,8 @@ class section48 extends Scene{
     //put your code here
         
     public function __construct($formData){
+        
+     
 	$paraObj = new parameters();
     }
     
@@ -91,16 +93,16 @@ class section48 extends Scene{
              $paraObj-> firstOfficerOnSceneName = $scene[8];
              $paraObj-> firstOfficerOnSceneRank = $scene[9];
              
-             $case = $this->case->getCaseByScene($paraObj->sceneID);
+             /*$case = $this->case->getCaseByScene($paraObj->sceneID);
              
               $paraObj-> caseNumber = $case[0];
-              $paraObj-> sceneID = $case[1];
-              $paraObj-> FOPersonalNumber = $case[2];
+              //$paraObj-> sceneID = $case[1];
+              $paraObj-> FOPersonalNumber = $case[2];*/
             
             return json_encode($paraObj);
         
     }
 }
-    $test = new section48(1);
+    $test = new section48();
     //$test->getSection48Case($database,2);
-    print $test->getSection48Case($database,2);
+    //print $test->getSection48Case($database,2);

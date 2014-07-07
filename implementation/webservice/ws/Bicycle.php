@@ -38,6 +38,4 @@ class Bicycle extends Scene {
     }
 }
 
-    $test = new Bicycle("yy");
-    $test->getAllBicycleCases($database);
-    print "collen ".$database;
+    
