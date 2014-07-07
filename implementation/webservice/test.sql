@@ -113,6 +113,7 @@ create table if not exists victimType(
 create table if not exists victims
 (
     victimID int not null auto_increment,
+    victimIdentityNumber varchar(200) not null,
     victimGender varchar(10) not null,
     victimRace varchar(200) not null,
     victimName varchar(200) not null,
@@ -518,6 +519,7 @@ CREATE TABLE IF NOT EXISTS `sec48` (
   `victimHospitalized` text NOT NULL,
   `medicalEquipmentInSitu` varchar(5) NOT NULL,
   `gw714file` varchar(5) NOT NULL,
+    
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sec48ID`)
 );

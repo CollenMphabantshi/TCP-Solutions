@@ -143,6 +143,7 @@ private function viewCases() {
     try {
         
         $category= $this->_request['category'];
+        echo $category;
         switch ($category) {
             case "all":
                 break;

@@ -27,7 +27,8 @@ class Scene{
     private $firstOfficerOnSceneRank;
     public $case;
     public $sceneVictim;
-     
+    
+    
     public function __construct($_time,$_type,$_date,$_location,$_temperature,$_investigatingOfficerName,$_investigatingOfficerRank
             ,$_investigatingOfficerCellNo,$_firstOfficerOnSceneName,$_firstOfficerOnSceneRank){
                 if($_time != null && $_type != null && $_firstOfficerOnSceneRank != null)
