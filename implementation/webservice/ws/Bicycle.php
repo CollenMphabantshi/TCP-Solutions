@@ -16,4 +16,28 @@ class Bicycle extends Scene {
      public function __construct($formData){
 	
     }
+    public function getAllBicycleCases($database) {
+        
+        
+        $query ="SELECT * FROM sec48;";
+
+         if ( !( $result = mysql_query( $query, $database ) ) )
+           {
+           print( "Could not execute query!" );
+           die( mysql_error() );
+           }
+        while($info = mysql_fetch_array($result))
+            {
+            
+                /* This part selects main scenes*/
+		//print $info['sec48ID']." -- ".$info['sceneID']." -- ".$info['victimHospitalized']." -- ".$info['medicalEquipmentInSitu']." -- ".$info['gw714file']." -- ".$info['DrNames']." -- ".$info['DrCellNumber']." -- ".$info['NurseNames']." -- ".$info['NurseCellNumber']."\n";	
+                $query2 ="SELECT * FROM sec48;";
+                
+            }
+        
+    }
 }
+
+    $test = new Bicycle("yy");
+    $test->getAllBicycleCases($database);
+    print "collen ".$database;
