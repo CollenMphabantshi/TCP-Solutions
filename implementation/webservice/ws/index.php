@@ -20,7 +20,7 @@ and open the template in the editor.
 
                         request.onreadystatechange = function(){if(request.readyState == 4)
                         {
-
+                            alert(request.responseText);
                             $("body").append(request.responseText+"<br/>"+getCases(request));
                         }};
                         request.open("GET","api.php"+q);

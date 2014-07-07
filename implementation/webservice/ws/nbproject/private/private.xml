@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/newEmptyPHP.php</file>
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> daaea57c6f9224c7d5ae5f63f0352c4cd4f70177
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/api.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Hanging.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Scene.php</file>
@@ -14,6 +17,7 @@
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Victims.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/SceneVictims.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Cases.php</file>
+<<<<<<< HEAD
 =======
 >>>>>>> b4ebc3964e9a5eadc0b308eb7351f211e73b9f1c
             <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/api.php</file>
@@ -27,6 +31,8 @@
 =======
 >>>>>>> 846775bd5c57d92ce918dd2c941c3cf4c39a8089
 >>>>>>> b4ebc3964e9a5eadc0b308eb7351f211e73b9f1c
+=======
+>>>>>>> daaea57c6f9224c7d5ae5f63f0352c4cd4f70177
         </group>
     </open-files>
 </project-private>
