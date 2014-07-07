@@ -57,9 +57,15 @@ public function processApi()
     $func = strtolower(trim(str_replace("/","",$_REQUEST['rquest'])));
 
     if((int)method_exists($this,$func) > 0)
-    {$this->$func();}
+    {
+        
+        $this->$func();
+        
+    }
     else
-    {$this->response('',404);}
+    {
+        $this->response('',404);   
+    }
 // If the method not exist with in this class, response would be "Page not found".
     
     
@@ -127,36 +133,90 @@ private function users()
     $this->response('',204); // If no records "No Content" status
 }
 
-private function deleteUser()
-{
-    if($this->get_request_method() != "DELETE"){
-        $this->response('',406);
-    }
-    $id = (int)$this->_request['id'];
-    if($id > 0)
-    {
-        mysql_query("DELETE FROM users WHERE user_id = $id");
-        $success = array('status' => "Success", "msg" => "Successfully one record deleted.");
-        $this->response($this->json($success),200);
-    }
-    else
-    {
-        $this->response('',204); // If no records "No Content" status
-    }
-}
-
 
 private function viewCases() {
+    if($this->get_request_method() != "GET")
+    {
+        $this->response('',406);
+    }
+    
+    try {
+        
+        $category= $this->_request['category'];
+        switch ($category) {
+            case "all":
+                break;
+            case "hanging":
+                $hanging = new Hanging();
+                if(empty($this->_request['hanging'])){
+                    $h = $hanging->getAllHangings();
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No hanging cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                }else{
+                    $h = $hanging->getHanging($this->_request['hanging']);
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No hanging cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    } catch (Exception $exc) {
+        $error = array('status' => "Failed", "msg" => "Request to view cases was denied.");
+        $this->response($this->json($error), 400);
+    }
+
+    
     
 }
 
-private function viewCase() {
+private function addCase() {
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
     
+    try {
+        
+        $category= $this->_request['category'];
+        
+        switch ($category) {
+            case "aviation":
+                break;
+            case "hanging":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    
+                    $formData = $this->jsonToArray($this->_request['caseData']);
+                    if($formData != NULL){
+                        $hanging = new Hanging($formData);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    } catch (Exception $exc) {
+        $error = array('status' => "Failed", "msg" => "Request to view cases was denied.");
+        $this->response($this->json($error), 400);
+    }
 }
 
 private function assignDR() {
     
 }
+
 
 //Encode array into JSON
 private function json($data)
@@ -165,12 +225,21 @@ private function json($data)
         return json_encode($data);
     }
 }
+
+//Decode JSON into array
+private function jsonToArray($data)
+{
+
+    $array = json_decode($data,TRUE);
+    
+    return $array;
 }
 
+}
 
 // Initiiate Library
 $api = new API;
+
 $api->processApi();
 
-?>
 ?>

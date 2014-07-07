@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR | E_PARSE);
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,7 +8,7 @@
 
 $DB_SERVER = "localhost";
 $DB_USER = "root";
-$DB_PASSWORD = "";
+$DB_PASSWORD = "latitude@mysql";
 $DB_NAME = "mobileForensics";
 
 	if ( !($database = mysql_connect($DB_SERVER ,$DB_USER ,$DB_PASSWORD)))

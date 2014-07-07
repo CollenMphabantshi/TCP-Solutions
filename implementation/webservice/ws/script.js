@@ -1,141 +1,74 @@
 
-$(document).ready(function(){
-    $("#mylist-content").hide();
-    $("#mycreations-content").hide();
-    $("#inbox-content").hide();
-    $("#settings-content").hide();
-    $(".btn-disabled").removeAttr("href");
-    openPage("popular","home-content","");
-    $("#navigation li a").click(function(){
-	if($(this).attr("id") == "home")
-	{
-            $("#home-content").show();
-            $("#mylist-content").hide();
-            $("#mycreations-content").hide();
-            $("#inbox-content").hide();
-            $("#settings-content").hide();
-            openPage("popular","home-content","");
-	}else if($(this).attr("id") == "mylist"){
-            $("#home-content").hide();
-            $("#mylist-content").show();
-            $("#mycreations-content").hide();
-            $("#inbox-content").hide();
-            $("#settings-content").hide();
-            openPage("getList","mylist-content","");
-	}else if($(this).attr("id") == "mycreations"){
-            $("#home-content").hide();
-            $("#mylist-content").hide();
-            $("#mycreations-content").show();
-            $("#inbox-content").hide();
-            $("#settings-content").hide();
-            openPage("mycreation","mycreations-content","");
-	}else if($(this).attr("id") == "inbox"){
-            $("#home-content").hide();
-            $("#mylist-content").hide();
-            $("#mycreations-content").hide();
-            $("#inbox-content").show();
-            $("#settings-content").hide();
-            openPage("inbox","inbox-content","");
-	}else if($(this).attr("id") == "settings"){
-            $("#home-content").hide();
-            $("#mylist-content").hide();
-            $("#mycreations-content").hide();
-            $("#inbox-content").hide();
-            $("#settings-content").show();
-            openPage("settings","settings-content","");
-	}
-    });
-    
-    
-    
-    $("#navigation li").click(function(){
-        if($(this).children("a").attr("id") == "cf")
-	{
-            document.location.href = "/restricted/full/cf";
-	}
-    });
-    
-});
 
-
-function openPage(page,pageId,param){
-    var linkurl = "pages/";
-    if(page !== "" && page !== null)
-    {
-        linkurl += page+".php";
-    }else{
-        return;
-    }
-    
-   $("#popup-content").removeClass("popup");
-   $("#popup-content").html("");
-   
-    var html = $.ajax({
-        url: linkurl+param,
-        async: false
-    }).responseText;
-    //alert(html);
-    
-    if(pageId === "popup-content")
-    {
-        $("#home-content").hide();
-        $("#mylist-content").hide();
-        $("#mycreations-content").hide();
-        $("#inbox-content").hide();
-        $("#settings-content").hide();
-        $("#popup-content").addClass("popup");
-        
-        $("#popup-content").html(html);
-    }
-    else{
-        $("#"+pageId+" .data").html(html);
-    }
-}
-
-function acknowledge(cid){
-    openPage("acknowledge","popup-content","?cid="+cid);
-    window.document.location.reload();
- }
-function addToList(cid){
-    openPage("addToList","popup-content","?cid="+cid);
-    document.location.href = "/restricted/full/cf/";
-}
-function openCreation(cid){
-    openPage("viewCreation","popup-content","?cid="+cid);
-}
-function viewCreation(cid){
-    openPage("creation","popup-content","?cid="+cid);
-}
-function viewMyCreation(cid){
-    openPage("creationSetup","popup-content","?cid="+cid);
-}
-function addCreation(){
-    openPage("creationForm","popup-content","");
-}
-function removeCreation(){
-    openPage("removeCreation","popup-content","");
-}
-            
-function removeMyCreation(){
-    var query = new FormData();
-    var id = "";
-    $("fieldset input").each(function(count){
-        var el = document.getElementById(""+$(this).attr("id"));
-        if(el.checked){
-            id += $(this).attr("id")+",";
-        }
-    });
-    query.append("creationID",id);
-
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){if(request.readyState == 4)
-    {
-        $("#home-content").hide();
-        $("#mylist-content").hide();
-        $("#mycreations-content").hide();
-        $("#inbox-content").hide();
-        $("#settings-content").hide();
-        $("#popup-content").html(request.responseText);
-    }};
-    request.open("POST","pages/remove.php");request.send(query);
-}
+function getCases(request){
+                var obj = JSON.parse(request.responseText);
+                
+                    
+                var content = "<table border='1'>";
+                
+                
+                for(var i = 0; i < obj.count;i++)
+                {
+                    content += "<tr><td colspan='2'>Case Number: "+obj.objectlist[i]['caseData'].caseNumber+"</td></tr>";
+                    content += "<tr><td colspan='2'>Forensic Officer On scene: "+obj.objectlist[i]['caseData'].FOPersonelNumber+"</td></tr>";
+                    content += "<tr><td colspan='2'>Scene Arrival Time: "+obj.objectlist[i]['sceneData'].sceneTime+"</td></tr>";
+                    content += "<tr><td colspan='2'>Scene Date: "+obj.objectlist[i]['sceneData'].sceneDate+"</td></tr>";
+                    content += "<tr><td colspan='2'>Scene Location: "+obj.objectlist[i]['sceneData'].sceneLocation+"</td></tr>";
+                    content += "<tr><td colspan='2'>Scene Temparature: "+obj.objectlist[i]['sceneData'].sceneTemparature+"</td></tr>";
+                    content += "<tr><td colspan='2'>Investigating Officer&apos;s Name: "+obj.objectlist[i]['sceneData'].sceneInvestigatingOfficerRank+" "+obj.objectlist[i]['sceneData'].sceneInvestigatingOfficerName+"</td></tr>";
+                    
+                    content += "<tr>";
+                    for(var j = 0; j < obj.victims.length;j++)
+                    {
+                        
+                        content += "<td>";
+                        for(var k = 0; k < obj.victims[j].length;k++)
+                        {
+                            content += "<tr><td>Victim Fullname:</td><td>"+obj.victims[j][k]['victimName']+" "+obj.victims[j][k]['victimSurname']+"</td></tr>";
+                            content += "<tr><td>Victim Gender:</td><td>"+obj.victims[j][k]['victimGender']+"</td></tr>";
+                            content += "<tr><td>Victim Race:</td><td>"+obj.victims[j][k]['victimRace']+"</td></tr>";
+                            content += "<tr><td>Victim General History:</td><td>"+obj.victims[j][k]['victimGeneralHistory']+"</td></tr>";
+                            content += "<tr><td>Rape Homicide Suspected</td><td>"+obj.victims[j][k]['rapeHomicideSuspected']+"</td></tr>";
+                            content += "<tr><td>Victim&apos;s Body Found By:</td><td>"+ obj.victims[j][k]['whoFoundVictimBody'] +"</td></tr>";
+                        }
+                        content += "</td>";
+                    }
+                    
+                    content += "<td colspan='2'>Scene Number:  #"+obj.objectlist[i]['sceneID']+"</td>";
+                    var data = "";
+                    
+                    
+                    data += "<tr><td>Any signs of struggle:</td><td>"+ obj.objectlist[i]['signsOfStruggle'] +"</td></tr>";
+                    data += "<tr><td>Any alcohol bottle around:</td><td>"+ obj.objectlist[i]['alcoholBottleAround'] +"</td></tr>";
+                    data += "<tr><td>Was there Drugs:</td><td>"+ obj.objectlist[i]['drugParaphernalia'] +"</td></tr>";
+                    data += "<tr><td>Was there Auto Erotic Asphyxia:</td><td>"+ obj.objectlist[i]['autoeroticAsphyxia'] +"</td></tr>";
+                    data += "<tr><td>What type of partial hanging:</td><td>"+ obj.objectlist[i]['partialHangingType'] +"</td></tr>";
+                    data += "<tr><td>What type of complete Hanging:</td><td>"+ obj.objectlist[i]['completeHanging'] +"</td></tr>";
+                    data += "<tr><td>Was there ligature Around Neck:</td><td>"+ obj.objectlist[i]['ligatureAroundNeck'] +"</td></tr>";
+                    data += "<tr><td>Who Removed Ligature:</td><td>"+ obj.objectlist[i]['whoRemovedLigature'] +"</td></tr>";
+                    data += "<tr><td>What type of ligature:</td><td>"+ obj.objectlist[i]['ligatureType'] +"</td></tr>";
+                    data += "<tr><td>Was Strangulation Suspected:</td><td>"+ obj.objectlist[i]['strangulationSuspected'] +"</td></tr>";
+                    data += "<tr><td>Was Smothering Suspected:</td><td>"+ obj.objectlist[i]['smotheringSuspected'] +"</td></tr>";
+                    data += "<tr><td>Was Choking Suspected:</td><td>"+ obj.objectlist[i]['chockingSuspected'] +"</td></tr>";
+                    if(obj.objectlist[i]['hangingInside'] != null)
+                    {
+                        data += "<tr><td colspan='2'>Inside Hanging Type: "+ obj.objectlist[i]['hangingIOType'] +"</td></tr>";
+                        data += "<tr><td>Was Door Locked:</td><td>"+ obj.objectlist[i]['hangingInside'].doorLocked +"</td></tr>";
+                        data += "<tr><td>Was Windows Opened:</td><td>"+ obj.objectlist[i]['hangingInside'].windowsClosed +"</td></tr>";
+                        data += "<tr><td>Was Windows Broken:</td><td>"+ obj.objectlist[i]['hangingInside'].windowsBroken +"</td></tr>";
+                        data += "<tr><td>Was the victim alone:</td><td>"+ obj.objectlist[i]['hangingInside'].victimAlone +"</td></tr>";
+                        if(obj.objectlist[i]['hangingInside'].victimAlone === "no")
+                        {
+                            data += "<tr><td>Who was with victim:</td><td>"+ obj.objectlist[i]['hangingInside'].peopleWithVictim +"</td></tr>";
+                        }
+                        
+                    }else{
+                        data += "<tr><td colspan='2'>Outside Hanging Type: "+ obj.objectlist[i]['hangingIOType'] +"</td></tr>";
+                    }
+                
+                    content += "<td colspan='2'>"+data+"</td>";
+                    content += "</tr>";
+                }
+                content += "</table>";
+                return content;
+            }

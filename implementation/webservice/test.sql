@@ -112,15 +112,16 @@ create table if not exists victimType(
 
 create table if not exists victims
 (
-    victimID int not null,
-    victimGender varchar(5) not null,
-    victimRace int not null,
+    victimID int not null auto_increment,
+    victimGender varchar(10) not null,
+    victimRace varchar(200) not null,
     victimName varchar(200) not null,
     victimSurname varchar(200) not null,
+    `whoFoundVictimBody` text NOT NULL,
     bodyDecompose varchar(5) NOT NULL,
     medicalIntervention varchar(5) NOT NULL,
-    bodyBurned varchar(5) NOT NULL,
-    bodyIntact varchar(5) NOT NULL,
+    bodyBurned varchar(5) NULL,
+    bodyIntact varchar(5) NULL,
     `victimInside` varchar(5) NOT NULL,
     `victimOutside` varchar(5) NOT NULL,
     `victimFoundCloseToWater` varchar(5) NOT NULL,
@@ -133,7 +134,7 @@ create table if not exists victims
     primary key(victimID)
 );
 
-create table if not exists scenevVictims
+create table if not exists sceneVictims
 (
     id int not null auto_increment,
     sceneID int not null,
@@ -205,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `bicycleType` (
 CREATE TABLE IF NOT EXISTS `bicycle`(
    bicycleID int not null, 
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `bicycleNumPeople` text NOT NULL,
   `bicycleHit` text NOT NULL,
   `bicycleType` text NOT NULL,
@@ -246,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `burn` (
   `burnID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    burnIOType text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -274,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
   `electrocutionLightningID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
   `electrocutionLightningIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -302,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `firearm` (
   `firearmID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
    `firearmIOType` int NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
    `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -331,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `firearmInside` (
 CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `foetusabandonedbabyID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `babyIO` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
@@ -341,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `gassing` (
   `gassingID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
    `gassingIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
    `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -386,8 +387,7 @@ CREATE TABLE IF NOT EXISTS `hanging` (
   `hangingID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    hangingIOType text NOT NULL,
-  `whoFoundVictim` text NOT NULL,
-   `signsOfStruggle` varchar(5) NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
   `autoeroticAsphyxia` varchar(5) NOT NULL,
@@ -408,7 +408,6 @@ CREATE TABLE IF NOT EXISTS `hanging` (
 CREATE TABLE IF NOT EXISTS `hanginginside` (
   insideID int not null auto_increment primary key,
    hangingID int not null,
-  `insideSceneType` text NOT NULL,
   `doorLocked` varchar(5) NOT NULL,
   `windowsClosed` varchar(5) NOT NULL,
   `windowsBroken` varchar(5) NOT NULL,
@@ -421,7 +420,7 @@ CREATE TABLE IF NOT EXISTS `height` (
   `heightID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
    `heightIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -446,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoning` (
   `ingestionOverdosePoisoningID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    `ingestionOverdosePoisoningIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -467,7 +466,7 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoningInside` (
 CREATE TABLE IF NOT EXISTS `mba` (
   `mbaID` int NOT NULL,
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `victimWearingProtectiveClothing` varchar(5) NOT NULL,
   `mbaOutsideType` text NOT NULL,
   `victimsOnMotorcycle` text NOT NULL,
@@ -479,7 +478,7 @@ CREATE TABLE IF NOT EXISTS `mba` (
 CREATE TABLE IF NOT EXISTS `mva` (
   `mvaID` int NOT NULL,
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `victimFoundInCar` varchar(5) NOT NULL,
   `mvaOutsideType` text NOT NULL,
   `occupants` text NOT NULL,
@@ -494,7 +493,7 @@ CREATE TABLE IF NOT EXISTS `mva` (
 CREATE TABLE IF NOT EXISTS `pedestrian` (
   `perdestrianID` int NOT NULL,
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `perdestrianOutsideID` text NOT NULL,
   `hitAndRun` varchar(5) NOT NULL,
   `numberOfCarsDroveOverBody` int NOT NULL,
@@ -505,7 +504,7 @@ CREATE TABLE IF NOT EXISTS `pedestrian` (
 CREATE TABLE IF NOT EXISTS `railway` (
   `railwayID` int NOT NULL,
    sceneID int not null,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `sceneOfInjury` text NOT NULL,
   `victimType` text NOT NULL,
   `railwayType` text NOT NULL,
@@ -527,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `sharp`(
   `sharpID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    `sharpIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `sharpObjectAtScene` varchar(5) NOT NULL,
   `sharpForceInjuries` text NOT NULL,
   `theInjury` text NOT NULL,
@@ -577,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `suda` (
   `sudaID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    `sudaIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
    `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -605,7 +604,7 @@ CREATE TABLE IF NOT EXISTS `sudc` (
   `sudcID` int NULL auto_increment primary key,
    sceneID int not null,
    `sudcIOType` text NOT NULL,
-  `whoFoundVictimBody` text NOT NULL,
+  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
