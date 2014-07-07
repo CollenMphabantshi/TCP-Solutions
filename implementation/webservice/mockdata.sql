@@ -98,6 +98,7 @@ insert into aviationOutsideType values(0,"Commercial aircraft");
 insert into aviationOutsideType values(0,"Light aircraft");
 insert into aviationOutsideType values(0,"Helicopter");
 
+<<<<<<< HEAD
 insert into victims values(0,"Male","White","Tony","Coola","Roomi Jane","no","no","no","no","no","no","no","no","Violance and weird","no","no","no",0);
 insert into victims values(0,"Male","Indian","Ramzy","Palar","Soliu Jin","yes","yes","no","no","yes","yes","no","no","Violance and weird","yes","no","no",0);
 insert into victims values(0,"Female","White","Sally","Joomla","Lee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
@@ -113,3 +114,51 @@ insert into hanging values(0,2,'Industrial & construction area, mine','yes','no'
 insert into hanginginside values(0,1,'yes','yes','yes','no','Tony Lee, The Neighbour');
 
 select * from victims;
+=======
+
+insert into ligaturetype values(0, 'Rope');
+insert into ligaturetype values(0, 'Tie');
+insert into ligaturetype values(0, 'Wire');
+insert into ligaturetype values( 0,'Hosepipe');
+insert into ligaturetype values( 0,'Material/fabric/towel/bedding');
+insert into ligaturetype values( 0,'other');
+
+insert into partialhanging values( 0,'Sitting');
+insert into partialhanging values( 0,'Kneeling');
+insert into partialhanging values( 0,'Half-lying');
+insert into partialhanging values( 0,'Feet still touching the floor');
+insert into partialhanging values(0,'other');
+
+
+insert into weatherconditions values(0,'Sunny');
+insert into weatherconditions values(0,'Misty');
+insert into weatherconditions values(0,'Rainy');
+insert into weatherconditions values(0,'Cloudy');
+insert into weatherconditions values(0,'Snowy');
+insert into weatherconditions values(0,'Thunderstorm');
+insert into weatherconditions values(0,'Hail');
+
+insert into bicycletype values(0,'Bicycle only accident');
+insert into bicycletype values(0,'Bicycle- motorcycle accident');
+insert into bicycletype values(0,'Bicycle- car accident');
+insert into bicycletype values(0,'Bicycle- truck accident');
+insert into bicycletype values(0,'Bicycle- still standing object accident');
+insert into bicycletype values(0,'Bicycle- train accident');
+
+
+
+
+INSERT INTO `scene` (`sceneID`, `sceneTypeID`, `sceneTime`, `sceneDate`, `sceneLocation`, `sceneTemparature`, `sceneInvestigatingOfficerName`, `sceneInvestigatingOfficerRank`, `sceneInvestigatingOfficerCellNumber`, `firstOfficerOnSceneName`, `firstOfficerOnSceneRank`) VALUES
+(1, 1, '10:00:00', '2014-06-10', 'Steve Biko Hospital', '18 C', 'Pulle Legodi', 'Constable', '078886895', 'Collen Mphabantshi', 'Traineer');
+
+INSERT INTO `sec48` (`sec48ID`, `sceneID`, `victimHospitalized`, `medicalEquipmentInSitu`, `gw714file`, `DrNames`, `DrCellNumber`, `NurseNames`, `NurseCellNumber`) VALUES
+(2, 1, 'victim hospitalized for 20 years', 'yes', 'yes', 'Dr Sekoaere Malatji', '0468889999', 'Aluwani Bege', '0124457887');
+
+INSERT INTO `victims` (`victimID`, `victimGender`, `victimRace`, `victimName`, `victimSurname`, `IDnumber`, `bodyDecompose`, `medicalIntervention`, `bodyBurned`, `bodyIntact`, `victimInside`, `victimOutside`, `victimFoundCloseToWater`, `victimSuicideNoteFound`, `victimGeneralHistory`, `rapeHomicideSuspected`, `suicideSuspected`, `previousAttempts`, `numberOfPreviousAttempts`) VALUES
+(1, 'male', 'Asian', 'Ashim', 'Khali', '89658971524552', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 0);
+
+INSERT INTO `victimscenephotos` (`photoID`, `victimID`, `photoFilename`) VALUES
+(1, 1, 'photo/pic.jpg');
+
+select * from users;
+>>>>>>> 846775bd5c57d92ce918dd2c941c3cf4c39a8089

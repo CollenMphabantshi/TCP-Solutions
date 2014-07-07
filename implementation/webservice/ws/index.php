@@ -113,5 +113,8 @@ and open the template in the editor.
         // put your code here
             //echo md5("open");
         ?>
+        <form>
+            
+        </form>
     </body>
 </html>

@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/api.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Hanging.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Scene.php</file>
@@ -10,6 +11,13 @@
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Victims.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/SceneVictims.php</file>
             <file>file:/C:/Users/Latitude/Documents/cos301/TCP-Solutions/implementation/webservice/ws/Cases.php</file>
+=======
+            <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/api.php</file>
+            <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/Rest.inc.php</file>
+            <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/Scene.php</file>
+            <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/connect.php</file>
+            <file>file:/C:/Users/BANCHI/Documents/GitHub/TCP-Solutions/implementation/webservice/ws/Aviation.php</file>
+>>>>>>> 846775bd5c57d92ce918dd2c941c3cf4c39a8089
         </group>
     </open-files>
 </project-private>
