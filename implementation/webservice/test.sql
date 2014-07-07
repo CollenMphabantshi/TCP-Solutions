@@ -526,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `sec48` (
   `NurseCellNumber` text NOT NULL,
   FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sec48ID`)
-) 
+) ;
 
 
 CREATE TABLE IF NOT EXISTS `sharp`(
