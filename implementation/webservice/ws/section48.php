@@ -31,6 +31,9 @@ class parameters {
     public $sceneInvestigatingOfficerCellNumber;
     public $firstOfficerOnSceneName ;
     public $firstOfficerOnSceneRank ;
+    private $caseNumber;
+    private $sceneID;
+    private $FOPersonalNumber;
     
 
     function __construct() {
@@ -72,33 +75,32 @@ class section48 extends Scene{
                 
             }
             
-            //get data from scene table
-            $query2 ="SELECT * FROM scene WHERE sceneID=".$paraObj->sceneID.";";
-
-            if ( !( $result2 = mysql_query( $query2, $database ) ) )
-              {
-              print( "Could not execute query!" );
-              die( mysql_error() );
-              }
-            while($info2 = mysql_fetch_array($result2))
-            {
             
-                        $paraObj->sceneTypeID = $info2['sceneTypeID'];
-                        $paraObj->sceneTime = $info2['sceneTime'];
-                        $paraObj->sceneDate = $info2['sceneDate'];
-                        $paraObj->sceneLocation = $info2['sceneLocation'];
-                        $paraObj->sceneTemparature = $info2['sceneTemparature'];
-                        $paraObj->sceneInvestigatingOfficerName = $info2['sceneInvestigatingOfficerName'];
-                        $paraObj->sceneInvestigatingOfficerRank = $info2['sceneInvestigatingOfficerRank'];
-                        $paraObj->sceneInvestigatingOfficerCellNumber = $info2['sceneInvestigatingOfficerCellNumber'];
-                        $paraObj->firstOfficerOnSceneName = $info2['firstOfficerOnSceneName'];
-                        $paraObj->firstOfficerOnSceneRank = $info2['firstOfficerOnSceneRank'];
-                
-            }
-            return $paraObj;
+            $scene = $this->getSceneByID($paraObj->sceneID);
+            
+            print "tested   ". $scene[0];
+            
+             $paraObj-> sceneTypeID = $scene[0];
+             $paraObj-> sceneTime = $scene[1];
+             $paraObj-> sceneDate = $scene[2];
+             $paraObj-> sceneLocation = $scene[3];
+             $paraObj-> sceneTemparature = $scene[4];
+             $paraObj-> sceneInvestigatingOfficerName = $scene[5];
+             $paraObj-> sceneInvestigatingOfficerRank = $scene[6];
+             $paraObj-> sceneInvestigatingOfficerCellNumber = $scene[7];
+             $paraObj-> firstOfficerOnSceneName = $scene[8];
+             $paraObj-> firstOfficerOnSceneRank = $scene[9];
+             
+             $case = $this->case->getCaseByScene($paraObj->sceneID);
+             
+              $paraObj-> caseNumber = $case[0];
+              $paraObj-> sceneID = $case[1];
+              $paraObj-> FOPersonalNumber = $case[2];
+            
+            return json_encode($paraObj);
         
     }
 }
     $test = new section48(1);
     //$test->getSection48Case($database,2);
-    //print $test->getSection48Case($database,2);
+    print $test->getSection48Case($database,2);

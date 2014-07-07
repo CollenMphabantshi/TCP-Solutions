@@ -96,8 +96,10 @@
 		}		
 		
 		private function cleanInputs($data){
+                        
 			$clean_input = array();
 			if(is_array($data)){
+                            
 				foreach($data as $k => $v){
 					$clean_input[$k] = $this->cleanInputs($v);
 				}

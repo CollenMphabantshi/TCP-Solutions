@@ -20,7 +20,19 @@ class Victims {
     private $victimSurname;
     
     
-   public function __construct($formData){
-	
+   public function __construct($formData = NULL){
+	if($formData != NULL){
+            
+        }
+   }
+    
+   public function addVictim() {
+       
+       return null;
+   }
+    public function getVictim($victimID) {
+        $v_res = mysql_query("select * from victims where victimID=".$victimID);
+        $v_array = mysql_fetch_array($v_res);
+        return $v_array;
     }
 }

@@ -15,23 +15,49 @@
 class Cases {
 //put your code here
     private $caseNumber;
-    private $scene;
+    private $sceneID;
     private $FOPersonalNumber;
     
+    public function __construct($sceneID = null,$FOPersonelNumber=null){
+	if($sceneID != null && $FOPersonelNumber!= null)
+        {
+            $this->FOPersonalNumber = $FOPersonelNumber;
+            $this->sceneID = $sceneID;
+            $this->addCase();
+        }
+    }
     
-    
-    public function __construct(){
-	
+    private function addCase() {
+        $c_res = mysql_query("insert into cases values(0,".$this->sceneID.",'$this->FOPersonalNumber')");
+        $c_res = mysql_query("select * from cases where sceneID=".$this->sceneID);
+        $c_array = mysql_fetch_array($c_res);
+        $this->caseNumber = $c_array['caseNumber'];
     }
     public function getAllCases() {
-        return null;
+        $c_res = mysql_query("select * from cases");
+        $cases = array();
+        
+        while($c_array = mysql_fetch_array($c_res)){
+            $cases[] = $c_array; 
+        }
+        return $cases;
     }
     
     public function getCase($caseNumber) {
-        return null;
+        $c_res = mysql_query("select * from cases where caseNumber=".$caseNumber);
+        $c_array = mysql_fetch_array($c_res);
+        return $c_array;
+    }
+    
+    public function getCaseByScene($sceneID) {
+        $c_res = mysql_query("select * from cases where sceneID=".$sceneID);
+        $c_array = mysql_fetch_array($c_res);
+        return $c_array;
     }
     
     public function getBasicCaseInfo($caseNumber) {
-        return null;
+        $c_res = mysql_query("select * from cases where caseNumber=".$caseNumber);
+        $c_array = mysql_fetch_array($c_res);
+        return $c_array;
     }
 }
