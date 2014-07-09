@@ -27,10 +27,10 @@ class Scene{
     private $firstOfficerOnSceneRank;
     public $case;
     public $sceneVictim;
-    
+    public $api;
     
     public function __construct($_time,$_type,$_date,$_location,$_temperature,$_investigatingOfficerName,$_investigatingOfficerRank
-            ,$_investigatingOfficerCellNo,$_firstOfficerOnSceneName,$_firstOfficerOnSceneRank){
+            ,$_investigatingOfficerCellNo,$_firstOfficerOnSceneName,$_firstOfficerOnSceneRank,$api){
                 if($_time != null && $_type != null && $_firstOfficerOnSceneRank != null)
                 {
                     $this->sceneType = $_type;
@@ -44,24 +44,33 @@ class Scene{
                     $this->firstOfficerOnSceneName = $_firstOfficerOnSceneName;
                     $this->firstOfficerOnSceneRank = $_firstOfficerOnSceneRank;
                 }
-                $this->case = new Cases();
-                $this->sceneVictim = new SceneVictims();
+                $this->api = $api;
+                $this->case = new Cases(null,null,$this->api);
+                $this->sceneVictim = new SceneVictims(null,null, $this->api);
     }
     
     public function createScene() {
         if($this->isEmpty())return null;
-        $st_res = mysql_query("select sceneTypeID from sceneType where sceneTypeDescription='$this->sceneType'");
-        $st_array = mysql_fetch_array($st_res);
         
-        $query = "insert into scene(sceneType,sceneTime,sceneDate,sceneLocation,sceneTemparature,investigatingOfficerName,investigatingOfficerRank"
-                . "investigatingOfficerCellNo,firstOfficerOnSceneName,firstOfficerOnSceneRank) values(".$st_array['sceneTypeID'].","
-                . "'$this->time','$this->date','$this->location','$this->temperature','$this->investigatingOfficerName','$this->investigatingOfficerRank','$this->investigatingOfficerCellNo','$this->firstOfficerOnSceneName','$this->firstOfficerOnSceneRank')"; 
-        
-        $scene_res = mysql_query($query);
-        $scene_res = mysql_query("select * from scene where sceneLocation='$this->location'");
-        $scene_array = mysql_fetch_array($scene_res);
-        
-        return $scene_array['sceneID'];
+        $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and sceneTime='$this->time' and sceneDate='$this->date'");
+        if(mysql_num_rows($scene_res) <= 0)
+        {
+            $st_res = mysql_query("select * from sceneType where sceneTypeDescription='$this->sceneType'");
+            $st_array = mysql_fetch_array($st_res);
+
+            $stype = $st_array['sceneTypeID'];
+
+            $query = "insert into scene values(0,$stype,'$this->time','$this->date','$this->location','$this->temperature','$this->investigatingOfficerName','$this->investigatingOfficerRank','$this->investigatingOfficerCellNo','$this->firstOfficerOnSceneName','$this->firstOfficerOnSceneRank')"; 
+
+            $scene_res = mysql_query($query);
+            $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and sceneTime='$this->time' and sceneDate='$this->date'");
+            $scene_array = mysql_fetch_array($scene_res);
+
+            return $scene_array['sceneID'];
+        }else{
+            $error = array('status' => "Failed", "msg" => "Request to add scene was denied. Duplication was detected.");
+            $this->api->response($this->api->json($error), 400);
+        }
     }
     public function getScene() {
         if($this->isEmpty())return null;
@@ -99,11 +108,11 @@ class Scene{
     }
     
     public function setVictim($sceneID,$victims){
-        $this->sceneVictim = new SceneVictims($sceneID,$victims);
+        $this->sceneVictim = new SceneVictims($sceneID,$victims,$this->api);
     }
     
     public function setCase($sceneID,$FOPersonelNumber) {
-        $this->case = new Cases($sceneID,$FOPersonelNumber);
+        $this->case = new Cases($sceneID,$FOPersonelNumber,$this->api);
     }
     public function isEmpty() {
         return $this->time == "";

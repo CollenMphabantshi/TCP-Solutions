@@ -15,11 +15,21 @@ class SceneVictims {
     //put your code here
     private $sceneID;
     private $victimID;
-    
-     public function __construct($sceneID = NULL,$victims = NULL){
+    private $api;
+     public function __construct($sceneID = NULL,$victims = NULL,$api){
+         $this->api = $api;
 	if($victims != NULL && $sceneID != NULL){
+            $this->sceneID = $sceneID;
             for($i = 0; $i < count($victims);$i++){
-                $v = new Victims($victims);
+                $v = new Victims($victims[$i],$api);
+                $this->victimID = $v->addVictim();
+                if($this->victimID != null)
+                {
+                    $this->addSceneVictim();
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add victim was denied. Duplication was detected.");
+                    $this->api->response($this->api->json($error), 400);
+                }
             }
         }
     }

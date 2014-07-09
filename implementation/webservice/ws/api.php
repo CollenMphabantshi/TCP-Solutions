@@ -58,13 +58,11 @@ public function processApi()
 
     if((int)method_exists($this,$func) > 0)
     {
-        
-        $this->$func();
-        
+       $this->$func();    
     }
     else
     {
-        $this->response('',404);   
+       $this->response('',404);   
     }
 // If the method not exist with in this class, response would be "Page not found".
     
@@ -83,56 +81,147 @@ private function login()
 
     $username = $this->_request['username'];
     $password = $this->_request['password'];
-
-    // Input validations
-    if(!empty($username) and !empty($password))
-    {
-
-        if(validateUsername($email)){
-            $sql = mysql_query("SELECT * FROM users WHERE userName = '$email' AND userPassword = '".md5($password)."' LIMIT 1", $this->db);
-            
-            if(mysql_num_rows($sql) > 0){
-                $result = mysql_fetch_array($sql,MYSQL_ASSOC);
-
-                // If success everythig is good send header as "OK" and user details
-
-                $this->response($this->json($result), 200);
-
-            }
-
-            $this->response('', 204); // If no records "No Content" status
-        }
-    }
+    $platform = $this->_request['platform'];
+    $user = new User($this);
     
+    $user->login($username, $password, $platform);
     // If invalid inputs "Bad Request" status message and reason
     $error = array('status' => "Failed", "msg" => "Invalid username or Password");
     $this->response($this->json($error), 400);
 }
 
-private function users()
+private function addUser()
 {
     // Cross validation if the request method is GET else it will return "Not Acceptable" status
-    if($this->get_request_method() != "GET")
+    if($this->get_request_method() != "POST")
     {
         $this->response('',406);
     }
     
-    $sql = mysql_query("SELECT userID, userFirstname, userSurname FROM users", $this->db);
-    
-    if(mysql_num_rows($sql) > 0)
-    {
-        $result = array();
-        while($rlt = mysql_fetch_array($sql,MYSQL_ASSOC))
-        {
-            $result[] = $rlt;
-        }
-        // If success everythig is good send header as "OK" and return list of users in JSON format
-        $this->response($this->json($result), 200);
+    $type = $this->_request['utype'];
+    switch ($type) {
+        case "admin":
+            
+            $json = $this->jsonToArray($this->_request['userData']);
+            $admin = new Administrator($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            
+            if($admin->addUser($json['userName'], $admin->getUserID())){
+                $error = array('status' => "Success", "msg" => "Request to add user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
+            $this->response($this->json($error), 400);
+            break;
+        case "fo":
+            $json = $this->jsonToArray($this->_request['userData']);
+            $admin = new ForensicOfficer($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            
+            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+                $error = array('status' => "Success", "msg" => "Request to add user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
+            $this->response($this->json($error), 400);
+            break;
+        case "fp":
+            $json = $this->jsonToArray($this->_request['userData']);
+            $admin = new ForensicPractitioner($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            
+            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+                $error = array('status' => "Success", "msg" => "Request to add user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
+            $this->response($this->json($error), 400);
+            break;
+        case "student":
+            $json = $this->jsonToArray($this->_request['userData']);
+            $admin = new Student($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            
+            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+                $error = array('status' => "Success", "msg" => "Request to add user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
+            $this->response($this->json($error), 400);
+            break;
+        default:
+            break;
     }
     
-    $this->response('',204); // If no records "No Content" status
 }
 
+private function users()
+{
+    // Cross validation if the request method is GET else it will return "Not Acceptable" status
+    if($this->get_request_method() != "POST")
+    {
+        $this->response('',406);
+    }
+    
+    $type = $this->_request['utype'];
+    switch ($type) {
+        case "all":
+            $user = new User($this);
+            $this->response($this->json($user->getAllUsers()),406);
+            break;
+        case "admin":
+            $admin = new Administrator($this);
+            if(empty($this->_request['id']) && empty($this->_request['uid']))
+            {
+                $this->response($this->json($admin->getAllAdmins()),406);
+            }else if(!empty($this->_request['id']) && empty($this->_request['uid'])){
+                
+                $this->response($this->json($admin->getAdminByUserID($this->_request['id'])),406);
+            }else if(empty($this->_request['id']) && !empty($this->_request['uid'])){
+                
+                $this->response($this->json($admin->getAdminByUsername($this->_request['uid'])),406);
+            }
+            break;
+        case "fo":
+            $fo = new ForensicOfficer($this);
+            if(empty($this->_request['id']) && empty($this->_request['uid']))
+            {
+                $this->response($this->json($fo->getAllFOs()),406);
+            }else if(!empty($this->_request['id']) && empty($this->_request['uid'])){
+                
+                $this->response($this->json($fo->getFOByUserID($this->_request['id'])),406);
+            }else if(empty($this->_request['id']) && !empty($this->_request['uid'])){
+                
+                $this->response($this->json($fo->getFOByUsername($this->_request['uid'])),406);
+            }
+            break;
+        case "fp":
+            $fp = new ForensicPractitioner($this);
+            if(empty($this->_request['id']) && empty($this->_request['uid']))
+            {
+                $this->response($this->json($fp->getAllFPs()),406);
+            }else if(!empty($this->_request['id']) && empty($this->_request['uid'])){
+                
+                $this->response($this->json($fp->getFPByUserID($this->_request['id'])),406);
+            }else if(empty($this->_request['id']) && !empty($this->_request['uid'])){
+                
+                $this->response($this->json($fp->getFPByUsername($this->_request['uid'])),406);
+            }
+            break;
+        case "student":
+            $student = new Student($this);
+            
+            if(empty($this->_request['id']) && empty($this->_request['uid']))
+            {
+                $this->response($this->json($student->getAllStudents()),406);
+            }else if(!empty($this->_request['id']) && empty($this->_request['uid'])){
+                
+                $this->response($this->json($student->getStudentByUserID($this->_request['id'])),406);
+            }else if(empty($this->_request['id']) && !empty($this->_request['uid'])){
+                
+                $this->response($this->json($student->getStudentByUsername($this->_request['uid'])),406);
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 private function viewCases() {
     if($this->get_request_method() != "GET")
@@ -143,6 +232,7 @@ private function viewCases() {
     try {
         
         $category= $this->_request['category'];
+<<<<<<< HEAD
         //echo $category;
         switch ($category) {
             case "all":
@@ -151,6 +241,16 @@ private function viewCases() {
                 $aviation = new Aviation();
                 if(empty($this->_request['id'])){
                     $h = $aviation->getAllAviation();
+=======
+        
+        switch ($category) {
+            case "all":
+                break;
+            case "hanging":
+                $hanging = new Hanging();
+                if(empty($this->_request['id'])){
+                    $h = $hanging->getAllHangings();
+>>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
                     if($h != NULL)
                     {
                         $this->response($this->json($h),200);
@@ -200,8 +300,13 @@ private function addCase() {
                 {
                     
                     $formData = $this->jsonToArray($this->_request['caseData']);
+                    
                     if($formData != NULL){
+<<<<<<< HEAD
                         $aviation = new Aviation($formData);
+=======
+                        $hanging = new Hanging($formData,$this);
+>>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
                     }
                 }
                 break;
@@ -220,7 +325,7 @@ private function assignDR() {
 
 
 //Encode array into JSON
-private function json($data)
+    public function json($data)
 {
     if(is_array($data)){
         return json_encode($data);

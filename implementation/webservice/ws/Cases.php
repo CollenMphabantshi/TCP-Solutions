@@ -18,7 +18,7 @@ class Cases {
     private $sceneID;
     private $FOPersonalNumber;
     
-    public function __construct($sceneID = null,$FOPersonelNumber=null){
+    public function __construct($sceneID = null,$FOPersonelNumber=null,$api){
 	if($sceneID != null && $FOPersonelNumber!= null)
         {
             $this->FOPersonalNumber = $FOPersonelNumber;
@@ -28,10 +28,17 @@ class Cases {
     }
     
     private function addCase() {
-        $c_res = mysql_query("insert into cases values(0,".$this->sceneID.",'$this->FOPersonalNumber')");
         $c_res = mysql_query("select * from cases where sceneID=".$this->sceneID);
-        $c_array = mysql_fetch_array($c_res);
-        $this->caseNumber = $c_array['caseNumber'];
+        if(mysql_num_rows($c_res) <= 0)
+        {
+            $c_res = mysql_query("insert into cases values(0,".$this->sceneID.",'$this->FOPersonalNumber')");
+            $c_res = mysql_query("select * from cases where sceneID=".$this->sceneID);
+            $c_array = mysql_fetch_array($c_res);
+            $this->caseNumber = $c_array['caseNumber'];
+        }else{
+            $error = array('status' => "Failed", "msg" => "Request to create a case was denied. Duplication was detected.");
+            $this->api->response($this->api->json($error), 400);
+        }
     }
     public function getAllCases() {
         $c_res = mysql_query("select * from cases");
