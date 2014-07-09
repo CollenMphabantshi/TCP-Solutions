@@ -42,10 +42,15 @@ insert into sceneType values(0,"Lightning/ electrocution");
 
 insert into scene values(0,19,"00:00:12","2014-01-01","Hatfield plaza","30 C","Cobi Timoty","Surgent","0223333","Ramzi Cooper","Detective");
 insert into scene values(0,19,"12:10:10","2014-04-03","Lacansda","40 C","Folo Gola","Luetanent","01244355","Dony Lamda","Detective");
+insert into scene values(0,11,"12:10:10","2014-04-03","Pretoria","24 C","Sikhitha Talifhani","Luetanent","01244355","Dony Lamda","Detective");
+insert into scene values(0,21,"12:10:10","2014-04-03","Jhb","30 C","zeee Dister","John","01244367","Joseph Stiip","Detective");
+
+
 
 insert into cases values(0,1,"p33333333");
 insert into cases values(0,2,"p33333333");
-
+insert into cases values(0,3,"p33333333");
+insert into cases values(0,4,"p33333333");
 
 
  
@@ -104,11 +109,15 @@ insert into aviationOutsideType values(0,"Helicopter");
 insert into victims values(0,"29300201201","Male","White","Tony","Coola","Roomi Jane","no","no","no","no","no","no","no","no","Violance and weird","no","no","no",0);
 insert into victims values(0,"12300201201","Male","Indian","Ramzy","Palar","Soliu Jin","yes","yes","no","no","yes","yes","no","no","Violance and weird","yes","no","no",0);
 insert into victims values(0,"45300201201","Female","White","Sally","Joomla","Lee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
+insert into victims values(0,"23432561524","Female","Black","Talie","Fiona","Azee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
+insert into victims values(0,"23432561524","Female","Black","Talie","Fiona","Azee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
 
 
 insert into sceneVictims values(0,1,1,null);
 insert into sceneVictims values(0,1,3,null);
 insert into sceneVictims values(0,2,2,null);
+insert into sceneVictims values(0,3,4,"Crew");
+insert into sceneVictims values(0,4,5,null);
 
 insert into hanging values(0,1,'Private house','yes','no','no','no','Feet still touching the floor','feet of ground','yes','Toso cookoo','Rope','yes','yes','yes');
 insert into hanging values(0,2,'Industrial & construction area, mine','yes','no','no','no','Feet still touching the floor','feet of ground','yes','Toso cookoo','Rope','yes','yes','yes');
@@ -116,7 +125,8 @@ insert into hanging values(0,2,'Industrial & construction area, mine','yes','no'
 insert into hanginginside values(0,1,'yes','yes','yes','no','Tony Lee, The Neighbour');
 
 insert into foetusabandonedbaby values(0,2,'Near River');
-insert into aviation values(0,2,'Commercial aircraft','Plane','6','Rainy','Hail');
+insert into aviation values(0,3,'Commercial aircraft','Plane','6','Rainy','Hail');
+insert into burn values(0,4,'inside','No','No','No','Yes','No','no','no','no');
 
 select * from aviation;
 select * from victims;

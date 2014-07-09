@@ -13,13 +13,8 @@ and open the template in the editor.
         <!--script type="text/javascript">
             $(document).ready(function(){
                 $("#cases").click(function(p){
-
-<<<<<<< HEAD
                     var q = "?rquest=viewCases&category=hanging&id=2";
-=======
                     var q = "?rquest=viewCases&category=hanging";
->>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
-
                         var request = new XMLHttpRequest();
 
                         request.onreadystatechange = function(){if(request.readyState == 4)
@@ -129,7 +124,6 @@ and open the template in the editor.
                 });
 
             });
-<<<<<<< HEAD
         </script-->
         
         <!--script type="text/javascript">
@@ -211,7 +205,7 @@ and open the template in the editor.
             $(document).ready(function(){
                 $("#cases").click(function(p){
 
-                    var q = "?rquest=viewCases&category=aviation&id=2";
+                    var q = "?rquest=viewCases&category=burn&id=1";
 
                         var request = new XMLHttpRequest();
 
@@ -286,10 +280,6 @@ and open the template in the editor.
                 });
 
             });
-=======
-            
-            
->>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
         </script>
     </head>
     <body id="body">

@@ -32,15 +32,15 @@ class Sid extends Scene{
     private $infantLastSeenAlive;
     private $whereInfantFoundDead;
     
-     public function __construct($formData){
+     public function __construct($formData,$api){
 	 if($formData == NULL)
         {
-            parent::__construct(null,null,"","","","","","","",null);
+            parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Sid",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->sidIOType = $formData['object'][$i]['sidIOType'];
                 $this->resuscitationAttemped = $formData['object'][$i]['resuscitationAttemped'];
                 $this->infantSickLately = $formData['object'][$i]['infantSickLately'];
@@ -61,9 +61,13 @@ class Sid extends Scene{
                 
                     //
                 $sceneID = $this->createScene();
+                if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
+               
             }
             
         }
@@ -132,7 +136,8 @@ class Sid extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
     
@@ -189,7 +194,8 @@ class Sid extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
 }

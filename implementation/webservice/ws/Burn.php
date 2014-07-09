@@ -23,15 +23,15 @@ class Burn extends Scene{
     private $igniterUsed;
     private $foulPlaySuspected;
              
-     public function __construct($formData){
+     public function __construct($formData,$api){
 	if($formData == NULL)
         {
-            parent::__construct(null,null,"","","","","","","",null);
+            parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->burnIOType = $formData['object'][$i]['burnIOType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
@@ -42,10 +42,13 @@ class Burn extends Scene{
                 $this->igniterUsed = $formData['object'][$i]['igniterUsed'];
                 $this->foulPlaySuspected = $formData['object'][$i]['foulPlaySuspected'];
                     //
-                $sceneID = $this->createScene();
+               $sceneID = $this->createScene();
+                 if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
                 if($formData['object'][$i]['victims']['victimInside'] == "yes"){
                     $this->addBurn($sceneID,TRUE,$formData['object'][$i]);
                 }else{
@@ -58,10 +61,14 @@ class Burn extends Scene{
         
     }
     private function addBurn($sceneID,$inside,$object) {
-        if($this->accelerantsUsed != NULL)
+        if($this->accelerantsUsed != NULL && $this->igniterAtScene != NULL)
         {
             $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected')");
-        }else{
+        }else if($this->accelerantsUsed == NULL && $this->igniterAtScene != NULL){
+            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected')");
+        }  else if($this->accelerantsUsed != NULL && $this->igniterAtScene == NULL) {
+              $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene',null,'$this->foulPlaySuspected')");
+        }  else if($this->accelerantsUsed == NULL && $this->igniterAtScene == NULL) {
             $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene',null,'$this->foulPlaySuspected')");
         }
         
@@ -134,7 +141,8 @@ class Burn extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
     public function getBurn($burnID) {
@@ -189,7 +197,8 @@ class Burn extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
 }

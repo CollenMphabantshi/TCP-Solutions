@@ -19,15 +19,15 @@ class Aviation extends Scene{
     private $weatherCondition;
     private $weatherType;
     
-     public function __construct(){
+     public function __construct($formData,$api){
          if($formData == NULL)
         {
-            parent::__construct(null,null,"","",null);
+            parent::__construct(null,null,"","",null,$api);
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Aviation",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->aviationOutsideType = $formData['object'][$i]['aviationOutsideType'];
                 $this->aircraftType = $formData['object'][$i]['autoeroticAsphyxia'];
                 $this->aircraftNumPeople = $formData['object'][$i]['aircraftNumPeople'];
@@ -35,9 +35,13 @@ class Aviation extends Scene{
                 $this->weatherType = $formData['object'][$i]['weatherType'];
                     //
                 $sceneID = $this->createScene();
+                 if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
+               
                 
             }
             
@@ -90,7 +94,8 @@ class Aviation extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
         }
     }
     public function getAviation($aviationID) {
@@ -134,7 +139,8 @@ class Aviation extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
         }
     }
 

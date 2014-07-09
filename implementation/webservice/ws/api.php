@@ -232,17 +232,8 @@ private function viewCases() {
     try {
         
         $category= $this->_request['category'];
-<<<<<<< HEAD
-        //echo $category;
-        switch ($category) {
-            case "all":
-                break;
-            case "aviation":
-                $aviation = new Aviation();
-                if(empty($this->_request['id'])){
-                    $h = $aviation->getAllAviation();
-=======
         
+            
         switch ($category) {
             case "all":
                 break;
@@ -250,7 +241,7 @@ private function viewCases() {
                 $hanging = new Hanging();
                 if(empty($this->_request['id'])){
                     $h = $hanging->getAllHangings();
->>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
+
                     if($h != NULL)
                     {
                         $this->response($this->json($h),200);
@@ -258,6 +249,29 @@ private function viewCases() {
                         $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
                         $this->response($this->json($error), 400);
                     }
+                }else{
+                    $h = $hanging->getHanging($this->_request['id']);
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                }
+                break;
+            case "aviation":
+                $aviation = new Aviation();
+                if(empty($this->_request['id'])){
+                    $h = $aviation->getAllAviation();
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                    
                 }else{
                     $h = $aviation->getAviation($this->_request['id']);
                     if($h != NULL)
@@ -268,6 +282,31 @@ private function viewCases() {
                         $this->response($this->json($error), 400);
                     }
                 }
+                
+                break;
+                case "burn":
+                $burn = new Burn();
+                if(empty($this->_request['id'])){
+                    $h = $burn->getAllBurn();
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                    
+                }else{
+                    $h = $burn->getBurn($this->_request['id']);
+                    if($h != NULL)
+                    {
+                        $this->response($this->json($h),200);
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                        $this->response($this->json($error), 400);
+                    }
+                }
+                
                 break;
             default:
                 break;
@@ -302,11 +341,8 @@ private function addCase() {
                     $formData = $this->jsonToArray($this->_request['caseData']);
                     
                     if($formData != NULL){
-<<<<<<< HEAD
                         $aviation = new Aviation($formData);
-=======
                         $hanging = new Hanging($formData,$this);
->>>>>>> 7e5b83e1023bbcb0243debd2553ab177843d6356
                     }
                 }
                 break;

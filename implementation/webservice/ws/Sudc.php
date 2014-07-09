@@ -23,15 +23,15 @@ class Sudc extends Scene{
     private $sudcAppliances;
     private $wierdSmellInAir;
     
-     public function __construct($formData){
+     public function __construct($formData,$api){
 	if($formData == NULL)
         {
-            parent::__construct(null,null,"","","","","","","",null);
+            parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Sudc",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->sudcIOType = $formData['object'][$i]['sudcIOType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
@@ -45,11 +45,11 @@ class Sudc extends Scene{
                 $sceneID = $this->createScene();
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
+                
                 if($formData['object'][$i]['victims']['victimInside'] == "yes"){
-                    $this->addHanging($sceneID,TRUE,$formData['object'][$i]);
+                    $this->addSudc($sceneID,TRUE,$formData['object'][$i]);
                 }else{
-                    $this->addHanging($sceneID,FALSE,null);
+                    $this->addSudc($sceneID,FALSE,null);
                 }
             }
             
@@ -134,7 +134,8 @@ class Sudc extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+           $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
     
@@ -194,7 +195,8 @@ class Sudc extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+           $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
         }
     }
 }
