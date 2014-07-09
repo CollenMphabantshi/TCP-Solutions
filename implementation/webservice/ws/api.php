@@ -143,28 +143,28 @@ private function viewCases() {
     try {
         
         $category= $this->_request['category'];
-        echo $category;
+        //echo $category;
         switch ($category) {
             case "all":
                 break;
-            case "hanging":
-                $hanging = new Hanging();
-                if(empty($this->_request['hanging'])){
-                    $h = $hanging->getAllHangings();
+            case "aviation":
+                $aviation = new Aviation();
+                if(empty($this->_request['id'])){
+                    $h = $aviation->getAllAviation();
                     if($h != NULL)
                     {
                         $this->response($this->json($h),200);
                     }else{
-                        $error = array('status' => "Failed", "msg" => "No hanging cases were found.");
+                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
                         $this->response($this->json($error), 400);
                     }
                 }else{
-                    $h = $hanging->getHanging($this->_request['hanging']);
+                    $h = $aviation->getAviation($this->_request['id']);
                     if($h != NULL)
                     {
                         $this->response($this->json($h),200);
                     }else{
-                        $error = array('status' => "Failed", "msg" => "No hanging cases were found.");
+                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
                         $this->response($this->json($error), 400);
                     }
                 }
@@ -192,16 +192,16 @@ private function addCase() {
         $category= $this->_request['category'];
         
         switch ($category) {
-            case "aviation":
+            case "foetus":
                 break;
-            case "hanging":
+            case "aviation":
                 
                 if(!empty($this->_request['caseData']))
                 {
                     
                     $formData = $this->jsonToArray($this->_request['caseData']);
                     if($formData != NULL){
-                        $hanging = new Hanging($formData);
+                        $aviation = new Aviation($formData);
                     }
                 }
                 break;

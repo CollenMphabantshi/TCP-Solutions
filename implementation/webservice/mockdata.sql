@@ -113,8 +113,12 @@ insert into hanging values(0,2,'Industrial & construction area, mine','yes','no'
 
 insert into hanginginside values(0,1,'yes','yes','yes','no','Tony Lee, The Neighbour');
 
-select * from victims;
+insert into foetusabandonedbaby values(0,2,'Near River');
+insert into aviation values(0,2,'Commercial aircraft','Plane','6','Rainy','Hail');
 
+select * from aviation;
+select * from victims;
+select * from foetusabandonedbaby;
 
 insert into ligaturetype values(0, 'Rope');
 insert into ligaturetype values(0, 'Tie');

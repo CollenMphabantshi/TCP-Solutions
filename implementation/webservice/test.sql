@@ -207,7 +207,6 @@ CREATE TABLE IF NOT EXISTS `bicycleType` (
 CREATE TABLE IF NOT EXISTS `bicycle`(
    bicycleID int not null, 
    sceneID int not null,
-  
   `bicycleNumPeople` text NOT NULL,
   `bicycleHit` text NOT NULL,
   `bicycleType` text NOT NULL,
@@ -305,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `firearm` (
    sceneID int not null,
    `firearmIOType` int NOT NULL,
   
-   `signsOfStruggle` varchar(5) NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
   `gunshotWounds` text NOT NULL,
@@ -333,7 +332,6 @@ CREATE TABLE IF NOT EXISTS `firearmInside` (
 CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `foetusabandonedbabyID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-  
   `babyIO` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
@@ -479,7 +477,6 @@ CREATE TABLE IF NOT EXISTS `mba` (
 CREATE TABLE IF NOT EXISTS `mva` (
   `mvaID` int NOT NULL,
    sceneID int not null,
-  
   `victimFoundInCar` varchar(5) NOT NULL,
   `mvaOutsideType` text NOT NULL,
   `occupants` text NOT NULL,

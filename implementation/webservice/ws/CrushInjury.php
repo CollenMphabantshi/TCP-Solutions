@@ -13,6 +13,8 @@ require_once("Scene.php");
  */
 class CrushInjury extends Scene{
     //put your code here
+
+    
      public function __construct($formData){
 	
     }
