@@ -132,7 +132,7 @@ create table if not exists victims
     `suicideSuspected` varchar(5) NOT NULL,
     previousAttempts varchar(5) NOT NULL,
     numberOfPreviousAttempts int not null,
-    primary key(victimID)
+    primary key(victimID,victimIdentityNumber)
 );
 
 create table if not exists sceneVictims

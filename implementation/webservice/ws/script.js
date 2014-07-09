@@ -1,5 +1,59 @@
 
+function decodeMessage(message){
+    try{
+        var obj = JSON.parse(message);
+        
+        if(obj.status === "Failed")
+        {
+            return "<p class='error'>"+obj.msg+"</p>";
+        }else if(obj.status === "Success")
+        {
+            return "<p class='success'>"+obj.msg+"</p>";
+        }else if(obj.rtype === "users"){
+            var content = "<table>";
+            
+            for(var i = 0; i < obj.count;i++){
+                content += "<tr><td>"+obj[i].userName+"</td></tr>";
+            }
+            
+            content += "</table>";
+            return content;
+        }else if(obj.rtype === "student"){
+            var content = "<table>";
+            
+            for(var i = 0; i < obj.count;i++){
+                content += "<tr><td>"+obj[i].userData.userName+"</td></tr>";
+            }
+            
+            content += "</table>";
+            return content;
+        }else if(obj.rtype === "administrator"){
+            var content = "<table>";
+            
+            for(var i = 0; i < obj.count;i++){
+                content += "<tr><td>"+obj[i].userData.userName+"</td></tr>";
+            }
+            
+            content += "</table>";
+            return content;
+        }
+    }catch (e){
+        
+    }
+}
 
+function sendRequest(data){
+                
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(){if(request.readyState == 4)
+    {
+        alert(request.responseText)
+        $("body .test").html("<br/>"+decodeMessage(request.responseText)+"<br/>");
+    }};
+    request.open("POST","api.php");
+    //request.setRequestHeader("Content-Type","application/json;charset=utf-8");
+    request.send(data);
+}
 function getCases(request){
                 var obj = JSON.parse(request.responseText);
                 
@@ -72,3 +126,4 @@ function getCases(request){
                 content += "</table>";
                 return content;
             }
+            

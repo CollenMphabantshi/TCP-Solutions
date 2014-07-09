@@ -9,11 +9,13 @@ insert into users values(0,"p11111111","7cef8a734855777c2a9d0caf42666e69","mynam
 insert into administrator values("p11111111",1);
 
 insert into users values(0,"p22222222","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",101,1);
-insert into forensicPractitioner values("p22222222",2,12345);
+insert into forensicPractitioner values("p22222222",2,"12345");
 
 insert into users values(0,"p33333333","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",102,1);
-insert into forensicOfficer values("p33333333",3,12345);
+insert into forensicOfficer values("p33333333",3,"12345");
 
+insert into users values(0,"p44444444","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",103,1);
+insert into student values("p44444444",4,"12345");
 
 insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
 insert into sceneType values(0,"Sudden unexpected death of a child  (1 – 18 years)");
@@ -154,11 +156,24 @@ INSERT INTO `scene` (`sceneID`, `sceneTypeID`, `sceneTime`, `sceneDate`, `sceneL
 INSERT INTO `sec48` (`sec48ID`, `sceneID`, `victimHospitalized`, `medicalEquipmentInSitu`, `gw714file`, `DrNames`, `DrCellNumber`, `NurseNames`, `NurseCellNumber`) VALUES
 (2, 1, 'victim hospitalized for 20 years', 'yes', 'yes', 'Dr Sekoaere Malatji', '0468889999', 'Aluwani Bege', '0124457887');
 
-INSERT INTO `victims` (`victimID`,victimIdentityNumber, `victimGender`, `victimRace`, `victimName`, `victimSurname`, `bodyDecompose`, `medicalIntervention`, `bodyBurned`, `bodyIntact`, `victimInside`, `victimOutside`, `victimFoundCloseToWater`, `victimSuicideNoteFound`, `victimGeneralHistory`, `rapeHomicideSuspected`, `suicideSuspected`, `previousAttempts`, `numberOfPreviousAttempts`) VALUES
-(1, '89658971524552','male', 'Asian', 'Ashim', 'Khali', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 0);
+INSERT INTO `victims` (`victimID`,victimIdentityNumber, `victimGender`, `victimRace`, `victimName`, `victimSurname`,whoFoundVictimBody ,`bodyDecompose`, `medicalIntervention`, `bodyBurned`, `bodyIntact`, `victimInside`, `victimOutside`, `victimFoundCloseToWater`, `victimSuicideNoteFound`, `victimGeneralHistory`, `rapeHomicideSuspected`, `suicideSuspected`, `previousAttempts`, `numberOfPreviousAttempts`) VALUES
+(0, '89658971524552','male', 'Asian', 'Ashim', 'Khali','me', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 0);
 
 INSERT INTO `victimScenePhotos` (`photoID`, `victimID`, `photoFilename`) VALUES
 (0, 1, 'photo/pic.jpg');
 
+select * from cases as c,hanging as h where c.sceneID=h.sceneID;
+
+select * from victims;
+
+select * from scene;
+
+select * from cases;
+
+select * from userType;
 select * from users;
 
+select * from administrator;
+select * from forensicOfficer;
+select * from forensicpractitioner;
+select * from student;

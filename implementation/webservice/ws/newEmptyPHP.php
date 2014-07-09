@@ -1,10 +1,6 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+class NewClass{
 private $sec48ID;
     private $sceneID;
     private $victimHospitalized;
@@ -14,7 +10,8 @@ private $sec48ID;
     private $DrCellNumber;
     private $NurseNames;
     private $NurseCellNumber;
-while($info = mysql_fetch_array($result))
+    public function _construct(){
+        while($info = mysql_fetch_array($result))
             {
             
                 /* This part selects main scenes*/
@@ -31,3 +28,6 @@ while($info = mysql_fetch_array($result))
                 
             }
             return json_encode($array);
+    }
+}
+?>
