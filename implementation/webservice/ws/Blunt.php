@@ -84,7 +84,7 @@ class Blunt extends Scene{
             }
         }
     }
-    public function getAllHangings() {
+    public function getAllBlunts() {
         try{
             
             $h_res = mysql_query("select * from blunt");
@@ -114,7 +114,7 @@ class Blunt extends Scene{
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
-                $hi_res = mysql_query("select * from bluntInside where hangingID=".$h_array['bluntID']);
+                $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
@@ -142,10 +142,10 @@ class Blunt extends Scene{
         }
     }
     
-    public function getHanging($hangingID) {
+    public function getBlunt($bluntID) {
         try{
             
-            $h_res = mysql_query("select * from hanging where hangingID=".$hangingID);
+            $h_res = mysql_query("select * from blunt where bluntID=".$bluntID);
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
             $sv_i = 0;
@@ -172,7 +172,7 @@ class Blunt extends Scene{
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
-                $hi_res = mysql_query("select * from bluntInside where hangingID=".$h_array['bluntID']);
+                $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
