@@ -330,6 +330,16 @@ private function addCase() {
         $category= $this->_request['category'];
         switch ($category) {
             case "foetus":
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new FoetusabandonedBaby($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
                 break;
             case "aviation":    
                 if(!empty($this->_request['caseData']))
@@ -382,13 +392,143 @@ private function addCase() {
                     $this->response($this->json($error), 400);
                 }
                 break;
-            case "bicycle":
+            case "burn":
                 
                 if(!empty($this->_request['caseData']))
                 {
                     $formData = $this->jsonToArray($this->_request['caseData']);   
                     if($formData != NULL){
-                        $obj = new Bicycle($formData,$this);
+                        $obj = new Burn($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "crushinjury":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new CrushInjury($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "deathregister":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new DeathRegister($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "drowning":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Drowning($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "electrocutionlightning":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new ElectrocutionLightning($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "firearm":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Firearm($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "fromheight":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new FromHeight($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "gassing":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Gassing($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "ingestionoverdosepoisoning":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new IngestionOverdosePoisoning($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "mva":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new MotorVehicleAccident($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "mba":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new CrushInjury($formData,$this);
                     }
                 }else{
                     $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
