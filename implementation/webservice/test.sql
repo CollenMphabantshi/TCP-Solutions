@@ -537,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `pedestrian` (
   `hitAndRun` varchar(5) NOT NULL,
   `pedestrianType` int NOT NULL,
   `numberOfCarsDroveOverBody` int NOT NULL,
-  `weatherType` int NOT NULL,
+  `weatherConditionType` int NOT NULL,
   `weatherCondition` int NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
