@@ -43,6 +43,67 @@ class Suda extends Scene{
         $paraObjAll =new sudaParameters();
         
         $sudaCases = array();
+        
+        if($formData == NULL)
+        {
+            parent::__construct(null,null,"","","","","","","",null,$api);
+        }else {
+            for($i = 0; $i < count($formData['object']);$i++)
+            {
+                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                $this->sudaIOType = $formData['object'][$i]['sudaIOType'];
+                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
+                $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
+                $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
+                $this->sudaAppliances = $formData['object'][$i]['sudaAppliances'];
+                $this->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
+                
+               $sceneID = $this->createScene();
+                 if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
+                $this->setVictim($sceneID,$formData['object'][$i]['victims']);
+                $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
+                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                    $this->addSharpForceInjury($sceneID,TRUE,$formData['object'][$i]);
+                }else{
+                    $this->addSharpForceInjury($sceneID,FALSE,null);
+                }
+            }
+            
+            
+        }
+    }
+    
+    public function addSuda($sceneID,$inside,$object) {
+        
+        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$this->sudaIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->sudaAppliances','$this->wierdSmellInAir')");
+        if($h_res == FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
+        if($inside == TRUE){
+            $h_res = mysql_query("select sudaID from suda where sceneID=".$sceneID);
+            $sudaID= mysql_result($h_res,0,'sudaID');
+            $dl = $object['doorLocked'];
+            $wc = $object['windowsClosed'];
+            $wb = $object['windowsBroken'];
+            $va = $object['victimAlone'];
+            $pv = $object['peopleWithVictim'];
+            if($va != "yes")
+            {
+                $hi_res = mysql_query("insert into sudainside values(0,".$sudaID.",'$dl','$wc','$wb','$va','$pv')");
+            }else{
+                $hi_res = mysql_query("insert into sudainside values(0,".$sudaID.",'$dl','$wc','$wb','$va',null)");
+            }
+        }
+        
     }
     
     public function getAllSudaCases() {

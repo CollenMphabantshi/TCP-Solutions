@@ -42,6 +42,39 @@ class Railway extends Scene{
         $paraObjAll =new railwayParameters();
         
         $railwayCases = array();
+        
+        if($formData == NULL)
+        {
+            parent::__construct(null,null,"","","","","","","",null,$api);
+        }else {
+            for($i = 0; $i < count($formData['object']);$i++)
+            {
+                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                $this->sceneOfInjury = $formData['object'][$i]['sceneOfInjury'];
+                $this->victimType = $formData['object'][$i]['victimType'];
+                $this->railwayType = $formData['object'][$i]['railwayType'];
+                
+               $sceneID = $this->createScene();
+                 if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
+                $this->setVictim($sceneID,$formData['object'][$i]['victims']);
+                $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
+                $this->addRailway($sceneID);
+            }
+            
+            
+        }
+    }
+     public function addRailway($sceneID) {
+       
+        $h_res = mysql_query("insert into railway values(0,".$sceneID.",'$this->sceneOfInjury','$this->victimType','$this->railwayType')");
+        if($h_res == FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
     }
     
     public function getAllRailwayCases() {

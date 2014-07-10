@@ -64,7 +64,7 @@ class Bicycle extends Scene {
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                $this->addBicycle($sceneID,TRUE,$formData['object'][$i]);
+                $this->addBicycle($sceneID);
                 
             }
             

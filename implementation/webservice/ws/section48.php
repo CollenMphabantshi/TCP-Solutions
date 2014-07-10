@@ -50,20 +50,43 @@ class section48 extends Scene{
      
         if($formData == NULL)
         {
-            parent::__construct(null,null,"","","","","","","",null);
+            parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
-            $i = 0;
-            $val = new Scene($formData['object'][$i]['sceneTime'],"section48",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+            for($i = 0; $i < count($formData['object']);$i++)
+            {
+                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                $this->victimHospitalized = $formData['object'][$i]['victimHospitalized'];
+                $this->medicalEquipmentInSitu = $formData['object'][$i]['medicalEquipmentInSitu'];
+                $this->gw714file = $formData['object'][$i]['gw714file'];
+                $this->DrNames = $formData['object'][$i]['DrNames'];
+                $this->DrCellNumber = $formData['object'][$i]['DrCellNumber'];
+                $this->NurseNames = $formData['object'][$i]['NurseNames'];
+                $this->NurseCellNumber = $formData['object'][$i]['NurseCellNumber'];
+                
+               $sceneID = $this->createScene();
+                 if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
+                $this->setVictim($sceneID,$formData['object'][$i]['victims']);
+                $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
+                $this->addSection48($sceneID);
+            }
             
-            //print $formData['object'][$i]['sceneTime']."  **  "."section48"."  **  ".$formData['object'][$i]['sceneDate']."  **  ".$formData['object'][$i]['sceneLocation']."  **  ".$formData['object'][$i]['sceneTemparature']."  **  ".$formData['object'][$i]['investigatingOfficerName']."  **  ".$formData['object'][$i]['investigatingOfficerRank']."  **  ".$formData['object'][$i]['investigatingOfficerCellNo']."  **  ".$formData['object'][$i]['firstOfficerOnSceneName']."  **  ".$formData['object'][$i]['firstOfficerOnSceneRank'];
-            $sceneId = $val->createScene();
-            $val->setVictim($sceneId,$formData['object'][$i]['victims']);
-            $val->setCase($sceneId, $formData['object'][$i]['FOPersonelNumber']);
-            print "\n <br/> scene id :".$sceneId ;
             
         }
 	
+    }
+    
+    public function addSection48($sceneID) {
+       
+        $h_res = mysql_query("insert into sec48 values(0,".$sceneID.",'$this->victimHospitalized','$this->medicalEquipmentInSitu','$this->gw714file','$this->DrNames','$this->DrCellNumber','$this->NurseNames','$this->NurseCellNumber')");
+        if($h_res == FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
     }
     
     public function getAllSection48Cases() {
