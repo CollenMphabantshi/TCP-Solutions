@@ -15,13 +15,16 @@ class DeathRegister {
     //put your code here
     private  $deathRegisterNumber;
     private $caseNumber;
+    private $api;
 
-
-    public function __construct(){
-	
+    public function __construct($formData,$api){
+	$this->api = $api;
     }
     
     public function getCase($param) {
+        
+    }
+    public function addCaseToDR($param) {
         
     }
 }

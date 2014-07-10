@@ -247,7 +247,6 @@ CREATE TABLE IF NOT EXISTS `burn` (
   `burnID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    burnIOType text NOT NULL,
-  
   `signsOfStruggle` varchar(5) NOT NULL,
   `alcoholBottleAround` varchar(5) NOT NULL,
   `drugParaphernalia` varchar(5) NOT NULL,
@@ -269,6 +268,49 @@ CREATE TABLE IF NOT EXISTS `burninside` (
   `victimAlone` varchar(5) NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (burnID) REFERENCES burn(burnID)
+);
+
+CREATE TABLE IF NOT EXISTS `crushinjury` (
+  `crushinjuryID` int NOT NULL auto_increment primary key,
+   sceneID int not null,
+  `crushIO` varchar(5) NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL,
+   FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
+);
+
+CREATE TABLE IF NOT EXISTS `crushinjuryinside` (
+  insideID int not null auto_increment primary key,
+  crushinjuryID int not null,
+  `doorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL,
+   peopleWithVictim text null,
+   FOREIGN KEY (crushinjuryID) REFERENCES crushinjury(crushinjuryID)
+);
+
+CREATE TABLE IF NOT EXISTS `drowning` (
+  `drowningID` int NOT NULL auto_increment primary key,
+   sceneID int not null,
+  `drowningIO` text NOT NULL,
+  `drowningType` text NOT NULL,
+  `signsOfStruggle` varchar(5) NOT NULL,
+  `alcoholBottleAround` varchar(5) NOT NULL,
+  `drugParaphernalia` varchar(5) NOT NULL,
+   FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
+);
+
+CREATE TABLE IF NOT EXISTS `drowninginside` (
+  insideID int not null auto_increment primary key,
+  drowningID int not null,
+  `doorLocked` varchar(5) NOT NULL,
+  `windowsClosed` varchar(5) NOT NULL,
+  `windowsBroken` varchar(5) NOT NULL,
+  `victimAlone` varchar(5) NOT NULL,
+   peopleWithVictim text null,
+   FOREIGN KEY (drowningID) REFERENCES drowning(drowningID)
 );
 
 CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
