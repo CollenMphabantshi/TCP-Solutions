@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `bicycle`(
   `bicycleHit` text NOT NULL,
   `bicycleType` text NOT NULL,
   `weatherCondition` text NOT NULL,
+   `bicycleOutputType` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 

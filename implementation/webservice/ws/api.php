@@ -53,9 +53,7 @@ public function __construct()
 //This method dynmically call the method based on the query string
 public function processApi()
 {
-    
     $func = strtolower(trim(str_replace("/","",$_REQUEST['rquest'])));
-
     if((int)method_exists($this,$func) > 0)
     {
        $this->$func();    
@@ -65,8 +63,6 @@ public function processApi()
        $this->response('',404);   
     }
 // If the method not exist with in this class, response would be "Page not found".
-    
-    
 }
 
 private function login()
@@ -223,6 +219,8 @@ private function users()
     }
 }
 
+// receives request to add a new case
+
 private function viewCases() {
     if($this->get_request_method() != "GET")
     {
@@ -238,7 +236,7 @@ private function viewCases() {
             case "all":
                 break;
             case "hanging":
-                $hanging = new Hanging();
+                $hanging = new Hanging(null,$this);
                 if(empty($this->_request['id'])){
                     $h = $hanging->getAllHangings();
 
@@ -261,53 +259,495 @@ private function viewCases() {
                 }
                 break;
             case "aviation":
-                $aviation = new Aviation();
-                if(empty($this->_request['id'])){
-                    $h = $aviation->getAllAviation();
-                    if($h != NULL)
-                    {
-                        $this->response($this->json($h),200);
+                    $aviation = new Aviation(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $aviation->getAllAviation();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+
                     }else{
-                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
-                        $this->response($this->json($error), 400);
+                        $h = $aviation->getAviation($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
                     }
-                    
-                }else{
-                    $h = $aviation->getAviation($this->_request['id']);
-                    if($h != NULL)
-                    {
-                        $this->response($this->json($h),200);
-                    }else{
-                        $error = array('status' => "Failed", "msg" => "No aviation cases were found.");
-                        $this->response($this->json($error), 400);
-                    }
-                }
-                
-                break;
+
+                    break;
                 case "burn":
-                $burn = new Burn();
-                if(empty($this->_request['id'])){
-                    $h = $burn->getAllBurn();
-                    if($h != NULL)
-                    {
-                        $this->response($this->json($h),200);
+                    $burn = new Burn(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $burn->getAllBurn();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+
                     }else{
-                        $error = array('status' => "Failed", "msg" => "No burn cases were found.");
-                        $this->response($this->json($error), 400);
+                        $h = $burn->getBurn($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
                     }
-                    
-                }else{
-                    $h = $burn->getBurn($this->_request['id']);
-                    if($h != NULL)
-                    {
-                        $this->response($this->json($h),200);
+                    break;
+            case "blunt":
+                    $obj = new Blunt(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllBlunts();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+
                     }else{
-                        $error = array('status' => "Failed", "msg" => "No burn cases were found.");
-                        $this->response($this->json($error), 400);
+                        $h = $obj->getBlunt($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
                     }
-                }
-                
-                break;
+                    break;
+            case "bicycle":
+                    $obj = new Bicycle(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllBicycleCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+
+                    }else{
+                        $h = $obj->getBicycleCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "crushinjury":
+                    $obj = new CrushInjury(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllCrushInjury();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+
+                    }else{
+                        $h = $obj->getCrushInjury($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "deathregister":
+                    $obj = new DeathRegister(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllDeathRegisterCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getDeathRegisterCase($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "drowning":
+                    $obj = new Drowning(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllDrowning();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getDrowning($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "electrocutionlightning":
+                    $obj = new ElectrocutionLightning(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllElectrocutionLightningCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getElectrocutionLightningCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "firearm":
+                    $obj = new Firearm(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllFirearm();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getFirearm($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "foetus":
+                    $obj = new FoetusabandonedBaby(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllFoetusabandonedBaby();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getFoetusabandonedBaby($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "fromheight":
+                    $obj = new FromHeight(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllHeightCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getFromHeightCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "gassing":
+                    $obj = new Gassing(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllGassingCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getGassingCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "ingestionoverdosepoisoning":
+                    $obj = new IngestionOverdosePoisoning(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllIngestionOverdosePoisoningCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getIngestionOverdosePoisoningCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "mva":
+                    $obj = new MotorVehicleAccident(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllMotorVehicleAccident();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getMotorVehicleAccident($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "mba":
+                    $obj = new MotorbikeAccident(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllMotorbikeAccidents();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getMotorbikeAccident($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "pedestrian":
+                    $obj = new Perdestrian(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllPedestrian();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getPedestrian($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "railway":
+                    $obj = new Railway(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllRailwayCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getRailwayCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "sharpforceinjury":
+                    $obj = new SharpForceInjury(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllSharpForceInjuryCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getSharpForceInjuryCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "sid":
+                    $obj = new Sid(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllSid();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getSid($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "suda":
+                    $obj = new Suda(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllSudaCases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getSudaCases($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "sudc":
+                    $obj = new Sudc(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllSudc();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getSudc($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
+            case "section48":
+                    $obj = new section48(null,$this);
+                    if(empty($this->_request['id'])){
+                        $h = $obj->getAllSection48Cases();
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }else{
+                        $h = $obj->getSection48Case($this->_request['id']);
+                        if($h != NULL)
+                        {
+                            $this->response($this->json($h),200);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "No burn cases were found.");
+                            $this->response($this->json($error), 400);
+                        }
+                    }
+                    break;
             default:
                 break;
         }
@@ -319,6 +759,8 @@ private function viewCases() {
     
     
 }
+
+// receives request to add a new case
 
 private function addCase() {
     if($this->get_request_method() != "POST")
@@ -523,12 +965,102 @@ private function addCase() {
                 }
                 break;
             case "mba":
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new MotorbikeAccident($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "pedestrian":
                 
                 if(!empty($this->_request['caseData']))
                 {
                     $formData = $this->jsonToArray($this->_request['caseData']);   
                     if($formData != NULL){
-                        $obj = new CrushInjury($formData,$this);
+                        $obj = new Perdestrian($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "railway":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Railway($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "sharpforceinjury":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new SharpForceInjury($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "sid":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Sid($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "suda":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Suda($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "sudc":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Sudc($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "section48":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new section48($formData,$this);
                     }
                 }else{
                     $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
@@ -542,10 +1074,6 @@ private function addCase() {
         $error = array('status' => "Failed", "msg" => "Request to view cases was denied.");
         $this->response($this->json($error), 400);
     }
-}
-
-private function assignDR() {
-    
 }
 
 

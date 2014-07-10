@@ -13,7 +13,15 @@ require_once("Scene.php");
  */
 class MotorbikeAccident extends Scene{
     //put your code here
-     public function __construct($formData){
-	
+     public function __construct($formData,$api){
+         $this->api = $api;
+    }
+    
+    public function getAllMotorbikeAccidents() {
+        
+    }
+    
+    public function getMotorbikeAccident($id) {
+        
     }
 }
