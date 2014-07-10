@@ -532,12 +532,14 @@ CREATE TABLE IF NOT EXISTS `mva` (
 
 CREATE TABLE IF NOT EXISTS `pedestrian` (
   `perdestrianID` int NOT NULL,
-   sceneID int not null,
-  
-  `perdestrianOutsideID` text NOT NULL,
+   sceneID int not null,  
+  `perdestrianOutside` text NOT NULL,
   `hitAndRun` varchar(5) NOT NULL,
+  `pedestrianType` int NOT NULL,
   `numberOfCarsDroveOverBody` int NOT NULL,
-      FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
+  `weatherType` int NOT NULL,
+  `weatherCondition` int NOT NULL,
+   FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 
