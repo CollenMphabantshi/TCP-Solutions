@@ -23,6 +23,7 @@ class MotorVehicleAccident extends Scene{
     private $carBurnt;
     
      public function __construct($formData,$api){
+         $this->api = $api;
 	if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);

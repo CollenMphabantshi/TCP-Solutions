@@ -327,23 +327,72 @@ private function addCase() {
     }
     
     try {
-        
         $category= $this->_request['category'];
-        
         switch ($category) {
             case "foetus":
                 break;
-            case "aviation":
+            case "aviation":    
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $aviation = new Aviation($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+             case "hanging":
                 
                 if(!empty($this->_request['caseData']))
                 {
-                    
-                    $formData = $this->jsonToArray($this->_request['caseData']);
-                    
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
                     if($formData != NULL){
-                        $aviation = new Aviation($formData);
                         $hanging = new Hanging($formData,$this);
                     }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "bicycle":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Bicycle($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "blunt":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Blunt($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
+                }
+                break;
+            case "bicycle":
+                
+                if(!empty($this->_request['caseData']))
+                {
+                    $formData = $this->jsonToArray($this->_request['caseData']);   
+                    if($formData != NULL){
+                        $obj = new Bicycle($formData,$this);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $this->response($this->json($error), 400);
                 }
                 break;
             default:

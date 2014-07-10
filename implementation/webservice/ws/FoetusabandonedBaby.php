@@ -15,7 +15,8 @@ class FoetusabandonedBaby extends Scene{
     //put your code here
      private $foetusabandonedbabyID;
      
-     public function __construct($formData){
+     public function __construct($formData,$api){
+         $this->api = $api;
 	if($formData == NULL)
         {
             parent::__construct(null);
@@ -23,9 +24,13 @@ class FoetusabandonedBaby extends Scene{
             for($i = 0; $i < count($formData['object']);$i++)
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"FoetusabandonedBaby",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
-                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank']);
+                        ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                     //
                 $sceneID = $this->createScene();
+                if($sceneID == NULL){
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $this->api->response($this->api->json($error), 400);
+                 }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
@@ -77,7 +82,8 @@ class FoetusabandonedBaby extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
         }
     }
      public function getFoetusabandonedBaby($foetusabandonedbabyID) {
@@ -117,7 +123,8 @@ class FoetusabandonedBaby extends Scene{
             return $final_array;
         }catch(Exception $ex){
             
-            return null;
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
         }
     }
 }

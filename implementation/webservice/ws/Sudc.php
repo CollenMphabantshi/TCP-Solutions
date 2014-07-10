@@ -24,6 +24,7 @@ class Sudc extends Scene{
     private $wierdSmellInAir;
     
      public function __construct($formData,$api){
+         $this->api = $api;
 	if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);
@@ -196,7 +197,7 @@ class Sudc extends Scene{
         }catch(Exception $ex){
             
            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
-                     $this->api->response($this->api->json($error), 400);
+           $this->api->response($this->api->json($error), 400);
         }
     }
 }

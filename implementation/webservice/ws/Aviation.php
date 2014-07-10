@@ -20,6 +20,7 @@ class Aviation extends Scene{
     private $weatherType;
     
      public function __construct($formData,$api){
+         $this->api = $api;
          if($formData == NULL)
         {
             parent::__construct(null,null,"","",null,$api);
@@ -42,7 +43,8 @@ class Aviation extends Scene{
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                
-                
+                $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
+                $this->api->response($this->api->json($error), 400);
             }
             
             

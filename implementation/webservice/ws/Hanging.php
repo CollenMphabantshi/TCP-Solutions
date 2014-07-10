@@ -28,7 +28,7 @@ class Hanging extends Scene{
     private $chockingSuspected;
     
     public function __construct($formData,$api){
-        
+        $this->api = $api;
         if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);
@@ -53,6 +53,7 @@ class Hanging extends Scene{
                 $this->whoRemovedLigature = $formData['object'][$i]['whoRemovedLigature'];
                     //
                 $sceneID = $this->createScene();
+                
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);

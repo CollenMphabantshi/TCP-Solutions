@@ -24,6 +24,7 @@ class Burn extends Scene{
     private $foulPlaySuspected;
              
      public function __construct($formData,$api){
+         $this->api = $api;
 	if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);

@@ -24,6 +24,7 @@ class Firearm extends Scene{
     private $firearmCalibre;
     
      public function __construct($formData,$api){
+         $this->api = $api;
 	if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);

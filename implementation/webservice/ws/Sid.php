@@ -33,6 +33,7 @@ class Sid extends Scene{
     private $whereInfantFoundDead;
     
      public function __construct($formData,$api){
+         $this->api = $api;
 	 if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);

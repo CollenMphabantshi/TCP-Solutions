@@ -10,7 +10,7 @@ and open the template in the editor.
         <title></title>
         <script src="jquery.js"></script>
         <script src="script.js"></script>
-        <!--script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function(){
                 $("#cases").click(function(p){
                     var q = "?rquest=viewCases&category=hanging&id=2";
@@ -124,9 +124,9 @@ and open the template in the editor.
                 });
 
             });
-        </script-->
+        </script>
         
-        <!--script type="text/javascript">
+        <!-- <script type="text/javascript">
             $(document).ready(function(){
                 $("#cases").click(function(p){
 
@@ -200,7 +200,7 @@ and open the template in the editor.
                 });
 
             });
-        </script-->
+        </script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#cases").click(function(p){
@@ -280,7 +280,7 @@ and open the template in the editor.
                 });
 
             });
-        </script>
+        </script>-->
     </head>
     <body id="body">
         <a href="#" id="cases">View Case</a> <a href="#" id="add">Add Case</a> <a href="#" id="addUser">Add User</a> <a href="#" id="users">View Users</a>
