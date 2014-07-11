@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+C:\Users\BANCHI\Documents\GitHub\TCP-Solutions\implementation\webservice\workspace\.metadata\.plugins\org.eclipse.jdt.core
+3548071268.index
+4150414105.index
+3254200690.index
