@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.banchi.collen.MainActivity" >
+	
+    <LinearLayout 
+	    android:layout_gravity="center"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+	<EditText
+	    android:id="@+id/usernameId"
+	    android:layout_width="350dp"
+	    android:layout_height="wrap_content"
+	    android:ems="10"
+	    android:layout_margin="15dp"
+	    android:hint="username"
+	    android:inputType="textPersonName" >
+	        
+	   </EditText> 
+	    
+	<EditText
+	    android:id="@+id/passwordId"
+	    android:layout_width="350dp"
+	    android:layout_height="wrap_content"
+	    android:layout_margin="15dp"
+	    android:ems="10"
+	    android:hint="password"
+	    android:password="true">
+	    
+	</EditText>
+	
+			<LinearLayout 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    >
+			    	<CheckBox
+			    	    android:id="@+id/rememberMeId"
+			    	    android:layout_width="wrap_content"
+			    	    android:layout_height="wrap_content"
+			    	    android:layout_margin="10dp"
+					    android:paddingRight="35dp"
+					    android:gravity="center"
+			    	    android:text="remember me"
+			    	    ></CheckBox>
+					<Button
+					    android:id="@+id/logginId"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:visibility="visible"
+					    android:layout_margin="10dp"
+					    android:paddingLeft="55dp"
+					    android:paddingRight="55dp"
+					    android:gravity="center"
+					    android:text="login"
+					    />
+					
+					
+			
+			</LinearLayout>
+	
+	</LinearLayout>
+	
+</LinearLayout>
