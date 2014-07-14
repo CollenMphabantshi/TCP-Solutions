@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal">
+    
+    <TextView 
+            android:id="@+id/tvInformation"
+       		android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="INFORMATION"
+        	android:layout_margin="15dp"
+			android:textStyle="bold"
+			android:textSize="20sp"
+        	android:layout_alignBaseline="@+id/tvInformation"/>
+    
+    <RelativeLayout 
+        android:id="@+id/idInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        
+        >
+        <TextView 
+            android:id="@+id/ivOfficer"
+       		android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:text="Investigating Officer "
+        	/>
+        <TextView 
+            android:id="@+id/tvName"
+       		android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:text="Name : "
+        	android:layout_alignBaseline="@+id/etName"
+        	android:layout_alignBottom="@+id/ivOfficer"/>
+       <EditText 
+            android:id="@+id/etName"
+       		android:layout_width="150dp"
+       		android:layout_marginLeft="55dp"
+        	android:layout_height="wrap_content"
+        	android:layout_toRightOf="@+id/tvName"
+        	/>
+       
+       <TextView 
+            android:id="@+id/tvName"
+       		android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:text="Name : "
+        	android:layout_alignBaseline="@+id/etName"/>
+       <EditText 
+            android:id="@+id/etName"
+       		android:layout_width="150dp"
+       		android:layout_marginLeft="55dp"
+        	android:layout_height="wrap_content"
+        	android:layout_toRightOf="@+id/tvName"
+        	/>
+            
+       "
+        
+        
+    </RelativeLayout>
+    
+
+</LinearLayout>

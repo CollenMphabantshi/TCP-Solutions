@@ -1,0 +1,23 @@
+package com.example.mobileforensics;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+
+public class Loggin extends Activity{
+	Button login;
+	EditText username,password;
+	CheckBox rememberMe;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.loggin);
+	}
+	
+	
+
+}

@@ -1,0 +1,55 @@
+package com.example.mobileforensics;
+
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+public class SceneMenu extends ListActivity{
+	
+	String scence[] = {"Aviation","Bicycle","Blunt","Burn","CrushInjury","Drowning"
+			,"Electrocutionlightning","firearm","","","","","","","","","",""
+			,"",""};
+	ListView sceneMenu;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		//setContentView(R.layout.scenemenu);
+		
+		initialise();
+		sceneMenu.setAdapter(new ArrayAdapter<String>(this,R.layout.scenemenu,scence));
+	}
+	
+	public void initialise(){
+		
+		sceneMenu = (ListView) findViewById(R.id.SceneMenuListViewId);
+	}
+	
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		
+		super.onListItemClick(l, v, position, id);
+		
+		String selectedClass = scence[position];//tell us what position is clicked
+		
+		try {
+			//start activity that is selected
+			Class ourClass = Class.forName("com.example.mobileforensics."+selectedClass);
+			Intent sceneIntent = new Intent(SceneMenu.this, ourClass);
+			startActivity(sceneIntent);
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+
+}

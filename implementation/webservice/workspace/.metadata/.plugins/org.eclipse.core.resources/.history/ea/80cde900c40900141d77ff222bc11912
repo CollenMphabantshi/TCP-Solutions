@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mobileforensics"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".Loggin"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Home"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.HOME" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SceneMenu"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SCENEMENU" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Aviation"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.AVIATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".BasicReport"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.BASICREPORT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Bicycle"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.BICYCLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Blunt"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.BLUNT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Burn"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.BURN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Crushinjury"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.CRUSHINJURY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Drowning"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.DROWNING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Electrocutionlightining"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.ELECTROCUTIONLIGHTINING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Firearm"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.FIREARM" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Foetusabandonedbaby"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.FOETUSABANDONEDBABY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Fromheight"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.FROMHEIGHT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Gassing"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.GASSING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Hanging"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.HANGING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Ingestionoverdosepoisoning"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.INGESTIONOVERDOSEPOISONING" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Mba"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.MBA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Mva"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.MVA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Pedestrian"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.PEDESTRIAN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Aviation"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.PREVIOUSCASEBASICINFO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Railway"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.RAILWAY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Sec48"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SEC48" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Sharp"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SHARP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Suda"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SUDA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Sudc"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SUDC" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".Sudi"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.mobileforensics.SUDI" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+    </application>
+
+</manifest>
