@@ -98,7 +98,7 @@ function sendRequest(data){
             alert("error: "+result);
         }
     }).responseText;*/
-    request.open("POST","models/api.php");
+    request.open("POST","../models/api.php");
     
     request.send(data);
     
