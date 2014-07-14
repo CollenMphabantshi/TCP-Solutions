@@ -1,3 +1,36 @@
+$(document).ready(function (){
+    $("#login-form-button").click(function(){
+        var username = $("#username").val();
+        var pass = $("#password").val();
+        
+        if(username !== "" && pass !== ""){
+            login(username,pass);
+        }else{
+            alertResponse("Please fill in both username and password","error");
+        }
+    });
+});
+
+
+function login(username,pass){
+    var query = new FormData();
+    query.append("rquest","login");
+    query.append("username",username);
+    query.append("password",pass);
+    query.append("platform","webapp");
+    sendRequest(query);
+    //alertResponse(sendRequest(query),"error");
+}
+
+function alertResponse(message,status){
+    $(".response").remove();
+    if(status === "error")
+    {
+        $("#header").after("<div class='response error'>"+message+"</div>");
+    }else{
+        $("#header").after("<div class='response success'>"+message+"</div>");
+    }
+}
 
 function decodeMessage(message){
     try{
@@ -45,14 +78,30 @@ function decodeMessage(message){
 function sendRequest(data){
                 
     var request = new XMLHttpRequest();
+    var res = null;
     request.onreadystatechange = function(){if(request.readyState == 4)
     {
         alert(request.responseText)
-        $("body .test").html("<br/>"+decodeMessage(request.responseText)+"<br/>");
+        
     }};
-    request.open("POST","api.php");
-    //request.setRequestHeader("Content-Type","application/json;charset=utf-8");
+    /*res = $.ajax({
+        type:"POST",
+        url: "models/api.php",
+        data: data,
+        processData:false,
+        async: false,
+        dataType: "json",
+        success: function (result){
+            alert(result);
+        },
+        error:function (result){
+            alert("error: "+result);
+        }
+    }).responseText;*/
+    request.open("POST","models/api.php");
+    
     request.send(data);
+    
 }
 function getCases(request){
                 var obj = JSON.parse(request.responseText);

@@ -2,6 +2,7 @@
 session_start();
 
 require_once './connect.php';
+require_once './Validations.inc.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,8 +24,10 @@ class User {
     private $userTypeID;
     private $userActive;
     public $api;
+    private $validation;
     public function __construct($api,$userName=NULL,$userPassword=NULL,$userFirstname=NULL,$userSurname=NULL,$userTypeID=NULL,$userActive=NULL){
         $this->api = $api;
+        $this->validation = new Validations();
         if($userName != null && $userPassword != null && $userFirstname != null && $userSurname != null){
             $this->userName = $userName;
             $this->userPassword = md5($userPassword);
@@ -173,7 +176,8 @@ class User {
                 {
                     if($platform == "webapp")
                     {
-                        $_SESSION['s_ip'] = $_SERVER['HOST_ADDR'];
+                        $_SESSION['s_ip'] = $_SERVER['REMOTE_ADDR'];
+                        $_SESSION['s_ua'] = $_SERVER['HTTP_USER_AGENT'];
                         $_SESSION['s_id'] = $u_array['userID'];
                     }
                     $error = array('status' => "Success", "msg" => "Request to login was accepted.");
