@@ -74,7 +74,7 @@ private function login()
 
         $this->response('',406);
     }
-
+    
     $username = $this->_request['username'];
     $password = $this->_request['password'];
     $platform = $this->_request['platform'];
