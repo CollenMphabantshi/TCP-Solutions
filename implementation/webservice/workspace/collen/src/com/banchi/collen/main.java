@@ -107,90 +107,7 @@ public class main extends Activity {
             return sb.toString();
     }
     
-    public String call(String URL, JSONObject postParameters)
-    {
-        BufferedReader in = null;
-        DefaultHttpClient httpClient;
-        StringBuffer sb = new StringBuffer();   
-        try{
-            httpClient = CustomHttpClient.getHttpClient();
-
-            HttpProtocolParams.setUseExpectContinue(httpClient.getParams(), false); //making 3G network works*
-            HttpPost request = new HttpPost(URL);
-            
-            request.setEntity(new StringEntity(postParameters.toString(), "utf-8"));
-            HttpResponse response = httpClient.execute(request);
-            in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String line = "";
-            String NL = System.getProperty("line.separator");
-            while ((line = in.readLine()) != null) {
-            sb.append(line + NL);
-            }
-            in.close();
-
-        }catch(Exception ex)
-        {
-            ex.printStackTrace();
-
-        }
-        return sb.toString();
-    }
-
-    public void postData() throws JSONException{ 
-        // Create a new HttpClient and Post Header
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://localhost/vs/index.php");
-        JSONObject json = new JSONObject();
- 
-        try {
-            // JSON data:
-            json.put("name", "Fahmi Rahman");
-            json.put("position", "sysdev");
- 
-            JSONArray postjson=new JSONArray();
-            postjson.put(json);
- 
-            // Post the data:
-            httppost.setHeader("json",json.toString());
-            httppost.getParams().setParameter("jsonpost",postjson);
- 
-            // Execute HTTP Post Request
-            System.out.print(json);
-            HttpResponse response = httpclient.execute(httppost);
- 
-            // for JSON:
-            if(response != null)
-            {
-                InputStream is = response.getEntity().getContent();
- 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                StringBuilder sb = new StringBuilder();
- 
-                String line = null;
-                try {
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        is.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                text = sb.toString();
-            }
- 
-            tv.setText(text);
- 
-        }catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-        }
-    }
+    
     
     public class Read extends AsyncTask<JSONObject, Integer, String>{
 
@@ -222,8 +139,6 @@ public class main extends Activity {
 			super.onPostExecute(result);
 			tv.setText(result);
 		}
-
-		
-    	
+	
     }
 }

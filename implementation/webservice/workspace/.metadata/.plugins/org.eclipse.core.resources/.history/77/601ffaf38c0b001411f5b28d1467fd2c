@@ -1,0 +1,29 @@
+package com.example.mobileforensics;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.EditText;
+
+public class Blunt extends Activity{
+
+	private EditText ioName;
+	private EditText ioSurname;
+	private EditText ioRank;
+	private EditText ioCellNo;
+	
+	private EditText ioName;
+	private EditText ioName;
+	private EditText ioName;
+	
+	private EditText ioName;
+	private EditText ioName;
+	private EditText ioName;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
+	
+
+}

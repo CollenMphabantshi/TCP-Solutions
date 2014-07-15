@@ -1,0 +1,52 @@
+package com.example.mobileforensics;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.RadioButton;
+
+public class Blunt extends Activity{
+
+	private EditText ioName;
+	private EditText ioSurname;
+	private EditText ioRank;
+	private EditText ioCellNo;
+	
+	private EditText foosName;
+	private EditText foosSurname;
+	private EditText foosRank;
+	
+	private EditText victimName;
+	private EditText victimSurname;
+	private EditText victimIDNo;
+	
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+		ioName = (EditText)findViewById(R.id.io_name);
+		ioSurname = (EditText)findViewById(R.id.io_surname);
+		ioRank = (EditText)findViewById(R.id.io_rank);
+		ioCellNo = (EditText)findViewById(R.id.io_cell);
+		
+		foosName = (EditText)findViewById(R.id.foos_name);
+		foosSurname = (EditText)findViewById(R.id.foos_surname);
+		foosRank = (EditText)findViewById(R.id.foos_rank);
+		
+		victimName = (EditText)findViewById(R.id.victim_name);
+		victimSurname = (EditText)findViewById(R.id.victim_surname);
+		victimIDNo = (EditText)findViewById(R.id.victim_id);
+	}
+	
+
+}

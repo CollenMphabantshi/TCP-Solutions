@@ -1,0 +1,149 @@
+package com.example.mobileforensics;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.banchi.collen.WebServiceWrapper;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.RadioButton;
+
+public class Blunt extends Activity{
+
+	private EditText ioName;
+	private EditText ioSurname;
+	private EditText ioRank;
+	private EditText ioCellNo;
+	
+	private EditText foosName;
+	private EditText foosSurname;
+	private EditText foosRank;
+	
+	private EditText victimName;
+	private EditText victimSurname;
+	private EditText victimIDNo;
+	
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
+
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+		ioName = (EditText)findViewById(R.id.io_name);
+		ioSurname = (EditText)findViewById(R.id.io_surname);
+		ioRank = (EditText)findViewById(R.id.io_rank);
+		ioCellNo = (EditText)findViewById(R.id.io_cell);
+		
+		foosName = (EditText)findViewById(R.id.foos_name);
+		foosSurname = (EditText)findViewById(R.id.foos_surname);
+		foosRank = (EditText)findViewById(R.id.foos_rank);
+		
+		victimName = (EditText)findViewById(R.id.victim_name);
+		victimSurname = (EditText)findViewById(R.id.victim_surname);
+		victimIDNo = (EditText)findViewById(R.id.victim_id);
+		
+		rgbMale = (RadioButton)findViewById(R.id.rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.rgbUnknownRace);
+		
+	}
+	
+	public String request(String url, JSONObject request)
+            throws ClientProtocolException, IOException, IllegalStateException,
+            JSONException {
+
+        	DefaultHttpClient client = (DefaultHttpClient) WebServiceWrapper.getNewHttpClient();
+
+            HttpPost post = new HttpPost(url);
+            List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+
+            pairs.add(new BasicNameValuePair("rquest","login"));
+            pairs.add(new BasicNameValuePair("username",username.getText().toString()));  
+            pairs.add(new BasicNameValuePair("password",password.getText().toString()));  
+            pairs.add(new BasicNameValuePair("platform","android"));
+            
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs,HTTP.UTF_8);
+            //post.setEntity(new StringEntity(request.toString(), "utf-8"));
+            post.setEntity(entity);
+            HttpResponse response = client.execute(post);
+            BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String line = "";
+            StringBuffer sb = new StringBuffer();
+            String NL = System.getProperty("line.separator");
+            while ((line = in.readLine()) != null) {
+            	sb.append(line + NL);
+            }
+            in.close();
+            return sb.toString();
+    }
+    
+    
+    
+    public class Read extends AsyncTask<JSONObject, Integer, String>{
+
+		@Override
+		protected String doInBackground(JSONObject... params) {
+			// TODO Auto-generated method stub
+			try {
+				text = request("https://192.168.56.1/ws/models/api.php", params[0]);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("RESPONSE >> "+text);
+			return text;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			tv.setText(result);
+		}
+	
+    }
+
+}
