@@ -8,7 +8,7 @@
 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Section 48 death–surgical case"
+		android:text="Road traffic accidents(Bicycle accident)"
 		android:layout_margin="15dp"
 		android:textStyle="bold"
 		android:textSize="20sp"
@@ -116,7 +116,7 @@
 							            
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
-							        	android:text="Doctor"
+							        	android:text="First Officer on scene"
 							        	android:layout_margin="5dp"
 										android:textStyle="bold"
 										android:textSize="15sp"
@@ -131,118 +131,52 @@
 							        >
 							        
 							        <TextView 
-							            android:id="@+id/tv_dr_name"
+							            android:id="@+id/tv_fo_name"
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
 							        	android:text="Name"
-							        	android:layout_alignBaseline="@+id/dr_name"/>
+							        	android:layout_alignBaseline="@+id/fo_name"/>
 							       <EditText 
-							            android:id="@+id/dr_name"
+							            android:id="@+id/fo_name"
 							       		android:layout_width="200dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_dr_name"/>
+							        	android:layout_toRightOf="@+id/tv_fo_name"/>
 							       
 							       
 							       <TextView 
-							            android:id="@+id/tv_dr_surname"
+							            android:id="@+id/tv_fo_surname"
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_dr_name"
+							        	android:layout_below="@+id/tv_fo_name"
 							        	android:text="Surname"
-							        	android:layout_alignBaseline="@+id/dr_surname"/>
+							        	android:layout_alignBaseline="@+id/fo_surname"/>
 							       <EditText 
-							            android:id="@+id/dr_surname"
+							            android:id="@+id/fo_surname"
 							       		android:layout_width="200dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_dr_surname"
-							        	android:layout_below="@+id/dr_name"/>
+							        	android:layout_toRightOf="@+id/tv_fo_surname"
+							        	android:layout_below="@+id/fo_name"/>
 							       
 							       
 							       <TextView 
-							            android:id="@+id/tv_dr_cell"
+							            android:id="@+id/tv_fo_rank"
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_dr_surname"
-							        	android:text="Cell"
-							        	android:layout_alignBaseline="@+id/dr_cell"/>
+							        	android:layout_below="@+id/tv_fo_surname"
+							        	android:text="Rank"
+							        	android:layout_alignBaseline="@+id/fo_rank"/>
 							       <EditText 
-							            android:id="@+id/dr_cell"
+							            android:id="@+id/fo_rank"
 							       		android:layout_width="200dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_dr_cell"
-							        	android:layout_below="@+id/dr_surname"/>
+							        	android:layout_toRightOf="@+id/tv_fo_rank"
+							        	android:layout_below="@+id/fo_surname"/>
 							       
 							       
 							       
 							       
 							    </RelativeLayout>
 							
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Nurse"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	/>
-							    
-							    <RelativeLayout 
-							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        
-							        >
-							        
-							        <TextView 
-							            android:id="@+id/tv_nr_name"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Name"
-							        	android:layout_alignBaseline="@+id/nr_name"/>
-							       <EditText 
-							            android:id="@+id/nr_name"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_nr_name"/>
-							       
-							       
-							       <TextView 
-							            android:id="@+id/tv_nr_surname"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_nr_name"
-							        	android:text="Surname"
-							        	android:layout_alignBaseline="@+id/nr_surname"/>
-							       <EditText 
-							            android:id="@+id/nr_surname"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_nr_surname"
-							        	android:layout_below="@+id/nr_name"/>
-							       
-							       
-							       <TextView 
-							            android:id="@+id/tv_nr_cell"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_nr_surname"
-							        	android:text="Cell"
-							        	android:layout_alignBaseline="@+id/nr_cell"/>
-							       <EditText 
-							            android:id="@+id/nr_cell"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_nr_cell"
-							        	android:layout_below="@+id/nr_surname"/>
-							       
-							       
-							       
-							       
-							    </RelativeLayout>
-							    
 							    
 							    <TextView 
 							            android:id="@+id/tvDemographics"
@@ -463,78 +397,206 @@
 							        
 							        
 							        <TextView 
-							            android:id="@+id/tv_hospitalized"
+							            android:id="@+id/tv_decomposed"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
-							        	android:text="How long was the victim hospitalized?"
+							        	android:text="Is the body decomposed?"
 							        	android:layout_below="@+id/scenephoto"
-							        	android:layout_alignBaseline="@+id/hospitalized"
+							        	android:layout_alignBaseline="@+id/decomposed"
 							        	android:layout_marginRight="50dp"
 							            />
-							        <EditText 
-							            android:id="@+id/hospitalized"
-							       		android:layout_width="300dp"
+							        <Spinner 
+							            android:id="@+id/decomposed"
+							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_hospitalized"
+							            android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_toRightOf="@+id/tv_decomposed"
 							        	android:layout_below="@+id/camera"/>
 							        
 							         <TextView 
-							            android:id="@+id/tv_medical_equipment"
+							            android:id="@+id/tv_intervention"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
-							        	android:text="Are all the medical equipment in-situ (still on and in the body)?"
-							        	android:layout_below="@+id/tv_hospitalized"
-							        	android:layout_alignBaseline="@+id/medical_equipment"
+							        	android:text="Is there any medical intervention?"
+							        	android:layout_below="@+id/tv_decomposed"
+							        	android:layout_alignBaseline="@+id/intervention"
 							        	android:layout_marginRight="50dp"
 							            />
 							        
 							       <Spinner 
-							            android:id="@+id/medical_equipment"
+							            android:id="@+id/intervention"
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
 							            android:entries="@array/yesorno"
 							            android:prompt="@string/chooseYN"
-							            android:layout_toRightOf="@+id/tv_medical_equipment"
-							        	android:layout_below="@+id/hospitalized"/>
+							            android:layout_toRightOf="@+id/tv_intervention"
+							        	android:layout_below="@+id/decomposed"/>
 							       
 							       <TextView 
-							            android:id="@+id/tv_GW"
+							            android:id="@+id/tv_foundbody"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
-							        	android:text="Are the GW 7/14 in file?"
-							        	android:layout_below="@+id/tv_medical_equipment"
-							        	android:layout_alignBaseline="@+id/GW"
+							        	android:text="Who found the body?"
+							        	android:layout_below="@+id/tv_intervention"
+							        	android:layout_alignBaseline="@+id/foundbody"
 							        	android:layout_marginRight="50dp"
 							            />
 							        
-							       <Spinner 
-							            android:id="@+id/GW"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							            android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							            android:layout_toRightOf="@+id/tv_GW"
-							        	android:layout_below="@+id/medical_equipment"/>
-							       
-							       <TextView 
-							            android:id="@+id/tv_general"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="General history"
-							        	android:layout_below="@+id/tv_GW"
-							        	android:layout_alignBaseline="@+id/general"
-							        	android:layout_marginRight="50dp"
-							            />
-							        <EditText 
-							            android:id="@+id/general"
+							       <EditText 
+							            android:id="@+id/foundbody"
 							       		android:layout_width="300dp"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_general"
-							        	android:layout_below="@+id/GW"/>
+							            android:layout_toRightOf="@+id/tv_foundbody"
+							        	android:layout_below="@+id/intervention"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_bodyintact"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Is the body intact?"
+							        	android:layout_below="@+id/tv_foundbody"
+							        	android:layout_alignBaseline="@+id/bodyintact"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <Spinner 
+							            android:id="@+id/bodyintact"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_bodyintact"
+							        	android:layout_below="@+id/foundbody"/>
 							       
 							            
 							       
 							    </RelativeLayout>
+							    
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="THE SCENE"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	/>
+							    
+							    
+							    <LinearLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:orientation="vertical" 
+							        android:gravity="center"
+							        
+							        >
+							       
+							        <TextView 
+							            android:id="@+id/tv_singlemultiple"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Single/ multiple victims on the bicycle?"							        	
+							        	
+							        	android:layout_marginRight="50dp"
+							            />
+							        <Spinner 
+							            android:id="@+id/singlemultiple"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/singlemultiple"
+							           
+							        	
+							        	/>
+							        
+							         <TextView 
+							            android:id="@+id/tv_hit"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="The bicycle was hit from the?"
+							        	
+							        	
+							        	android:layout_marginRight="50dp"
+							            />
+							        
+							       <Spinner 
+							            android:id="@+id/hit"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/hitfrom"
+							            />
+							       
+							       <TextView 
+							            android:id="@+id/tv_wasit"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Was it a?"
+							        	android:layout_marginTop="10dp"
+							        
+							        	
+							            />
+							        
+							       <Spinner 
+							            android:id="@+id/wasit"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            />
+							       
+							       <TextView 
+							            android:id="@+id/tv_weather"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Weather condition"
+							        	
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/weather"
+							       		android:layout_width="100dp"
+							       		android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_note"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Suicide note"
+							        	
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/note"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        <EditText 
+							            android:id="@+id/note_yes"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	android:hint="if yes is it with police or body"
+							        	></EditText>
+							       
+							        <TextView 
+							            android:id="@+id/tv_general"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							      		android:text="General history"
+							        	
+							        	
+							            />
+							        
+							        <EditText 
+							            android:id="@+id/general"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	
+							        	/>
+							            
+							       
+							    </LinearLayout>
 							    
 							    
 							    <TextView 
