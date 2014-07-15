@@ -423,6 +423,7 @@
 					android:entries="@array/question"
 					android:prompt="@string/choose"
 				    />
+				
 				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -440,6 +441,7 @@
 					android:prompt="@string/choose"
 					
 				    />
+<<<<<<< HEAD
 				<EditText 
 					android:id="@+id/howManyAttempts"
 					android:layout_width="200dp"
@@ -449,6 +451,10 @@
 				
 				
 				<TextView
+=======
+				
+				<TextView 
+>>>>>>> 262b4e4616c5fda27d4d8f35739cbe9abcf88086
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"

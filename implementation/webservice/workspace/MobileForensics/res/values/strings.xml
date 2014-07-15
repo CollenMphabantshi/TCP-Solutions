@@ -24,5 +24,24 @@
         <item>Outside</item>
     </string-array>
     
+     <string name="chooseYN"> choose </string>
+    
+    <string-array name="yesorno">
+        <item>yes</item>
+        <item>no</item>
+    </string-array>
+    
+    <string-array name="singlemultiple">
+        <item>single</item>
+        <item>multiple</item>
+    </string-array>
+    
+    <string-array name="hitfrom">
+        <item>Front</item>
+        <item>Back</item>
+        <item>Right side</item>
+        <item>Left side</item>
+    </string-array>
+    
 
 </resources>
