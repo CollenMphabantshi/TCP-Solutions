@@ -403,7 +403,7 @@
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Any previous attempts?"
+					android:text="Any previous tempts?"
 					/>
 				<Spinner
 				    android:id="@+id/previousAttempts"

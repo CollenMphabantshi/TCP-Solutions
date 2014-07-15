@@ -395,7 +395,6 @@
 					android:entries="@array/question"
 					android:prompt="@string/choose"
 				    />
-				
 				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -403,7 +402,7 @@
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Any previous attempts?"
+					android:text="Any previous tempts?"
 					/>
 				<Spinner
 				    android:id="@+id/previousAttempts"
@@ -413,7 +412,6 @@
 					android:prompt="@string/choose"
 					android:visibility="invisible"
 				    />
-				
 				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
