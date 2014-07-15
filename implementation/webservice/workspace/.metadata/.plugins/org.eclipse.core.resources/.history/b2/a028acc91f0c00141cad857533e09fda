@@ -786,7 +786,7 @@
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Is there any suicide notes on the scene? (Is it with the police/body?)"
+					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
 					android:layout_alignBaseline="@+id/bodyBurned"
 					android:visibility="gone"
 					/>
