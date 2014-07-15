@@ -307,16 +307,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the body decomposed?"
-					android:layout_alignBaseline="@+id/bodyDecomposed"
-					android:visibility="gone"
-					/>
+					android:layout_alignBaseline="@+id/bodyDecomposed"/>
 				<Spinner
 				    android:id="@+id/bodyDecomposed"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				    
 				<TextView 
@@ -328,21 +325,16 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there any medical intervention?"
-					android:layout_alignBaseline="@+id/medicalIntervention"
-					android:visibility="gone"
-					/>
-				
+					android:layout_alignBaseline="@+id/medicalIntervention"/>
 				<Spinner
 				    android:id="@+id/medicalIntervention"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_bodyBurned"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -350,20 +342,16 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the body burned? (Ask IO to get dental records)"
-					android:layout_alignBaseline="@+id/bodyBurned"
-					android:visibility="gone"
-					/>
+					android:layout_alignBaseline="@+id/bodyBurned"/>
 				<Spinner
 				    android:id="@+id/bodyBurned"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_bodyIntact"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -371,20 +359,16 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the body intact?"
-					android:layout_alignBaseline="@+id/bodyIntact"
-					android:visibility="gone"
-					/>
+					android:layout_alignBaseline="@+id/bodyIntact"/>
 				<Spinner
 				    android:id="@+id/bodyIntact"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_whoFoundVictimBody"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -392,17 +376,14 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Who found victim body?"
-					android:visibility="gone"
 					/>
 				<EditText 
 					android:id="@+id/whoFoundVictimBody"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
 					/>
 				
 				<TextView 
-				    android:id="@+id/tv_closeToWater"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -410,7 +391,6 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the victim found close to water?"
-					android:visibility="gone"
 					/>
 				<Spinner
 				    android:id="@+id/closeToWater"
@@ -418,11 +398,42 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_sceneOType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Outside"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/sceneIType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/sceneITypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -431,7 +442,6 @@
 					android:textSize="15sp"
 					android:text="Where outside?"
 					android:visibility="gone"
-					
 					/>
 				<Spinner
 				    android:id="@+id/sceneOType"
@@ -441,7 +451,6 @@
 					android:visibility="gone"
 				    />
 				<TextView 
-				    android:id="@+id/tv_sceneOTypeOther"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -457,8 +466,7 @@
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				<TextView
-				    android:id="@+id/tv_aircraftType" 
+				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -476,7 +484,6 @@
 					android:visibility="gone"
 				    />
 				<TextView 
-				    android:id="@+id/tv_aircraftNumPeople"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -492,8 +499,7 @@
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				<TextView
-				    android:id="@+id/tv_person" 
+				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -512,7 +518,6 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_victimIO"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -531,7 +536,6 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_weatherCondition"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -550,7 +554,6 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_weatherType"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -569,7 +572,6 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_suicideNote"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -577,20 +579,26 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
-					android:layout_alignBaseline="@+id/bodyBurned"
-					android:visibility="gone"
-					/>
+					android:layout_alignBaseline="@+id/bodyBurned"/>
 				<Spinner
 				    android:id="@+id/suicideNote"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
-			
+				
 				<TextView 
-				    android:id="@+id/tv_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="GET MEDICAL RECORDS OF VICTIM"
+					android:visibility="gone"
+					/>
+				<TextView 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -606,19 +614,6 @@
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				
-					
-				<TextView 
-				    android:id="@+id/tv_text"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="GET MEDICAL RECORDS OF VICTIM"
-					android:visibility="gone"
-					/>
 				
 		</LinearLayout>
 		

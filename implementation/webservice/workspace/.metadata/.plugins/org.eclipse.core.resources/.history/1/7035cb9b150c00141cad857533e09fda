@@ -410,7 +410,6 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the victim found close to water?"
-					android:visibility="gone"
 					/>
 				<Spinner
 				    android:id="@+id/closeToWater"
@@ -418,7 +417,6 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 				
 				<TextView 
@@ -431,7 +429,6 @@
 					android:textSize="15sp"
 					android:text="Where outside?"
 					android:visibility="gone"
-					
 					/>
 				<Spinner
 				    android:id="@+id/sceneOType"
@@ -577,16 +574,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
-					android:layout_alignBaseline="@+id/bodyBurned"
-					android:visibility="gone"
-					/>
+					android:layout_alignBaseline="@+id/bodyBurned"/>
 				<Spinner
 				    android:id="@+id/suicideNote"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 			
 				<TextView 

@@ -586,7 +586,6 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
 				    />
 			
 				<TextView 
