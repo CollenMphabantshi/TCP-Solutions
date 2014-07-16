@@ -9137,6 +9137,7 @@ java.awt.FontFormatException: Font name not found
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:629)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:584)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1438)
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.jdt.core 4 4 2014-07-16 12:35:01.279
 !MESSAGE Background Indexer Crash Recovery
@@ -9716,3 +9717,5 @@ Binding(CTRL+SHIFT+\,
 
 !ENTRY com.android.ide.eclipse.adt 2 0 2014-07-16 15:20:39.262
 !MESSAGE aviation.xml: Couldn't resolve resource @string/aviation_theScene
+=======
+>>>>>>> 018933d2c4fa42345712afb414c3152ae7382a65
