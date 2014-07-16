@@ -242,6 +242,362 @@
 							       
 							       
 							    </RelativeLayout>
+							    
+							    
+							    <TextView 
+							            android:id="@+id/tvDemographics"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="DEMOGRAPHICS"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	android:layout_alignBaseline="@+id/tvDemographics"/>
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        >
+							     <TextView 
+							            android:id="@+id/tv_gender"
+							       		android:layout_width="150dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Gender"
+							        	android:layout_alignBaseline="@+id/male"
+							            />
+							        <RadioButton 
+							            android:id="@+id/male"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="male"
+							        	android:layout_toRightOf="@+id/tv_gender"
+							        	android:layout_alignBaseline="@+id/female"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/female"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="female"
+							        	android:layout_toRightOf="@+id/male"
+							        	android:layout_alignBaseline="@+id/unknown"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/unknown_gender"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="unknown"
+							        	android:layout_toRightOf="@+id/female"
+							            />
+							        
+							        
+							        <TextView 
+							            android:id="@+id/tv_race"
+							       		android:layout_width="150dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Race"
+							        	android:layout_alignBaseline="@+id/asian"
+							        	android:layout_below="@+id/tv_gender"
+							            />
+							        <RadioButton 
+							            android:id="@+id/asian"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Asian"
+							        	android:layout_toRightOf="@+id/tv_race"
+							        	android:layout_alignBaseline="@+id/black"
+							        	android:layout_below="@+id/male"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/black"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Black"
+							        	android:layout_toRightOf="@+id/asian"
+							        	android:layout_alignBaseline="@+id/coloured"
+							        	android:layout_below="@+id/female"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/coloured"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Cloured"
+							        	android:layout_toRightOf="@+id/black"
+							        	android:layout_below="@+id/unknown_gender"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/white"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="White"
+							        	android:layout_alignBaseline="@+id/unknown_race"
+							        	android:layout_below="@+id/tv_race"
+							        	android:layout_marginLeft="150dp"
+							        	
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/unknown_race"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="unknown"
+							        	android:layout_toRightOf="@+id/white"
+							        	android:layout_below="@+id/asian"
+							            />
+							        </RelativeLayout>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="UnKnown/Known individual"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+							        	/>
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							        
+							         <TextView 
+							            android:id="@+id/tv_vict_name"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Name"
+							        	android:layout_alignBaseline="@+id/vict_name"/>
+							       <EditText 
+							            android:id="@+id/vict_name"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_vict_surname"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_vict_name"
+							        	android:text="Surname"
+							        	android:layout_alignBaseline="@+id/vict_surname"/>
+							       <EditText 
+							            android:id="@+id/vict_surname"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_surname"
+							        	android:layout_below="@+id/vict_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_vict_idnumber"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_vict_surname"
+							        	android:text="ID number"
+							        	android:layout_alignBaseline="@+id/vict_idnumber"/>
+							       <EditText 
+							            android:id="@+id/vict_idnumber"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_idnumber"
+							        	android:layout_below="@+id/vict_surname"/>
+							        
+							       
+							       
+							    </RelativeLayout>
+							    
+							    
+							    <TextView 
+							            android:id="@+id/tvThebody"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="THE BODY"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	android:layout_alignBaseline="@+id/tvThebody"/>
+							    
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							       
+							        <TextView 
+							            android:id="@+id/scenephoto"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="SCENE PHOTO"
+							        	android:layout_alignBaseline="@+id/camera"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <TextView 
+							            android:id="@+id/camera"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Camera"
+							        	android:layout_toRightOf="@+id/scenephoto"
+							        	android:layout_marginRight="50dp"
+							        	
+							            />
+							         <TextView 
+							            android:id="@+id/browse"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="browse"
+							        	android:layout_toRightOf="@+id/camera"
+							        	
+							            />
+							        
+							        
+							        <TextView 
+							            android:id="@+id/tv_hospitalized"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="How long was the victim hospitalized?"
+							        	android:layout_below="@+id/scenephoto"
+							        	android:layout_alignBaseline="@+id/hospitalized"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <EditText 
+							            android:id="@+id/hospitalized"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_hospitalized"
+							        	android:layout_below="@+id/camera"/>
+							        
+							         <TextView 
+							            android:id="@+id/tv_medical_equipment"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Are all the medical equipment in-situ (still on and in the body)?"
+							        	android:layout_below="@+id/tv_hospitalized"
+							        	android:layout_alignBaseline="@+id/medical_equipment"
+							        	android:layout_marginRight="50dp"
+							            />
+							        
+							       <Spinner 
+							            android:id="@+id/medical_equipment"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							            android:layout_toRightOf="@+id/tv_medical_equipment"
+							        	android:layout_below="@+id/hospitalized"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_GW"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Are the GW 7/14 in file?"
+							        	android:layout_below="@+id/tv_medical_equipment"
+							        	android:layout_alignBaseline="@+id/GW"
+							        	android:layout_marginRight="50dp"
+							            />
+							        
+							       <Spinner 
+							            android:id="@+id/GW"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							            android:layout_toRightOf="@+id/tv_GW"
+							        	android:layout_below="@+id/medical_equipment"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_general"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="General history"
+							        	android:layout_below="@+id/tv_GW"
+							        	android:layout_alignBaseline="@+id/general"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <EditText 
+							            android:id="@+id/general"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_general"
+							        	android:layout_below="@+id/GW"/>
+							       
+							            
+							       
+							    </RelativeLayout>
+							    
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="CREATE GALLERY"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	/>
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Select from memory"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:layout_marginTop="15dp"
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="browse"
+							        	android:layout_margin="5dp"
+							        	
+										
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Take a picture"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:layout_marginTop="15dp"
+										
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="camera"
+							        	android:layout_margin="5dp"
+							        	
+										
+										
+							        	/>
+							    
+								<Button
+								    android:layout_width="wrap_content"
+							        android:layout_height="wrap_content"
+							        android:text="Submit"
+							       	android:layout_margin="5dp"
+							       	android:layout_marginTop="15dp"
+								    ></Button>	    
 			    
 			    </LinearLayout>
     

@@ -9,8 +9,11 @@ package com.example.mobileforensics;
 
 public final class R {
     public static final class array {
+        public static final int hitfrom=0x7f060004;
         public static final int question=0x7f060000;
         public static final int sceneIO=0x7f060001;
+        public static final int singlemultiple=0x7f060003;
+        public static final int yesorno=0x7f060002;
     }
     public static final class attr {
     }
@@ -29,6 +32,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int action_settings=0x7f090313;
         public static final int alcoholBottleAround=0x7f090071;
         public static final int aviation_aircraftNumPeople=0x7f090032;
@@ -834,6 +838,281 @@ public final class R {
         public static final int sect48=0x7f03000c;
         public static final int sid=0x7f03000d;
         public static final int sudc=0x7f03000e;
+=======
+<<<<<<< HEAD
+        public static final int action_settings=0x7f09005a;
+        public static final int alcoholBottleAround=0x7f090039;
+        public static final int basicReportId=0x7f090048;
+        public static final int bluntForceObjectOnScene=0x7f09003d;
+        public static final int bluntObjectUsed=0x7f09003c;
+        public static final int bodyDecomposed=0x7f090021;
+        public static final int chockingSuspected=0x7f090040;
+        public static final int closeToWater=0x7f090027;
+        public static final int communityAssault=0x7f09003b;
+        public static final int createCaseId=0x7f090046;
+        public static final int doneButton=0x7f090044;
+        public static final int doorLocked=0x7f090030;
+        public static final int dr_cell=0x7f090053;
+        public static final int dr_name=0x7f09004f;
+        public static final int dr_surname=0x7f090051;
+        public static final int drugParaphernalia=0x7f09003a;
+        public static final int foos_name=0x7f09000a;
+        public static final int foos_rank=0x7f09000e;
+        public static final int foos_surname=0x7f09000c;
+        public static final int generalHistory=0x7f090042;
+        public static final int howManyAttempts=0x7f09002c;
+=======
+        public static final int FoulPlay=0x7f090098;
+        public static final int GW=0x7f0900b2;
+        public static final int accelerants=0x7f090090;
+        public static final int accelerantsSpecify=0x7f090092;
+        public static final int action_settings=0x7f0900b3;
+        public static final int aircraftNumPeople=0x7f090032;
+        public static final int aircraftType=0x7f090030;
+        public static final int alcoholBottleAround=0x7f09007c;
+        public static final int asian=0x7f09004d;
+        public static final int basicReportId=0x7f09009b;
+        public static final int black=0x7f09004e;
+        public static final int bodyBurned=0x7f090024;
+        public static final int bodyDecomposed=0x7f090020;
+        public static final int bodyIntact=0x7f090026;
+        public static final int bodyintact=0x7f090063;
+        public static final int browse=0x7f09005b;
+        public static final int camera=0x7f09005a;
+        public static final int closeToWater=0x7f09002a;
+        public static final int coloured=0x7f09004f;
+        public static final int communityAssault=0x7f09007e;
+        public static final int createCaseId=0x7f090099;
+        public static final int decomposed=0x7f09005d;
+        public static final int doorLocked=0x7f090077;
+        public static final int dr_cell=0x7f0900a6;
+        public static final int dr_name=0x7f0900a2;
+        public static final int dr_surname=0x7f0900a4;
+        public static final int drugParaphernalia=0x7f09007d;
+        public static final int female=0x7f090049;
+        public static final int fo_name=0x7f090041;
+        public static final int fo_rank=0x7f090045;
+        public static final int fo_surname=0x7f090043;
+        public static final int foos_name=0x7f09000a;
+        public static final int foos_rank=0x7f09000e;
+        public static final int foos_surname=0x7f09000c;
+        public static final int foundbody=0x7f090061;
+        public static final int general=0x7f090070;
+        public static final int generalHistory=0x7f09003e;
+        public static final int hit=0x7f090067;
+        public static final int hospitalized=0x7f0900ae;
+        public static final int igniter=0x7f090094;
+        public static final int igniterSpecify=0x7f090096;
+        public static final int intervention=0x7f09005f;
+>>>>>>> 262b4e4616c5fda27d4d8f35739cbe9abcf88086
+        public static final int io_cell=0x7f090008;
+        public static final int io_name=0x7f090002;
+        public static final int io_rank=0x7f090006;
+        public static final int io_surname=0x7f090004;
+<<<<<<< HEAD
+        public static final int list=0x7f09004d;
+        public static final int logginId=0x7f09004c;
+        public static final int logoutButton=0x7f090045;
+        public static final int medicalIntervention=0x7f090023;
+        public static final int nextButton=0x7f090043;
+        public static final int nr_cell=0x7f090059;
+        public static final int nr_name=0x7f090055;
+        public static final int nr_surname=0x7f090057;
+        public static final int passwordId=0x7f09004a;
+        public static final int peopleWithVictim=0x7f090035;
+        public static final int previousAttempts=0x7f09002b;
+        public static final int previousCaseId=0x7f090047;
+        public static final int rapeHomicide=0x7f090029;
+        public static final int rememberMeId=0x7f09004b;
+=======
+        public static final int list=0x7f0900a0;
+        public static final int logginId=0x7f09009f;
+        public static final int male=0x7f090048;
+        public static final int medicalIntervention=0x7f090022;
+        public static final int medical_equipment=0x7f0900b0;
+        public static final int note=0x7f09006d;
+        public static final int note_yes=0x7f09006e;
+        public static final int nr_cell=0x7f0900ac;
+        public static final int nr_name=0x7f0900a8;
+        public static final int nr_surname=0x7f0900aa;
+        public static final int passwordId=0x7f09009d;
+        public static final int person=0x7f090034;
+        public static final int previousAttempts=0x7f090073;
+        public static final int previousAttemptsNum=0x7f090083;
+        public static final int previousCaseId=0x7f09009a;
+        public static final int rapeHomicide=0x7f090071;
+        public static final int rememberMeId=0x7f09009e;
+>>>>>>> 262b4e4616c5fda27d4d8f35739cbe9abcf88086
+        public static final int rgGender=0x7f09000f;
+        public static final int rgRace=0x7f090013;
+        public static final int rgbAsian=0x7f090014;
+        public static final int rgbBlack=0x7f090015;
+        public static final int rgbColoured=0x7f090016;
+        public static final int rgbFemale=0x7f090011;
+        public static final int rgbMale=0x7f090010;
+        public static final int rgbUnknownGender=0x7f090012;
+        public static final int rgbUnknownRace=0x7f090018;
+        public static final int rgbWhite=0x7f090017;
+<<<<<<< HEAD
+        public static final int sceneIOType=0x7f09002d;
+        public static final int sceneIType=0x7f09002e;
+        public static final int sceneITypeOther=0x7f09002f;
+        public static final int sceneOType=0x7f090036;
+        public static final int sceneOTypeOther=0x7f090037;
+        public static final int signsOfStruggle=0x7f090038;
+        public static final int smotheringSuspected=0x7f09003f;
+        public static final int strangulationSuspected=0x7f09003e;
+        public static final int suicideNoteFound=0x7f090041;
+        public static final int suicideSuspected=0x7f09002a;
+        public static final int tvInformation=0x7f090000;
+        public static final int tv_bodyDecomposed=0x7f090020;
+        public static final int tv_closeToWater=0x7f090026;
+        public static final int tv_dr_cell=0x7f090052;
+        public static final int tv_dr_name=0x7f09004e;
+        public static final int tv_dr_surname=0x7f090050;
+=======
+        public static final int sceneIOType=0x7f090074;
+        public static final int sceneIType=0x7f090075;
+        public static final int sceneITypeOther=0x7f090076;
+        public static final int sceneOType=0x7f09002c;
+        public static final int sceneOTypeOther=0x7f09002e;
+        public static final int scenephoto=0x7f090059;
+        public static final int signsOfStruggle=0x7f09007b;
+        public static final int singlemultiple=0x7f090065;
+        public static final int suicideNote=0x7f09003c;
+        public static final int suicideSuspected=0x7f090072;
+        public static final int tvDemographics=0x7f090046;
+        public static final int tvInformation=0x7f090000;
+        public static final int tvThebody=0x7f090058;
+        public static final int tv_FoulPlay=0x7f090097;
+        public static final int tv_GW=0x7f0900b1;
+        public static final int tv_accelerants=0x7f09008f;
+        public static final int tv_accelerantsSpecify=0x7f090091;
+        public static final int tv_aircraftNumPeople=0x7f090031;
+        public static final int tv_aircraftType=0x7f09002f;
+        public static final int tv_alcoholBottleAround=0x7f09008d;
+        public static final int tv_bodyBurned=0x7f090023;
+        public static final int tv_bodyDecomposed=0x7f09001f;
+        public static final int tv_bodyIntact=0x7f090025;
+        public static final int tv_bodyintact=0x7f090062;
+        public static final int tv_closeToWater=0x7f090029;
+        public static final int tv_decomposed=0x7f09005c;
+        public static final int tv_doorLocked=0x7f090086;
+        public static final int tv_dr_cell=0x7f0900a5;
+        public static final int tv_dr_name=0x7f0900a1;
+        public static final int tv_dr_surname=0x7f0900a3;
+        public static final int tv_drugParaphernalia=0x7f09008e;
+        public static final int tv_fo_name=0x7f090040;
+        public static final int tv_fo_rank=0x7f090044;
+        public static final int tv_fo_surname=0x7f090042;
+>>>>>>> 262b4e4616c5fda27d4d8f35739cbe9abcf88086
+        public static final int tv_foos_name=0x7f090009;
+        public static final int tv_foos_rank=0x7f09000d;
+        public static final int tv_foos_surname=0x7f09000b;
+        public static final int tv_foundbody=0x7f090060;
+        public static final int tv_gender=0x7f090047;
+        public static final int tv_general=0x7f09006f;
+        public static final int tv_generalHistory=0x7f09003d;
+        public static final int tv_hit=0x7f090066;
+        public static final int tv_hospitalized=0x7f0900ad;
+        public static final int tv_igniter=0x7f090093;
+        public static final int tv_igniterSpecify=0x7f090095;
+        public static final int tv_intervention=0x7f09005e;
+        public static final int tv_io_cell=0x7f090007;
+        public static final int tv_io_name=0x7f090001;
+        public static final int tv_io_rank=0x7f090005;
+        public static final int tv_io_surname=0x7f090003;
+<<<<<<< HEAD
+        public static final int tv_medicalIntervention=0x7f090022;
+        public static final int tv_nr_cell=0x7f090058;
+        public static final int tv_nr_name=0x7f090054;
+        public static final int tv_nr_surname=0x7f090056;
+        public static final int tv_peopleWithVictim=0x7f090034;
+        public static final int tv_rapeHomicide=0x7f090028;
+        public static final int tv_the_body=0x7f09001f;
+        public static final int tv_victim_id=0x7f09001d;
+        public static final int tv_victim_name=0x7f090019;
+        public static final int tv_victim_surname=0x7f09001b;
+        public static final int tv_whoFoundVictimBody=0x7f090024;
+        public static final int usernameId=0x7f090049;
+        public static final int victimAlone=0x7f090033;
+        public static final int victim_id=0x7f09001e;
+        public static final int victim_name=0x7f09001a;
+        public static final int victim_surname=0x7f09001c;
+        public static final int whoFoundVictimBody=0x7f090025;
+        public static final int windowsBroken=0x7f090032;
+        public static final int windowsClosed=0x7f090031;
+=======
+        public static final int tv_medicalIntervention=0x7f090021;
+        public static final int tv_medical_equipment=0x7f0900af;
+        public static final int tv_note=0x7f09006c;
+        public static final int tv_nr_cell=0x7f0900ab;
+        public static final int tv_nr_name=0x7f0900a7;
+        public static final int tv_nr_surname=0x7f0900a9;
+        public static final int tv_person=0x7f090033;
+        public static final int tv_previousAttempts=0x7f090081;
+        public static final int tv_previousAttemptsNum=0x7f090082;
+        public static final int tv_race=0x7f09004c;
+        public static final int tv_rapeHomicide=0x7f09007f;
+        public static final int tv_sceneIType=0x7f090084;
+        public static final int tv_sceneITypeOther=0x7f090085;
+        public static final int tv_sceneOType=0x7f09002b;
+        public static final int tv_sceneOTypeOther=0x7f09002d;
+        public static final int tv_signsOfStruggle=0x7f09008c;
+        public static final int tv_singlemultiple=0x7f090064;
+        public static final int tv_suicideNote=0x7f09003b;
+        public static final int tv_suicideSuspected=0x7f090080;
+        public static final int tv_text=0x7f09003f;
+        public static final int tv_vict_idnumber=0x7f090056;
+        public static final int tv_vict_name=0x7f090052;
+        public static final int tv_vict_surname=0x7f090054;
+        public static final int tv_victimAlone=0x7f090089;
+        public static final int tv_victimIO=0x7f090035;
+        public static final int tv_victimWith=0x7f09008a;
+        public static final int tv_victim_id=0x7f09001d;
+        public static final int tv_victim_name=0x7f090019;
+        public static final int tv_victim_surname=0x7f09001b;
+        public static final int tv_wasit=0x7f090068;
+        public static final int tv_weather=0x7f09006a;
+        public static final int tv_weatherCondition=0x7f090037;
+        public static final int tv_weatherType=0x7f090039;
+        public static final int tv_whoFoundVictimBody=0x7f090027;
+        public static final int tv_windowsBroken=0x7f090088;
+        public static final int tv_windowsClosed=0x7f090087;
+        public static final int unknown=0x7f09004a;
+        public static final int unknown_gender=0x7f09004b;
+        public static final int unknown_race=0x7f090051;
+        public static final int usernameId=0x7f09009c;
+        public static final int vict_idnumber=0x7f090057;
+        public static final int vict_name=0x7f090053;
+        public static final int vict_surname=0x7f090055;
+        public static final int victimAlone=0x7f09007a;
+        public static final int victimIO=0x7f090036;
+        public static final int victimWith=0x7f09008b;
+        public static final int victim_id=0x7f09001e;
+        public static final int victim_name=0x7f09001a;
+        public static final int victim_surname=0x7f09001c;
+        public static final int wasit=0x7f090069;
+        public static final int weather=0x7f09006b;
+        public static final int weatherCondition=0x7f090038;
+        public static final int weatherType=0x7f09003a;
+        public static final int white=0x7f090050;
+        public static final int whoFoundVictimBody=0x7f090028;
+        public static final int windowsBroken=0x7f090079;
+        public static final int windowsClosed=0x7f090078;
+>>>>>>> 262b4e4616c5fda27d4d8f35739cbe9abcf88086
+    }
+    public static final class layout {
+        public static final int aviation=0x7f030000;
+        public static final int bicycle=0x7f030001;
+        public static final int blunt=0x7f030002;
+        public static final int burn=0x7f030003;
+        public static final int foetusabandoned=0x7f030004;
+        public static final int home=0x7f030005;
+        public static final int loggin=0x7f030006;
+        public static final int scenemenu=0x7f030007;
+        public static final int sect48=0x7f030008;
+>>>>>>> 6adc16dea6b62cec80cbeb9716b6bb5dd9a939b9
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -842,11 +1121,14 @@ public final class R {
         public static final int action_settings=0x7f050002;
         public static final int app_name=0x7f050000;
         public static final int choose=0x7f050006;
+        public static final int chooseYN=0x7f050009;
         public static final int hello_world=0x7f050001;
         public static final int loggin=0x7f050004;
         public static final int password=0x7f050005;
-        public static final int scene_look=0x7f050008;
-        public static final int scene_of_injury=0x7f050007;
+        public static final int scene_look=0x7f050009;
+        public static final int scene_of_injury=0x7f050008;
+        public static final int the_body=0x7f050007;
+        public static final int the_scene=0x7f05000a;
         public static final int username=0x7f050003;
     }
     public static final class style {
