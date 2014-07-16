@@ -5,14 +5,15 @@
     android:orientation="vertical" 
     android:gravity="center_horizontal" >
     
+
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Aviation"
+		android:text="Burns"
 		android:layout_margin="15dp"
 		android:textStyle="bold"
 		android:textSize="20sp"
-		android:layout_alignBaseline="@+id/aviation_tvInformation"/>
+		android:layout_alignBaseline="@+id/burn_tvInformation"/>
 	
     <ScrollView 
         android:layout_width="match_parent"
@@ -38,60 +39,60 @@
 				android:gravity="center_horizontal">
 							        
 				<TextView 
-					android:id="@+id/tv_aviation_io_name"
+					android:id="@+id/tv_burn_io_name"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Name"
-					android:layout_alignBaseline="@+id/aviation_io_name"/>
+					android:layout_alignBaseline="@+id/burn_io_name"/>
 				<EditText 
-					android:id="@+id/aviation_io_name"
+					android:id="@+id/burn_io_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_io_name"/>
+					android:layout_toRightOf="@+id/tv_burn_io_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_io_surname"
+					android:id="@+id/tv_burn_io_surname"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_io_name"
+					android:layout_below="@+id/tv_burn_io_name"
 					android:text="Surname"
-					android:layout_alignBaseline="@+id/aviation_io_surname"/>
+					android:layout_alignBaseline="@+id/burn_io_surname"/>
 				<EditText 
-					android:id="@+id/aviation_io_surname"
+					android:id="@+id/burn_io_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_io_surname"
-					android:layout_below="@+id/aviation_io_name"/>
+					android:layout_toRightOf="@+id/tv_burn_io_surname"
+					android:layout_below="@+id/burn_io_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_io_rank"
+					android:id="@+id/tv_burn_io_rank"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_io_surname"
+					android:layout_below="@+id/tv_burn_io_surname"
 					android:text="Rank"
-					android:layout_alignBaseline="@+id/aviation_io_rank"/>
+					android:layout_alignBaseline="@+id/burn_io_rank"/>
 				<EditText 
-					android:id="@+id/aviation_io_rank"
+					android:id="@+id/burn_io_rank"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_io_rank"
-					android:layout_below="@+id/aviation_io_surname"/>
+					android:layout_toRightOf="@+id/tv_burn_io_rank"
+					android:layout_below="@+id/burn_io_surname"/>
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_io_cell"
+					android:id="@+id/tv_burn_io_cell"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_io_rank"
+					android:layout_below="@+id/tv_burn_io_rank"
 					android:text="Cell"
-					android:layout_alignBaseline="@+id/aviation_io_cell"/>
+					android:layout_alignBaseline="@+id/burn_io_cell"/>
 				<EditText 
-					android:id="@+id/aviation_io_cell"
+					android:id="@+id/burn_io_cell"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_io_cell"
-					android:layout_below="@+id/aviation_io_rank"/>				       
+					android:layout_toRightOf="@+id/tv_burn_io_cell"
+					android:layout_below="@+id/burn_io_rank"/>				       
 			</RelativeLayout>
 			
 			<TextView			            
@@ -108,46 +109,46 @@
 				android:gravity="center_horizontal">
 							        
 				<TextView 
-					android:id="@+id/tv_aviation_foos_name"
+					android:id="@+id/tv_burn_foos_name"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Name"
-					android:layout_alignBaseline="@+id/aviation_foos_name"/>
+					android:layout_alignBaseline="@+id/burn_foos_name"/>
 				<EditText 
-					android:id="@+id/aviation_foos_name"
+					android:id="@+id/burn_foos_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_foos_name"/>
+					android:layout_toRightOf="@+id/tv_burn_foos_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_foos_surname"
+					android:id="@+id/tv_burn_foos_surname"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_foos_name"
+					android:layout_below="@+id/tv_burn_foos_name"
 					android:text="Surname"
-					android:layout_alignBaseline="@+id/aviation_foos_surname"/>
+					android:layout_alignBaseline="@+id/burn_foos_surname"/>
 				<EditText 
-					android:id="@+id/aviation_foos_surname"
+					android:id="@+id/burn_foos_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_foos_surname"
-					android:layout_below="@+id/aviation_foos_name"/>
+					android:layout_toRightOf="@+id/tv_burn_foos_surname"
+					android:layout_below="@+id/burn_foos_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_foos_rank"
+					android:id="@+id/tv_burn_foos_rank"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_foos_surname"
+					android:layout_below="@+id/tv_burn_foos_surname"
 					android:text="Rank"
-					android:layout_alignBaseline="@+id/aviation_foos_rank"/>
+					android:layout_alignBaseline="@+id/burn_foos_rank"/>
 				<EditText 
-					android:id="@+id/aviation_foos_rank"
+					android:id="@+id/burn_foos_rank"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_foos_rank"
-					android:layout_below="@+id/aviation_foos_surname"/>
+					android:layout_toRightOf="@+id/tv_burn_foos_rank"
+					android:layout_below="@+id/burn_foos_surname"/>
 								       
 			</RelativeLayout>
 			<TextView			            
@@ -160,28 +161,28 @@
 				android:textSize="15sp"
 			/>
 			<RadioGroup 
-			    android:id="@+id/aviation_rgGender"
+			    android:id="@+id/burn_rgGender"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    >
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbMale"
+			        android:id="@+id/burn_rgbMale"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Male"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbFemale"
+			        android:id="@+id/burn_rgbFemale"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Female"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbUnknownGender"
+			        android:id="@+id/burn_rgbUnknownGender"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -199,42 +200,42 @@
 				android:textSize="15sp"
 			/>
 			<RadioGroup 
-			    android:id="@+id/aviation_rgRace"
+			    android:id="@+id/burn_rgRace"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    >
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbAsian"
+			        android:id="@+id/burn_rgbAsian"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Asian"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbBlack"
+			        android:id="@+id/burn_rgbBlack"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Black"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbColoured"
+			        android:id="@+id/burn_rgbColoured"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Coloured"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbWhite"
+			        android:id="@+id/burn_rgbWhite"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="White"
 			        />
 			    <RadioButton 
-			        android:id="@+id/aviation_rgbUnknownRace"
+			        android:id="@+id/burn_rgbUnknownRace"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -256,50 +257,50 @@
 				android:gravity="center_horizontal">
 							        
 				<TextView 
-					android:id="@+id/tv_aviation_victim_name"
+					android:id="@+id/tv_burn_victim_name"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Victim Name"
-					android:layout_alignBaseline="@+id/aviation_victim_name"/>
+					android:layout_alignBaseline="@+id/burn_victim_name"/>
 				<EditText 
-					android:id="@+id/aviation_victim_name"
+					android:id="@+id/burn_victim_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_victim_name"/>
+					android:layout_toRightOf="@+id/tv_burn_victim_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_victim_surname"
+					android:id="@+id/tv_burn_victim_surname"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_victim_name"
+					android:layout_below="@+id/tv_burn_victim_name"
 					android:text="Victim Surname"
-					android:layout_alignBaseline="@+id/aviation_victim_surname"/>
+					android:layout_alignBaseline="@+id/burn_victim_surname"/>
 				<EditText 
-					android:id="@+id/aviation_victim_surname"
+					android:id="@+id/burn_victim_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_victim_surname"
-					android:layout_below="@+id/aviation_victim_name"/>
+					android:layout_toRightOf="@+id/tv_burn_victim_surname"
+					android:layout_below="@+id/burn_victim_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_aviation_victim_id"
+					android:id="@+id/tv_burn_victim_id"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/tv_aviation_victim_id"
+					android:layout_below="@+id/tv_burn_victim_id"
 					android:text="ID Number"
-					android:layout_alignBaseline="@+id/aviation_victim_id"/>
+					android:layout_alignBaseline="@+id/burn_victim_id"/>
 				<EditText 
-					android:id="@+id/aviation_victim_id"
+					android:id="@+id/burn_victim_id"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/tv_aviation_victim_id"
-					android:layout_below="@+id/aviation_victim_surname"/>
+					android:layout_toRightOf="@+id/tv_burn_victim_id"
+					android:layout_below="@+id/burn_victim_surname"/>
 								       
 				</RelativeLayout>
 				<TextView 
-				    android:id="@+id/tv_aviation_bodyDecomposed"
+				    android:id="@+id/tv_burn_bodyDecomposed"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -307,11 +308,11 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the body decomposed?"
-					android:layout_alignBaseline="@+id/aviation_bodyDecomposed"
+					android:layout_alignBaseline="@+id/burn_bodyDecomposed"
 					android:visibility="gone"
 					/>
 				<Spinner
-				    android:id="@+id/aviation_bodyDecomposed"
+				    android:id="@+id/burn_bodyDecomposed"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
@@ -320,7 +321,7 @@
 				    />
 				    
 				<TextView 
-				    android:id="@+id/tv_aviation_medicalIntervention"
+				    android:id="@+id/tv_burn_medicalIntervention"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -328,12 +329,12 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there any medical intervention?"
-					android:layout_alignBaseline="@+id/aviation_medicalIntervention"
+					android:layout_alignBaseline="@+id/burn_medicalIntervention"
 					android:visibility="gone"
 					/>
 				
 				<Spinner
-				    android:id="@+id/aviation_medicalIntervention"
+				    android:id="@+id/burn_medicalIntervention"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
@@ -342,49 +343,7 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_aviation_bodyBurned"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Is the body burned? (Ask IO to get dental records)"
-					android:layout_alignBaseline="@+id/aviation_bodyBurned"
-					android:visibility="gone"
-					/>
-				<Spinner
-				    android:id="@+id/aviation_bodyBurned"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:entries="@array/question"
-					android:prompt="@string/choose"
-					android:visibility="gone"
-				    />
-				
-				<TextView 
-				    android:id="@+id/tv_aviation_bodyIntact"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Is the body intact?"
-					android:layout_alignBaseline="@+id/aviation_bodyIntact"
-					android:visibility="gone"
-					/>
-				<Spinner
-				    android:id="@+id/aviation_bodyIntact"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:entries="@array/question"
-					android:prompt="@string/choose"
-					android:visibility="gone"
-				    />
-				
-				<TextView 
-				    android:id="@+id/tv_aviation_whoFoundVictimBody"
+				    android:id="@+id/tv_burn_whoFoundVictimBody"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -395,14 +354,14 @@
 					android:visibility="gone"
 					/>
 				<EditText 
-					android:id="@+id/aviation_whoFoundVictimBody"
+					android:id="@+id/burn_whoFoundVictimBody"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 					/>
 				
 				<TextView 
-				    android:id="@+id/tv_aviation_closeToWater"
+				    android:id="@+id/tv_burn_closeToWater"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -413,7 +372,7 @@
 					android:visibility="gone"
 					/>
 				<Spinner
-				    android:id="@+id/aviation_closeToWater"
+				    android:id="@+id/burn_closeToWater"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
@@ -422,7 +381,219 @@
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_aviation_sceneOType"
+				    android:id="@+id/tv_burn_rapeHomicide"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is a rape-homicide suspected? (IF YES REMEMBER TO BAG HANDS WITH PAPER BAGS)"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_rapeHomicide"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_burn_suicideSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Suspicion of suicide?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_suicideSuspected"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_burn_previousAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are there any previous attempts?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/burn_previousAttempts"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_previousAttemptsNum"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If yes, specify the number of attempts?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/burn_previousAttemptsNum"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_burn_sceneIType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where inside?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/burn_sceneIType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_sceneITypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/burn_sceneITypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_burn_doorLocked"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the door locked from the inside?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_doorLocked"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_windowsClosed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Were the windows closed?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_windowsClosed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView
+				    android:id="@+id/tv_burn_windowsBroken" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are any of the windows broken?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_windowsBroken"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_victimAlone" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the victim alone at the time of death?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_victimAlone"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_victimWith"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If no, who was the victim with?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/burn_victimWith"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_burn_sceneOType"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -434,14 +605,14 @@
 					
 					/>
 				<Spinner
-				    android:id="@+id/aviation_sceneOType"
+				    android:id="@+id/burn_sceneOType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:prompt="@string/choose"
 					android:visibility="gone"
 				    />
 				<TextView 
-				    android:id="@+id/tv_aviation_sceneOTypeOther"
+				    android:id="@+id/tv_burn_sceneOTypeOther"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -452,136 +623,177 @@
 					android:visibility="gone"
 					/>
 				<EditText
-				    android:id="@+id/aviation_sceneOTypeOther"
+				    android:id="@+id/burn_sceneOTypeOther"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				<TextView
-				    android:id="@+id/tv_aviation_aircraftType" 
+				<TextView 
+				    android:id="@+id/tv_burn_signsOfStruggle"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Is it a"
+					android:text="Are there any signs of struggle?"
 					android:visibility="gone"
 					/>
 				<Spinner
-				    android:id="@+id/aviation_aircraftType"
+				    android:id="@+id/burn_signsOfStruggle"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/question"
 					android:prompt="@string/choose"
 					android:visibility="gone"
 				    />
 				<TextView 
-				    android:id="@+id/tv_aviation_aircraftNumPeople"
+				    android:id="@+id/tv_burn_alcoholBottleAround"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="How many people were in the aircraft?"
+					android:text="Alcohol bottle standing around?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_alcoholBottleAround"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_drugParaphernalia"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Drug paraphernalia?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_drugParaphernalia"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_burn_accelerants" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are there any accelerants at scene?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_accelerants"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_accelerantsSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If yes, specify"
 					android:visibility="gone"
 					/>
 				<EditText
-				    android:id="@+id/aviation_aircraftNumPeople"
+				    android:id="@+id/burn_accelerantsSpecify"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				<TextView
-				    android:id="@+id/tv_aviation_person" 
+							
+				<TextView 
+				    android:id="@+id/tv_burn_igniter" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Is this"
+					android:text="Are there any igniters at the scene?"
 					android:visibility="gone"
 					/>
 				<Spinner
-				    android:id="@+id/aviation_person"
+				    android:id="@+id/burn_igniter"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_burn_igniterSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If yes, specify the igniter"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/burn_igniterSpecify"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+	
+				<TextView 
+				    android:id="@+id/tv_burn_FoulPlay" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there a suspicion of foul play?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_FoulPlay"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
 					android:prompt="@string/choose"
 					android:visibility="gone"
 				    />
 				
 				<TextView 
-				    android:id="@+id/tv_aviation_victimIO"
+				    android:id="@+id/tv_burn_suicideNote"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					android:layout_marginTop="100dp"
 					android:textStyle="bold"
 					android:textSize="15sp"
-					android:text="Is the victim"
-					android:visibility="gone"
-					/>
-				<Spinner
-				    android:id="@+id/aviation_victimIO"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:prompt="@string/choose"
-					android:visibility="gone"
-				    />
-				
-				<TextView 
-				    android:id="@+id/tv_aviation_weatherCondition"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Weather condition"
-					android:visibility="gone"
-					/>
-				<Spinner
-				    android:id="@+id/aviation_weatherCondition"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:prompt="@string/choose"
-					android:visibility="gone"
-				    />
-				
-				<TextView 
-				    android:id="@+id/tv_aviation_weatherType"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Was it"
-					android:visibility="gone"
-					/>
-				<Spinner
-				    android:id="@+id/aviation_weatherType"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:prompt="@string/choose"
-					android:visibility="gone"
-				    />
-				
-				<TextView 
-				    android:id="@+id/tv_aviation_suicideNote"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
+					android:text="Is there any suicide notes on the scene? (Is it with the police/body?)"
 					android:layout_alignBaseline="@+id/bodyBurned"
 					android:visibility="gone"
 					/>
 				<Spinner
-				    android:id="@+id/aviation_suicideNote"
+				    android:id="@+id/burn_suicideNote"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
@@ -590,7 +802,7 @@
 				    />
 			
 				<TextView 
-				    android:id="@+id/tv_aviation_generalHistory"
+				    android:id="@+id/tv_burn_generalHistory"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -601,27 +813,15 @@
 					android:visibility="gone"
 					/>
 				<EditText
-				    android:id="@+id/aviation_generalHistory"
+				    android:id="@+id/burn_generalHistory"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
-				
-					
-				<TextView 
-				    android:id="@+id/tv_aviation_text"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					android:layout_marginTop="100dp"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="GET MEDICAL RECORDS OF VICTIM"
-					android:visibility="gone"
-					/>
 				
 		</LinearLayout>
 		
 	</ScrollView>    	
 </LinearLayout>
 
+>>>>>>> f8075949aa7a4ced2b8698137fbe939f808bc776

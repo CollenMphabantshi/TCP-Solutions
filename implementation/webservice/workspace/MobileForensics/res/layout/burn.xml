@@ -5,9 +5,6 @@
     android:orientation="vertical" 
     android:gravity="center_horizontal" >
     
-<<<<<<< HEAD
-    </LinearLayout>
-=======
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -826,4 +823,4 @@
 	</ScrollView>    	
 </LinearLayout>
 
->>>>>>> f8075949aa7a4ced2b8698137fbe939f808bc776
+
