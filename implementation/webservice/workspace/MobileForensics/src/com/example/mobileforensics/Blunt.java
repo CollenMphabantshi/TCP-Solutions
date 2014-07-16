@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -154,6 +155,13 @@ public class Blunt extends Activity{
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
 	private int pageCount;
+	
+	private String username;
+	private String time;
+	private String date;
+	private String location;
+	private String temperature;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -161,6 +169,11 @@ public class Blunt extends Activity{
 		setContentView(R.layout.blunt);
 		
 		pageCount = 1;
+		username = "p11111111";
+		time = "00:00:10";
+		date = "2014-01-01";
+		location = "122223, -13332";
+		temperature = "23 C";
 		
 		tv_ioName = (TextView)findViewById(R.id.blunt_tv_io_name);
 		ioName = (EditText)findViewById(R.id.blunt_io_name);
@@ -309,6 +322,16 @@ public class Blunt extends Activity{
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					if(postdata != null)
+					{
+						new Read().execute(postdata);
+						if(json != null)
+						{
+							System.out.println("\n\n\n\n\n\n\n\nOUTPUT: "+json.toString()+"\n\n\n\n\n\n\n\n");
+						}
+					}
+					
+					
 					nextButton.setVisibility(GONE);
 					doneButton.setVisibility(GONE);
 					logoutButton.setVisibility(VISIBLE);
@@ -857,20 +880,184 @@ public class Blunt extends Activity{
 	}
 	
 	private List<NameValuePair> getPostData(){
-		
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
-
-        pairs.add(new BasicNameValuePair("rquest","addCases"));
-        
-        
-        return pairs;
+		try{
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+	
+	        pairs.add(new BasicNameValuePair("rquest","addCase"));
+	        pairs.add(new BasicNameValuePair("category","blunt"));
+	        JSONObject obj = new JSONObject();
+	        JSONArray array = new JSONArray();
+	        JSONObject info = new JSONObject();
+	        JSONArray vicArray = new JSONArray();
+	        JSONObject victims = new JSONObject();
+	        
+	        
+	        info.accumulate("FOPersonelNumber", username);
+	        info.accumulate("sceneTime", time);
+	        info.accumulate("sceneDate", date);
+	        info.accumulate("sceneLocation", location);
+	        info.accumulate("sceneTemparature", temperature);
+	        info.accumulate("investigatingOfficerName", ioName.getText().toString());
+	        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
+	        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
+	        info.accumulate("firstOfficerOnSceneName", foosName.getText().toString());
+	        info.accumulate("firstOfficerOnSceneRank", foosRank.getText().toString());
+	        knownVictim();
+	        victims.accumulate("victimIdentityNumber", victimIDNo.getText().toString());
+	        victims.accumulate("victimGender", getVictimGender());
+	        victims.accumulate("victimRace", getVictimRace());
+	        victims.accumulate("victimName", victimName.getText().toString());
+	        victims.accumulate("victimSurame", victimSurname.getText().toString());
+	        victims.accumulate("scenePhoto", null);
+	        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
+	        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
+	        victims.accumulate("bodyBurned", null);
+	        victims.accumulate("bodyIntact", null);
+	        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
+	        victims.accumulate("victimFoundCloseToWater", (String)closeToWater.getSelectedItem());
+	        victims.accumulate("suicideSuspected", (String)suicideSuspected.getSelectedItem());
+	        victims.accumulate("victimSuicideNoteFound", (String)suicideNoteFound.getSelectedItem());
+	        victims.accumulate("previousAttempts", (String)previousAttempts.getSelectedItem());
+	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+	        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
+	        String item = (String)sceneIOType.getSelectedItem();
+	        if(item.toLowerCase().equals("yes"))
+	        {
+		        victims.accumulate("victimInside", "yes");
+		        victims.accumulate("victimOutside", "no");
+	        }
+	       
+	        vicArray.put(victims);
+	        info.accumulate("victims", vicArray);
+	        
+	        info.accumulate("bluntIOType",getIOType() );
+	        info.accumulate("signsOfStruggle", (String)signsOfStruggle.getSelectedItem());
+	        info.accumulate("alcoholBottleAround", (String)alcoholBottleAround.getSelectedItem());
+	        info.accumulate("drugParaphernalia", (String)drugParaphernalia.getSelectedItem());
+	        info.accumulate("strangulationSuspected", (String)strangulationSuspected.getSelectedItem());
+	        info.accumulate("smotheringSuspected", (String)smotheringSuspected.getSelectedItem());
+	        info.accumulate("chockingSuspected", (String)chockingSuspected.getSelectedItem());
+	        info.accumulate("doorLocked", (String)doorLocked.getSelectedItem());
+	        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
+	        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
+	        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
+	        info.accumulate("peopleWithVictim", peopleWithVictim.getText().toString());
+	        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
+	        info.accumulate("bluntForceObjectStillOnScene", (String)bluntForceObjectOnScene.getSelectedItem());
+	        info.accumulate("wasCommunityAssult", (String)communityAssault.getSelectedItem());
+	        
+	        array.put(info);
+	        obj.accumulate("object", array);
+	        pairs.add(new BasicNameValuePair("caseData",obj.toString()));
+	        
+	        return pairs;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
+	private String getIOType(){
+		try{
+			String type = "";
+			String item = (String)sceneIOType.getSelectedItem();
+			if(item.toLowerCase().equals("inside"))
+			{
+				type = (String)sceneIType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneITypeOther.getText().toString();
+				}
+				return type;
+			}else{
+				type = (String)sceneOType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneOTypeOther.getText().toString();
+				}
+				return type;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String getVictimGender(){
+		try{
+			
+			
+			if(rgbMale.isChecked())
+			{
+				return "Male";
+			}else if(rgbFemale.isChecked())
+			{
+				return "Female";
+			}else if(rgbUnknownGender.isChecked())
+			{
+				return "Unknown";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "Unknown";
+	}
+	
+	private String getVictimRace(){
+		try{
+			
+			
+			if(rgbAsian.isChecked())
+			{
+				return "Asian";
+			}else if(rgbBlack.isChecked())
+			{
+				return "Black";
+			}else if(rgbColoured.isChecked())
+			{
+				return "Coloured";
+			}else if(rgbWhite.isChecked())
+			{
+				return "White";
+			}else if(rgbUnknownRace.isChecked())
+			{
+				return "Unknown";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "Unknown";
+	}
+	
+	private void knownVictim(){
+		try{
+			if(victimName.getText().toString().equals(""))
+			{
+				victimName.setText("Unknown");
+				victimSurname.setText("Unknown");
+				victimIDNo.setText("Unknown");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	private int getAttempts(){
+		try{
+			String item = (String)previousAttempts.getSelectedItem();
+			if(item.toLowerCase().equals("yes"))
+			{
+				int attempts = Integer.parseInt(howManyAttempts.getText().toString());
+				return attempts;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	public JSONObject request(String url, List<NameValuePair> request)
             throws ClientProtocolException, IOException, IllegalStateException,
             JSONException {
 		
-        	DefaultHttpClient client = (DefaultHttpClient) com.example.mobileforensics.helpers.WebServiceWrapper.getNewHttpClient();
+        	DefaultHttpClient client = (DefaultHttpClient) WebServiceWrapper.getNewHttpClient();
             HttpPost post = new HttpPost(url);
             
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(request,HTTP.UTF_8);
