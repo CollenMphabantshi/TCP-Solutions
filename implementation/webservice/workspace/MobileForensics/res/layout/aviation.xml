@@ -5,14 +5,15 @@
     android:orientation="vertical" 
     android:gravity="center_horizontal" >
     
-    <TextView 		
+    <TextView
+       		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="Aviation"
 		android:layout_margin="15dp"
 		android:textStyle="bold"
 		android:textSize="20sp"
-		android:layout_alignBaseline="@+id/aviation_tvInformation"/>
+		/>
 	
     <ScrollView 
         android:layout_width="match_parent"
@@ -24,7 +25,8 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"  
 			android:gravity="center_horizontal">
-			<TextView			            
+			<TextView
+			    android:id="@+id/aviation_tvInformation" 			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Investigating Officer Information"
@@ -94,7 +96,8 @@
 					android:layout_below="@+id/aviation_io_rank"/>				       
 			</RelativeLayout>
 			
-			<TextView			            
+			<TextView
+			    android:id="@+id/tv_aviation_foosInfo"			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="First Officer On Scene"
@@ -150,7 +153,8 @@
 					android:layout_below="@+id/aviation_foos_surname"/>
 								       
 			</RelativeLayout>
-			<TextView			            
+			<TextView
+			    android:id="@+id/tv_aviation_victimGender"			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Gender"
@@ -189,7 +193,8 @@
 			        />
 			</RadioGroup>
 			
-			<TextView			            
+			<TextView
+			    android:id="@+id/tv_aviation_victimRace"			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Race"
@@ -242,7 +247,8 @@
 			        />
 			</RadioGroup>
 			
-			<TextView			            
+			<TextView	
+			    android:id="@+id/tv_aviation_victimInfo"            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Information (if known individual)"
@@ -298,6 +304,19 @@
 					android:layout_below="@+id/aviation_victim_surname"/>
 								       
 				</RelativeLayout>
+				
+			<TextView 
+				    android:id="@+id/aviation_tv_the_body"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_body"
+					android:visibility="gone"
+					/>
+			
 				<TextView 
 				    android:id="@+id/tv_aviation_bodyDecomposed"
 					android:layout_width="wrap_content"
@@ -420,6 +439,18 @@
 					android:prompt="@string/choose"
 					android:visibility="gone"
 				    />
+					
+					<TextView
+				    android:id="@+id/aviation_sceneOfInjury"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/scene_of_injury"
+					android:visibility="gone"
+					/>
 				
 				<TextView 
 				    android:id="@+id/tv_aviation_sceneOType"
@@ -457,6 +488,19 @@
 					android:layout_height="wrap_content"
 					android:visibility="gone"
 				    />
+				
+				<TextView 
+				    android:id="@+id/aviation_theScene"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_scene"
+					android:visibility="gone"
+					/>
+				
 				<TextView
 				    android:id="@+id/tv_aviation_aircraftType" 
 					android:layout_width="wrap_content"
@@ -619,7 +663,31 @@
 					android:text="GET MEDICAL RECORDS OF VICTIM"
 					android:visibility="gone"
 					/>
+				<Button
+				    android:id="@+id/aviation_nextButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="NEXT PAGE"
+				    android:visibility="visible" 
+				    />
 				
+				<Button
+				    android:id="@+id/aviation_doneButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="DONE"
+				    android:visibility="gone" 
+				    />
+				<Button
+				    android:id="@+id/aviation_logoutButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="LOGOUT"
+				    android:visibility="gone" 
+				    />
 		</LinearLayout>
 		
 	</ScrollView>    	
