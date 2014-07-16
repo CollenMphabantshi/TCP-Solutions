@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal" >
+    
+    <TextView 		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Motor vehicle accident"
+		android:layout_margin="15dp"
+		android:textStyle="bold"
+		android:textSize="20sp"
+		android:layout_alignBaseline="@+id/tvInformation"/>
+	
+    <ScrollView 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:scrollbars="vertical">
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"  
+			android:gravity="center_horizontal">
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Investigating Officer Information"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_mva_io_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/mva_io_name"/>
+				<EditText 
+					android:id="@+id/mva_io_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_mva_io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_io_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_io_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/io_surname"/>
+				<EditText 
+					android:id="@+id/io_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_io_surname"
+					android:layout_below="@+id/io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_io_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_io_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/io_rank"/>
+				<EditText 
+					android:id="@+id/io_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_io_rank"
+					android:layout_below="@+id/io_surname"/>
+							       
+				<TextView 
+					android:id="@+id/tv_io_cell"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_io_rank"
+					android:text="Cell"
+					android:layout_alignBaseline="@+id/io_cell"/>
+				<EditText 
+					android:id="@+id/io_cell"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_io_cell"
+					android:layout_below="@+id/io_rank"/>				       
+			</RelativeLayout>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="First Officer On Scene"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_foos_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/foos_name"/>
+				<EditText 
+					android:id="@+id/foos_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_foos_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_foos_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/foos_surname"/>
+				<EditText 
+					android:id="@+id/foos_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_foos_surname"
+					android:layout_below="@+id/foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_foos_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_foos_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/foos_rank"/>
+				<EditText 
+					android:id="@+id/foos_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_foos_rank"
+					android:layout_below="@+id/foos_surname"/>
+								       
+			</RelativeLayout>
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Gender"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/rgGender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/rgbMale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Male"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbFemale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Female"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbUnknownGender"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Race"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/rgRace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/rgbAsian"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Asian"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbBlack"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Black"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbColoured"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Coloured"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbWhite"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="White"
+			        />
+			    <RadioButton 
+			        android:id="@+id/rgbUnknownRace"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Information (if known individual)"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_victim_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Name"
+					android:layout_alignBaseline="@+id/victim_name"/>
+				<EditText 
+					android:id="@+id/victim_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_victim_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_victim_name"
+					android:text="Victim Surname"
+					android:layout_alignBaseline="@+id/victim_surname"/>
+				<EditText 
+					android:id="@+id/victim_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_victim_surname"
+					android:layout_below="@+id/victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_victim_id"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_victim_id"
+					android:text="ID Number"
+					android:layout_alignBaseline="@+id/victim_id"/>
+				<EditText 
+					android:id="@+id/victim_id"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_victim_id"
+					android:layout_below="@+id/victim_surname"/>
+								       
+				</RelativeLayout>
+				<TextView 
+				    android:id="@+id/tv_bodyDecomposed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the body decomposed?"
+					android:layout_alignBaseline="@+id/bodyDecomposed"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/bodyDecomposed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				    
+				<TextView 
+				    android:id="@+id/tv_medicalIntervention"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any medical intervention?"
+					android:layout_alignBaseline="@+id/medicalIntervention"
+					android:visibility="gone"
+					/>
+				
+				<Spinner
+				    android:id="@+id/medicalIntervention"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_bodyBurned"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the body burned? (Ask IO to get dental records)"
+					android:layout_alignBaseline="@+id/bodyBurned"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/bodyBurned"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_bodyIntact"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the body intact?"
+					android:layout_alignBaseline="@+id/bodyIntact"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/bodyIntact"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_victimInCar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the victim found in the car"
+					android:layout_alignBaseline="@+id/victimInCar"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/victimInCar"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_VictimInCarSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="if no, specify"
+					android:visibility="gone"
+					/>
+				<EditText 
+					android:id="@+id/VictimInCarSpecify"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+					/>		
+				
+				<TextView 
+				    android:id="@+id/tv_sceneOType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where outside?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/sceneOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_sceneOTypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/sceneOTypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_singleMultiple"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where there Single/multiple car occupants"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/singleMultiple"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_multiple"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If multiple, how many?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/multiple"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				<TextView
+				    android:id="@+id/tv_victimType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the victim the"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/victimType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView
+				    android:id="@+id/tv_carHit" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="The car was hit"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/carHit"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView
+				    android:id="@+id/tv_accidentType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was it a"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/accidentType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_car_burnt"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the car burnt"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/car_burnt"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_alcoholBottleAround"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Alcohol bottle standing around?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/alcoholBottleAround"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_drugParaphernalia"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Drug paraphernalia?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/drugParaphernalia"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_weatherCondition"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Weather condition"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/weatherCondition"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_suicideNote"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
+					android:layout_alignBaseline="@+id/bodyBurned"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/suicideNote"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+			
+				<TextView 
+				    android:id="@+id/tv_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Any general history?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/generalHistory"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+		</LinearLayout>
+		
+	</ScrollView>    	
+</LinearLayout>
+

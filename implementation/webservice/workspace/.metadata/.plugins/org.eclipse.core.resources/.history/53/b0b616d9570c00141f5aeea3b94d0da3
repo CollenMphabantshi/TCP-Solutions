@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal" >
+    
+    <TextView 		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Firearm discharge/gunshot wound"
+		android:layout_margin="15dp"
+		android:textStyle="bold"
+		android:textSize="20sp"
+		android:layout_alignBaseline="@+id/firearm_tvInformation"/>
+	
+    <ScrollView 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:scrollbars="vertical">
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"  
+			android:gravity="center_horizontal">
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Investigating Officer Information"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_firearm_io_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/firearm_io_name"/>
+				<EditText 
+					android:id="@+id/firearm_io_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_io_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_io_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/firearm_io_surname"/>
+				<EditText 
+					android:id="@+id/firearm_io_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_io_surname"
+					android:layout_below="@+id/firearm_io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_io_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_io_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/firearm_io_rank"/>
+				<EditText 
+					android:id="@+id/firearm_io_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_io_rank"
+					android:layout_below="@+id/firearm_io_surname"/>
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_io_cell"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_io_rank"
+					android:text="Cell"
+					android:layout_alignBaseline="@+id/firearm_io_cell"/>
+				<EditText 
+					android:id="@+id/firearm_io_cell"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_io_cell"
+					android:layout_below="@+id/firearm_io_rank"/>				       
+			</RelativeLayout>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="First Officer On Scene"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_firearm_foos_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/firearm_foos_name"/>
+				<EditText 
+					android:id="@+id/firearm_foos_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_foos_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_foos_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/firearm_foos_surname"/>
+				<EditText 
+					android:id="@+id/firearm_foos_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_foos_surname"
+					android:layout_below="@+id/firearm_foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_foos_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_foos_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/firearm_foos_rank"/>
+				<EditText 
+					android:id="@+id/firearm_foos_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_foos_rank"
+					android:layout_below="@+id/firearm_foos_surname"/>
+								       
+			</RelativeLayout>
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Gender"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/firearm_rgGender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbMale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Male"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbFemale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Female"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbUnknownGender"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Race"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/firearm_rgRace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbAsian"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Asian"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbBlack"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Black"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbColoured"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Coloured"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbWhite"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="White"
+			        />
+			    <RadioButton 
+			        android:id="@+id/firearm_rgbUnknownRace"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Information (if known individual)"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_firearm_victim_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Name"
+					android:layout_alignBaseline="@+id/firearm_victim_name"/>
+				<EditText 
+					android:id="@+id/firearm_victim_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_victim_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_victim_name"
+					android:text="Victim Surname"
+					android:layout_alignBaseline="@+id/firearm_victim_surname"/>
+				<EditText 
+					android:id="@+id/firearm_victim_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_victim_surname"
+					android:layout_below="@+id/firearm_victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_firearm_victim_id"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_firearm_victim_id"
+					android:text="ID Number"
+					android:layout_alignBaseline="@+id/firearm_victim_id"/>
+				<EditText 
+					android:id="@+id/firearm_victim_id"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_firearm_victim_id"
+					android:layout_below="@+id/firearm_victim_surname"/>
+								       
+				</RelativeLayout>
+				<TextView 
+				    android:id="@+id/tv_firearm_bodyDecomposed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the body decomposed?"
+					android:layout_alignBaseline="@+id/firearm_bodyDecomposed"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_bodyDecomposed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				    
+				<TextView 
+				    android:id="@+id/tv_firearm_medicalIntervention"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any medical intervention?"
+					android:layout_alignBaseline="@+id/firearm_medicalIntervention"
+					android:visibility="gone"
+					/>
+				
+				<Spinner
+				    android:id="@+id/firearm_medicalIntervention"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_whoFoundVictimBody"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Who found victim body?"
+					android:visibility="gone"
+					/>
+				<EditText 
+					android:id="@+id/firearm_whoFoundVictimBody"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+					/>
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_closeToWater"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the victim found close to water?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_closeToWater"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_rapeHomicide"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is a rape-homicide suspected? (IF YES REMEMBER TO BAG HANDS WITH PAPER BAGS)"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_rapeHomicide"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_suicideSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Suspicion of suicide?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_suicideSuspected"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_previousAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are there any previous attempts?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/firearm_previousAttempts"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_previousAttemptsNum"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If yes, specify the number of attempts?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/firearm_previousAttemptsNum"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_sceneIType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where inside?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/firearm_sceneIType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_sceneITypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/firearm_sceneITypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_doorLocked"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the door locked from the inside?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_doorLocked"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_windowsClosed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Were the windows closed?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_windowsClosed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView
+				    android:id="@+id/tv_firearm_windowsBroken" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are any of the windows broken?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_windowsBroken"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_victimAlone" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was the victim alone at the time of death?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_victimAlone"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_victimWith"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If no, who was the victim with?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/firearm_victimWith"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_sceneOType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where outside?"
+					android:visibility="gone"
+					
+					/>
+				<Spinner
+				    android:id="@+id/firearm_sceneOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_sceneOTypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/firearm_sceneOTypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_signsOfStruggle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are there any signs of struggle?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_signsOfStruggle"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_alcoholBottleAround"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Alcohol bottle standing around?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_alcoholBottleAround"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_firearm_drugParaphernalia"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Drug paraphernalia?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_drugParaphernalia"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_WasIt" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was it"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_WasIt"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+							
+				<TextView 
+				    android:id="@+id/tv_firearm_ShotArea" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="In what area are the gunshot wounds"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_firearm_ShotArea"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_woundsArea" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are the wounds"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_woundsArea"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_firearm"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Are the firearm on the scene"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_firearm"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_firearm_victimWith"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="What calibre is the firearm?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/firearm_victimWith"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_burn_suicideNote"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any suicide notes on the scene? (Is it with the police/body?)"
+					android:layout_alignBaseline="@+id/bodyBurned"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/burn_suicideNote"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+			
+				<TextView 
+				    android:id="@+id/tv_burn_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Any general history?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/burn_generalHistory"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+		</LinearLayout>
+		
+	</ScrollView>    	
+</LinearLayout>
+
+
