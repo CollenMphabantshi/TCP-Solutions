@@ -1,0 +1,748 @@
+package com.example.mobileforensics;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class Blunt extends Activity{
+
+	private EditText ioName;
+	private EditText ioSurname;
+	private EditText ioRank;
+	private EditText ioCellNo;
+	
+	private EditText foosName;
+	private EditText foosSurname;
+	private EditText foosRank;
+	
+	private EditText victimName;
+	private EditText victimSurname;
+	private EditText victimIDNo;
+	
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
+
+	private TextView theBody;
+	private TextView tv_bodyDecomposed;
+	private Spinner bodyDecomposed;
+	private TextView tv_medicalIntervention;
+	private Spinner medicalIntervention;
+	private TextView tv_whoFoundVictimBody;
+	private EditText whoFoundVictimBody;
+	private TextView tv_closeToWater;
+	private Spinner closeToWater;
+	private TextView tv_rapeHomicide;
+	private Spinner rapeHomicide;
+	private TextView tv_suicideSuspected;
+	private Spinner suicideSuspected;
+	private TextView tv_previousAttempts;
+	private Spinner previousAttempts;
+	private TextView tv_howManyAttempts;
+	private EditText howManyAttempts;
+	
+	private TextView sceneOfInjury;
+	private TextView tv_sceneIOType;
+	private Spinner sceneIOType;
+	private TextView tv_whereInside;
+	private Spinner sceneIType;
+	private TextView tv_sceneITypeOther;
+	private EditText sceneITypeOther;
+	private TextView tv_doorLocked;
+	private Spinner doorLocked;
+	private TextView tv_windowsClosed;
+	private Spinner windowsClosed;
+	private TextView tv_windowsBroken;
+	private Spinner windowsBroken;
+	private TextView tv_victimAlone;
+	private Spinner victimAlone;
+	private TextView tv_peopleWithVictim;
+	private EditText peopleWithVictim;
+	private TextView tv_sceneOType;
+	private Spinner sceneOType;
+	private TextView tv_sceneOTypeOther;
+	private EditText sceneOTypeOther;
+	
+	private TextView sceneLook;
+	private TextView tv_signsOfStruggle;
+	private Spinner signsOfStruggle;
+	private TextView tv_alcoholBottleAround;
+	private Spinner alcoholBottleAround;
+	private TextView tv_drugParaphernalia;
+	private Spinner drugParaphernalia;
+	
+	private TextView theScene;
+	private TextView tv_communityAssault;
+	private Spinner communityAssault;
+	private TextView tv_bluntObjectUsed;
+	private EditText bluntObjectUsed;
+	private TextView tv_bluntForceObjectOnScene;
+	private Spinner bluntForceObjectOnScene;
+	private TextView tv_strangulationSuspected;
+	private Spinner strangulationSuspected;
+	private TextView tv_smotheringSuspected;
+	private Spinner smotheringSuspected;
+	private TextView tv_chockingSuspected;
+	private Spinner chockingSuspected;
+	private TextView tv_suicideNoteFound;
+	private Spinner suicideNoteFound;
+	private TextView tv_generalHistory;
+	private EditText generalHistory;
+	
+	private Button nextButton;
+	private Button doneButton;
+	private Button logoutButton;
+	
+	private JSONObject json;
+	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
+	private final static int PAGES = 6;
+	private final static int VISIBLE = 1;
+	private final static int INVISIBLE = 2;
+	private final static int GONE = 3;
+	private int pageCount;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.blunt);
+		
+		pageCount = 1;
+		
+		
+		ioName = (EditText)findViewById(R.id.io_name);
+		ioSurname = (EditText)findViewById(R.id.io_surname);
+		ioRank = (EditText)findViewById(R.id.io_rank);
+		ioCellNo = (EditText)findViewById(R.id.io_cell);
+		
+		foosName = (EditText)findViewById(R.id.blunt_foos_name);
+		foosSurname = (EditText)findViewById(R.id.blunt_foos_surname);
+		foosRank = (EditText)findViewById(R.id.blunt_foos_rank);
+		
+		victimName = (EditText)findViewById(R.id.blunt_victim_name);
+		victimSurname = (EditText)findViewById(R.id.blunt_victim_surname);
+		victimIDNo = (EditText)findViewById(R.id.blunt_victim_id);
+		
+		rgbMale = (RadioButton)findViewById(R.id.blunt_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.blunt_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.blunt_rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.blunt_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.blunt_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.blunt_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.blunt_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.blunt_rgbUnknownRace);
+		
+		theBody = (TextView)findViewById(R.id.blunt_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.blunt_tv_bodyDecomposed);
+		bodyDecomposed = (Spinner)findViewById(R.id.blunt_bodyDecomposed);
+		tv_medicalIntervention = (TextView)findViewById(R.id.blunt_tv_medicalIntervention);
+		medicalIntervention = (Spinner)findViewById(R.id.blunt_medicalIntervention);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.blunt_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.blunt_whoFoundVictimBody);
+		tv_closeToWater = (TextView)findViewById(R.id.blunt_tv_closeToWater);
+		closeToWater = (Spinner)findViewById(R.id.blunt_closeToWater);
+		tv_rapeHomicide = (TextView)findViewById(R.id.blunt_tv_rapeHomicide);
+		rapeHomicide = (Spinner)findViewById(R.id.blunt_rapeHomicide);
+		tv_suicideSuspected = (TextView)findViewById(R.id.blunt_tv_suicideSuspected);
+		suicideSuspected = (Spinner)findViewById(R.id.blunt_suicideSuspected);
+		tv_previousAttempts = (TextView)findViewById(R.id.blunt_tv_previousAttempts);
+		previousAttempts = (Spinner)findViewById(R.id.blunt_previousAttempts);
+		tv_howManyAttempts = (TextView)findViewById(R.id.blunt_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.blunt_howManyAttempts);
+		
+		sceneOfInjury = (TextView)findViewById(R.id.blunt_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.blunt_tv_sceneIOType);
+		sceneIOType = (Spinner)findViewById(R.id.blunt_sceneIOType);
+		tv_whereInside = (TextView)findViewById(R.id.blunt_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.blunt_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.blunt_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.blunt_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.blunt_tv_doorLocked);
+		doorLocked = (Spinner)findViewById(R.id.blunt_doorLocked);
+		tv_windowsClosed = (TextView)findViewById(R.id.blunt_tv_windowsClosed);
+		windowsClosed = (Spinner)findViewById(R.id.blunt_windowsClosed);
+		tv_windowsBroken = (TextView)findViewById(R.id.blunt_tv_windowsBroken);
+		windowsBroken = (Spinner)findViewById(R.id.blunt_windowsBroken);
+		tv_victimAlone = (TextView)findViewById(R.id.blunt_tv_victimAlone);
+		victimAlone = (Spinner)findViewById(R.id.blunt_victimAlone);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.blunt_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.blunt_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.blunt_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.blunt_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.blunt_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.blunt_sceneOTypeOther);
+		
+		sceneLook = (TextView)findViewById(R.id.blunt_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.blunt_tv_signsOfStruggle);
+		signsOfStruggle = (Spinner)findViewById(R.id.blunt_signsOfStruggle);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.blunt_tv_alcoholBottleAround);
+		alcoholBottleAround = (Spinner)findViewById(R.id.blunt_alcoholBottleAround);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.blunt_tv_drugParaphernalia);
+		drugParaphernalia = (Spinner)findViewById(R.id.blunt_drugParaphernalia);
+		
+		theScene = (TextView)findViewById(R.id.blunt_theScene);
+		tv_communityAssault = (TextView)findViewById(R.id.blunt_tv_communityAssault);
+		communityAssault = (Spinner)findViewById(R.id.blunt_communityAssault);
+		tv_bluntObjectUsed = (TextView)findViewById(R.id.blunt_tv_bluntObjectUsed);
+		bluntObjectUsed = (EditText)findViewById(R.id.blunt_bluntObjectUsed);
+		tv_bluntForceObjectOnScene = (TextView)findViewById(R.id.blunt_tv_bluntForceObjectOnScene);
+		bluntForceObjectOnScene = (Spinner)findViewById(R.id.blunt_bluntForceObjectOnScene);
+		tv_strangulationSuspected = (TextView)findViewById(R.id.blunt_tv_strangulationSuspected);
+		strangulationSuspected = (Spinner)findViewById(R.id.blunt_strangulationSuspected);
+		tv_smotheringSuspected = (TextView)findViewById(R.id.blunt_tv_smotheringSuspected);
+		smotheringSuspected = (Spinner)findViewById(R.id.blunt_smotheringSuspected);
+		tv_chockingSuspected = (TextView)findViewById(R.id.blunt_tv_chockingSuspected);
+		chockingSuspected = (Spinner)findViewById(R.id.blunt_chockingSuspected);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.blunt_tv_suicideNoteFound);
+		suicideNoteFound = (Spinner)findViewById(R.id.blunt_suicideNoteFound);
+		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
+		
+		nextButton = (Button)findViewById(R.id.blunt_nextButton);
+		doneButton = (Button)findViewById(R.id.blunt_doneButton);
+		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
+	}
+	
+	private void setOnClickEvents(){
+		
+		nextButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				if(validateNextPage())
+				{
+					pageCount++;
+				}else{
+					Toast.makeText(Blunt.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
+				}
+			}
+		});
+		
+		doneButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		logoutButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		/**
+		 * 	Spinner onclick event
+		 */
+		
+		
+		previousAttempts.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Spinner s = (Spinner)view;
+				if(s != null)
+				{
+					String item = (String)s.getSelectedItem();
+					if(item.toLowerCase().equals("yes"))
+					{
+						tv_howManyAttempts.setVisibility(VISIBLE);
+						howManyAttempts.setVisibility(VISIBLE);
+					}else{
+						tv_howManyAttempts.setVisibility(GONE);
+						howManyAttempts.setVisibility(GONE);
+					}
+				}
+			}
+		});
+		
+		sceneIOType.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Spinner s = (Spinner)view;
+				if(s != null)
+				{
+					String item = (String)s.getSelectedItem();
+					if(item.toLowerCase().equals("outside"))
+					{
+						tv_whereInside.setVisibility(GONE);
+						sceneIType.setVisibility(GONE);
+						tv_sceneITypeOther.setVisibility(GONE);
+						sceneITypeOther.setVisibility(GONE);
+						tv_doorLocked.setVisibility(GONE);
+						doorLocked.setVisibility(GONE);
+						tv_windowsClosed.setVisibility(GONE);
+						windowsClosed.setVisibility(GONE);
+						tv_windowsBroken.setVisibility(GONE);
+						windowsBroken.setVisibility(GONE);
+						tv_victimAlone.setVisibility(GONE);
+						victimAlone.setVisibility(GONE);
+						tv_peopleWithVictim.setVisibility(GONE);
+						peopleWithVictim.setVisibility(GONE);
+						
+						tv_sceneOType.setVisibility(VISIBLE);
+						sceneOType.setVisibility(VISIBLE);
+						
+					}else{
+						tv_whereInside.setVisibility(VISIBLE);
+						sceneIType.setVisibility(VISIBLE);
+						tv_doorLocked.setVisibility(VISIBLE);
+						doorLocked.setVisibility(VISIBLE);
+						tv_windowsClosed.setVisibility(VISIBLE);
+						windowsClosed.setVisibility(VISIBLE);
+						tv_windowsBroken.setVisibility(VISIBLE);
+						windowsBroken.setVisibility(VISIBLE);
+						tv_victimAlone.setVisibility(VISIBLE);
+						victimAlone.setVisibility(VISIBLE);
+						
+						tv_sceneOType.setVisibility(GONE);
+						sceneOType.setVisibility(GONE);
+						tv_sceneOTypeOther.setVisibility(GONE);
+						sceneOTypeOther.setVisibility(GONE);
+					}
+				}
+			}
+		});
+		
+		sceneIType.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Spinner s = (Spinner)view;
+				if(s != null)
+				{
+					String item = (String)s.getSelectedItem();
+					if(item.toLowerCase().equals("other"))
+					{
+						tv_sceneITypeOther.setVisibility(VISIBLE);
+						sceneITypeOther.setVisibility(VISIBLE);
+					}else{
+						tv_sceneITypeOther.setVisibility(GONE);
+						sceneITypeOther.setVisibility(GONE);
+					}
+				}
+			}
+		});
+		
+		victimAlone.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Spinner s = (Spinner)view;
+				if(s != null)
+				{
+					String item = (String)s.getSelectedItem();
+					if(item.toLowerCase().equals("no"))
+					{
+						tv_peopleWithVictim.setVisibility(VISIBLE);
+						peopleWithVictim.setVisibility(VISIBLE);
+					}else{
+						tv_peopleWithVictim.setVisibility(GONE);
+						peopleWithVictim.setVisibility(GONE);
+					}
+				}
+			}
+		});
+		
+		sceneOType.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				Spinner s = (Spinner)view;
+				if(s != null)
+				{
+					String item = (String)s.getSelectedItem();
+					if(item.toLowerCase().equals("other"))
+					{
+						tv_sceneOTypeOther.setVisibility(VISIBLE);
+						sceneOTypeOther.setVisibility(VISIBLE);
+					}else{
+						tv_sceneOTypeOther.setVisibility(GONE);
+						sceneOTypeOther.setVisibility(GONE);
+					}
+				}
+			}
+		});
+		
+	}
+	private void hidePage(){
+		//if not first page disable
+		if(pageCount != 1)
+		{
+			
+			ioName.setVisibility(GONE);
+			ioSurname.setVisibility(GONE);
+			ioRank.setVisibility(GONE);
+			ioCellNo.setVisibility(GONE);
+			
+			foosName.setVisibility(GONE);
+			foosSurname.setVisibility(GONE);
+			foosRank.setVisibility(GONE);
+		
+		}
+		
+		//if not second page disable
+		if(pageCount != 2){
+			victimName.setVisibility(GONE);
+			victimSurname.setVisibility(GONE);
+			victimIDNo.setVisibility(GONE);
+			
+			rgbMale.setVisibility(GONE);
+			rgbFemale.setVisibility(GONE);
+			rgbUnknownGender.setVisibility(GONE);
+			
+			rgbAsian.setVisibility(GONE);
+			rgbBlack.setVisibility(GONE);
+			rgbColoured.setVisibility(GONE);
+			rgbWhite.setVisibility(GONE);
+			rgbUnknownRace.setVisibility(GONE);
+		}
+		
+		//if not third page disable
+		if(pageCount != 3){
+			theBody.setVisibility(GONE);
+			tv_bodyDecomposed.setVisibility(GONE);
+			bodyDecomposed.setVisibility(GONE);
+			tv_medicalIntervention.setVisibility(GONE);
+			medicalIntervention.setVisibility(GONE);
+			tv_whoFoundVictimBody.setVisibility(GONE);
+			whoFoundVictimBody.setVisibility(GONE);
+			tv_closeToWater.setVisibility(GONE);
+			closeToWater.setVisibility(GONE);
+			tv_rapeHomicide.setVisibility(GONE);
+			rapeHomicide.setVisibility(GONE);
+			tv_suicideSuspected.setVisibility(GONE);
+			suicideSuspected.setVisibility(GONE);
+			tv_previousAttempts.setVisibility(GONE);
+			previousAttempts.setVisibility(GONE);
+			tv_howManyAttempts.setVisibility(GONE);
+			howManyAttempts.setVisibility(GONE);
+		}
+
+		//if not fourth page disable
+		if(pageCount != 4){
+			sceneOfInjury.setVisibility(GONE);
+			tv_sceneIOType.setVisibility(GONE);
+			sceneIOType.setVisibility(GONE);
+			tv_whereInside.setVisibility(GONE);
+			sceneIType.setVisibility(GONE);
+			tv_sceneITypeOther.setVisibility(GONE);
+			sceneITypeOther.setVisibility(GONE);
+			tv_doorLocked.setVisibility(GONE);
+			doorLocked.setVisibility(GONE);
+			tv_windowsClosed.setVisibility(GONE);
+			windowsClosed.setVisibility(GONE);
+			tv_windowsBroken.setVisibility(GONE);
+			windowsBroken.setVisibility(GONE);
+			tv_victimAlone.setVisibility(GONE);
+			victimAlone.setVisibility(GONE);
+			tv_peopleWithVictim.setVisibility(GONE);
+			peopleWithVictim.setVisibility(GONE);
+			tv_sceneOType.setVisibility(GONE);
+			sceneOType.setVisibility(GONE);
+			tv_sceneOTypeOther.setVisibility(GONE);
+			sceneOTypeOther.setVisibility(GONE);
+		}
+
+		//if not fifth page disable
+		if(pageCount != 5){
+			sceneLook.setVisibility(GONE);
+			tv_signsOfStruggle.setVisibility(GONE);
+			signsOfStruggle.setVisibility(GONE);
+			tv_alcoholBottleAround.setVisibility(GONE);
+			alcoholBottleAround.setVisibility(GONE);
+			tv_drugParaphernalia.setVisibility(GONE);
+			drugParaphernalia.setVisibility(GONE);
+		}
+
+		//if not sixth page disable
+		if(pageCount != 6){
+			theScene.setVisibility(GONE);
+			tv_communityAssault.setVisibility(GONE);
+			communityAssault.setVisibility(GONE);
+			tv_bluntObjectUsed.setVisibility(GONE);
+			bluntObjectUsed.setVisibility(GONE);
+			tv_bluntForceObjectOnScene.setVisibility(GONE);
+			bluntForceObjectOnScene.setVisibility(GONE);
+			tv_strangulationSuspected.setVisibility(GONE);
+			strangulationSuspected.setVisibility(GONE);
+			tv_smotheringSuspected.setVisibility(GONE);
+			smotheringSuspected.setVisibility(GONE);
+			tv_chockingSuspected.setVisibility(GONE);
+			chockingSuspected.setVisibility(GONE);
+			tv_suicideNoteFound.setVisibility(GONE);
+			suicideNoteFound.setVisibility(GONE);
+			tv_generalHistory.setVisibility(GONE);
+			generalHistory.setVisibility(GONE);
+		}
+	}
+	
+	private void showPage(){
+		//if fist page show
+		if(pageCount == 1)
+		{
+			
+			ioName.setVisibility(VISIBLE);
+			ioSurname.setVisibility(VISIBLE);
+			ioRank.setVisibility(VISIBLE);
+			ioCellNo.setVisibility(VISIBLE);
+			
+			foosName.setVisibility(VISIBLE);
+			foosSurname.setVisibility(VISIBLE);
+			foosRank.setVisibility(VISIBLE);
+		
+		}
+		
+		//if second page show
+		if(pageCount == 2){
+			victimName.setVisibility(VISIBLE);
+			victimSurname.setVisibility(VISIBLE);
+			victimIDNo.setVisibility(VISIBLE);
+			
+			rgbMale.setVisibility(VISIBLE);
+			rgbFemale.setVisibility(VISIBLE);
+			rgbUnknownGender.setVisibility(VISIBLE);
+			
+			rgbAsian.setVisibility(VISIBLE);
+			rgbBlack.setVisibility(VISIBLE);
+			rgbColoured.setVisibility(VISIBLE);
+			rgbWhite.setVisibility(VISIBLE);
+			rgbUnknownRace.setVisibility(VISIBLE);
+		}
+		
+		//if third page show
+		if(pageCount == 3){
+			
+			theBody.setVisibility(VISIBLE);
+			tv_bodyDecomposed.setVisibility(VISIBLE);
+			bodyDecomposed.setVisibility(VISIBLE);
+			tv_medicalIntervention.setVisibility(VISIBLE);
+			medicalIntervention.setVisibility(VISIBLE);
+			tv_whoFoundVictimBody.setVisibility(VISIBLE);
+			whoFoundVictimBody.setVisibility(VISIBLE);
+			tv_closeToWater.setVisibility(VISIBLE);
+			closeToWater.setVisibility(VISIBLE);
+			tv_rapeHomicide.setVisibility(VISIBLE);
+			rapeHomicide.setVisibility(VISIBLE);
+			tv_suicideSuspected.setVisibility(VISIBLE);
+			suicideSuspected.setVisibility(VISIBLE);
+			tv_previousAttempts.setVisibility(VISIBLE);
+			previousAttempts.setVisibility(VISIBLE);
+		}
+
+		//if fourth page show
+		if(pageCount == 4){
+			sceneOfInjury.setVisibility(VISIBLE);
+			tv_sceneIOType.setVisibility(VISIBLE);
+			sceneIOType.setVisibility(VISIBLE);
+		}
+
+		//if fifth page show
+		if(pageCount == 5){
+			sceneLook.setVisibility(VISIBLE);
+			tv_signsOfStruggle.setVisibility(VISIBLE);
+			signsOfStruggle.setVisibility(VISIBLE);
+			tv_alcoholBottleAround.setVisibility(VISIBLE);
+			alcoholBottleAround.setVisibility(VISIBLE);
+			tv_drugParaphernalia.setVisibility(VISIBLE);
+			drugParaphernalia.setVisibility(VISIBLE);
+		}
+
+		//if sixth page show
+		if(pageCount == 6){
+			theScene.setVisibility(VISIBLE);
+			tv_communityAssault.setVisibility(VISIBLE);
+			communityAssault.setVisibility(VISIBLE);
+			tv_bluntObjectUsed.setVisibility(VISIBLE);
+			bluntObjectUsed.setVisibility(VISIBLE);
+			tv_bluntForceObjectOnScene.setVisibility(VISIBLE);
+			bluntForceObjectOnScene.setVisibility(VISIBLE);
+			tv_strangulationSuspected.setVisibility(VISIBLE);
+			strangulationSuspected.setVisibility(VISIBLE);
+			tv_smotheringSuspected.setVisibility(VISIBLE);
+			smotheringSuspected.setVisibility(VISIBLE);
+			tv_chockingSuspected.setVisibility(VISIBLE);
+			chockingSuspected.setVisibility(VISIBLE);
+			tv_suicideNoteFound.setVisibility(VISIBLE);
+			suicideNoteFound.setVisibility(VISIBLE);
+			tv_generalHistory.setVisibility(VISIBLE);
+			generalHistory.setVisibility(VISIBLE);
+		}
+	}
+	
+	
+	private boolean validateNextPage(){
+		switch(pageCount)
+		{
+			case 1:
+				if(!ioName.getText().toString().equals("") && !ioSurname.getText().toString().equals("") && !ioRank.getText().toString().equals("")
+						&& !ioCellNo.getText().toString().equals("") && !foosName.getText().toString().equals("") && !foosSurname.getText().toString().equals("")
+						&& !foosRank.getText().toString().equals("")){
+					return true;
+				}
+				break;
+			case 2:
+				if(!victimName.getText().toString().equals("") && !victimSurname.getText().toString().equals("") && !victimIDNo.getText().toString().equals("")
+						&& (rgbMale.isChecked() || rgbFemale.isChecked() ||rgbUnknownGender.isChecked())
+						&& (rgbAsian.isChecked() || rgbBlack.isChecked() ||rgbColoured.isChecked()
+							|| rgbWhite.isChecked() || rgbUnknownRace.isChecked())){
+					
+					return true;
+				}
+				break;
+			case 3:
+				try{
+					String item = (String)previousAttempts.getSelectedItem();
+					if(item != null){
+						if(item.toLowerCase().equals("yes") && !howManyAttempts.getText().toString().equals(""))
+						{
+							return true;
+						}else if(item.toLowerCase().equals("no")){
+							return true;
+						}
+					}
+				}catch(Exception ex){}
+				break;
+			case 4:
+				try{
+					String siot = (String)sceneIOType.getSelectedItem();
+					String sit = (String)sceneIType.getSelectedItem();
+					String sot = (String)sceneOType.getSelectedItem();
+					String va = (String)victimAlone.getSelectedItem();
+					
+					if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes"))
+					{
+							return true;
+					}else if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("no")){
+						if(!peopleWithVictim.getText().toString().equals(""))
+						{
+							return true;
+						}
+					}else if(siot.toLowerCase().equals("inside") && sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes")){
+						
+					}
+					
+				}catch(Exception ex){}
+				
+				
+				sceneITypeOther
+				
+				
+				
+				
+				
+				sceneOTypeOther.setVisibility(GONE);
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+		}
+		return false;
+	}
+	
+	public JSONObject request(String url, List<NameValuePair> request)
+            throws ClientProtocolException, IOException, IllegalStateException,
+            JSONException {
+		
+        	DefaultHttpClient client = (DefaultHttpClient) com.example.mobileforensics.helpers.WebServiceWrapper.getNewHttpClient();
+            HttpPost post = new HttpPost(url);
+            
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(request,HTTP.UTF_8);
+            post.setEntity(entity);
+            
+            HttpResponse response = client.execute(post);
+            
+            Scanner in = new Scanner(response.getEntity().getContent());
+            String line ="";
+            
+            while(in.hasNextLine()){
+            	line += in.nextLine();
+            }
+            
+            JSONObject tmp = new JSONObject(line);
+            in.close();
+            return tmp;
+    }
+    
+    
+    
+    public class Read extends AsyncTask<List<NameValuePair>, Integer,JSONObject>{
+
+		@Override
+		protected JSONObject doInBackground(List<NameValuePair>... params) {
+			// TODO Auto-generated method stub
+			try {
+				json = request(WS_URL, params[0]);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return json;
+		}
+		
+		@Override
+		protected void onPostExecute(JSONObject result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+		}
+	
+    }
+
+}
