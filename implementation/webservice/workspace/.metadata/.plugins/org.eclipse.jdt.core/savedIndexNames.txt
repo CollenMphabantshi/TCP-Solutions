@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+INDEX VERSION 1.126+C:\Users\patrick\Documents\GitHub\TCP-Solutions\implementation\webservice\workspace\.metadata\.plugins\org.eclipse.jdt.core
+1856399511.index
+3254200690.index
+208473268.index
+832510324.index
+55677606.index
+=======
 INDEX VERSION 1.126+C:\Users\Latitude\Documents\cos301\TCP-Solutions\implementation\webservice\workspace\.metadata\.plugins\org.eclipse.jdt.core
 3222614409.index
 3167989896.index
+<<<<<<< HEAD
+=======
+3254200690.index
+1856399511.index
+>>>>>>> 018933d2c4fa42345712afb414c3152ae7382a65
+>>>>>>> cfcc96270c03b750ba3e4259ea83e0cd395d527b
