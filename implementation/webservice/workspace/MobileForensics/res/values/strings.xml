@@ -20,9 +20,46 @@
         <item>No</item>
     </string-array>
     <string-array name="sceneIO">
-        <item>Inside</item>
         <item>Outside</item>
+        <item>Inside</item>
     </string-array>
+    <string-array name="insideTypes">
+        <item>Private house</item>
+        <item>Residential institution</item>
+        <item>Informal settlement/squatter camp</item>
+        <item>Bar, shebeen, night club, disco</item>
+        <item>Amusement park, sports area</item>
+        <item>Railway station</item>
+        <item>Shop, bank, retail area</item>
+        <item>School, educational area</item>
+        <item>Industrial &amp; constructional area , mine</item>
+        <item>Medical service area</item>
+        <item>Farm &amp; primary production area</item>
+        <item>In custody, prison</item>
+        <item>Place unknown</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="outsideTypes">
+        <item>Yard</item>
+        <item>Residential institution</item>
+        <item>Informal settlement/squatter camp</item>
+        <item>Bar, shebeen, night club, disco</item>
+        <item>Amusement park, sports area</item>
+        <item>Road/street/highway</item>
+        <item>Railway track, station</item>
+        <item>Shop, bank, retail area</item>
+        <item>School, educational area</item>
+        <item>Industrial &amp; constructional area , mine</item>
+        <item>Medical service area</item>
+        <item>Farm &amp; primary production area</item>
+        <item>Sea, lake, river, dam</item>
+        <item>Open land, beach</item>
+        <item>Countryside</item>
+        <item>Prison</item>
+        <item>Place unknown</item>
+        <item>Other</item>
+    </string-array>
+
     
      <string name="chooseYN"> choose </string>
     
