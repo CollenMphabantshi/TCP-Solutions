@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal" >
+    
+    <TextView 		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Pedestrian vehicle accident"
+		android:layout_margin="15dp"
+		android:textStyle="bold"
+		android:textSize="20sp"
+		android:layout_alignBaseline="@+id/pedestrian_tvInformation"/>
+	
+    <ScrollView 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:scrollbars="vertical">
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"  
+			android:gravity="center_horizontal">
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Investigating Officer Information"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_pedestrian_io_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/pedestrian_io_name"/>
+				<EditText 
+					android:id="@+id/pedestrian_io_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_io_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_io_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/pedestrian_io_surname"/>
+				<EditText 
+					android:id="@+id/pedestrian_io_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_io_surname"
+					android:layout_below="@+id/pedestrian_io_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_io_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_io_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/pedestrian_io_rank"/>
+				<EditText 
+					android:id="@+id/pedestrian_io_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_io_rank"
+					android:layout_below="@+id/pedestrian_io_surname"/>
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_io_cell"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_io_rank"
+					android:text="Cell"
+					android:layout_alignBaseline="@+id/pedestrian_io_cell"/>
+				<EditText 
+					android:id="@+id/pedestrian_io_cell"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_io_cell"
+					android:layout_below="@+id/pedestrian_io_rank"/>				       
+			</RelativeLayout>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="First Officer On Scene"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_pedestrian_foos_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Name"
+					android:layout_alignBaseline="@+id/pedestrian_foos_name"/>
+				<EditText 
+					android:id="@+id/pedestrian_foos_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_foos_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_foos_name"
+					android:text="Surname"
+					android:layout_alignBaseline="@+id/pedestrian_foos_surname"/>
+				<EditText 
+					android:id="@+id/pedestrian_foos_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_foos_surname"
+					android:layout_below="@+id/pedestrian_foos_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_foos_rank"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_foos_surname"
+					android:text="Rank"
+					android:layout_alignBaseline="@+id/pedestrian_foos_rank"/>
+				<EditText 
+					android:id="@+id/pedestrian_foos_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_foos_rank"
+					android:layout_below="@+id/pedestrian_foos_surname"/>
+								       
+			</RelativeLayout>
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Gender"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/pedestrian_rgGender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbMale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Male"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbFemale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Female"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbUnknownGender"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Race"
+				android:layout_margin="5dp"
+				android:layout_marginTop="10dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RadioGroup 
+			    android:id="@+id/pedestrian_rgRace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    >
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbAsian"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Asian"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbBlack"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Black"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbColoured"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Coloured"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbWhite"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="White"
+			        />
+			    <RadioButton 
+			        android:id="@+id/pedestrian_rgbUnknownRace"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			        />
+			</RadioGroup>
+			
+			<TextView			            
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Victim Information (if known individual)"
+				android:layout_margin="5dp"
+				android:textStyle="bold"
+				android:textSize="15sp"
+			/>
+			<RelativeLayout 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal">
+							        
+				<TextView 
+					android:id="@+id/tv_pedestrian_victim_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Name"
+					android:layout_alignBaseline="@+id/pedestrian_victim_name"/>
+				<EditText 
+					android:id="@+id/pedestrian_victim_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_victim_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_victim_name"
+					android:text="Victim Surname"
+					android:layout_alignBaseline="@+id/pedestrian_victim_surname"/>
+				<EditText 
+					android:id="@+id/pedestrian_victim_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_victim_surname"
+					android:layout_below="@+id/pedestrian_victim_name"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/tv_pedestrian_victim_id"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/tv_pedestrian_victim_id"
+					android:text="ID Number"
+					android:layout_alignBaseline="@+id/pedestrian_victim_id"/>
+				<EditText 
+					android:id="@+id/pedestrian_victim_id"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/tv_pedestrian_victim_id"
+					android:layout_below="@+id/pedestrian_victim_surname"/>
+								       
+				</RelativeLayout>
+				<TextView 
+				    android:id="@+id/tv_pedestrian_bodyDecomposed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the body decomposed?"
+					android:layout_alignBaseline="@+id/pedestrian_bodyDecomposed"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_bodyDecomposed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				    
+				<TextView 
+				    android:id="@+id/tv_pedestrian_medicalIntervention"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any medical intervention?"
+					android:layout_alignBaseline="@+id/pedestrian_medicalIntervention"
+					android:visibility="gone"
+					/>
+				
+				<Spinner
+				    android:id="@+id/pedestrian_medicalIntervention"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_pedestrian_whoFoundVictimBody"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Who found victim body?"
+					android:visibility="gone"
+					/>
+				<EditText 
+					android:id="@+id/pedestrian_whoFoundVictimBody"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+					/>
+				
+				<TextView 
+				    android:id="@+id/tv_pedestrian_sceneOType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Where outside?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_sceneOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_pedestrian_sceneOTypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If Other, specify?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/pedestrian_sceneOTypeOther"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_pedestrian_hitrun"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was it a hit and run?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_hitrun"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_pedestrian_weatherType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was it"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_weatherType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				<TextView 
+				    android:id="@+id/tv_pedestrian_accidentType"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Was it a"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_accidentType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_pedestrian_carsDroveOver"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="How many cars drove over the body?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/pedestrian_carsDroveOver"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+							
+				<TextView 
+				    android:id="@+id/tv_pedestrian_weatherCondition" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Weather condition"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_weatherCondition"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_pedestrian_igniterSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="If yes, specify the igniter"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/pedestrian_igniterSpecify"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+	
+				<TextView 
+				    android:id="@+id/tv_pedestrian_FoulPlay" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there a suspicion of foul play?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_FoulPlay"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+				
+				<TextView 
+				    android:id="@+id/tv_pedestrian_suicideNote"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is there any suicide notes on the scene? (Is it with the police/body?)"
+					android:layout_alignBaseline="@+id/bodypedestrianed"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/pedestrian_suicideNote"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/question"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
+			
+				<TextView 
+				    android:id="@+id/tv_pedestrian_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Any general history?"
+					android:visibility="gone"
+					/>
+				<EditText
+				    android:id="@+id/pedestrian_generalHistory"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+				    />
+				
+		</LinearLayout>
+		
+	</ScrollView>    	
+</LinearLayout>
+

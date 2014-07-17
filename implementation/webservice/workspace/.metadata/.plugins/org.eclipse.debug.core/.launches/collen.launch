@@ -15,8 +15,11 @@
 <listEntry value="4"/>
 <listEntry value="1"/>
 </listAttribute>
+<<<<<<< HEAD
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
+=======
+>>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="collen"/>
 </launchConfiguration>

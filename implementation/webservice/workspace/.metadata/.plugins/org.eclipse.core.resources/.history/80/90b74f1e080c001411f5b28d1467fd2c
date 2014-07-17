@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Medical Forensics</string>
+    
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="username">username</string>
+    <string name="loggin">Loggin</string>
+    <string name="password">password</string>
+    <string name="choose">Choose option</string>
+    <string name="scene_of_injury">SCENE OF INJURY</string>
+    <string name="scene_look">HOW DO THE SCENE LOOK</string>
+    <string-array name="question">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="sceneIO">
+        <item>Inside</item>
+        <item>Outside</item>
+    </string-array>
+    
+
+</resources>

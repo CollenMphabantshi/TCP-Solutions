@@ -44,7 +44,7 @@ class Blunt extends Scene{
                 $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
-                    //
+                
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -54,9 +54,9 @@ class Blunt extends Scene{
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
                 if($formData['object'][$i]['victims']['victimInside'] == "yes"){
-                    $this->addHanging($sceneID,TRUE,$formData['object'][$i]);
+                    $this->addBlunt($sceneID,TRUE,$formData['object'][$i]);
                 }else{
-                    $this->addHanging($sceneID,FALSE,null);
+                    $this->addBlunt($sceneID,FALSE,null);
                 }
             }
             
@@ -83,6 +83,8 @@ class Blunt extends Scene{
                 $hi_res = mysql_query("insert into hanginginside values(0,".$bluntID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        $error = array('status' => "Success", "msg" => "Request to add case was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     public function getAllBlunts() {
         try{

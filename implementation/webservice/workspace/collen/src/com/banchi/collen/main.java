@@ -87,10 +87,79 @@ public class main extends Activity {
             HttpPost post = new HttpPost(url);
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 
-            pairs.add(new BasicNameValuePair("rquest","login"));
+            /*pairs.add(new BasicNameValuePair("rquest","login"));
             pairs.add(new BasicNameValuePair("username",username.getText().toString()));  
             pairs.add(new BasicNameValuePair("password",password.getText().toString()));  
-            pairs.add(new BasicNameValuePair("platform","android"));
+            pairs.add(new BasicNameValuePair("platform","android"));*/
+              
+        	
+	        pairs.add(new BasicNameValuePair("rquest","addCase"));
+	        pairs.add(new BasicNameValuePair("category","blunt"));
+	        JSONObject obj = new JSONObject();
+	        JSONArray array = new JSONArray();
+	        JSONObject info = new JSONObject();
+	        JSONArray vicArray = new JSONArray();
+	        JSONObject victims = new JSONObject();
+	        
+	        
+	        info.accumulate("FOPersonelNumber", "p55555555");
+	        info.accumulate("sceneTime", "00:00:01");
+	        info.accumulate("sceneDate", "2014-01-01");
+	        info.accumulate("sceneLocation", "time");
+	        info.accumulate("sceneTemparature", "time");
+	        info.accumulate("investigatingOfficerName", "time");
+	        info.accumulate("investigatingOfficerRank", "time");
+	        info.accumulate("investigatingOfficerCellNo", "time");
+	        info.accumulate("firstOfficerOnSceneName", "time");
+	        info.accumulate("firstOfficerOnSceneRank", "time");
+	        
+	        victims.accumulate("victimIdentityNumber", "time");
+	        victims.accumulate("victimGender", "time");
+	        victims.accumulate("victimRace", "time");
+	        victims.accumulate("victimName", "time");
+	        victims.accumulate("victimSurame", "time");
+	        victims.accumulate("scenePhoto", null);
+	        victims.accumulate("bodyDecomposed", "yes");
+	        victims.accumulate("medicalIntervention","yes");
+	        victims.accumulate("bodyBurned", null);
+	        victims.accumulate("bodyIntact", null);
+	        victims.accumulate("whoFoundVictimBody","yes");
+	        victims.accumulate("victimFoundCloseToWater","yes");
+	        victims.accumulate("suicideSuspected", "yes");
+	        victims.accumulate("victimSuicideNoteFound","yes");
+	        victims.accumulate("previousAttempts", "yes");
+	        victims.accumulate("numberOfPreviousAttempts", 0);
+	        victims.accumulate("rapeHomicideSuspected", "yes");
+	        String item = "yes";
+	        if(item.toLowerCase().equals("yes"))
+	        {
+		        victims.accumulate("victimInside", "yes");
+		        victims.accumulate("victimOutside", "no");
+	        }
+	       
+	        vicArray.put(victims);
+	        info.accumulate("victims", vicArray);
+	        
+	        info.accumulate("bluntIOType","yes" );
+	        info.accumulate("signsOfStruggle", "yes");
+	        info.accumulate("alcoholBottleAround", "yes");
+	        info.accumulate("drugParaphernalia", "yes");
+	        info.accumulate("strangulationSuspected", "yes");
+	        info.accumulate("smotheringSuspected", "yes");
+	        info.accumulate("chockingSuspected", "yes");
+	        info.accumulate("doorLocked", "yes");
+	        info.accumulate("windowsClosed", "yes");
+	        info.accumulate("windowsBroken", "yes");
+	        info.accumulate("victimAlone", "yes");
+	        info.accumulate("peopleWithVictim", "yes");
+	        info.accumulate("bluntForceObjectSuspected", "yes");
+	        info.accumulate("bluntForceObjectStillOnScene", "yes");
+	        info.accumulate("wasCommunityAssult", "yes");
+	        
+	        array.put(info);
+	        obj.accumulate("object", array);
+	        pairs.add(new BasicNameValuePair("caseData",obj.toString()));
+	        System.out.println("\n\n\n\n\n\n\n\n\n"+obj.toString()+"\n\n\n\n\n\n\n\n\n");
             
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs,HTTP.UTF_8);
             //post.setEntity(new StringEntity(request.toString(), "utf-8"));
