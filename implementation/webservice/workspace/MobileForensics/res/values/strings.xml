@@ -39,5 +39,24 @@
         <item>Left side</item>
     </string-array>
     
+    <string-array name="railwaysceneofinjury">
+        
+        <item>On the train tracks </item>   
+        <item>At the station </item>
+        <item>In the train</item>
+        <item>Place unknown </item>
+        <item>Other</item>
+    </string-array>
+    
+    <string-array name="sharpinjuries">
+        <item >Head</item>
+        <item >Thorax</item>
+        <item >Abdomen</item>
+        <item >Arm</item>
+        <item >Legs </item> 
+        <item >Front</item>
+        <item >Back</item>
+        <item >Front and back </item>   
+    </string-array>
 
 </resources>

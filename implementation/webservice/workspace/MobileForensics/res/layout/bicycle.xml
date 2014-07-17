@@ -395,14 +395,13 @@
 							        	
 							            />
 							        
-							        
-							        <TextView 
+							    </RelativeLayout>
+							    
+							    <TextView 
 							            android:id="@+id/tv_decomposed"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
 							        	android:text="Is the body decomposed?"
-							        	android:layout_below="@+id/scenephoto"
-							        	android:layout_alignBaseline="@+id/decomposed"
 							        	android:layout_marginRight="50dp"
 							            />
 							        <Spinner 
@@ -410,17 +409,13 @@
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
 							            android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							        	android:layout_toRightOf="@+id/tv_decomposed"
-							        	android:layout_below="@+id/camera"/>
+							            android:prompt="@string/chooseYN"/>
 							        
 							         <TextView 
 							            android:id="@+id/tv_intervention"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
 							        	android:text="Is there any medical intervention?"
-							        	android:layout_below="@+id/tv_decomposed"
-							        	android:layout_alignBaseline="@+id/intervention"
 							        	android:layout_marginRight="50dp"
 							            />
 							        
@@ -429,35 +424,27 @@
 							       		android:layout_width="100dp"
 							        	android:layout_height="wrap_content"
 							            android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							            android:layout_toRightOf="@+id/tv_intervention"
-							        	android:layout_below="@+id/decomposed"/>
+							            android:prompt="@string/chooseYN"/>
 							       
 							       <TextView 
 							            android:id="@+id/tv_foundbody"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
 							        	android:text="Who found the body?"
-							        	android:layout_below="@+id/tv_intervention"
-							        	android:layout_alignBaseline="@+id/foundbody"
 							        	android:layout_marginRight="50dp"
 							            />
 							        
 							       <EditText 
 							            android:id="@+id/foundbody"
 							       		android:layout_width="300dp"
-							        	android:layout_height="wrap_content"
-							            android:layout_toRightOf="@+id/tv_foundbody"
-							        	android:layout_below="@+id/intervention"/>
+							        	android:layout_height="wrap_content"/>
 							       
 							       <TextView 
 							            android:id="@+id/tv_bodyintact"
 							       		android:layout_width="wrap_content"
 							        	android:layout_height="wrap_content"
 							        	android:text="Is the body intact?"
-							        	android:layout_below="@+id/tv_foundbody"
-							        	android:layout_alignBaseline="@+id/bodyintact"
-							        	android:layout_marginRight="50dp"
+							        	
 							            />
 							        <Spinner 
 							            android:id="@+id/bodyintact"
@@ -465,12 +452,9 @@
 							       		android:entries="@array/yesorno"
 							            android:prompt="@string/chooseYN"
 							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_bodyintact"
-							        	android:layout_below="@+id/foundbody"/>
+							        	/>
 							       
 							            
-							       
-							    </RelativeLayout>
 							    
 							    
 							    <TextView 
@@ -483,15 +467,6 @@
 										android:textSize="18sp"
 							        	/>
 							    
-							    
-							    <LinearLayout 
-							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:orientation="vertical" 
-							        android:gravity="center"
-							        
-							        >
 							       
 							        <TextView 
 							            android:id="@+id/tv_singlemultiple"
@@ -596,7 +571,7 @@
 							        	/>
 							            
 							       
-							    </LinearLayout>
+							   
 							    
 							    
 							    <TextView 

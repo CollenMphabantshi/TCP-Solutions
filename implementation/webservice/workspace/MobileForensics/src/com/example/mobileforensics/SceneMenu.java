@@ -50,8 +50,8 @@ public class SceneMenu extends Activity{
                                          
                                         };
         final String[] classes = new String[] {"Sudi","Sudc","Suda","Foetusabandonedbaby","Sec48"
-        		,"Pedestrian","Bicycle","Mba","Mva","Railway","Aviation","FromHeight","Crushinjury"
-        		,"Firearm","Sharp","Blunt","Drowning","Gassing","Hanging","Ingestionoverdosepoisoning","Burns","Electrocutionlightning"};
+        		,"Pedestrian","Bicycle","Mba","Mva","Railway","Aviation","Fromheight","Crushinjury"
+        		,"Firearm","Sharp","Blunt","Drowning","Gassing","Hanging","Ingestionoverdosepoisoning","Burn","Electrocutionlightning"};
         
         // Define a new Adapter
         // First parameter - Context
