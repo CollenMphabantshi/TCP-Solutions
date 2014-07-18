@@ -66,7 +66,7 @@ insert into insideScenes values(0,"Shop, bank, retail area");
 insert into insideScenes values(0,"School, educational area");
 insert into insideScenes values(0,"Medical service area");
 insert into insideScenes values(0,"Industrial & constructional area , mine");
-insert into insideScenes values(0,"Farm &amp; primary production area");
+insert into insideScenes values(0,"Farm & primary production area");
 insert into insideScenes values(0,"In custody, prison");
 insert into insideScenes values(0,"Place unknown");
 insert into insideScenes values(0,"Other(Specify)");

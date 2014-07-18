@@ -213,6 +213,9 @@ doneButton.setOnClickListener(new OnClickListener() {
 						if(json != null)
 						{
 							System.out.println("\n\n\n\n\n\n\n\nOUTPUT: "+json.toString()+"\n\n\n\n\n\n\n\n");
+						}else{
+							System.out.println("\n\n\n\n\n\n\n\nOUTPUT:1 "+json.toString()+"\n\n\n\n\n\n\n\n");
+							
 						}
 					}
 					

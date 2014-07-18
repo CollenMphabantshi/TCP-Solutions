@@ -17,14 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mobileforensics.Blunt.Read;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Fromheight extends Activity{
 	private TextView tv_ioName;
@@ -198,229 +194,6 @@ public class Fromheight extends Activity{
 						}catch(Exception e){e.printStackTrace();}
 					}
 				});
-		
-doneButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-				// TODO Auto-generated method stub
-				try{
-					//submit data to the server
-					List<NameValuePair> postdata = getPostData();
-					if(postdata != null)
-					{
-						new Read().execute(postdata);
-						if(json != null)
-						{
-							System.out.println("\n\n\n\n\n\n\n\nOUTPUT: "+json.toString()+"\n\n\n\n\n\n\n\n");
-						}
-					}
-					
-					
-					nextButton.setVisibility(GONE);
-					doneButton.setVisibility(GONE);
-					logoutButton.setVisibility(VISIBLE);
-				}catch(Exception e){e.printStackTrace();}
-			}
-		});
-		
-		logoutButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		/**
-		 * 	Spinner onclick event
-		 */
-		
-		
-		previousAttempts.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("yes"))
-						{
-							tv_howManyAttempts.setVisibility(VISIBLE);
-							howManyAttempts.setVisibility(VISIBLE);
-						}else{
-							tv_howManyAttempts.setVisibility(GONE);
-							howManyAttempts.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		sceneIOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("outside"))
-						{
-							tv_whereInside.setVisibility(GONE);
-							sceneIType.setVisibility(GONE);
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-							tv_doorLocked.setVisibility(GONE);
-							doorLocked.setVisibility(GONE);
-							tv_windowsClosed.setVisibility(GONE);
-							windowsClosed.setVisibility(GONE);
-							tv_windowsBroken.setVisibility(GONE);
-							windowsBroken.setVisibility(GONE);
-							tv_victimAlone.setVisibility(GONE);
-							victimAlone.setVisibility(GONE);
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-							
-							tv_sceneOType.setVisibility(VISIBLE);
-							sceneOType.setVisibility(VISIBLE);
-							
-						}else{
-							tv_whereInside.setVisibility(VISIBLE);
-							sceneIType.setVisibility(VISIBLE);
-							tv_doorLocked.setVisibility(VISIBLE);
-							doorLocked.setVisibility(VISIBLE);
-							tv_windowsClosed.setVisibility(VISIBLE);
-							windowsClosed.setVisibility(VISIBLE);
-							tv_windowsBroken.setVisibility(VISIBLE);
-							windowsBroken.setVisibility(VISIBLE);
-							tv_victimAlone.setVisibility(VISIBLE);
-							victimAlone.setVisibility(VISIBLE);
-							
-							tv_sceneOType.setVisibility(GONE);
-							sceneOType.setVisibility(GONE);
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneITypeOther.setVisibility(VISIBLE);
-							sceneITypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		victimAlone.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("no"))
-						{
-							tv_peopleWithVictim.setVisibility(VISIBLE);
-							peopleWithVictim.setVisibility(VISIBLE);
-						}else{
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		
-		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneOTypeOther.setVisibility(VISIBLE);
-							sceneOTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		
 	}
