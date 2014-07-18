@@ -1,21 +1,27 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.sdk=C\:\\adt-bundle-windows-x86_64-20140702\\adt-bundle-windows-x86_64-20140702\\sdk
 com.android.ide.eclipse.adt.xmlEditor=true
 =======
 <<<<<<< HEAD
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=5c9a701f82a9498b352043c5232497f19e7daa73
+>>>>>>>=018933d2c4fa42345712afb414c3152ae7382a65
 com.android.ide.eclipse.adt.autoPickTarget=false
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.sdk=C\:\\Android\\adt-bundle-windows-x86_64-20140702\\sdk
 com.android.ide.eclipse.adt.xmlEditor=true
 design.palette.flyout.width=150
+<<<<<<< HEAD
+=======
 =======
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.sdk=C\:\\Users\\Latitude\\Documents\\software\\new\\Android\\adt-bundle-windows-x86-20140702\\sdk
 com.android.ide.eclipse.adt.xmlEditor=true
 >>>>>>> 018933d2c4fa42345712afb414c3152ae7382a65
 >>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 eclipse.preferences.version=1

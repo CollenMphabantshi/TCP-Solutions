@@ -24,7 +24,8 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"  
 			android:gravity="center_horizontal">
-			<TextView			            
+			<TextView	
+				android:id="@+id/foetus_tv_io"			
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Investigating Officer Information"
@@ -38,20 +39,20 @@
 				android:gravity="center_horizontal">
 							        
 				<TextView 
-					android:id="@+id/tv_io_name"
+					android:id="@+id/foetus_tv_io_name"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Name"
 					android:layout_alignBaseline="@+id/foetus_io_name"/>
 				<EditText 
-					android:id="@+id/io_name"
+					android:id="@+id/foetus_io_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_toRightOf="@+id/tv_foetus_io_name"/>
 							       
 							       
 				<TextView 
-					android:id="@+id/tv_io_surname"
+					android:id="@+id/foetus_tv_io_surname"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:layout_below="@+id/tv_foetus_io_name"
@@ -94,7 +95,8 @@
 					android:layout_below="@+id/foetus_io_rank"/>				       
 			</RelativeLayout>
 			
-			<TextView			            
+			<TextView	
+			     android:id="@+id/foetus_tv_foosInfo"			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="First Officer On Scene"
@@ -150,7 +152,8 @@
 					android:layout_below="@+id/foetus_foos_surname"/>
 								       
 			</RelativeLayout>
-			<TextView			            
+			<TextView
+			    android:id="@+id/foetus_tv_victimGender"				            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Gender"
@@ -189,7 +192,8 @@
 			        />
 			</RadioGroup>
 			
-			<TextView			            
+			<TextView	
+			    android:id="@+id/foetus_tv_victimRace"			            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Race"
@@ -242,7 +246,8 @@
 			        />
 			</RadioGroup>
 			
-			<TextView			            
+			<TextView
+			    android:id="@+id/foetus_tv_victimInfo"				            
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Victim Information (if known individual)"
@@ -298,6 +303,18 @@
 					android:layout_below="@+id/foetus_victim_surname"/>
 								       
 				</RelativeLayout>
+				
+			<TextView 
+				    android:id="@+id/foetus_tv_the_body"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_body"
+					android:visibility="gone"
+					/>
 				<TextView 
 				    android:id="@+id/tv_foetus_bodyDecomposed"
 					android:layout_width="wrap_content"
@@ -379,6 +396,36 @@
 					android:visibility="gone"
 				    />
 				
+				<TextView
+				    android:id="@+id/foetus_sceneOfInjury"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/scene_of_injury"
+					android:visibility="gone"
+					/>
+				<TextView
+				    android:id="@+id/foetus_tv_sceneIOType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="Is the scene Outside or Inside?"
+					android:visibility="gone"
+					/>
+				<Spinner
+				    android:id="@+id/foetus_sceneIOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/sceneIO"
+					android:prompt="@string/choose"
+					android:visibility="gone"
+				    />
 				<TextView 
 				    android:id="@+id/tv_foetus_sceneIType"
 					android:layout_width="wrap_content"
@@ -454,6 +501,18 @@
 				    />
 				
 				<TextView 
+				    android:id="@+id/foetus_theScene"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_scene"
+					android:visibility="gone"
+					/>
+				
+				<TextView 
 				    android:id="@+id/tv_foetus_generalHistory"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -484,6 +543,31 @@
 					android:visibility="gone"
 					/>
 				
+				<Button
+				    android:id="@+id/foetus_nextButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="NEXT PAGE"
+				    android:visibility="visible" 
+				    />
+				
+				<Button
+				    android:id="@+id/foetus_doneButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="DONE"
+				    android:visibility="gone" 
+				    />
+				<Button
+				    android:id="@+id/foetus_logoutButton"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_gravity="center_horizontal"
+				    android:text="LOGOUT"
+				    android:visibility="gone" 
+				    />
 		</LinearLayout>
 		
 	</ScrollView>    	

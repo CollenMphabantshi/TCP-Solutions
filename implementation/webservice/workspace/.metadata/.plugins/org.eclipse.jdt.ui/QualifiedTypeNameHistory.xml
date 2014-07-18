@@ -22,5 +22,8 @@
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="com.example.mobileforensics.Blunt.Read"/>
+<<<<<<< HEAD
+=======
 >>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 </qualifiedTypeNameHistroy>
