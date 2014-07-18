@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchHistory>
+<<<<<<< HEAD
 <launchGroup id="org.eclipse.ui.externaltools.launchGroup">
 <mruHistory/>
+=======
+<launchGroup id="org.eclipse.debug.ui.launchGroup.debug">
+<mruHistory>
+<launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;MobileForensics&quot;/&gt;&#13;&#10;"/>
+<launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;collen&quot;/&gt;&#13;&#10;"/>
+</mruHistory>
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 <favorites/>
 </launchGroup>
 <launchGroup id="org.eclipse.debug.ui.launchGroup.profile">
 <mruHistory/>
 <favorites/>
 </launchGroup>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 <launchGroup id="org.eclipse.debug.ui.launchGroup.debug">
 <mruHistory>
 <launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;MobileForensics&quot;/&gt;&#13;&#10;"/>
 <launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;collen&quot;/&gt;&#13;&#10;"/>
 </mruHistory>
+<<<<<<< HEAD
+=======
+=======
+<launchGroup id="org.eclipse.ui.externaltools.launchGroup">
+<mruHistory/>
+>>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
+>>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
 <favorites/>
 </launchGroup>
 <launchGroup id="org.eclipse.debug.ui.launchGroup.run">
@@ -20,6 +39,9 @@
 <launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;MobileForensics&quot;/&gt;&#13;&#10;"/>
 <launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;collen&quot;/&gt;&#13;&#10;"/>
 </mruHistory>
-<favorites/>
+<favorites>
+<launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;MobileForensics&quot;/&gt;&#13;&#10;"/>
+<launch memento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;launchConfiguration local=&quot;true&quot; path=&quot;collen&quot;/&gt;&#13;&#10;"/>
+</favorites>
 </launchGroup>
 </launchHistory>

@@ -44,32 +44,32 @@ public class Aviation extends Activity{
 	private EditText ioRank;
 	private TextView tv_ioCellNo;
 	private EditText ioCellNo;
-	
+
 	private TextView tv_foosName;
 	private EditText foosName;
 	private TextView tv_foosSurname;
 	private EditText foosSurname;
 	private TextView tv_foosRank;
 	private EditText foosRank;
-	
+
 	private TextView tv_victimName;
 	private EditText victimName;
 	private TextView tv_victimSurname;
 	private EditText victimSurname;
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	
+
 	private TextView tv_victimInfo;
 	private TextView tv_victimRace;
 	private TextView tv_victimGender;
 	private TextView tv_foos;
 	private TextView tv_io;
-	
-	
+
+
 	private RadioButton rgbMale;
 	private RadioButton rgbFemale;
 	private RadioButton rgbUnknownGender;
-	
+
 	private RadioButton rgbAsian;
 	private RadioButton rgbBlack;
 	private RadioButton rgbColoured;
@@ -89,14 +89,14 @@ public class Aviation extends Activity{
 	private EditText whoFoundVictimBody;
 	private TextView tv_closeToWater;
 	private Spinner closeToWater;
-	
-	
+
+
 	private TextView sceneOfInjury;
 	private TextView tv_sceneOType;
 	private Spinner sceneOType;
 	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
-	
+
 	private TextView theScene;
 	private TextView tv_aircraftType;
 	private Spinner aircraftType;
@@ -114,12 +114,12 @@ public class Aviation extends Activity{
 	private Spinner suicideNote;
 	private TextView tv_generalHistory;
 	private EditText generalHistory;
-	
+
 	private RelativeLayout rl1;
 	private Button nextButton;
 	private Button doneButton;
 	private Button logoutButton;
-	
+
 	private JSONObject json;
 	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
 	private final static int PAGES = 6;
@@ -132,9 +132,9 @@ public class Aviation extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.aviation);
-		
+
 		pageCount = 1;
-		
+
 		tv_ioName = (TextView)findViewById(R.id.tv_aviation_io_name);
 		ioName = (EditText)findViewById(R.id.aviation_io_name);
 		tv_ioSurname = (TextView)findViewById(R.id.tv_aviation_io_surname);
@@ -143,37 +143,37 @@ public class Aviation extends Activity{
 		ioRank = (EditText)findViewById(R.id.aviation_io_rank);
 		tv_ioCellNo = (TextView)findViewById(R.id.tv_aviation_io_cell);
 		ioCellNo = (EditText)findViewById(R.id.aviation_io_cell);
-		
+
 		tv_foosName = (TextView)findViewById(R.id.tv_aviation_foos_name);
 		foosName = (EditText)findViewById(R.id.aviation_foos_name);
 		tv_foosSurname = (TextView)findViewById(R.id.tv_aviation_foos_surname);
 		foosSurname = (EditText)findViewById(R.id.aviation_foos_surname);
 		tv_foosRank = (TextView)findViewById(R.id.tv_aviation_foos_rank);
 		foosRank = (EditText)findViewById(R.id.aviation_foos_rank);
-		
+
 		tv_io = (TextView)findViewById(R.id.aviation_tvInformation);
 		tv_foos = (TextView)findViewById(R.id.tv_aviation_foosInfo);
 		tv_victimInfo = (TextView)findViewById(R.id.tv_aviation_victimInfo);
 		tv_victimRace = (TextView)findViewById(R.id.tv_aviation_victimRace);
 		tv_victimGender = (TextView)findViewById(R.id.tv_aviation_victimGender);
-		
+
 		tv_victimName = (TextView)findViewById(R.id.tv_aviation_victim_name);
 		victimName = (EditText)findViewById(R.id.aviation_victim_name);
 		tv_victimSurname = (TextView)findViewById(R.id.tv_aviation_victim_surname);
 		victimSurname = (EditText)findViewById(R.id.aviation_victim_surname);
 		tv_victimIDNo = (TextView)findViewById(R.id.tv_aviation_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.aviation_victim_id);
-		
+
 		rgbMale = (RadioButton)findViewById(R.id.aviation_rgbMale);
 		rgbFemale = (RadioButton)findViewById(R.id.aviation_rgbFemale);
 		rgbUnknownGender = (RadioButton)findViewById(R.id.aviation_rgbUnknownGender);
-		
+
 		rgbAsian = (RadioButton)findViewById(R.id.aviation_rgbAsian);
 		rgbBlack = (RadioButton)findViewById(R.id.aviation_rgbBlack);
 		rgbColoured = (RadioButton)findViewById(R.id.aviation_rgbColoured);
 		rgbWhite = (RadioButton)findViewById(R.id.aviation_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.aviation_rgbUnknownRace);
-		
+
 		theBody = (TextView)findViewById(R.id.aviation_tv_the_body);
 		tv_bodyDecomposed = (TextView)findViewById(R.id.tv_aviation_bodyDecomposed);
 		bodyDecomposed = (Spinner)findViewById(R.id.aviation_bodyDecomposed);
@@ -187,7 +187,7 @@ public class Aviation extends Activity{
 		whoFoundVictimBody = (EditText)findViewById(R.id.aviation_whoFoundVictimBody);
 		tv_closeToWater = (TextView)findViewById(R.id.tv_aviation_closeToWater);
 		closeToWater = (Spinner)findViewById(R.id.aviation_closeToWater);
-		
+
 		theScene = (TextView)findViewById(R.id.aviation_theScene);
 		tv_sceneOType = (TextView)findViewById(R.id.tv_aviation_sceneOType);
 		sceneOType = (Spinner)findViewById(R.id.aviation_sceneOType);
@@ -209,21 +209,21 @@ public class Aviation extends Activity{
 		suicideNote = (Spinner)findViewById(R.id.aviation_suicideNote);
 		tv_generalHistory = (TextView)findViewById(R.id.tv_aviation_generalHistory);
 		generalHistory = (EditText)findViewById(R.id.aviation_generalHistory);
-		
+
 		nextButton = (Button)findViewById(R.id.aviation_nextButton);
 		doneButton = (Button)findViewById(R.id.aviation_doneButton);
 		logoutButton = (Button)findViewById(R.id.aviation_logoutButton);
-		
+
 		setOnClickEvents();
 		hidePage();
 		showPage();
 		showHideButtons();
 	}
-	
+
 	private void setOnClickEvents(){
-		
+
 		nextButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
@@ -238,13 +238,13 @@ public class Aviation extends Activity{
 					}else{
 						//Toast.makeText(aviation.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
 					}
-					
+
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
-		
+
 		doneButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
@@ -257,20 +257,20 @@ public class Aviation extends Activity{
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
-		
+
 		logoutButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		/**
 		 * 	Spinner onclick event
 		 */
-		
+
 		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -297,12 +297,12 @@ public class Aviation extends Activity{
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 	}
-	
+
 	private void showHideButtons(){
 		if(pageCount > PAGES)
 		{
@@ -327,33 +327,33 @@ public class Aviation extends Activity{
 				ioRank.setVisibility(GONE);
 				tv_ioCellNo.setVisibility(GONE);
 				ioCellNo.setVisibility(GONE);
-				
+
 				tv_foosName.setVisibility(GONE);
 				foosName.setVisibility(GONE);
 				tv_foosSurname.setVisibility(GONE);
 				foosSurname.setVisibility(GONE);
 				tv_foosRank.setVisibility(GONE);
 				foosRank.setVisibility(GONE);
-				
+
 			}
-			
+
 			//if not second page disable
 			if(pageCount != 2){
-				
-				
+
+
 				tv_victimName.setVisibility(GONE);
 				victimName.setVisibility(GONE);
 				tv_victimSurname.setVisibility(GONE);
 				victimSurname.setVisibility(GONE);
 				tv_victimIDNo.setVisibility(GONE);
 				victimIDNo.setVisibility(GONE);
-				
-				
+
+
 				rgbMale.setVisibility(GONE);
 				rgbFemale.setVisibility(GONE);
 				rgbUnknownGender.setVisibility(GONE);
-				
-				
+
+
 				rgbAsian.setVisibility(GONE);
 				rgbBlack.setVisibility(GONE);
 				rgbColoured.setVisibility(GONE);
@@ -363,7 +363,7 @@ public class Aviation extends Activity{
 				tv_victimRace.setVisibility(GONE);
 				tv_victimGender.setVisibility(GONE);
 			}
-			
+
 			//if not third page disable
 			if(pageCount != 3){
 				theBody.setVisibility(GONE);
@@ -380,7 +380,7 @@ public class Aviation extends Activity{
 				tv_closeToWater.setVisibility(GONE);
 				closeToWater.setVisibility(GONE);
 			}
-	
+
 			//if not fourth page disable
 			if(pageCount != 4){
 				sceneOfInjury.setVisibility(GONE);
@@ -388,7 +388,7 @@ public class Aviation extends Activity{
 				tv_sceneOTypeOther.setVisibility(GONE);
 				sceneOTypeOther.setVisibility(GONE);
 			}
-	
+
 			//if not fifth page disable
 			if(pageCount != 5){
 				theScene.setVisibility(GONE);
@@ -411,7 +411,7 @@ public class Aviation extends Activity{
 			}
 		}catch(Exception e){e.printStackTrace();}
 	}
-	
+
 	public void showPage(){
 		try{
 			//if fist page show
@@ -427,44 +427,44 @@ public class Aviation extends Activity{
 				ioRank.setVisibility(VISIBLE);
 				tv_ioCellNo.setVisibility(VISIBLE);
 				ioCellNo.setVisibility(VISIBLE);
-				
+
 				tv_foosName.setVisibility(VISIBLE);
 				foosName.setVisibility(VISIBLE);
 				tv_foosSurname.setVisibility(VISIBLE);
 				foosSurname.setVisibility(VISIBLE);
 				tv_foosRank.setVisibility(VISIBLE);
 				foosRank.setVisibility(VISIBLE);
-			
+
 			}
-			
+
 			//if second page show
 			if(pageCount == 2){
-				
+
 				tv_victimName.setVisibility(VISIBLE);
 				victimName.setVisibility(VISIBLE);
 				tv_victimSurname.setVisibility(VISIBLE);
 				victimSurname.setVisibility(VISIBLE);
 				tv_victimIDNo.setVisibility(VISIBLE);
 				victimIDNo.setVisibility(VISIBLE);
-				
+
 				rgbMale.setVisibility(VISIBLE);
 				rgbFemale.setVisibility(VISIBLE);
 				rgbUnknownGender.setVisibility(VISIBLE);
-				
+
 				rgbAsian.setVisibility(VISIBLE);
 				rgbBlack.setVisibility(VISIBLE);
 				rgbColoured.setVisibility(VISIBLE);
 				rgbWhite.setVisibility(VISIBLE);
 				rgbUnknownRace.setVisibility(VISIBLE);
-				
+
 				tv_victimInfo.setVisibility(VISIBLE);
 				tv_victimRace.setVisibility(VISIBLE);
 				tv_victimGender.setVisibility(VISIBLE);
 			}
-			
+
 			//if third page show
 			if(pageCount == 3){
-				
+
 				theBody.setVisibility(VISIBLE);
 				tv_bodyDecomposed.setVisibility(VISIBLE);
 				bodyDecomposed.setVisibility(VISIBLE);
@@ -479,8 +479,8 @@ public class Aviation extends Activity{
 				tv_closeToWater.setVisibility(VISIBLE);
 				closeToWater.setVisibility(VISIBLE);
 			}
-	
-			
+
+
 			//if fifth page show
 			if(pageCount == 4){
 				theScene.setVisibility(VISIBLE);
@@ -500,12 +500,12 @@ public class Aviation extends Activity{
 				suicideNote.setVisibility(VISIBLE);
 				tv_generalHistory.setVisibility(VISIBLE);
 				generalHistory.setVisibility(VISIBLE);
-				
+
 			}
 		}catch(Exception e){e.printStackTrace();}
 	}
-	
-	
+
+
 	public boolean validateNextPage(){
 		try{
 			switch(pageCount)
@@ -523,14 +523,14 @@ public class Aviation extends Activity{
 							&& (rgbMale.isChecked() || rgbFemale.isChecked() ||rgbUnknownGender.isChecked())
 							&& (rgbAsian.isChecked() || rgbBlack.isChecked() || rgbColoured.isChecked()
 								|| rgbWhite.isChecked() || rgbUnknownRace.isChecked())){
-						
+
 						return true;
 					}
 					break;
 				case 3:
 					try{
 						String sot = (String)sceneOType.getSelectedItem();
-						
+
 						if(!sot.toLowerCase().equals("other"))
 						{
 							return true;
@@ -540,7 +540,7 @@ public class Aviation extends Activity{
 								return true;
 							}
 						}
-						
+
 					}catch(Exception ex){}
 					break;
 				case 4:
@@ -549,9 +549,9 @@ public class Aviation extends Activity{
 		}catch(Exception e){e.printStackTrace();}
 		return false;
 	}
-	
+
 	private List<NameValuePair> getPostData(){
-		
+
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 
         pairs.add(new BasicNameValuePair("rquest","addCases"));
@@ -559,11 +559,11 @@ public class Aviation extends Activity{
         
         return pairs;
 	}
-	
+
 	public JSONObject request(String url, List<NameValuePair> request)
             throws ClientProtocolException, IOException, IllegalStateException,
             JSONException {
-		
+
         	DefaultHttpClient client = (DefaultHttpClient) com.example.mobileforensics.helpers.WebServiceWrapper.getNewHttpClient();
             HttpPost post = new HttpPost(url);
             
@@ -606,17 +606,17 @@ public class Aviation extends Activity{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return json;
 		}
-		
+
 		@Override
 		protected void onPostExecute(JSONObject result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
+
 		}
-	
+
     }
     
     public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
@@ -626,23 +626,23 @@ public class Aviation extends Activity{
 			boolean status = false; 
 			try{
 			// TODO Auto-generated method stub
-			
+
 				if(params[0] != null){
-					
+
 					return true;
 				}
-			
+
 			}catch(Exception e){e.printStackTrace();}
 			return status;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Boolean result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
+
 		}
-	
+
     }
 
 }
