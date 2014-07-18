@@ -1,0 +1,384 @@
+package com.example.mobileforensics;
+
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class Fromheight extends Activity{
+	private TextView tv_ioName;
+	private EditText ioName;
+	private TextView tv_ioSurname;
+	private EditText ioSurname;
+	private TextView tv_ioRank;
+	private EditText ioRank;
+	private TextView tv_ioCellNo;
+	private EditText ioCellNo;
+	
+	private TextView tv_foosName;
+	private EditText foosName;
+	private TextView tv_foosSurname;
+	private EditText foosSurname;
+	private TextView tv_foosRank;
+	private EditText foosRank;
+	
+	private TextView tv_victimName;
+	private EditText victimName;
+	private TextView tv_victimSurname;
+	private EditText victimSurname;
+	private TextView tv_victimIDNo;
+	private EditText victimIDNo;
+	
+	private TextView tv_victimInfo;
+	private TextView tv_victimRace;
+	private TextView tv_victimGender;
+	private TextView tv_foos;
+	private TextView tv_io;
+	
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
+
+	private TextView theBody;
+	private TextView tv_bodyDecomposed;
+	private Spinner bodyDecomposed;
+	private TextView tv_medicalIntervention;
+	private Spinner medicalIntervention;
+	private TextView tv_whoFoundVictimBody;
+	private EditText whoFoundVictimBody;
+	private TextView tv_closeToWater;
+	private Spinner closeToWater;
+	private TextView tv_rapeHomicide;
+	private Spinner rapeHomicide;
+	private TextView tv_suicideSuspected;
+	private Spinner suicideSuspected;
+	private TextView tv_previousAttempts;
+	private Spinner previousAttempts;
+	private TextView tv_howManyAttempts;
+	private EditText howManyAttempts;
+	
+	private TextView sceneOfInjury;
+	private TextView tv_sceneIOType;
+	private Spinner sceneIOType;
+	private TextView tv_whereInside;
+	private Spinner sceneIType;
+	private TextView tv_sceneITypeOther;
+	private EditText sceneITypeOther;
+	private TextView tv_doorLocked;
+	private Spinner doorLocked;
+	private TextView tv_windowsClosed;
+	private Spinner windowsClosed;
+	private TextView tv_windowsBroken;
+	private Spinner windowsBroken;
+	private TextView tv_victimAlone;
+	private Spinner victimAlone;
+	private TextView tv_peopleWithVictim;
+	private EditText peopleWithVictim;
+	private TextView tv_sceneOType;
+	private Spinner sceneOType;
+	private TextView tv_sceneOTypeOther;
+	private EditText sceneOTypeOther;
+	
+	private TextView sceneLook;
+	private TextView tv_signsOfStruggle;
+	private Spinner signsOfStruggle;
+	private TextView tv_alcoholBottleAround;
+	private Spinner alcoholBottleAround;
+	private TextView tv_drugParaphernalia;
+	private Spinner drugParaphernalia;
+	
+	private TextView theScene;
+	private TextView tv_fromwhat;
+	private EditText fromwhat;
+	private TextView tv_howhigh;
+	private EditText howhigh;
+	private TextView tv_onwhat;
+	private EditText onwhat;
+	
+	private TextView tv_suicideNoteFound;
+	private Spinner suicideNoteFound;
+	private TextView tv_generalHistory;
+	private EditText generalHistory;
+	
+	private LinearLayout fromheight_information_layout;
+	private LinearLayout fromheight_demographics_layout;
+	private LinearLayout fromheight_thebody_layout;
+	private LinearLayout fromheight_sceneOfInjury_layout;
+	private LinearLayout fromheight_theScene_layout;
+	private LinearLayout fromheight_gallery_layout;
+	
+	
+	private RelativeLayout rl1;
+	private Button nextButton;
+	private Button doneButton;
+	private Button logoutButton;
+	
+	private JSONObject json;
+	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
+	private final static int PAGES = 6;
+	private final static int VISIBLE = View.VISIBLE;
+	private final static int INVISIBLE = View.INVISIBLE;
+	private final static int GONE = View.GONE;
+	private int pageCount;
+	
+	private String username;
+	private String time;
+	private String date;
+	private String location;
+	private String temperature;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fromheight);
+		initialiseParameters();
+		setOnclickEvents();
+		hidePage();
+		showPage();
+		showHideButtons();
+	}
+	
+	private void setOnclickEvents(){
+		
+		nextButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View view) {
+						// TODO Auto-generated method stub
+						try{
+							System.out.println("Page: "+pageCount);
+							if(true)
+							{
+								pageCount++;
+								hidePage();
+								showPage();
+								showHideButtons();
+							}else{
+								//Toast.makeText(Fromheight.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
+							}
+							
+						}catch(Exception e){e.printStackTrace();}
+					}
+				});
+		
+		
+	}
+	
+	private void showHideButtons(){
+		if(pageCount > PAGES)
+		{
+			nextButton.setVisibility(GONE);
+			doneButton.setVisibility(VISIBLE);
+			logoutButton.setVisibility(GONE);
+		}
+	}
+	
+	private void showPage(){
+		
+		
+		try{
+			
+			//show page1
+			if(pageCount == 1){
+				fromheight_information_layout.setVisibility(VISIBLE);
+			}
+			//show page2
+			if(pageCount == 2){
+				fromheight_demographics_layout.setVisibility(VISIBLE);
+			}
+			//show page3
+			if(pageCount == 3){
+				fromheight_thebody_layout.setVisibility(VISIBLE);
+			}
+			//show page4
+			if(pageCount == 4){
+				fromheight_sceneOfInjury_layout.setVisibility(VISIBLE);
+				
+			}
+			//show page5
+			if(pageCount == 5){
+				fromheight_theScene_layout.setVisibility(VISIBLE);
+			}
+			//show page6
+			if(pageCount == 6){
+				fromheight_gallery_layout.setVisibility(VISIBLE);
+			}
+		
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+private void hidePage(){
+		
+		try{
+			
+			//hide page1
+			if(pageCount != 1){
+				fromheight_information_layout.setVisibility(GONE);
+			}
+			//hide page2
+			if(pageCount != 2){
+				fromheight_demographics_layout.setVisibility(GONE);
+			}
+			//hide page3
+			if(pageCount != 3){
+				fromheight_thebody_layout.setVisibility(GONE);
+			}
+			//hide page4
+			if(pageCount != 4){
+				fromheight_sceneOfInjury_layout.setVisibility(GONE);
+			}
+			//hide page5
+			if(pageCount != 5){
+				fromheight_theScene_layout.setVisibility(GONE);
+			}
+			//hide page6
+			if(pageCount != 6){
+				fromheight_gallery_layout.setVisibility(GONE);
+			}
+		
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+	private void initialiseParameters(){
+		
+		pageCount = 1;
+		username = "p11111111";
+		time = "00:00:10";
+		date = "2014-01-01";
+		location = "122223, -13332";
+		temperature = "23 C";
+		
+		tv_ioName = (TextView)findViewById(R.id.fromheight_tv_io_name);
+		ioName = (EditText)findViewById(R.id.fromheight_io_name);
+		tv_ioSurname = (TextView)findViewById(R.id.fromheight_tv_io_surname);
+		ioSurname = (EditText)findViewById(R.id.fromheight_io_surname);
+		tv_ioRank = (TextView)findViewById(R.id.fromheight_tv_io_rank);
+		ioRank = (EditText)findViewById(R.id.fromheight_io_rank);
+		tv_ioCellNo = (TextView)findViewById(R.id.fromheight_tv_io_cell);
+		ioCellNo = (EditText)findViewById(R.id.fromheight_io_cell);
+		
+		tv_foosName = (TextView)findViewById(R.id.fromheight_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.fromheight_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.fromheight_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.fromheight_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.fromheight_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.fromheight_foos_rank);
+		
+		tv_io = (TextView)findViewById(R.id.fromheight_tv_io);
+		tv_foos = (TextView)findViewById(R.id.fromheight_tv_foos);
+		tv_victimInfo = (TextView)findViewById(R.id.fromheight_tv_victimInfo);
+		tv_victimRace = (TextView)findViewById(R.id.fromheight_tv_victimRace);
+		tv_victimGender = (TextView)findViewById(R.id.fromheight_tv_victimGender);
+		
+		tv_victimName = (TextView)findViewById(R.id.fromheight_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.fromheight_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.fromheight_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.fromheight_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.fromheight_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.fromheight_victim_id);
+		
+		rgbMale = (RadioButton)findViewById(R.id.fromheight_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.fromheight_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.fromheight_rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.fromheight_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.fromheight_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.fromheight_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.fromheight_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.fromheight_rgbUnknownRace);
+		
+		theBody = (TextView)findViewById(R.id.fromheight_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.fromheight_tv_bodyDecomposed);
+		bodyDecomposed = (Spinner)findViewById(R.id.fromheight_bodyDecomposed);
+		tv_medicalIntervention = (TextView)findViewById(R.id.fromheight_tv_medicalIntervention);
+		medicalIntervention = (Spinner)findViewById(R.id.fromheight_medicalIntervention);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.fromheight_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.fromheight_whoFoundVictimBody);
+		tv_closeToWater = (TextView)findViewById(R.id.fromheight_tv_closeToWater);
+		closeToWater = (Spinner)findViewById(R.id.fromheight_closeToWater);
+		tv_rapeHomicide = (TextView)findViewById(R.id.fromheight_tv_rapeHomicide);
+		rapeHomicide = (Spinner)findViewById(R.id.fromheight_rapeHomicide);
+		tv_suicideSuspected = (TextView)findViewById(R.id.fromheight_tv_suicideSuspected);
+		suicideSuspected = (Spinner)findViewById(R.id.fromheight_suicideSuspected);
+		tv_previousAttempts = (TextView)findViewById(R.id.fromheight_tv_previousAttempts);
+		previousAttempts = (Spinner)findViewById(R.id.fromheight_previousAttempts);
+		tv_howManyAttempts = (TextView)findViewById(R.id.fromheight_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.fromheight_howManyAttempts);
+		
+		sceneOfInjury = (TextView)findViewById(R.id.fromheight_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.fromheight_tv_sceneIOType);
+		sceneIOType = (Spinner)findViewById(R.id.fromheight_sceneIOType);
+		tv_whereInside = (TextView)findViewById(R.id.fromheight_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.fromheight_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.fromheight_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.fromheight_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.fromheight_tv_doorLocked);
+		doorLocked = (Spinner)findViewById(R.id.fromheight_doorLocked);
+		tv_windowsClosed = (TextView)findViewById(R.id.fromheight_tv_windowsClosed);
+		windowsClosed = (Spinner)findViewById(R.id.fromheight_windowsClosed);
+		tv_windowsBroken = (TextView)findViewById(R.id.fromheight_tv_windowsBroken);
+		windowsBroken = (Spinner)findViewById(R.id.fromheight_windowsBroken);
+		tv_victimAlone = (TextView)findViewById(R.id.fromheight_tv_victimAlone);
+		victimAlone = (Spinner)findViewById(R.id.fromheight_victimAlone);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.fromheight_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.fromheight_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.fromheight_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.fromheight_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.fromheight_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.fromheight_sceneOTypeOther);
+		
+		sceneLook = (TextView)findViewById(R.id.fromheight_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.fromheight_tv_signsOfStruggle);
+		signsOfStruggle = (Spinner)findViewById(R.id.fromheight_signsOfStruggle);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.fromheight_tv_alcoholBottleAround);
+		alcoholBottleAround = (Spinner)findViewById(R.id.fromheight_alcoholBottleAround);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.fromheight_tv_drugParaphernalia);
+		drugParaphernalia = (Spinner)findViewById(R.id.fromheight_drugParaphernalia);
+		
+		theScene = (TextView)findViewById(R.id.tv_fromheight_theScene);
+		
+		tv_fromwhat = (TextView)findViewById(R.id.fromheight_tv_fromwhat);
+		fromwhat = (EditText) findViewById(R.id.fromheight_fromwhat);
+		tv_howhigh = (TextView)findViewById(R.id.fromheight_tv_howhigh);
+		howhigh = (EditText) findViewById(R.id.fromheight_howhigh);
+		tv_onwhat = (TextView)findViewById(R.id.fromheight_tv_onwhat);
+		onwhat = (EditText) findViewById(R.id.fromheight_onwhat);
+		
+		fromheight_information_layout = (LinearLayout) findViewById(R.id.fromheight_information_layout);
+		fromheight_demographics_layout = (LinearLayout) findViewById(R.id.fromheight_demographics_layout);
+		fromheight_thebody_layout = (LinearLayout) findViewById(R.id.fromheight_thebody_layout);
+		fromheight_sceneOfInjury_layout = (LinearLayout) findViewById(R.id.fromheight_sceneOfInjury_layout);
+		fromheight_theScene_layout = (LinearLayout) findViewById(R.id.fromheight_theScene_layout);
+		fromheight_gallery_layout = (LinearLayout) findViewById(R.id.fromheight_gallery_layout);
+		
+		tv_suicideNoteFound = (TextView)findViewById(R.id.fromheight_tv_suicideNoteFound);
+		suicideNoteFound = (Spinner)findViewById(R.id.fromheight_suicideNoteFound);
+		tv_generalHistory = (TextView)findViewById(R.id.fromheight_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.fromheight_generalHistory);
+		
+		rl1 = (RelativeLayout)findViewById(R.id.fromheight_rl1);
+		nextButton = (Button)findViewById(R.id.fromheight_nextButton);
+		doneButton = (Button)findViewById(R.id.fromheight_doneButton);
+		logoutButton = (Button)findViewById(R.id.fromheight_logoutButton);
+		
+	}
+	
+
+}

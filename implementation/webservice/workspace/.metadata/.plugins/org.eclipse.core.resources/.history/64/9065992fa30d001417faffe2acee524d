@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal">
+    <TextView 
+		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Fall/push/jump from height"
+		android:layout_margin="15dp"
+		android:textStyle="bold"
+		android:textSize="20sp"
+		android:layout_alignBaseline="@+id/tvInformation"/>
+    
+    
+    <ScrollView 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:scrollbars="vertical">
+			    <LinearLayout 
+			        android:layout_width="match_parent"
+				    android:layout_height="match_parent"
+				    android:orientation="vertical"  
+				    android:gravity="center_horizontal">
+				    	<LinearLayout 
+				    	    android:id="@+id/information_layout"
+				    	    android:layout_width="match_parent"
+						    android:layout_height="match_parent"
+						    android:orientation="vertical"  
+						    android:gravity="center_horizontal"
+				    	    
+				    	    >
+							    <TextView 
+							            android:id="@+id/tvInformation"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="INFORMATION"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	android:layout_alignBaseline="@+id/tvInformation"/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Investigating Officer"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+										android:visibility="invisible"
+							        	/>
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							        
+							        <TextView 
+							            android:id="@+id/tv_io_name"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Name"
+							        	android:layout_alignBaseline="@+id/io_name"/>
+							       <EditText 
+							            android:id="@+id/io_name"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_io_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_io_surname"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_io_name"
+							        	android:text="Surname"
+							        	android:layout_alignBaseline="@+id/io_surname"/>
+							       <EditText 
+							            android:id="@+id/io_surname"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_io_surname"
+							        	android:layout_below="@+id/io_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_io_rank"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_io_surname"
+							        	android:text="Rank"
+							        	android:layout_alignBaseline="@+id/io_rank"/>
+							       <EditText 
+							            android:id="@+id/io_rank"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_io_rank"
+							        	android:layout_below="@+id/io_surname"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_io_cell"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_io_rank"
+							        	android:text="Cell"
+							        	android:layout_alignBaseline="@+id/io_cell"/>
+							       <EditText 
+							            android:id="@+id/io_cell"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_io_cell"
+							        	android:layout_below="@+id/io_rank"/>
+							       
+							       
+							    </RelativeLayout>
+							    
+							<TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="First Officer on scene"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+							        	/>
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							        
+							        <TextView 
+							            android:id="@+id/tv_fo_name"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Name"
+							        	android:layout_alignBaseline="@+id/fo_name"/>
+							       <EditText 
+							            android:id="@+id/fo_name"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_fo_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_fo_surname"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_fo_name"
+							        	android:text="Surname"
+							        	android:layout_alignBaseline="@+id/fo_surname"/>
+							       <EditText 
+							            android:id="@+id/fo_surname"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_fo_surname"
+							        	android:layout_below="@+id/fo_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_fo_rank"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_fo_surname"
+							        	android:text="Rank"
+							        	android:layout_alignBaseline="@+id/fo_rank"/>
+							       <EditText 
+							            android:id="@+id/fo_rank"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_fo_rank"
+							        	android:layout_below="@+id/fo_surname"/>
+							       
+							       
+							       
+							       
+							    </RelativeLayout>
+							    
+							    </LinearLayout>
+							<LinearLayout 
+				    	    android:id="@+id/demographics_layout"
+				    	    android:layout_width="match_parent"
+						    android:layout_height="match_parent"
+						    android:orientation="vertical"  
+						    android:gravity="center_horizontal"
+				    	    
+				    	    >
+							    
+							    <TextView 
+							            android:id="@+id/tvDemographics"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="DEMOGRAPHICS"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	android:layout_alignBaseline="@+id/tvDemographics"/>
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        >
+							     <TextView 
+							            android:id="@+id/tv_gender"
+							       		android:layout_width="150dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Gender"
+							        	android:layout_alignBaseline="@+id/male"
+							            />
+							     <RadioGroup
+							         android:id="@+id/gender" >
+							        <RadioButton 
+							            android:id="@+id/male"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="male"
+							        	android:layout_toRightOf="@+id/tv_gender"
+							        	android:layout_alignBaseline="@+id/female"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/female"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="female"
+							        	android:layout_toRightOf="@+id/male"
+							        	android:layout_alignBaseline="@+id/unknown"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/unknown_gender"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="unknown"
+							        	android:layout_toRightOf="@+id/female"
+							            />
+							        </RadioGroup>
+							        
+							        <TextView 
+							            android:id="@+id/tv_race"
+							       		android:layout_width="150dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Race"
+							        	android:layout_alignBaseline="@+id/asian"
+							        	android:layout_below="@+id/tv_gender"
+							            />
+							        <RadioButton 
+							            android:id="@+id/asian"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Asian"
+							        	android:layout_toRightOf="@+id/tv_race"
+							        	android:layout_alignBaseline="@+id/black"
+							        	android:layout_below="@+id/male"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/black"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Black"
+							        	android:layout_toRightOf="@+id/asian"
+							        	android:layout_alignBaseline="@+id/coloured"
+							        	android:layout_below="@+id/female"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/coloured"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Cloured"
+							        	android:layout_toRightOf="@+id/black"
+							        	android:layout_below="@+id/unknown_gender"
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/white"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="White"
+							        	android:layout_alignBaseline="@+id/unknown_race"
+							        	android:layout_below="@+id/tv_race"
+							        	android:layout_marginLeft="150dp"
+							        	
+							            />
+							        
+							        <RadioButton 
+							            android:id="@+id/unknown_race"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="unknown"
+							        	android:layout_toRightOf="@+id/white"
+							        	android:layout_below="@+id/asian"
+							            />
+							        </RelativeLayout>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="UnKnown/Known individual"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+							        	/>
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							        
+							         <TextView 
+							            android:id="@+id/tv_vict_name"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:text="Name"
+							        	android:layout_alignBaseline="@+id/vict_name"/>
+							       <EditText 
+							            android:id="@+id/vict_name"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_vict_surname"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_vict_name"
+							        	android:text="Surname"
+							        	android:layout_alignBaseline="@+id/vict_surname"/>
+							       <EditText 
+							            android:id="@+id/vict_surname"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_surname"
+							        	android:layout_below="@+id/vict_name"/>
+							       
+							       
+							       <TextView 
+							            android:id="@+id/tv_vict_idnumber"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_below="@+id/tv_vict_surname"
+							        	android:text="ID number"
+							        	android:layout_alignBaseline="@+id/vict_idnumber"/>
+							       <EditText 
+							            android:id="@+id/vict_idnumber"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:layout_toRightOf="@+id/tv_vict_idnumber"
+							        	android:layout_below="@+id/vict_surname"/>
+							        
+							       
+							       
+							    </RelativeLayout>
+							    
+							    </LinearLayout>
+							    
+							    <TextView 
+							            android:id="@+id/tvThebody"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="THE BODY"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	android:layout_alignBaseline="@+id/tvThebody"/>
+							    
+							    
+							    <RelativeLayout 
+							        
+							        android:layout_width="match_parent"
+							        android:layout_height="wrap_content"
+							        android:gravity="center_horizontal"
+							        
+							        >
+							       
+							        <TextView 
+							            android:id="@+id/scenephoto"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="SCENE PHOTO"
+							        	android:layout_alignBaseline="@+id/camera"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <TextView 
+							            android:id="@+id/camera"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Camera"
+							        	android:layout_toRightOf="@+id/scenephoto"
+							        	android:layout_marginRight="50dp"
+							        	
+							            />
+							         <TextView 
+							            android:id="@+id/browse"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="browse"
+							        	android:layout_toRightOf="@+id/camera"
+							        	
+							            />
+							        
+							    </RelativeLayout>
+							    
+							    <TextView 
+							            android:id="@+id/tv_decomposed"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Is the body decomposed?"
+							        	android:layout_marginRight="50dp"
+							            />
+							        <Spinner 
+							            android:id="@+id/decomposed"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"/>
+							        
+							         <TextView 
+							            android:id="@+id/tv_intervention"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Is there any medical intervention?"
+							        	android:layout_marginRight="50dp"
+							            />
+							        
+							       <Spinner 
+							            android:id="@+id/intervention"
+							       		android:layout_width="100dp"
+							        	android:layout_height="wrap_content"
+							            android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_foundbody"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Who found the body?"
+							        	android:layout_marginRight="50dp"
+							            />
+							        
+							       <EditText 
+							            android:id="@+id/foundbody"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"/>
+							       
+							       <TextView 
+							            android:id="@+id/tv_closetowater"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Was the victim found close to water?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/closetowater"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_rapehomicide"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Is a rape-homicide suspected?(if yes: REMEMBER TO BAG HANDS WITH PAPER BAGS)"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/rapehomicide"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"
+							        	
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_suicidesuspicion"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Suspicion of suicide"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/suicidesuspicion"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"></Spinner>
+							        	
+							        	<TextView 
+							            android:id="@+id/tv_prevattempts"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Previous attempts"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/prevattempts"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"></Spinner>
+							        <EditText 
+							            android:id="@+id/attemptsnum"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	android:hint="if yes specify how many"
+							        	></EditText>
+							       
+							     <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="SCENE OF INJURY"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	/>
+							    <TextView 
+							            android:id="@+id/tv_isceneIO"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Is the body burnt?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/sceneIO"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/sceneIO"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="If the body was found insise"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+							        	
+							            />
+							        
+							        <TextView 
+							            android:id="@+id/tv_insidelocation"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Where inside"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/insidelocation"
+							       		android:layout_width="100dp"
+							       		
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_doorlocked"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Was the door locked from the inside?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/doorlocked"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_windowsclosed"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Were the windows closed?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/windowsclosed"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							       
+							        <TextView 
+							            android:id="@+id/tv_windowsbroken"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Are any of the windows broken?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/windowsbroken"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							    <TextView 
+							            android:id="@+id/tv_victimalone"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Was the victim alone at time of death?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/victimalone"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <EditText 
+							            android:id="@+id/victimwaswith"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	android:hint="if NO (specify who)"
+							        	
+							        	/>
+							        
+							        <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="If the body was found outside"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:textSize="15sp"
+							        	
+							            />
+							        
+							        <TextView 
+							            android:id="@+id/tv_outsidelocation"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Where outside"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/outsidelocation"
+							       		android:layout_width="100dp"
+							       		
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_signsofstruggle"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Are there signs of a struggle?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/signsofstruggle"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_alcoholbottle"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Alcohol bottle standing around?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/alcoholbottle"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        
+							        <TextView 
+							            android:id="@+id/tv_drug"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Drug paraphernalia?"
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/drug"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							        	android:layout_height="wrap_content"
+							        	/>
+							            
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="THE SCENE"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	/>
+							    
+							       
+							        <TextView 
+							            android:id="@+id/tv_fromwhat"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="From what did the fall/jump/push occur?"							        	
+							        	
+							            />
+							        <EditText 
+							            android:id="@+id/fromwhat"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	
+							        	></EditText>
+							        
+							         <TextView 
+							            android:id="@+id/tv_howhigh"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="How high was the fall/jump/push?"
+							        	
+							            />
+							        
+							       <EditText 
+							            android:id="@+id/howhigh"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	
+							        	></EditText>
+							       
+							       <TextView 
+							            android:id="@+id/tv_onwhat"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="On what did the victim land?"
+							        	
+							            />
+							        
+							       <EditText 
+							            android:id="@+id/onwhat"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	
+							        	></EditText>
+							       
+							        
+							        <TextView 
+							            android:id="@+id/tv_note"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Suicide note"
+							        	
+							        	
+							            />
+							        <Spinner 
+							            android:id="@+id/note"
+							       		android:layout_width="100dp"
+							       		android:entries="@array/yesorno"
+							            android:prompt="@string/chooseYN"
+							        	android:layout_height="wrap_content"
+							        	/>
+							        <EditText 
+							            android:id="@+id/note_yes"
+							       		android:layout_width="300dp"
+							        	android:layout_height="wrap_content"
+							        	android:hint="if yes is it with police or body"
+							        	></EditText>
+							       
+							        <TextView 
+							            android:id="@+id/tv_general"
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							      		android:text="General history"
+							        	
+							        	
+							            />
+							        
+							        <EditText 
+							            android:id="@+id/general"
+							       		android:layout_width="200dp"
+							        	android:layout_height="wrap_content"
+							        	
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="CREATE GALLERY"
+							        	android:layout_margin="8dp"
+										android:textStyle="bold"
+										android:textSize="18sp"
+							        	/>
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Select from memory"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:layout_marginTop="15dp"
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="browse"
+							        	android:layout_margin="5dp"
+							        	
+										
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="Take a picture"
+							        	android:layout_margin="5dp"
+										android:textStyle="bold"
+										android:layout_marginTop="15dp"
+										
+										
+							        	/>
+							    
+							    <TextView 
+							            
+							       		android:layout_width="wrap_content"
+							        	android:layout_height="wrap_content"
+							        	android:text="camera"
+							        	android:layout_margin="5dp"
+					
+							        	/>
+							    
+								<Button
+								    android:layout_width="wrap_content"
+							        android:layout_height="wrap_content"
+							        android:text="Submit"
+							       	android:layout_margin="5dp"
+							       	android:layout_marginTop="15dp"
+								    ></Button>	    
+			    
+			    </LinearLayout>
+    
+    </ScrollView>
+    
+    
+</LinearLayout>
