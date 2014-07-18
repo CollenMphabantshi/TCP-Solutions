@@ -122,7 +122,7 @@ public class Aviation extends Activity{
 
 	private JSONObject json;
 	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
-	private final static int PAGES = 6;
+	private final static int PAGES = 5;
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
@@ -541,9 +541,13 @@ public class Aviation extends Activity{
 							}
 						}
 
-					}catch(Exception ex){}
+					}catch(Exception ex){
+						ex.printStackTrace();
+					}
 					break;
 				case 4:
+					return true;
+				case 5:
 					return true;
 			}
 		}catch(Exception e){e.printStackTrace();}

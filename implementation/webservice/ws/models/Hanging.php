@@ -61,28 +61,34 @@ class Hanging extends Scene{
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                if($formData['object'][$i]['victims'][0]['victimInside'] == "yes"){
                     $this->addHanging($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addHanging($sceneID,FALSE,null);
                 }
+                
             }
-            
+            $error = array('status' => "Success", "msg" => "Your data was successfully saved.");
+            $this->api->response($this->api->json($error), 200);
             
         }
         
     }
     
     private function addHanging($sceneID,$inside,$object) {
+         $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+         
         if($this->whoRemovedLigature != NULL)
         {
-            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
+            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+                or $this->api->response($this->api->json($error), 400);
         }else{
-            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
+            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+              or  $this->api->response($this->api->json($error), 400);
         }
         
         if($inside == TRUE){
-            $h_res = mysql_query("select hangingID from hanging where sceneID=".$sceneID);
+            $h_res = mysql_query("select hangingID from hanging where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400);
             $hangingID = mysql_result($h_res,0,'hangingID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
@@ -91,16 +97,17 @@ class Hanging extends Scene{
             $pv = $object['peopleWithVictim'];
             if($va != "yes")
             {
-                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va','$pv')") or $this->api->response($this->api->json($error), 400);
             }else{
-                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
     }
     public function getAllHangings() {
+        $error = array('status' => "Failed", "msg" => "Request to get hanging scenea was denied.");
         try{
             
-            $h_res = mysql_query("select * from hanging");
+            $h_res = mysql_query("select * from hanging") or $this->api->response($this->api->json($error), 400);
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
             $sv_i = 0;
@@ -130,7 +137,7 @@ class Hanging extends Scene{
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
-                $hi_res = mysql_query("select * from hanginginside where hangingID=".$h_array['hangingID']);
+                $hi_res = mysql_query("select * from hanginginside where hangingID=".$h_array['hangingID']) or $this->api->response($this->api->json($error), 400);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);

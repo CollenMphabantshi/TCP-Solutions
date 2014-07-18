@@ -44,7 +44,7 @@ class Victims {
             $this->victimName = $formData['victimName'];
             $this->victimSurname = $formData['victimSurname'];
             $this->whoFoundVictimBody = $formData['whoFoundVictimBody'];
-            $this->bodyDecompose = $formData['bodyDecompose'];
+            $this->bodyDecompose = $formData['bodyDecomposed'];
             $this->medicalIntervention = $formData['medicalIntervention'];
             $this->bodyBurned = $formData['bodyBurned'];
             $this->bodyIntact = $formData['bodyIntact'];
@@ -52,7 +52,7 @@ class Victims {
             $this->victimOutside = $formData['victimOutside'];
             $this->victimFoundCloseToWater = $formData['victimFoundCloseToWater'];
             $this->victimSuicideNoteFound = $formData['victimSuicideNoteFound'];
-            $this->victimGeneralHistory = $formData['ictimGeneralHistory'];
+            $this->victimGeneralHistory = $formData['victimGeneralHistory'];
             $this->rapeHomicideSuspected = $formData['rapeHomicideSuspected'];
             $this->suicideSuspected = $formData['suicideSuspected'];
             $this->previousAttempts = $formData['previousAttempts'];

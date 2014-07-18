@@ -169,7 +169,9 @@ class User {
         {
             $this->userName = $userName;
             $this->userPassword = md5($userPassword);
-            $u_res = mysql_query("select * from users where userName='$this->userName' and userPassword='$this->userPassword'");
+            $error = array('status' => "Failed", "msg" => "Request to login was denied. Invalid username or password.");
+            $u_res = mysql_query("select * from users where userName='$this->userName' and userPassword='$this->userPassword'")
+                    or $this->api->response($this->api->json($error), 400);
             if(mysql_num_rows($u_res) > 0){
                 $u_array = mysql_fetch_array($u_res);
                 if($u_array['userActive'] == 1)
@@ -191,7 +193,7 @@ class User {
                 $this->api->response($this->api->json($error), 400);
             }
         }else {
-            $error = array('status' => "Failed", "msg" => "Request to login was denied. Some user data were ommited.");
+            $error = array('status' => "Failed", "msg" => "Request to login was denied. Please provide all the required details.");
             $this->api->response($this->api->json($error), 400);
         }
     }

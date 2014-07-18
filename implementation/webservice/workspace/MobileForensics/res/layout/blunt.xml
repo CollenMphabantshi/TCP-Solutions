@@ -934,6 +934,17 @@
 					android:visibility="gone"
 				    />
 				
+				<TextView
+				    android:id="@+id/blunt_tv_response"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="@string/send_response"
+					android:visibility="gone"
+					/>
 				<Button
 				    android:id="@+id/blunt_nextButton"
 				    android:layout_width="fill_parent"

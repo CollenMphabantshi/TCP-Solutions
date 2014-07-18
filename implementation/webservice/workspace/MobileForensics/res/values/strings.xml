@@ -14,6 +14,7 @@
     <string name="scene_of_injury">SCENE OF INJURY</string>
     <string name="scene_look">HOW DO THE SCENE LOOK</string>
     <string name="the_scene">THE SCENE</string>
+    <string name="send_response">Your data was successfully sent.</string>
     
     <string-array name="question">
         <item>Yes</item>
@@ -59,7 +60,26 @@
         <item>Place unknown</item>
         <item>Other</item>
     </string-array>
-
+    <string-array name="partialHanging">
+        <item>Sitting</item>
+        <item>Kneeling</item>
+        <item>Half-lying</item>
+        <item>Feet still touching the floor</item>
+        <item>Other</item>
+    </string-array>
+	<string-array name="completeHanging">
+        <item>feet of ground</item>
+        <item>fully suspended</item>
+    </string-array>
+    <string-array name="ligatureType">
+        <item>Rope</item>
+        <item>Tie</item>
+        <item>Wire</item>
+        <item>Hosepipe</item>
+        <item>Material/fabric/towel/bedding</item>
+        <item>Other</item>
+    </string-array>
+    
     
      <string name="chooseYN"> choose </string>
     
