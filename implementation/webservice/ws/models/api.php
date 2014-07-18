@@ -222,7 +222,7 @@ private function users()
 // receives request to add a new case
 
 private function viewCases() {
-    if($this->get_request_method() != "GET")
+    if($this->get_request_method() != "POST")
     {
         $this->response('',406);
     }
@@ -828,6 +828,9 @@ private function addCase() {
                     $formData = $this->jsonToArray($this->_request['caseData']);   
                     if($formData != NULL){
                         $obj = new Blunt($formData,$this);
+                    }else{
+                            $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                          $this->response($this->json($error), 400);
                     }
                 }else{
                     $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
@@ -1088,10 +1091,12 @@ private function addCase() {
 //Decode JSON into array
 private function jsonToArray($data)
 {
-
-    $array = json_decode($data,TRUE);
-    
-    return $array;
+    try{
+        $array = json_decode($data,TRUE);
+        return $array;
+    }catch(Exception $ex){
+        return null;
+    }
 }
 
 }

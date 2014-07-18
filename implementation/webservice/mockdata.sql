@@ -191,3 +191,4 @@ select * from administrator;
 select * from forensicOfficer;
 select * from forensicpractitioner;
 select * from student;
+select * from blunt;

@@ -16,10 +16,10 @@ insert into forensicOfficer values("p33333333",3,12345);
 
 
 insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
-insert into sceneType values(0,"Sudden unexpected death of a child  (1 – 18 years)");
+insert into sceneType values(0,"Sudden unexpected death of a child  (1 ï¿½ 18 years)");
 insert into sceneType values(0,"Sudden unexpected death of an adult/ found dead");
 insert into sceneType values(0,"Foetus / Abandoned baby");
-insert into sceneType values(0,"Section 48  death –surgical case");
+insert into sceneType values(0,"Section 48  death ï¿½surgical case");
 insert into sceneType values(0,"Pedestrian vehicle accident");
 insert into sceneType values(0,"Bicycle accident");
 insert into sceneType values(0,"Motorbike accident");
@@ -141,4 +141,4 @@ INSERT INTO `victims` (`victimID`, `victimGender`, `victimRace`, `victimName`, `
 INSERT INTO `victimscenephotos` (`photoID`, `victimID`, `photoFilename`) VALUES
 (1, 1, 'photo/pic.jpg');
 
-select * from users;
+select * from blunt;

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;MobileForensics/src/com.example.mobileforensics&apos;&#x0D;&#x0A;- Original project: &apos;MobileForensics&apos;&#x0D;&#x0A;- Destination element: &apos;MobileForensics/src/com.example.mobileforensics&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.example.mobileforensics.helpers.MySSLSocketFactory.java&#x0D;&#x0A;     com.example.mobileforensics.helpers.WebServiceWrapper.java" description="Copy compilation units" destination="/src&lt;com.example.mobileforensics" element1="/src&lt;com.example.mobileforensics.helpers{MySSLSocketFactory.java" element2="/src&lt;com.example.mobileforensics.helpers{WebServiceWrapper.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1405514435275" units="2" version="1.0"/>
+</session>
