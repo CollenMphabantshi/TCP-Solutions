@@ -1,0 +1,130 @@
+package com.example.mobileforensics;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class Fromheight extends Activity{
+	private TextView tv_ioName;
+	private EditText ioName;
+	private TextView tv_ioSurname;
+	private EditText ioSurname;
+	private TextView tv_ioRank;
+	private EditText ioRank;
+	private TextView tv_ioCellNo;
+	private EditText ioCellNo;
+	
+	private TextView tv_foosName;
+	private EditText foosName;
+	private TextView tv_foosSurname;
+	private EditText foosSurname;
+	private TextView tv_foosRank;
+	private EditText foosRank;
+	
+	private TextView tv_victimName;
+	private EditText victimName;
+	private TextView tv_victimSurname;
+	private EditText victimSurname;
+	private TextView tv_victimIDNo;
+	private EditText victimIDNo;
+	
+	private TextView tv_victimInfo;
+	private TextView tv_victimRace;
+	private TextView tv_victimGender;
+	private TextView tv_foos;
+	private TextView tv_io;
+	
+	
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
+
+	private TextView theBody;
+	private TextView tv_bodyDecomposed;
+	private Spinner bodyDecomposed;
+	private TextView tv_medicalIntervention;
+	private Spinner medicalIntervention;
+	private TextView tv_whoFoundVictimBody;
+	private EditText whoFoundVictimBody;
+	private TextView tv_closeToWater;
+	private Spinner closeToWater;
+	private TextView tv_rapeHomicide;
+	private Spinner rapeHomicide;
+	private TextView tv_suicideSuspected;
+	private Spinner suicideSuspected;
+	private TextView tv_previousAttempts;
+	private Spinner previousAttempts;
+	private TextView tv_howManyAttempts;
+	private EditText howManyAttempts;
+	
+	private TextView sceneOfInjury;
+	private TextView tv_sceneIOType;
+	private Spinner sceneIOType;
+	private TextView tv_whereInside;
+	private Spinner sceneIType;
+	private TextView tv_sceneITypeOther;
+	private EditText sceneITypeOther;
+	private TextView tv_doorLocked;
+	private Spinner doorLocked;
+	private TextView tv_windowsClosed;
+	private Spinner windowsClosed;
+	private TextView tv_windowsBroken;
+	private Spinner windowsBroken;
+	private TextView tv_victimAlone;
+	private Spinner victimAlone;
+	private TextView tv_peopleWithVictim;
+	private EditText peopleWithVictim;
+	private TextView tv_sceneOType;
+	private Spinner sceneOType;
+	private TextView tv_sceneOTypeOther;
+	private EditText sceneOTypeOther;
+	
+	private TextView sceneLook;
+	private TextView tv_signsOfStruggle;
+	private Spinner signsOfStruggle;
+	private TextView tv_alcoholBottleAround;
+	private Spinner alcoholBottleAround;
+	private TextView tv_drugParaphernalia;
+	private Spinner drugParaphernalia;
+	
+	private TextView theScene;
+	private TextView tv_fromwhat;
+	private Spinner fromwhat;
+	private TextView tv_howhigh;
+	private EditText howhigh;
+	private TextView tv_onwhat;
+	private Spinner onwhat;
+	
+	private TextView tv_suicideNoteFound;
+	private Spinner suicideNoteFound;
+	private TextView tv_generalHistory;
+	private EditText generalHistory;
+	
+	
+	
+	
+	private RelativeLayout rl1;
+	private Button nextButton;
+	private Button doneButton;
+	private Button logoutButton;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fromheight);
+	}
+	
+
+}

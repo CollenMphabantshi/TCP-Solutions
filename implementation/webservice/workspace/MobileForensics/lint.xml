@@ -3,4 +3,5 @@
     <issue id="HardcodedText">
         <ignore path="res/layout/loggin.xml" />
     </issue>
+    <issue id="LintError" severity="ignore" />
 </lint>
