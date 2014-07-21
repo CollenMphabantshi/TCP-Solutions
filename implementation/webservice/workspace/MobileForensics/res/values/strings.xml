@@ -14,6 +14,7 @@
     <string name="scene_of_injury">SCENE OF INJURY</string>
     <string name="scene_look">HOW DO THE SCENE LOOK</string>
     <string name="the_scene">THE SCENE</string>
+    <string name="the_gallery">THE GALLERY</string>
     <string name="send_response">Your data was successfully sent.</string>
     
     <string-array name="question">
@@ -79,9 +80,39 @@
         <item>Material/fabric/towel/bedding</item>
         <item>Other</item>
     </string-array>
-    
-    
-     <string name="chooseYN"> choose </string>
+    <string-array name="aircraftTypes">
+        <item>Commercial aircraft</item>
+        <item>Light aircraft</item>
+        <item>Helicopter</item>
+    </string-array>
+    <string-array name="aviationVictimTypes">
+        <item>Pilot</item>
+        <item>Co-pilot</item>
+        <item>Crew</item>
+        <item>Passenger</item>
+        <item>Unknown</item>
+    </string-array>
+    <string-array name="victimIO">
+        <item>Inside aircraft</item>
+        <item>Outside aircraft</item>
+    </string-array>
+	<string-array name="weatherConditions">
+        <item>Sunny</item>
+        <item>Misty</item>
+        <item>Rainy</item>
+        <item>Cloudy</item>
+        <item>Snowy</item>
+        <item>Thunderstorm</item>
+        <item>Hail</item>
+    </string-array>
+    <string-array name="WeatherType">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Dusk</item>
+        <item>Dawn</item>
+    </string-array>
+         
+    <string name="chooseYN"> choose </string>
     
     <string-array name="yesorno">
         <item>yes</item>

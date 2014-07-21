@@ -2,6 +2,7 @@ package com.example.mobileforensics;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +17,8 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.mobileforensics.Blunt.Read;
 
 
 import android.app.Activity;
@@ -32,6 +35,7 @@ import android.widget.Space;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class Hanging extends Activity{
 
@@ -165,8 +169,7 @@ public class Hanging extends Activity{
 	private Button logoutButton;
 	
 	private JSONObject json;
-	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
-	private final static int PAGES = 7;
+	
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
@@ -185,9 +188,11 @@ public class Hanging extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hanging);
 		
+		GlobalValues.setPages(7);
 		pageCount = 1;
 		username = "p11111111";
-		time = "00:00:10";
+		Date d = new Date();
+		time = ""+d.getTime();
 		date = "2014-01-02";
 		location = "1242523, -13332";
 		temperature = "23 C";
@@ -347,7 +352,7 @@ public class Hanging extends Activity{
 						showPage();
 						showHideButtons();
 					}else{
-						//Toast.makeText(hanging.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
+						Toast.makeText(getApplicationContext(), "Please Fill in all Questions.", Toast.LENGTH_LONG).show();
 					}
 					
 				}catch(Exception e){e.printStackTrace();}
@@ -381,7 +386,12 @@ public class Hanging extends Activity{
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
+				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
+		        pairs.add(new BasicNameValuePair("rquest","addCase"));
+		        pairs.add(new BasicNameValuePair("category","hanging"));
+		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
+		        new Read().execute(pairs);
 			}
 		});
 		
@@ -675,7 +685,7 @@ public class Hanging extends Activity{
 		
 	}
 	private void showHideButtons(){
-		if(pageCount > PAGES)
+		if(pageCount > GlobalValues.PAGES)
 		{
 			response.setVisibility(GONE);
 			nextButton.setVisibility(GONE);
@@ -735,46 +745,46 @@ public class Hanging extends Activity{
 	}
 	
 	public void showPage(){
-			try{
-				//if not first page disable
-				if(pageCount == 1)
-				{
-					infoLayout.setVisibility(VISIBLE);
-					
-				}
+		try{
+			//if first page show
+			if(pageCount == 1)
+			{
+				infoLayout.setVisibility(VISIBLE);
 				
-				//if not second page disable
-				if(pageCount == 2){
-					
-					
-					demographicsLayout.setVisibility(VISIBLE);
-				}
+			}
+			
+			//if second page show
+			if(pageCount == 2){
 				
-				//if not third page disable
-				if(pageCount == 3){
-					theBodyLayout.setVisibility(VISIBLE);
-				}
-		
-				//if not fourth page disable
-				if(pageCount == 4){
-					sceneOfInjuryLayout.setVisibility(VISIBLE);
-				}
-		
-				//if not fifth page disable
-				if(pageCount == 5){
-					sceneLookLayout.setVisibility(VISIBLE);
-				}
-		
-				//if not sixth page disable
-				if(pageCount == 6){
-					theSceneLayout.setVisibility(VISIBLE);
-				}
 				
-				//if not seventh page disable
-				if(pageCount == 7){
-					galleryLayout.setVisibility(VISIBLE);
-				}
-			}catch(Exception e){e.printStackTrace();}
+				demographicsLayout.setVisibility(VISIBLE);
+			}
+			
+			//if third page show
+			if(pageCount == 3){
+				theBodyLayout.setVisibility(VISIBLE);
+			}
+	
+			//if not fourth page disable
+			if(pageCount == 4){
+				sceneOfInjuryLayout.setVisibility(VISIBLE);
+			}
+	
+			//if fifth page show
+			if(pageCount == 5){
+				sceneLookLayout.setVisibility(VISIBLE);
+			}
+	
+			//if sixth page show
+			if(pageCount == 6){
+				theSceneLayout.setVisibility(VISIBLE);
+			}
+			
+			//if seventh page show
+			if(pageCount == 7){
+				galleryLayout.setVisibility(VISIBLE);
+			}
+		}catch(Exception e){e.printStackTrace();}
 	}
 	
 
@@ -1290,7 +1300,7 @@ public class Hanging extends Activity{
 		protected JSONObject doInBackground(List<NameValuePair>... params) {
 			// TODO Auto-generated method stub
 			try {
-				json = request(WS_URL, params[0]);
+				json = request(GlobalValues.WS_URL, params[0]);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1328,7 +1338,7 @@ public class Hanging extends Activity{
 					}
 				}
 			}catch(Exception e){
-				
+				e.printStackTrace();
 			}
 		}
 	

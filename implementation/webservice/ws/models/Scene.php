@@ -52,7 +52,7 @@ class Scene{
     public function createScene() {
         if($this->isEmpty())return null;
         
-        $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and sceneTime='$this->time' and sceneDate='$this->date'");
+        $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and (sceneTime='$this->time' and sceneDate='$this->date')");
         if(mysql_num_rows($scene_res) <= 0)
         {
             $st_res = mysql_query("select * from sceneType where sceneTypeDescription='$this->sceneType'");
