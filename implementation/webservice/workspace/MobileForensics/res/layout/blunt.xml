@@ -24,6 +24,14 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"  
 			android:gravity="center_horizontal">
+			
+		    <LinearLayout
+			    android:id="@+id/blunt_infoLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 			<TextView
 			    android:id="@+id/blunt_tv_io"			            
 				android:layout_width="wrap_content"
@@ -185,6 +193,15 @@
 					android:visibility="visible"/>
 								       
 			</RelativeLayout>
+			</LinearLayout>
+			
+		    <LinearLayout
+			    android:id="@+id/blunt_demographicLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 			<TextView
 			    android:id="@+id/blunt_tv_victimGender"	            
 				android:layout_width="wrap_content"
@@ -194,7 +211,7 @@
 				android:layout_marginTop="10dp"
 				android:textStyle="bold"
 				android:textSize="15sp"
-				android:visibility="gone"
+				
 			/>
 			<RadioGroup 
 			    android:id="@+id/blunt_rgGender"
@@ -209,7 +226,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Male"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbFemale"
@@ -217,7 +234,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Female"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbUnknownGender"
@@ -225,7 +242,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Unknown"
-			    	android:visibility="gone"
+			    	
 			        />
 			</RadioGroup>
 			
@@ -239,7 +256,7 @@
 				android:layout_marginTop="10dp"
 				android:textStyle="bold"
 				android:textSize="15sp"
-				android:visibility="gone"
+				
 			/>
 			<RadioGroup 
 			    android:id="@+id/blunt_rgRace"
@@ -255,7 +272,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Asian"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbBlack"
@@ -263,7 +280,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Black"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbColoured"
@@ -271,7 +288,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Coloured"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbWhite"
@@ -279,7 +296,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="White"
-			    	android:visibility="gone"
+			    	
 			        />
 			    <RadioButton 
 			        android:id="@+id/blunt_rgbUnknownRace"
@@ -287,7 +304,7 @@
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
 			    	android:text="Unknown"
-			    	android:visibility="gone"
+			    	
 			        />
 			</RadioGroup>
 			
@@ -299,7 +316,7 @@
 				android:layout_margin="5dp"
 				android:textStyle="bold"
 				android:textSize="15sp"
-				android:visibility="gone"
+				
 			/>
 			<RelativeLayout 
 				android:layout_width="match_parent"
@@ -313,13 +330,13 @@
 					android:layout_height="wrap_content"
 					android:text="Victim Name"
 					android:layout_alignBaseline="@+id/blunt_victim_name"
-					android:visibility="gone"/>
+					/>
 				<EditText 
 					android:id="@+id/blunt_victim_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_toRightOf="@+id/blunt_tv_victim_name"
-					android:visibility="gone"/>
+					/>
 							       
 							       
 				<TextView 
@@ -329,14 +346,14 @@
 					android:layout_below="@+id/blunt_tv_victim_name"
 					android:text="Victim Surname"
 					android:layout_alignBaseline="@+id/blunt_victim_surname"
-					android:visibility="gone"/>
+					/>
 				<EditText 
 					android:id="@+id/blunt_victim_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_toRightOf="@+id/blunt_tv_victim_surname"
 					android:layout_below="@+id/blunt_victim_name"
-					android:visibility="gone"/>
+					/>
 							       
 							       
 				<TextView 
@@ -346,18 +363,25 @@
 					android:layout_below="@+id/blunt_tv_victim_id"
 					android:text="ID Number"
 					android:layout_alignBaseline="@+id/blunt_victim_id"
-					android:visibility="gone"/>
+					/>
 				<EditText 
 					android:id="@+id/blunt_victim_id"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_toRightOf="@+id/blunt_tv_victim_id"
 					android:layout_below="@+id/blunt_victim_surname"
-					android:visibility="gone"/>
+					/>
 								       
 				</RelativeLayout>
+				</LinearLayout>
 				
-			
+		    	<LinearLayout
+			    android:id="@+id/blunt_theBodyLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 				<TextView 
 				    android:id="@+id/blunt_tv_the_body"
 					android:layout_width="wrap_content"
@@ -367,7 +391,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/the_body"
-					android:visibility="gone"
+					
 					/>
 				<TextView 
 				    android:id="@+id/blunt_tv_bodyDecomposed"
@@ -378,7 +402,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the body decomposed?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_bodyDecomposed"
@@ -386,7 +410,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				    
 				<TextView 
@@ -398,14 +422,14 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there any medical intervention?"
-					android:visibility="gone"/>
+					/>
 				<Spinner
 				    android:id="@+id/blunt_medicalIntervention"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView
@@ -417,13 +441,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Who found victim body?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 					android:id="@+id/blunt_whoFoundVictimBody"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 					/>
 				
 				<TextView
@@ -435,7 +459,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the victim found close to water?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_closeToWater"
@@ -443,7 +467,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_rapeHomicide"
@@ -454,7 +478,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is a rape-homicide suspected?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_rapeHomicide"
@@ -462,7 +486,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_suicideSuspected"
@@ -473,7 +497,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Suspicion of suicide?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_suicideSuspected"
@@ -481,7 +505,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -493,7 +517,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Any previous attempts?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_previousAttempts"
@@ -501,7 +525,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose" 
-					android:visibility="gone"/>
+					/>
 				<TextView 
 				    android:id="@+id/blunt_tv_howManyAttempts"
 					android:layout_width="wrap_content"
@@ -511,15 +535,23 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="How many attempts?"
-					android:visibility="gone"
+					
 					/>
 				<EditText 
 					android:id="@+id/blunt_howManyAttempts"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 					/>
+				</LinearLayout>
 				
+		    	<LinearLayout
+			    android:id="@+id/blunt_sceneOfInjuryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 				<TextView
 				    android:id="@+id/blunt_sceneOfInjury"
 					android:layout_width="wrap_content"
@@ -529,7 +561,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/scene_of_injury"
-					android:visibility="gone"
+					
 					/>
 				
 				<TextView
@@ -541,7 +573,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the scene Outside or Inside?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_sceneIOType"
@@ -549,7 +581,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/sceneIO"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_whereInside"
@@ -560,7 +592,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Where inside?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_sceneIType"
@@ -568,7 +600,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/insideTypes"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_sceneITypeOther"
@@ -579,13 +611,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="If Other, specify?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/blunt_sceneITypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_doorLocked" 
@@ -596,7 +628,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the door locked from the inside?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_doorLocked"
@@ -604,7 +636,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_windowsClosed" 
@@ -615,7 +647,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Were the windows closed?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_windowsClosed"
@@ -623,7 +655,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_windowsBroken" 
@@ -634,7 +666,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Are any of the windows broken?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_windowsBroken"
@@ -642,7 +674,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_victimAlone" 
@@ -653,7 +685,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the victim alone at the time of death?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_victimAlone"
@@ -661,7 +693,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_peopleWithVictim"
@@ -672,13 +704,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Who was with victim? (specify)"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/blunt_peopleWithVictim"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView
@@ -690,7 +722,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Where outside?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_sceneOType"
@@ -698,7 +730,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/outsideTypes"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_sceneOTypeOther"
@@ -709,15 +741,23 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="If Other, specify?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/blunt_sceneOTypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
+				</LinearLayout>
 				
+		    	<LinearLayout
+			    android:id="@+id/blunt_sceneLookLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 				<TextView 
 				    android:id="@+id/blunt_sceneLook"
 					android:layout_width="wrap_content"
@@ -727,7 +767,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/scene_look"
-					android:visibility="gone"
+					
 					/>
 				<TextView
 				    android:id="@+id/blunt_tv_signsOfStruggle" 
@@ -738,7 +778,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Are there any signs of struggle?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_signsOfStruggle"
@@ -746,7 +786,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/blunt_tv_alcoholBottleAround"
@@ -757,7 +797,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Alcohol bottle standing around?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_alcoholBottleAround"
@@ -765,7 +805,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_drugParaphernalia"
@@ -776,7 +816,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Drug paraphernalia?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_drugParaphernalia"
@@ -784,9 +824,17 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
+				</LinearLayout>
 				
+		    	<LinearLayout
+			    android:id="@+id/blunt_theSceneLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 				<TextView 
 				    android:id="@+id/blunt_theScene"
 					android:layout_width="wrap_content"
@@ -796,7 +844,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/the_scene"
-					android:visibility="gone"
+					
 					/>
 				<TextView 
 				     android:id="@+id/blunt_tv_communityAssault"
@@ -807,7 +855,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was it a community assault?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_communityAssault"
@@ -815,7 +863,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_bluntObjectUsed"
@@ -826,13 +874,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="What is  the suspected blunt force object used?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/blunt_bluntObjectUsed"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -844,7 +892,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the blunt force object still on scene? (if yes, compulsory to take a photo of object)"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_bluntForceObjectOnScene"
@@ -852,7 +900,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_strangulationSuspected"
@@ -863,7 +911,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there a suspicion of strangulation?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_strangulationSuspected"
@@ -871,7 +919,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_smotheringSuspected"
@@ -882,7 +930,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there a suspicion of smothering?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_smotheringSuspected"
@@ -890,7 +938,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView
@@ -902,7 +950,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there a suspicion of chocking?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_chockingSuspected"
@@ -910,7 +958,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_suicideNoteFound"
@@ -921,7 +969,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is there a Suicide note on scene? (if yes with who(police / with body))"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/blunt_suicideNoteFound"
@@ -929,7 +977,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/blunt_tv_generalHistory"
@@ -940,15 +988,47 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Victim General history?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/blunt_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
+				</LinearLayout>
 				
+				<LinearLayout
+			    android:id="@+id/blunt_galleryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+				<TextView 
+				    android:id="@+id/blunt_theGallery"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_gallery"
+					
+					/>
+				</LinearLayout>
+				
+				<TextView
+				    android:id="@+id/blunt_tv_response"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="@string/send_response"
+					android:visibility="gone"
+					/>
 				<Button
 				    android:id="@+id/blunt_nextButton"
 				    android:layout_width="fill_parent"
@@ -964,7 +1044,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="DONE"
-				    android:visibility="gone" 
+				     android:visibility="gone"
 				    />
 				<Button
 				    android:id="@+id/blunt_logoutButton"
@@ -972,7 +1052,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="LOGOUT"
-				    android:visibility="gone" 
+				     android:visibility="gone"
 				    />
 		</LinearLayout>
 		

@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Calendar;
+
+import java.util.Date;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -43,18 +47,27 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Blunt extends Activity   implements OnMyLocationChangeListener{
+public class Blunt extends Activity implements GlobalMethods, OnMyLocationChangeListener{
 	
 	Button next;
 	
 	TextView value;
 
+	private LinearLayout infoLayout;
+	private LinearLayout demographicsLayout;
+	private LinearLayout theBodyLayout;
+	private LinearLayout sceneOfInjuryLayout;
+	private LinearLayout sceneLookLayout;
+	private LinearLayout theSceneLayout;
+	private LinearLayout galleryLayout;
+	
 	private TextView tv_ioName;
 	private EditText ioName;
 	private TextView tv_ioSurname;
@@ -161,14 +174,16 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	private TextView tv_generalHistory;
 	private EditText generalHistory;
 	
-	private RelativeLayout rl1;
+	private TextView response;
 	private Button nextButton;
 	private Button doneButton;
 	private Button logoutButton;
 	
 	private JSONObject json;
+
 	private final static String WS_URL = "https://192.168.2.1/ws/models/api.php";
 	private final static int PAGES = 6;
+
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
@@ -179,6 +194,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	private String date;
 	private String location;
 	private String temperature;
+	private JSONObject currentDataSaved;
 	
 	GoogleMap map;
 	private JSONObject locate;
@@ -194,6 +210,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
 		
+
 		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		variablesInitialization();
@@ -289,6 +306,14 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	private void variablesInitialization(){
 		pageCount = 1;
 		username = "p11111111";
+		
+		infoLayout = (LinearLayout)findViewById(R.id.blunt_infoLayout);
+		demographicsLayout = (LinearLayout)findViewById(R.id.blunt_demographicLayout);
+		theBodyLayout = (LinearLayout)findViewById(R.id.blunt_theBodyLayout);
+		sceneOfInjuryLayout = (LinearLayout)findViewById(R.id.blunt_sceneOfInjuryLayout);
+		sceneLookLayout = (LinearLayout)findViewById(R.id.blunt_sceneLookLayout);
+		theSceneLayout = (LinearLayout)findViewById(R.id.blunt_theSceneLayout);
+		galleryLayout = (LinearLayout)findViewById(R.id.blunt_galleryLayout);
 		
 		tv_ioName = (TextView)findViewById(R.id.blunt_tv_io_name);
 		ioName = (EditText)findViewById(R.id.blunt_io_name);
@@ -395,7 +420,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
 		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
 		
-		rl1 = (RelativeLayout)findViewById(R.id.blunt_rl1);
+		response = (TextView)findViewById(R.id.blunt_tv_response);
 		nextButton = (Button)findViewById(R.id.blunt_nextButton);
 		doneButton = (Button)findViewById(R.id.blunt_doneButton);
 		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
@@ -404,7 +429,13 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		value = (TextView) findViewById(R.id.value);
 	}
 	
-	private void setOnClickEvents(){
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+	
+	public void setOnClickEvents(){
 		
 		nextButton.setOnClickListener(new OnClickListener() {
 			
@@ -420,7 +451,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 						showPage();
 						showHideButtons();
 					}else{
-						//Toast.makeText(Blunt.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
+						Toast.makeText(getApplicationContext(), "Please Fill in all Questions.", Toast.LENGTH_LONG).show();
 					}
 					
 				}catch(Exception e){e.printStackTrace();}
@@ -437,13 +468,10 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
+						
 						new Read().execute(postdata);
-						if(json != null)
-						{
-							System.out.println("\n\n\n\n\n\n\n\nOUTPUT: "+json.toString()+"\n\n\n\n\n\n\n\n");
-						}
+						
 					}
-					
 					
 					nextButton.setVisibility(GONE);
 					doneButton.setVisibility(GONE);
@@ -457,7 +485,12 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
+				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
+		        pairs.add(new BasicNameValuePair("rquest","addCase"));
+		        pairs.add(new BasicNameValuePair("category","blunt"));
+		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
+		        new Read().execute(pairs);
 			}
 		});
 		
@@ -652,9 +685,10 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		
 	}
 	
-	private void showHideButtons(){
-		if(pageCount > PAGES)
+	public void showHideButtons(){
+		if(pageCount > GlobalValues.PAGES)
 		{
+			response.setVisibility(GONE);
 			nextButton.setVisibility(GONE);
 			doneButton.setVisibility(VISIBLE);
 			logoutButton.setVisibility(GONE);
@@ -662,244 +696,86 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	}
 	public void hidePage(){
 		try{
+			
+			
 			//if not first page disable
 			if(pageCount != 1)
 			{
-				//rl1.setVisibility(GONE);
-				tv_io.setVisibility(GONE);
-				tv_foos.setVisibility(GONE);
-				tv_ioName.setVisibility(GONE);
-				ioName.setVisibility(GONE);
-				tv_ioSurname.setVisibility(GONE);
-				ioSurname.setVisibility(GONE);
-				tv_ioRank.setVisibility(GONE);
-				ioRank.setVisibility(GONE);
-				tv_ioCellNo.setVisibility(GONE);
-				ioCellNo.setVisibility(GONE);
-				
-				tv_foosName.setVisibility(GONE);
-				foosName.setVisibility(GONE);
-				tv_foosSurname.setVisibility(GONE);
-				foosSurname.setVisibility(GONE);
-				tv_foosRank.setVisibility(GONE);
-				foosRank.setVisibility(GONE);
+				infoLayout.setVisibility(GONE);
 				
 			}
 			
 			//if not second page disable
 			if(pageCount != 2){
-				
-				
-				tv_victimName.setVisibility(GONE);
-				victimName.setVisibility(GONE);
-				tv_victimSurname.setVisibility(GONE);
-				victimSurname.setVisibility(GONE);
-				tv_victimIDNo.setVisibility(GONE);
-				victimIDNo.setVisibility(GONE);
-				
-				
-				rgbMale.setVisibility(GONE);
-				rgbFemale.setVisibility(GONE);
-				rgbUnknownGender.setVisibility(GONE);
-				
-				
-				rgbAsian.setVisibility(GONE);
-				rgbBlack.setVisibility(GONE);
-				rgbColoured.setVisibility(GONE);
-				rgbWhite.setVisibility(GONE);
-				rgbUnknownRace.setVisibility(GONE);
-				tv_victimInfo.setVisibility(GONE);
-				tv_victimRace.setVisibility(GONE);
-				tv_victimGender.setVisibility(GONE);
+				demographicsLayout.setVisibility(GONE);
 			}
 			
 			//if not third page disable
 			if(pageCount != 3){
-				theBody.setVisibility(GONE);
-				tv_bodyDecomposed.setVisibility(GONE);
-				bodyDecomposed.setVisibility(GONE);
-				tv_medicalIntervention.setVisibility(GONE);
-				medicalIntervention.setVisibility(GONE);
-				tv_whoFoundVictimBody.setVisibility(GONE);
-				whoFoundVictimBody.setVisibility(GONE);
-				tv_closeToWater.setVisibility(GONE);
-				closeToWater.setVisibility(GONE);
-				tv_rapeHomicide.setVisibility(GONE);
-				rapeHomicide.setVisibility(GONE);
-				tv_suicideSuspected.setVisibility(GONE);
-				suicideSuspected.setVisibility(GONE);
-				tv_previousAttempts.setVisibility(GONE);
-				previousAttempts.setVisibility(GONE);
-				tv_howManyAttempts.setVisibility(GONE);
-				howManyAttempts.setVisibility(GONE);
+				theBodyLayout.setVisibility(GONE);
 			}
 	
 			//if not fourth page disable
 			if(pageCount != 4){
-				sceneOfInjury.setVisibility(GONE);
-				tv_sceneIOType.setVisibility(GONE);
-				sceneIOType.setVisibility(GONE);
-				tv_whereInside.setVisibility(GONE);
-				sceneIType.setVisibility(GONE);
-				tv_sceneITypeOther.setVisibility(GONE);
-				sceneITypeOther.setVisibility(GONE);
-				tv_doorLocked.setVisibility(GONE);
-				doorLocked.setVisibility(GONE);
-				tv_windowsClosed.setVisibility(GONE);
-				windowsClosed.setVisibility(GONE);
-				tv_windowsBroken.setVisibility(GONE);
-				windowsBroken.setVisibility(GONE);
-				tv_victimAlone.setVisibility(GONE);
-				victimAlone.setVisibility(GONE);
-				tv_peopleWithVictim.setVisibility(GONE);
-				peopleWithVictim.setVisibility(GONE);
-				tv_sceneOType.setVisibility(GONE);
-				sceneOType.setVisibility(GONE);
-				tv_sceneOTypeOther.setVisibility(GONE);
-				sceneOTypeOther.setVisibility(GONE);
+				sceneOfInjuryLayout.setVisibility(GONE);
 			}
 	
 			//if not fifth page disable
 			if(pageCount != 5){
-				sceneLook.setVisibility(GONE);
-				tv_signsOfStruggle.setVisibility(GONE);
-				signsOfStruggle.setVisibility(GONE);
-				tv_alcoholBottleAround.setVisibility(GONE);
-				alcoholBottleAround.setVisibility(GONE);
-				tv_drugParaphernalia.setVisibility(GONE);
-				drugParaphernalia.setVisibility(GONE);
+				sceneLookLayout.setVisibility(GONE);
 			}
 	
 			//if not sixth page disable
 			if(pageCount != 6){
-				theScene.setVisibility(GONE);
-				tv_communityAssault.setVisibility(GONE);
-				communityAssault.setVisibility(GONE);
-				tv_bluntObjectUsed.setVisibility(GONE);
-				bluntObjectUsed.setVisibility(GONE);
-				tv_bluntForceObjectOnScene.setVisibility(GONE);
-				bluntForceObjectOnScene.setVisibility(GONE);
-				tv_strangulationSuspected.setVisibility(GONE);
-				strangulationSuspected.setVisibility(GONE);
-				tv_smotheringSuspected.setVisibility(GONE);
-				smotheringSuspected.setVisibility(GONE);
-				tv_chockingSuspected.setVisibility(GONE);
-				chockingSuspected.setVisibility(GONE);
-				tv_suicideNoteFound.setVisibility(GONE);
-				suicideNoteFound.setVisibility(GONE);
-				tv_generalHistory.setVisibility(GONE);
-				generalHistory.setVisibility(GONE);
+				theSceneLayout.setVisibility(GONE);
+			}
+			
+			//if not seventh page disable
+			if(pageCount != 7){
+				galleryLayout.setVisibility(GONE);
 			}
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
 	public void showPage(){
 		try{
-			//if fist page show
+			//if first page show
 			if(pageCount == 1)
 			{
-				tv_io.setVisibility(VISIBLE);
-				tv_foos.setVisibility(VISIBLE);
-				tv_ioName.setVisibility(VISIBLE);
-				ioName.setVisibility(VISIBLE);
-				tv_ioSurname.setVisibility(VISIBLE);
-				ioSurname.setVisibility(VISIBLE);
-				tv_ioRank.setVisibility(VISIBLE);
-				ioRank.setVisibility(VISIBLE);
-				tv_ioCellNo.setVisibility(VISIBLE);
-				ioCellNo.setVisibility(VISIBLE);
+				infoLayout.setVisibility(VISIBLE);
 				
-				tv_foosName.setVisibility(VISIBLE);
-				foosName.setVisibility(VISIBLE);
-				tv_foosSurname.setVisibility(VISIBLE);
-				foosSurname.setVisibility(VISIBLE);
-				tv_foosRank.setVisibility(VISIBLE);
-				foosRank.setVisibility(VISIBLE);
-			
 			}
 			
 			//if second page show
 			if(pageCount == 2){
 				
-				tv_victimName.setVisibility(VISIBLE);
-				victimName.setVisibility(VISIBLE);
-				tv_victimSurname.setVisibility(VISIBLE);
-				victimSurname.setVisibility(VISIBLE);
-				tv_victimIDNo.setVisibility(VISIBLE);
-				victimIDNo.setVisibility(VISIBLE);
 				
-				rgbMale.setVisibility(VISIBLE);
-				rgbFemale.setVisibility(VISIBLE);
-				rgbUnknownGender.setVisibility(VISIBLE);
-				
-				rgbAsian.setVisibility(VISIBLE);
-				rgbBlack.setVisibility(VISIBLE);
-				rgbColoured.setVisibility(VISIBLE);
-				rgbWhite.setVisibility(VISIBLE);
-				rgbUnknownRace.setVisibility(VISIBLE);
-				
-				tv_victimInfo.setVisibility(VISIBLE);
-				tv_victimRace.setVisibility(VISIBLE);
-				tv_victimGender.setVisibility(VISIBLE);
+				demographicsLayout.setVisibility(VISIBLE);
 			}
 			
 			//if third page show
 			if(pageCount == 3){
-				
-				theBody.setVisibility(VISIBLE);
-				tv_bodyDecomposed.setVisibility(VISIBLE);
-				bodyDecomposed.setVisibility(VISIBLE);
-				tv_medicalIntervention.setVisibility(VISIBLE);
-				medicalIntervention.setVisibility(VISIBLE);
-				tv_whoFoundVictimBody.setVisibility(VISIBLE);
-				whoFoundVictimBody.setVisibility(VISIBLE);
-				tv_closeToWater.setVisibility(VISIBLE);
-				closeToWater.setVisibility(VISIBLE);
-				tv_rapeHomicide.setVisibility(VISIBLE);
-				rapeHomicide.setVisibility(VISIBLE);
-				tv_suicideSuspected.setVisibility(VISIBLE);
-				suicideSuspected.setVisibility(VISIBLE);
-				tv_previousAttempts.setVisibility(VISIBLE);
-				previousAttempts.setVisibility(VISIBLE);
+				theBodyLayout.setVisibility(VISIBLE);
 			}
 	
-			//if fourth page show
+			//if not fourth page disable
 			if(pageCount == 4){
-				sceneOfInjury.setVisibility(VISIBLE);
-				tv_sceneIOType.setVisibility(VISIBLE);
-				sceneIOType.setVisibility(VISIBLE);
+				sceneOfInjuryLayout.setVisibility(VISIBLE);
 			}
 	
 			//if fifth page show
 			if(pageCount == 5){
-				sceneLook.setVisibility(VISIBLE);
-				tv_signsOfStruggle.setVisibility(VISIBLE);
-				signsOfStruggle.setVisibility(VISIBLE);
-				tv_alcoholBottleAround.setVisibility(VISIBLE);
-				alcoholBottleAround.setVisibility(VISIBLE);
-				tv_drugParaphernalia.setVisibility(VISIBLE);
-				drugParaphernalia.setVisibility(VISIBLE);
+				sceneLookLayout.setVisibility(VISIBLE);
 			}
 	
 			//if sixth page show
 			if(pageCount == 6){
-				theScene.setVisibility(VISIBLE);
-				tv_communityAssault.setVisibility(VISIBLE);
-				communityAssault.setVisibility(VISIBLE);
-				tv_bluntObjectUsed.setVisibility(VISIBLE);
-				bluntObjectUsed.setVisibility(VISIBLE);
-				tv_bluntForceObjectOnScene.setVisibility(VISIBLE);
-				bluntForceObjectOnScene.setVisibility(VISIBLE);
-				tv_strangulationSuspected.setVisibility(VISIBLE);
-				strangulationSuspected.setVisibility(VISIBLE);
-				tv_smotheringSuspected.setVisibility(VISIBLE);
-				smotheringSuspected.setVisibility(VISIBLE);
-				tv_chockingSuspected.setVisibility(VISIBLE);
-				chockingSuspected.setVisibility(VISIBLE);
-				tv_suicideNoteFound.setVisibility(VISIBLE);
-				suicideNoteFound.setVisibility(VISIBLE);
-				tv_generalHistory.setVisibility(VISIBLE);
-				generalHistory.setVisibility(VISIBLE);
+				theSceneLayout.setVisibility(VISIBLE);
+			}
+			
+			//if seventh page show
+			if(pageCount == 7){
+				galleryLayout.setVisibility(VISIBLE);
 			}
 		}catch(Exception e){e.printStackTrace();}
 	}
@@ -928,16 +804,21 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 					break;
 				case 3:
 					try{
-						String item = (String)previousAttempts.getSelectedItem();
-						if(item != null){
-							if(item.toLowerCase().equals("yes") && !howManyAttempts.getText().toString().equals(""))
-							{
-								return true;
-							}else if(item.toLowerCase().equals("no")){
-								return true;
+						if(!whoFoundVictimBody.getText().toString().equals(""))
+						{
+							String item = (String)previousAttempts.getSelectedItem();
+							if(item != null){
+								if(item.toLowerCase().equals("yes") && !howManyAttempts.getText().toString().equals(""))
+								{
+									return true;
+								}else if(item.toLowerCase().equals("no")){
+									return true;
+								}
 							}
 						}
-					}catch(Exception ex){}
+					}catch(Exception ex){
+						ex.printStackTrace();
+					}
 					break;
 				case 4:
 					try{
@@ -976,7 +857,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 							}
 						}
 						
-					}catch(Exception ex){}
+					}catch(Exception ex){ex.printStackTrace();}
 					break;
 				case 5:
 					return true;
@@ -985,14 +866,16 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 						if(!bluntObjectUsed.getText().toString().equals("") && !generalHistory.getText().toString().equals("")){
 							return true;
 						}
-					}catch(Exception ex){}
+					}catch(Exception ex){ex.printStackTrace();}
 					break;
+				case 7:
+					return true;
 			}
 		}catch(Exception e){e.printStackTrace();}
 		return false;
 	}
 	
-	private List<NameValuePair> getPostData(){
+	public List<NameValuePair> getPostData(){
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
@@ -1020,7 +903,8 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	        victims.accumulate("victimGender", getVictimGender());
 	        victims.accumulate("victimRace", getVictimRace());
 	        victims.accumulate("victimName", victimName.getText().toString());
-	        victims.accumulate("victimSurame", victimSurname.getText().toString());
+	        victims.accumulate("victimSurname", victimSurname.getText().toString());
+	        victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
 	        victims.accumulate("scenePhoto", null);
 	        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
 	        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
@@ -1034,10 +918,13 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
 	        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
 	        String item = (String)sceneIOType.getSelectedItem();
-	        if(item.toLowerCase().equals("yes"))
+	        if(item.toLowerCase().equals("inside"))
 	        {
 		        victims.accumulate("victimInside", "yes");
 		        victims.accumulate("victimOutside", "no");
+	        }else{
+	        	victims.accumulate("victimInside", "no");
+		        victims.accumulate("victimOutside", "yes");
 	        }
 	       
 	        vicArray.put(victims);
@@ -1054,13 +941,15 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 	        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
 	        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
 	        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
-	        info.accumulate("peopleWithVictim", peopleWithVictim.getText().toString());
+	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
 	        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
 	        info.accumulate("bluntForceObjectStillOnScene", (String)bluntForceObjectOnScene.getSelectedItem());
 	        info.accumulate("wasCommunityAssult", (String)communityAssault.getSelectedItem());
 	        
 	        array.put(info);
 	        obj.accumulate("object", array);
+	        currentDataSaved = obj;
+	        
 	        pairs.add(new BasicNameValuePair("caseData",obj.toString()));
 	        
 	        return pairs;
@@ -1070,7 +959,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		}
 	}
 	
-	private String getIOType(){
+	public String getIOType(){
 		try{
 			String type = "";
 			String item = (String)sceneIOType.getSelectedItem();
@@ -1094,7 +983,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		return null;
 	}
 	
-	private String getVictimGender(){
+	public String getVictimGender(){
 		try{
 			
 			
@@ -1114,7 +1003,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		return "Unknown";
 	}
 	
-	private String getVictimRace(){
+	public String getVictimRace(){
 		try{
 			
 			
@@ -1140,7 +1029,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		return "Unknown";
 	}
 	
-	private void knownVictim(){
+	public void knownVictim(){
 		try{
 			if(victimName.getText().toString().equals(""))
 			{
@@ -1153,7 +1042,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		}
 	}
 	
-	private int getAttempts(){
+	public int getAttempts(){
 		try{
 			String item = (String)previousAttempts.getSelectedItem();
 			if(item.toLowerCase().equals("yes"))
@@ -1166,6 +1055,104 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		}
 		return 0;
 	}
+	
+	public String getPeopleWithVictim(){
+		try{
+			
+			String item = (String)victimAlone.getSelectedItem();
+			if(item.toLowerCase().equals("no"))
+			{
+				return peopleWithVictim.getText().toString();
+			}else{
+				
+				return null;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public void saveDataOnAction() throws Exception{
+        JSONObject obj = new JSONObject();
+        JSONArray array = new JSONArray();
+        JSONObject info = new JSONObject();
+        JSONArray vicArray = new JSONArray();
+        JSONObject victims = new JSONObject();
+        
+        
+        info.accumulate("FOPersonelNumber", username);
+        info.accumulate("sceneTime", time);
+        info.accumulate("sceneDate", date);
+        info.accumulate("sceneLocation", location);
+        info.accumulate("sceneTemparature", temperature);
+        info.accumulate("investigatingOfficerName", ioName.getText().toString());
+        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
+        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
+        info.accumulate("firstOfficerOnSceneName", foosName.getText().toString());
+        info.accumulate("firstOfficerOnSceneRank", foosRank.getText().toString());
+        knownVictim();
+        victims.accumulate("victimIdentityNumber", victimIDNo.getText().toString());
+        victims.accumulate("victimGender", getVictimGender());
+        victims.accumulate("victimRace", getVictimRace());
+        victims.accumulate("victimName", victimName.getText().toString());
+        victims.accumulate("victimSurname", victimSurname.getText().toString());
+        victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
+        victims.accumulate("scenePhoto", null);
+        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
+        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
+        victims.accumulate("bodyBurned", null);
+        victims.accumulate("bodyIntact", null);
+        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
+        victims.accumulate("victimFoundCloseToWater", (String)closeToWater.getSelectedItem());
+        victims.accumulate("suicideSuspected", (String)suicideSuspected.getSelectedItem());
+        victims.accumulate("victimSuicideNoteFound", (String)suicideNoteFound.getSelectedItem());
+        victims.accumulate("previousAttempts", (String)previousAttempts.getSelectedItem());
+        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
+        String item = (String)sceneIOType.getSelectedItem();
+        if(item.toLowerCase().equals("inside"))
+        {
+	        victims.accumulate("victimInside", "yes");
+	        victims.accumulate("victimOutside", "no");
+        }else{
+        	victims.accumulate("victimInside", "no");
+	        victims.accumulate("victimOutside", "yes");
+        }
+       
+        vicArray.put(victims);
+        info.accumulate("victims", vicArray);
+        
+        info.accumulate("bluntIOType",getIOType() );
+        info.accumulate("signsOfStruggle", (String)signsOfStruggle.getSelectedItem());
+        info.accumulate("alcoholBottleAround", (String)alcoholBottleAround.getSelectedItem());
+        info.accumulate("drugParaphernalia", (String)drugParaphernalia.getSelectedItem());
+        info.accumulate("strangulationSuspected", (String)strangulationSuspected.getSelectedItem());
+        info.accumulate("smotheringSuspected", (String)smotheringSuspected.getSelectedItem());
+        info.accumulate("chockingSuspected", (String)chockingSuspected.getSelectedItem());
+        info.accumulate("doorLocked", (String)doorLocked.getSelectedItem());
+        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
+        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
+        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
+        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
+        info.accumulate("bluntForceObjectStillOnScene", (String)bluntForceObjectOnScene.getSelectedItem());
+        info.accumulate("wasCommunityAssult", (String)communityAssault.getSelectedItem());
+        
+        array.put(info);
+        obj.accumulate("object", array);
+        currentDataSaved = obj;
+        
+	}
+	public void saveData(JSONObject data) throws Exception{
+		
+		System.out.println("SAVED: "+data.toString());
+		
+	}
+	
+	public void resendData() throws Exception{
+		
+	}
+	
 	public JSONObject request(String url, List<NameValuePair> request)
             throws ClientProtocolException, IOException, IllegalStateException,
             JSONException {
@@ -1185,6 +1172,8 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
             	line += in.nextLine();
             }
             
+            
+            
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1198,7 +1187,7 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		protected JSONObject doInBackground(List<NameValuePair>... params) {
 			// TODO Auto-generated method stub
 			try {
-				json = request(WS_URL, params[0]);
+				json = request(GlobalValues.WS_URL, params[0]);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1220,7 +1209,25 @@ public class Blunt extends Activity   implements OnMyLocationChangeListener{
 		protected void onPostExecute(JSONObject result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			
+			try{
+				if(result != null)
+				{
+					String status = result.getString("status");
+					String message = result.getString("msg");
+					System.out.println("STATUS: "+status);
+					System.out.println("MESSAGE: "+message);
+					response.setVisibility(VISIBLE);
+					if(status.toLowerCase().equals("failed"))
+					{
+						response.setText(message);
+						saveData(currentDataSaved);
+					}else{
+						response.setText(message);
+					}
+				}
+			}catch(Exception e){
+				
+			}
 		}
 	
     }

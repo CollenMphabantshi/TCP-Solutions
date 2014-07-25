@@ -31,7 +31,7 @@ class Blunt extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Hanging",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Blunt force injury/ assault",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                
                 $this->bluntIOType = $formData['object'][$i]['bluntIOType'];
@@ -53,7 +53,7 @@ class Blunt extends Scene{
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                if($formData['object'][$i]['victims'][0]['victimInside'] === "yes"){
                     $this->addBlunt($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addBlunt($sceneID,FALSE,null);
@@ -66,11 +66,15 @@ class Blunt extends Scene{
     }
     
     private function addBlunt($sceneID,$inside,$object) {
-        $h_res = mysql_query("insert into blunt values(0,".$sceneID.",'$this->bluntIOType','$this->bluntForceObjectSuspected','$this->bluntForceObjectStillOnScene','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasCommunityAssult','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
+        $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+        
+        $h_res = mysql_query("insert into blunt values(0,".$sceneID.",'$this->bluntIOType','$this->bluntForceObjectSuspected','$this->bluntForceObjectStillOnScene','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasCommunityAssult','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+                or $this->api->response($this->api->json($error), 400);
         
         if($inside == TRUE){
-            $h_res = mysql_query("select bluntID from hanging where sceneID=".$sceneID);
+            $h_res = mysql_query("select * from blunt where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400) ;
             $bluntID = mysql_result($h_res,0,'bluntID');
+            
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
@@ -78,9 +82,9 @@ class Blunt extends Scene{
             $pv = $object['peopleWithVictim'];
             if($va != "yes")
             {
-                $hi_res = mysql_query("insert into bluntInside values(0,".$bluntID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into bluntInside values(0,".$bluntID.",'$dl','$wc','$wb','$va','$pv')") or $this->api->response($this->api->json($error), 400);
             }else{
-                $hi_res = mysql_query("insert into hanginginside values(0,".$bluntID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into bluntinside values(0,".$bluntID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
         $error = array('status' => "Success", "msg" => "Request to add case was successful.");
@@ -88,8 +92,8 @@ class Blunt extends Scene{
     }
     public function getAllBlunts() {
         try{
-            
-            $h_res = mysql_query("select * from blunt");
+            $error = array('status' => "Failed", "msg" => "Request to view cases was denied.");
+            $h_res = mysql_query("select * from blunt") or $this->api->response($this->api->json($error), 400);
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
             $sv_i = 0;
@@ -116,7 +120,7 @@ class Blunt extends Scene{
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
-                $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']);
+                $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']) or $this->api->response($this->api->json($error), 400);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);

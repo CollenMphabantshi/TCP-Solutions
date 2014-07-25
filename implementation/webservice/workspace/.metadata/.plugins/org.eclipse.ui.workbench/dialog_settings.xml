@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="411" key="DIALOG_X_ORIGIN"/>
+		<item value="68" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
+<<<<<<< HEAD
+		<item value="625" key="dialogHeight"/>
+		<item value="1080" key="dialogWidth"/>
+		<list key="textEntries">
+=======
 		<item value="1025" key="dialogWidth"/>
 		<item value="525" key="dialogHeight"/>
 		<list key="orderedProviders">
 		</list>
 		<list key="textArray">
+>>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6
 		</list>
 		<list key="orderedElements">
 		</list>
-		<list key="textEntries">
+		<list key="orderedProviders">
+		</list>
+<<<<<<< HEAD
+		<list key="textArray">
 		</list>
 	</section>
+<<<<<<< HEAD
 	<section name="NewWizardAction">
 		<item value="com.android.ide.eclipse.editors.wizards.NewXmlFileWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="com.android.ide.eclipse.wizards.category"/>
 		</list>
+=======
+=======
+	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="8" key="DIALOG_Y_ORIGIN"/>
+		<item value="229" key="DIALOG_X_ORIGIN"/>
+>>>>>>> aa400d1e2542104e91e71592cdd1a549b6a5ec31
 	</section>
 	<section name="ImportExportAction">
 		<item value="com.android.ide.eclipse.adt.project.ImportProjectWizard" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
@@ -24,4 +45,17 @@
 			<item value="com.android.ide.eclipse.wizards.category"/>
 		</list>
 	</section>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="8" key="DIALOG_Y_ORIGIN"/>
+		<item value="50" key="DIALOG_X_ORIGIN"/>
+	</section>
+>>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
+>>>>>>> 9e79a44628c53011a6821a9f52d28e3b6f5dbbb0
+>>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6
+>>>>>>> aa400d1e2542104e91e71592cdd1a549b6a5ec31
 </section>

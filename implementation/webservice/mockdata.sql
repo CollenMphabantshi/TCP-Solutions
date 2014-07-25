@@ -176,19 +176,13 @@ INSERT INTO `victims` (`victimID`,victimIdentityNumber, `victimGender`, `victimR
 INSERT INTO `victimScenePhotos` (`photoID`, `victimID`, `photoFilename`) VALUES
 (0, 1, 'photo/pic.jpg');
 
-select * from cases as c,hanging as h where c.sceneID=h.sceneID;
+select * from hanging;
+select * from hanginginside;
+select * from blunt;
+select * from bluntinside;
 
 select * from victims;
 
 select * from scene;
-
+select * from sceneType;
 select * from cases;
-
-select * from userType;
-select * from users;
-
-select * from administrator;
-select * from forensicOfficer;
-select * from forensicpractitioner;
-select * from student;
-select * from blunt;

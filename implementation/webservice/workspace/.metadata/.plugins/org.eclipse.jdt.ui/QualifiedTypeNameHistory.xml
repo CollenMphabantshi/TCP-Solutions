@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
+<qualifiedTypeNameHistroy/>
+=======
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
@@ -12,3 +15,4 @@
 <fullyQualifiedTypeName name="com.banchi.googlemapsv2.R.id"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 </qualifiedTypeNameHistroy>
+>>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6

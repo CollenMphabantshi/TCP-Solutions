@@ -1,0 +1,527 @@
+package com.example.mobileforensics;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class Aviation extends Activity{
+
+	private LinearLayout infoLayout;
+	private TextView tv_ioName;
+	private EditText ioName;
+	private TextView tv_ioSurname;
+	private EditText ioSurname;
+	private TextView tv_ioRank;
+	private EditText ioRank;
+	private TextView tv_ioCellNo;
+	private EditText ioCellNo;
+
+	private TextView tv_foosName;
+	private EditText foosName;
+	private TextView tv_foosSurname;
+	private EditText foosSurname;
+	private TextView tv_foosRank;
+	private EditText foosRank;
+
+	private LinearLayout demographicsLayout;
+	private TextView tv_victimName;
+	private EditText victimName;
+	private TextView tv_victimSurname;
+	private EditText victimSurname;
+	private TextView tv_victimIDNo;
+	private EditText victimIDNo;
+
+	private TextView tv_victimInfo;
+	private TextView tv_victimRace;
+	private TextView tv_victimGender;
+	private TextView tv_foos;
+	private TextView tv_io;
+
+
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
+
+	private LinearLayout theBodyLayout;
+	private TextView theBody;
+	private TextView tv_bodyDecomposed;
+	private Spinner bodyDecomposed;
+	private TextView tv_medicalIntervention;
+	private Spinner medicalIntervention;
+	private TextView tv_bodyBurned;
+	private Spinner bodyBurned;
+	private TextView tv_bodyIntact;
+	private Spinner bodyIntact;
+	private TextView tv_whoFoundVictimBody;
+	private EditText whoFoundVictimBody;
+	private TextView tv_closeToWater;
+	private Spinner closeToWater;
+
+	private LinearLayout sceneOfInjuryLayout;
+	private TextView sceneOfInjury;
+	private TextView tv_sceneOType;
+	private Spinner sceneOType;
+	private TextView tv_sceneOTypeOther;
+	private EditText sceneOTypeOther;
+
+	private LinearLayout theSceneLayout;
+	private TextView theScene;
+	private TextView tv_aircraftType;
+	private Spinner aircraftType;
+	private TextView tv_aircraftNumPeople;
+	private EditText aircraftNumPeople;
+	private TextView tv_person;
+	private Spinner person;
+	private TextView tv_victimIO;
+	private Spinner victimIO;
+	private TextView tv_weatherCondition;
+	private Spinner weatherCondition;
+	private TextView tv_weatherType;
+	private Spinner weatherType;
+	private TextView tv_suicideNote;
+	private Spinner suicideNote;
+	private TextView tv_generalHistory;
+	private EditText generalHistory;
+
+	private LinearLayout galleryLayout;
+	
+	private TextView reminder;
+	private Button nextButton;
+	private Button doneButton;
+	private Button logoutButton;
+
+	private JSONObject json;
+	
+	private final static int VISIBLE = View.VISIBLE;
+	private final static int INVISIBLE = View.INVISIBLE;
+	private final static int GONE = View.GONE;
+	private int pageCount;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.aviation);
+
+		GlobalValues.setPages(6);
+		pageCount = 1;
+
+		infoLayout = (LinearLayout)findViewById(R.id.aviation_infoLayout);
+		tv_ioName = (TextView)findViewById(R.id.tv_aviation_io_name);
+		ioName = (EditText)findViewById(R.id.aviation_io_name);
+		tv_ioSurname = (TextView)findViewById(R.id.tv_aviation_io_surname);
+		ioSurname = (EditText)findViewById(R.id.aviation_io_surname);
+		tv_ioRank = (TextView)findViewById(R.id.tv_aviation_io_rank);
+		ioRank = (EditText)findViewById(R.id.aviation_io_rank);
+		tv_ioCellNo = (TextView)findViewById(R.id.tv_aviation_io_cell);
+		ioCellNo = (EditText)findViewById(R.id.aviation_io_cell);
+
+		tv_foosName = (TextView)findViewById(R.id.tv_aviation_foos_name);
+		foosName = (EditText)findViewById(R.id.aviation_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.tv_aviation_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.aviation_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.tv_aviation_foos_rank);
+		foosRank = (EditText)findViewById(R.id.aviation_foos_rank);
+
+		tv_io = (TextView)findViewById(R.id.aviation_tvInformation);
+		tv_foos = (TextView)findViewById(R.id.tv_aviation_foosInfo);
+		
+		demographicsLayout = (LinearLayout)findViewById(R.id.aviation_demographicLayout);
+		tv_victimInfo = (TextView)findViewById(R.id.tv_aviation_victimInfo);
+		tv_victimRace = (TextView)findViewById(R.id.tv_aviation_victimRace);
+		tv_victimGender = (TextView)findViewById(R.id.tv_aviation_victimGender);
+		tv_victimName = (TextView)findViewById(R.id.tv_aviation_victim_name);
+		victimName = (EditText)findViewById(R.id.aviation_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.tv_aviation_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.aviation_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.tv_aviation_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.aviation_victim_id);
+
+		rgbMale = (RadioButton)findViewById(R.id.aviation_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.aviation_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.aviation_rgbUnknownGender);
+
+		rgbAsian = (RadioButton)findViewById(R.id.aviation_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.aviation_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.aviation_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.aviation_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.aviation_rgbUnknownRace);
+
+		theBodyLayout = (LinearLayout)findViewById(R.id.aviation_theBodyLayout);
+		theBody = (TextView)findViewById(R.id.aviation_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.tv_aviation_bodyDecomposed);
+		bodyDecomposed = (Spinner)findViewById(R.id.aviation_bodyDecomposed);
+		tv_medicalIntervention = (TextView)findViewById(R.id.tv_aviation_medicalIntervention);
+		medicalIntervention = (Spinner)findViewById(R.id.aviation_medicalIntervention);
+		tv_bodyBurned = (TextView)findViewById(R.id.tv_aviation_bodyBurned);
+		bodyBurned = (Spinner)findViewById(R.id.aviation_bodyBurned);
+		tv_bodyIntact = (TextView)findViewById(R.id.tv_aviation_bodyIntact);
+		bodyIntact = (Spinner)findViewById(R.id.aviation_bodyIntact);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.tv_aviation_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.aviation_whoFoundVictimBody);
+		tv_closeToWater = (TextView)findViewById(R.id.tv_aviation_closeToWater);
+		closeToWater = (Spinner)findViewById(R.id.aviation_closeToWater);
+
+		
+		
+		sceneOfInjuryLayout = (LinearLayout)findViewById(R.id.aviation_sceneOfInjuryLayout);
+		tv_sceneOType = (TextView)findViewById(R.id.tv_aviation_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.aviation_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.tv_aviation_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.aviation_sceneOTypeOther);
+		
+		theSceneLayout = (LinearLayout)findViewById(R.id.aviation_theSceneLayout);
+		theScene = (TextView)findViewById(R.id.aviation_theScene);
+		tv_aircraftType = (TextView)findViewById(R.id.tv_aviation_aircraftType);
+		aircraftType = (Spinner)findViewById(R.id.aviation_aircraftType);
+		tv_aircraftNumPeople = (TextView)findViewById(R.id.tv_aviation_aircraftNumPeople);
+		aircraftNumPeople = (EditText)findViewById(R.id.aviation_aircraftNumPeople);
+		tv_person = (TextView)findViewById(R.id.tv_aviation_person);
+		person = (Spinner)findViewById(R.id.aviation_person);
+		tv_victimIO = (TextView)findViewById(R.id.tv_aviation_victimIO);
+		victimIO = (Spinner)findViewById(R.id.aviation_victimIO);
+		tv_weatherCondition = (TextView)findViewById(R.id.tv_aviation_weatherCondition);
+		weatherCondition = (Spinner)findViewById(R.id.aviation_weatherCondition);
+		tv_weatherType = (TextView)findViewById(R.id.tv_aviation_weatherType);
+		weatherType = (Spinner)findViewById(R.id.aviation_weatherType);
+		tv_suicideNote = (TextView)findViewById(R.id.tv_aviation_suicideNote);
+		suicideNote = (Spinner)findViewById(R.id.aviation_suicideNote);
+		tv_generalHistory = (TextView)findViewById(R.id.tv_aviation_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.aviation_generalHistory);
+
+		galleryLayout = (LinearLayout)findViewById(R.id.aviation_galleryLayout);
+		
+		reminder = (TextView)findViewById(R.id.tv_aviation_text);
+		nextButton = (Button)findViewById(R.id.aviation_nextButton);
+		doneButton = (Button)findViewById(R.id.aviation_doneButton);
+		logoutButton = (Button)findViewById(R.id.aviation_logoutButton);
+
+		setOnClickEvents();
+		hidePage();
+		showPage();
+		showHideButtons();
+	}
+
+	private void setOnClickEvents(){
+
+		nextButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				try{
+					System.out.println("Page: "+pageCount);
+					if(validateNextPage())
+					{
+						pageCount++;
+						hidePage();
+						showPage();
+						showHideButtons();
+					}else{
+						Toast.makeText(getApplicationContext(), "Please Fill in all Questions.", Toast.LENGTH_LONG).show();
+					}
+
+				}catch(Exception e){e.printStackTrace();}
+			}
+		});
+
+		doneButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				try{
+					//submit data to the server
+					List<NameValuePair> postdata = getPostData();
+					reminder.setVisibility(GONE);
+					nextButton.setVisibility(GONE);
+					doneButton.setVisibility(GONE);
+					logoutButton.setVisibility(VISIBLE);
+				}catch(Exception e){e.printStackTrace();}
+			}
+		});
+
+		logoutButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		/**
+		 * 	Spinner onclick event
+		 */
+
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText();
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+
+	private void showHideButtons(){
+		if(pageCount > GlobalValues.PAGES)
+		{
+			reminder.setVisibility(VISIBLE);
+			nextButton.setVisibility(GONE);
+			doneButton.setVisibility(VISIBLE);
+			logoutButton.setVisibility(GONE);
+		}
+	}
+	public void hidePage(){
+		try{
+			//if not first page disable
+			if(pageCount != 1)
+			{
+				infoLayout.setVisibility(GONE);
+
+			}
+
+			//if not second page disable
+			if(pageCount != 2){
+
+
+				demographicsLayout.setVisibility(GONE);
+			}
+
+			//if not third page disable
+			if(pageCount != 3){
+				theBodyLayout.setVisibility(GONE);
+			}
+
+			//if not fourth page disable
+			if(pageCount != 4){
+				sceneOfInjuryLayout.setVisibility(GONE);
+			}
+
+			//if not fifth page disable
+			if(pageCount != 5){
+				theSceneLayout.setVisibility(GONE);
+			}
+			
+			if(pageCount != 6){
+				galleryLayout.setVisibility(GONE);
+			}
+		}catch(Exception e){e.printStackTrace();}
+	}
+
+	public void showPage(){
+		try{
+			//if fist page show
+			if(pageCount == 1)
+			{
+				infoLayout.setVisibility(VISIBLE);
+
+			}
+
+			//if second page show
+			if(pageCount == 2){
+
+				demographicsLayout.setVisibility(VISIBLE);
+			}
+
+			//if third page show
+			if(pageCount == 3){
+
+				theBodyLayout.setVisibility(VISIBLE);
+			}
+
+
+			//if fifth page show
+			if(pageCount == 4){
+				sceneOfInjuryLayout.setVisibility(VISIBLE);
+
+			}
+			
+			//if sixth page show
+			if(pageCount == 5){
+				sceneOfInjuryLayout.setVisibility(VISIBLE);
+
+			}
+		}catch(Exception e){e.printStackTrace();}
+	}
+
+
+	public boolean validateNextPage(){
+		try{
+			switch(pageCount)
+			{
+				case 1:
+					if(!ioName.getText().toString().equals("") && !ioSurname.getText().toString().equals("") && !ioRank.getText().toString().equals("")
+							&& !ioCellNo.getText().toString().equals("") && !foosName.getText().toString().equals("") && !foosSurname.getText().toString().equals("")
+							&& !foosRank.getText().toString().equals("")){
+						return true;
+					}
+					break;
+				case 2:
+					if(((!victimName.getText().toString().equals("") && !victimSurname.getText().toString().equals("") && !victimIDNo.getText().toString().equals(""))
+						|| (victimName.getText().toString().equals("") && victimSurname.getText().toString().equals("") && victimIDNo.getText().toString().equals("")))	
+							&& (rgbMale.isChecked() || rgbFemale.isChecked() ||rgbUnknownGender.isChecked())
+							&& (rgbAsian.isChecked() || rgbBlack.isChecked() || rgbColoured.isChecked()
+								|| rgbWhite.isChecked() || rgbUnknownRace.isChecked())){
+
+						return true;
+					}
+					break;
+				case 3:
+					try{
+						String sot = (String)sceneOType.getSelectedItem();
+
+						if(!sot.toLowerCase().equals("other"))
+						{
+							return true;
+						}else if(sot.toLowerCase().equals("other")){
+							if(!sceneOTypeOther.getText().toString().equals(""))
+							{
+								return true;
+							}
+						}
+
+					}catch(Exception ex){
+						ex.printStackTrace();
+					}
+					break;
+				case 4:
+					return true;
+				case 5:
+					return true;
+			}
+		}catch(Exception e){e.printStackTrace();}
+		return false;
+	}
+
+	private List<NameValuePair> getPostData(){
+
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+
+        pairs.add(new BasicNameValuePair("rquest","addCases"));
+        
+        
+        return pairs;
+	}
+
+	public JSONObject request(String url, List<NameValuePair> request)
+            throws ClientProtocolException, IOException, IllegalStateException,
+            JSONException {
+
+        	DefaultHttpClient client = (DefaultHttpClient) com.example.mobileforensics.helpers.WebServiceWrapper.getNewHttpClient();
+            HttpPost post = new HttpPost(url);
+            
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(request,HTTP.UTF_8);
+            post.setEntity(entity);
+            
+            HttpResponse response = client.execute(post);
+            
+            Scanner in = new Scanner(response.getEntity().getContent());
+            String line ="";
+            
+            while(in.hasNextLine()){
+            	line += in.nextLine();
+            }
+            
+            JSONObject tmp = new JSONObject(line);
+            in.close();
+            return tmp;
+    }
+    
+    
+    
+    public class Read extends AsyncTask<List<NameValuePair>, Integer,JSONObject>{
+
+		@Override
+		protected JSONObject doInBackground(List<NameValuePair>... params) {
+			// TODO Auto-generated method stub
+			try {
+				json = request(GlobalValues.WS_URL, params[0]);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return json;
+		}
+
+		@Override
+		protected void onPostExecute(JSONObject result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+
+		}
+
+    }
+    
+
+
+}

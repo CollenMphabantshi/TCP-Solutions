@@ -25,6 +25,14 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"  
 			android:gravity="center_horizontal">
+			
+		    <LinearLayout
+			    android:id="@+id/aviation_infoLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 			<TextView
 			    android:id="@+id/aviation_tvInformation" 			            
 				android:layout_width="wrap_content"
@@ -153,6 +161,15 @@
 					android:layout_below="@+id/aviation_foos_surname"/>
 								       
 			</RelativeLayout>
+			</LinearLayout>
+			
+		    <LinearLayout
+			    android:id="@+id/aviation_demographicLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 			<TextView
 			    android:id="@+id/tv_aviation_victimGender"			            
 				android:layout_width="wrap_content"
@@ -304,7 +321,15 @@
 					android:layout_below="@+id/aviation_victim_surname"/>
 								       
 				</RelativeLayout>
+				</LinearLayout>
 				
+		    <LinearLayout
+			    android:id="@+id/aviation_theBodyLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 			<TextView 
 				    android:id="@+id/aviation_tv_the_body"
 					android:layout_width="wrap_content"
@@ -314,7 +339,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/the_body"
-					android:visibility="gone"
+					
 					/>
 			
 				<TextView 
@@ -327,7 +352,7 @@
 					android:textSize="15sp"
 					android:text="Is the body decomposed?"
 					android:layout_alignBaseline="@+id/aviation_bodyDecomposed"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_bodyDecomposed"
@@ -335,7 +360,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				    
 				<TextView 
@@ -348,7 +373,7 @@
 					android:textSize="15sp"
 					android:text="Is there any medical intervention?"
 					android:layout_alignBaseline="@+id/aviation_medicalIntervention"
-					android:visibility="gone"
+					
 					/>
 				
 				<Spinner
@@ -357,7 +382,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -370,7 +395,7 @@
 					android:textSize="15sp"
 					android:text="Is the body burned? (Ask IO to get dental records)"
 					android:layout_alignBaseline="@+id/aviation_bodyBurned"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_bodyBurned"
@@ -378,7 +403,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -391,7 +416,7 @@
 					android:textSize="15sp"
 					android:text="Is the body intact?"
 					android:layout_alignBaseline="@+id/aviation_bodyIntact"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_bodyIntact"
@@ -399,7 +424,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -411,13 +436,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Who found victim body?"
-					android:visibility="gone"
+					
 					/>
 				<EditText 
 					android:id="@+id/aviation_whoFoundVictimBody"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 					/>
 				
 				<TextView 
@@ -429,7 +454,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was the victim found close to water?"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_closeToWater"
@@ -437,9 +462,18 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 					
+				</LinearLayout>
+				
+		    <LinearLayout
+			    android:id="@+id/aviation_sceneOfInjuryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 					<TextView
 				    android:id="@+id/aviation_sceneOfInjury"
 					android:layout_width="wrap_content"
@@ -449,7 +483,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/scene_of_injury"
-					android:visibility="gone"
+					
 					/>
 				
 				<TextView 
@@ -461,15 +495,16 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Where outside?"
-					android:visibility="gone"
+					
 					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_sceneOType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/outsideTypes"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/tv_aviation_sceneOTypeOther"
@@ -480,15 +515,23 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="If Other, specify?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/aviation_sceneOTypeOther"
-				    android:layout_width="wrap_content"
+				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
+				</LinearLayout>
 				
+				<LinearLayout
+			    android:id="@+id/aviation_theSceneLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
 				<TextView 
 				    android:id="@+id/aviation_theScene"
 					android:layout_width="wrap_content"
@@ -498,7 +541,7 @@
 					android:textStyle="bold"
 					android:textSize="20sp"
 					android:text="@string/the_scene"
-					android:visibility="gone"
+					
 					/>
 				
 				<TextView
@@ -510,14 +553,15 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is it a"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_aircraftType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/aircraftTypes"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				<TextView 
 				    android:id="@+id/tv_aviation_aircraftNumPeople"
@@ -528,13 +572,13 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="How many people were in the aircraft?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/aviation_aircraftNumPeople"
-				    android:layout_width="wrap_content"
+				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
+					
 				    />
 				<TextView
 				    android:id="@+id/tv_aviation_person" 
@@ -545,14 +589,15 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is this"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_person"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/aviationVictimTypes"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -564,14 +609,15 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Is the victim"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_victimIO"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/victimIO"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -583,14 +629,15 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Weather condition"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_weatherCondition"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/weatherConditions"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -602,14 +649,15 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Was it"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_weatherType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:entries="@array/WeatherType"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 				
 				<TextView 
@@ -622,7 +670,7 @@
 					android:textSize="15sp"
 					android:text="Is there any suicide note on the scene? (Is it with the police/body?)"
 					android:layout_alignBaseline="@+id/bodyBurned"
-					android:visibility="gone"
+					
 					/>
 				<Spinner
 				    android:id="@+id/aviation_suicideNote"
@@ -630,7 +678,7 @@
 					android:layout_height="wrap_content"
 					android:entries="@array/question"
 					android:prompt="@string/choose"
-					android:visibility="gone"
+					
 				    />
 			
 				<TextView 
@@ -642,16 +690,35 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Any general history?"
-					android:visibility="gone"
+					
 					/>
 				<EditText
 				    android:id="@+id/aviation_generalHistory"
-				    android:layout_width="wrap_content"
+				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:visibility="gone"
-				    />
-				
 					
+				    />
+				</LinearLayout>
+					
+				<LinearLayout
+			    android:id="@+id/aviation_galleryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+				<TextView 
+				    android:id="@+id/aviation_theGallery"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="20sp"
+					android:text="@string/the_gallery"
+					
+					/>
+				</LinearLayout>
 				<TextView 
 				    android:id="@+id/tv_aviation_text"
 					android:layout_width="wrap_content"
@@ -661,6 +728,17 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="GET MEDICAL RECORDS OF VICTIM"
+					android:visibility="gone"
+					/>
+				<TextView
+				    android:id="@+id/aviation_tv_response"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="@string/send_response"
 					android:visibility="gone"
 					/>
 				<Button
@@ -678,7 +756,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="DONE"
-				    android:visibility="gone" 
+				     android:visibility="gone"
 				    />
 				<Button
 				    android:id="@+id/aviation_logoutButton"
@@ -686,7 +764,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="LOGOUT"
-				    android:visibility="gone" 
+				     android:visibility="gone"
 				    />
 		</LinearLayout>
 		

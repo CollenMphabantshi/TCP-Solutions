@@ -70,7 +70,7 @@ create table if not exists scene
 (
     sceneID int not null auto_increment,
     sceneTypeID int not null,
-    sceneTime time not null,
+    sceneTime text not null,
     sceneDate date not null,
     sceneLocation text not null,
     sceneTemparature text not null,
