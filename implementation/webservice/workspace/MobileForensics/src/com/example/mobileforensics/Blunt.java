@@ -204,6 +204,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private String myAddress;
 	private String Text;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -223,7 +224,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		showHideButtons();
 	}
 	
-	public void initialize(){
+	public String initialize(){
 			
 			if( status != ConnectionResult.SUCCESS){
 				int requestCode = 10;
@@ -236,6 +237,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				map.setOnMyLocationChangeListener(this);
 				
 			}
+			return location;
 			
 		}
 	
@@ -264,12 +266,14 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
-			//object.accumulate("Time", time);
-			//object.accumulate("Date", date);
+			object.accumulate("Time", time);
+			object.accumulate("Date", date);
 			object.accumulate("Location", locate.toString());
-			//object.accumulate("Temperature", temperature);
+			object.accumulate("Temperature", temperature);
 			
 			location = object.toString();
+			
+			value.setText(location);
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
