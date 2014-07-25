@@ -8076,3 +8076,6 @@ org.xml.sax.SAXParseException; lineNumber: 14; columnNumber: 2; The content of e
 !MESSAGE Problems occurred refreshing the selected resources.
 !SUBENTRY 1 org.eclipse.core.resources 4 567 2014-07-25 06:17:21.507
 !MESSAGE Failed to read the project description file (.project) for '.org.eclipse.jdt.core.external.folders'.  The file has been changed on disk, and it now contains invalid information.  The project will not function properly until the description file is restored to a valid state.
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-07-25 06:37:48.352
+!MESSAGE Failed to load properties file for project 'FileUploadTest'
