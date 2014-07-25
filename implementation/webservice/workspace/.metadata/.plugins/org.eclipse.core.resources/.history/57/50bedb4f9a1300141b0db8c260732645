@@ -1,0 +1,191 @@
+package com.banchi.googlemapsv2;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Bundle;
+import android.text.format.Time;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class locate extends Activity  implements OnMyLocationChangeListener{
+	Button next;
+	TextView value;
+	GoogleMap map;
+	private double longitude;
+	private double latitude;
+	
+	private int status;
+	private String time;
+	private String date;
+	private String myAddress;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.locate);
+		
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		
+		next = (Button) findViewById(R.id.nextButton);
+		value = (TextView) findViewById(R.id.value);
+		
+		
+		next.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				 //TODO Auto-generated method stub
+				initialize();
+			}
+		});
+	}
+	
+	
+	public void initialize(){
+		
+		if( status != ConnectionResult.SUCCESS){
+			int requestCode = 10;
+			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+			dialog.show();
+		}else{
+			
+			map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
+			map.setMyLocationEnabled(true);
+			map.setOnMyLocationChangeListener(this);
+			
+		}
+		
+	}
+
+
+	@Override
+	public void onMyLocationChange(Location loc) {
+		// TODO Auto-generated method stub
+		longitude = loc.getLongitude();
+		latitude = loc.getLatitude();
+		Calendar c = Calendar.getInstance();
+        System.out.println("Current time => "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        getAddress(longitude,latitude);
+        GoogleWeather obj = new GoogleWeather(longitude,latitude);
+		String Text = "My current location is: " +
+		        "Latitud = " + latitude +
+		        "\nLongitud = " + longitude+
+		        "\nTime = "+loc.getTime()+
+		        "\nBearing = "+loc.getBearing()+
+		        "\nAltitude = "+loc.getAltitude()+
+		        "\nAccuracy = "+loc.getAccuracy()+
+		        "\nDate = "+formattedDate+
+		        "\nAddress = "+myAddress+
+		        "\nWeather = "+;
+		        
+				value.setText(Text);
+		        Toast.makeText( getApplicationContext(), Text, Toast.LENGTH_SHORT).show();
+		
+		
+	}
+	
+	public void getAddress(double longi, double lati){
+		
+		 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+
+	       try {
+	  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
+	 
+	  if(addresses != null) {
+	   Address returnedAddress = addresses.get(0);
+	   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+	   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+	    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+	   }
+	   myAddress = strReturnedAddress.toString();
+	  }
+	  else{
+	   myAddress = "No Address returned!";
+	  }
+	 } catch (IOException e) {
+	  // TODO Auto-generated catch block
+	  e.printStackTrace();
+	  myAddress = "Canont get Address!";
+	 }
+	}
+	
+	public class GoogleWeather {  
+	    private double Latitude;//  
+	    private double Longitude;//  
+	    private String url=null;  
+	    private String sTemp;//  
+	      
+	    GoogleWeather(double longi,double lati)  
+	    {  
+	        Latitude=lati;  
+	        Longitude=longi;  
+	          
+	        //,,,30670000,104019996  
+	        url=",,,"+Longitude+","+Latitude;  
+	        Log.d("log","url="+url);  
+	    }  
+	      
+	    public String getWeatherData() throws ClientProtocolException, IOException, ParserConfigurationException, FactoryConfigurationError, SAXException  
+	    {  
+	        DefaultHttpClient client = new DefaultHttpClient();   
+	        HttpUriRequest Request = new HttpGet(url);   
+	        HttpResponse Response = client.execute(Request);  
+	        HttpEntity Entity = Response.getEntity();  
+	        InputStream stream = Entity.getContent();   
+	        DocumentBuilder Builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();  
+	        Document doc = Builder.parse(new InputSource(stream));  
+	        NodeList n = doc.getElementsByTagName("current_conditions");   
+	          
+	        Log.d("log","Node Length="+n.getLength());  
+	        for (int i = 0; i < n.getLength(); i++)//current_condition  
+	        {  
+	            //  
+	            sTemp=n.item(i).getChildNodes().item(2).getAttributes().item(0).getNodeValue();  
+	        }  
+	        Log.d("log","sTemp="+sTemp);
+			return sTemp;  
+	    }  
+	}
+
+}

@@ -151,7 +151,7 @@ public class Fromheight extends Activity{
 	private Button logoutButton;
 	
 	private JSONObject json;
-	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
+	private final static String WS_URL = "https://192.168.2.1/ws/models/api.php";
 	private final static int PAGES = 7;
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;

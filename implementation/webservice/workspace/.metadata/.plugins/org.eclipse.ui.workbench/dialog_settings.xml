@@ -12,9 +12,11 @@
 		<list key="textEntries">
 		</list>
 	</section>
-	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="8" key="DIALOG_Y_ORIGIN"/>
-		<item value="229" key="DIALOG_X_ORIGIN"/>
+	<section name="NewWizardAction">
+		<item value="com.android.ide.eclipse.editors.wizards.NewXmlFileWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="com.android.ide.eclipse.wizards.category"/>
+		</list>
 	</section>
 	<section name="ImportExportAction">
 		<item value="com.android.ide.eclipse.adt.project.ImportProjectWizard" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
@@ -22,13 +24,4 @@
 			<item value="com.android.ide.eclipse.wizards.category"/>
 		</list>
 	</section>
-<<<<<<< HEAD
-=======
-=======
-	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="8" key="DIALOG_Y_ORIGIN"/>
-		<item value="50" key="DIALOG_X_ORIGIN"/>
-	</section>
->>>>>>> 4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
->>>>>>> 9e79a44628c53011a6821a9f52d28e3b6f5dbbb0
 </section>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.banchi.collen.Location&apos; to &apos;Locate&apos;&#x0D;&#x0A;- Original project: &apos;collen&apos;&#x0D;&#x0A;- Original element: &apos;com.banchi.collen.Location&apos;&#x0D;&#x0A;- Renamed element: &apos;com.banchi.collen.Locate&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Rename similarly named elements&#x0D;&#x0A;- Update fully qualified names in &apos;*&apos; files&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Location&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.banchi.collen{Location.java[Location" matchStrategy="1" name="Locate" patterns="*" qualified="true" references="true" similarDeclarations="true" stamp="1406125534308" textual="true" version="1.0"/>
+</session>

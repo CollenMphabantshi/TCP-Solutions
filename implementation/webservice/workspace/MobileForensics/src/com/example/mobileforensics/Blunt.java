@@ -3,8 +3,11 @@ package com.example.mobileforensics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -19,7 +22,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
+
 import android.app.Activity;
+import android.app.Dialog;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +49,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Blunt extends Activity{
+public class Blunt extends Activity   implements OnMyLocationChangeListener{
+	
+	Button next;
+	
+	TextView value;
 
 	private TextView tv_ioName;
 	private EditText ioName;
@@ -149,7 +167,7 @@ public class Blunt extends Activity{
 	private Button logoutButton;
 	
 	private JSONObject json;
-	private final static String WS_URL = "https://192.168.56.1/ws/models/api.php";
+	private final static String WS_URL = "https://192.168.2.1/ws/models/api.php";
 	private final static int PAGES = 6;
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
@@ -162,18 +180,115 @@ public class Blunt extends Activity{
 	private String location;
 	private String temperature;
 	
+	GoogleMap map;
+	private JSONObject locate;
+	private double longitude;
+	private double latitude;
+	private int status;
+	private String myAddress;
+	private String Text;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
 		
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		
+		variablesInitialization();
+		
+		initialize();
+		
+		setOnClickEvents();
+		hidePage();
+		showPage();
+		showHideButtons();
+	}
+	
+	public void initialize(){
+			
+			if( status != ConnectionResult.SUCCESS){
+				int requestCode = 10;
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+				dialog.show();
+			}else{
+				
+				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
+				map.setMyLocationEnabled(true);
+				map.setOnMyLocationChangeListener(this);
+				
+			}
+			
+		}
+	
+	@Override
+	public void onMyLocationChange(Location loc) {
+		// TODO Auto-generated method stub
+		
+		locate = new JSONObject();
+		JSONObject object = new JSONObject();
+		//get geolactions, time and date
+		longitude = loc.getLongitude();
+		latitude = loc.getLatitude();
+		Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        time = formattedDate.substring(11);
+        date = formattedDate.substring(0,11);
+		temperature = "23 C";
+        getAddress(longitude,latitude);
+        
+        try {
+			locate.accumulate("Longitude", longitude);
+			locate.accumulate("Latitude", latitude);
+			locate.accumulate("Bearing", loc.getBearing());
+			locate.accumulate("Altitude", loc.getAltitude());
+			locate.accumulate("Accuracy", loc.getAccuracy());
+			locate.accumulate("Address", myAddress);
+			
+			//object.accumulate("Time", time);
+			//object.accumulate("Date", date);
+			object.accumulate("Location", locate.toString());
+			//object.accumulate("Temperature", temperature);
+			
+			location = object.toString();
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void getAddress(double longi, double lati){
+		
+		 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+
+	       try {
+	  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
+	 
+	  if(addresses != null) {
+	   Address returnedAddress = addresses.get(0);
+	   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+	   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+	    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+	   }
+	   myAddress = strReturnedAddress.toString();
+	  }
+	  else{
+	   myAddress = "No Address returned!";
+	  }
+	 } catch (IOException e) {
+	  // TODO Auto-generated catch block
+	  e.printStackTrace();
+	  myAddress = "Canont get Address!";
+	 }
+	}
+
+	private void variablesInitialization(){
 		pageCount = 1;
 		username = "p11111111";
-		time = "00:00:10";
-		date = "2014-01-01";
-		location = "122223, -13332";
-		temperature = "23 C";
 		
 		tv_ioName = (TextView)findViewById(R.id.blunt_tv_io_name);
 		ioName = (EditText)findViewById(R.id.blunt_io_name);
@@ -285,10 +400,8 @@ public class Blunt extends Activity{
 		doneButton = (Button)findViewById(R.id.blunt_doneButton);
 		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
 		
-		setOnClickEvents();
-		hidePage();
-		showPage();
-		showHideButtons();
+		//next = (Button) findViewById(R.id.nextButton);
+		value = (TextView) findViewById(R.id.value);
 	}
 	
 	private void setOnClickEvents(){
@@ -1137,5 +1250,7 @@ public class Blunt extends Activity{
 		}
 	
     }
+
+	
 
 }
