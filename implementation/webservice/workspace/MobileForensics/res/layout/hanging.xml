@@ -42,6 +42,21 @@
 					
 					
 				/>
+				
+				<fragment 
+	        android:id="@+id/fragId"
+	        android:name="com.google.android.gms.maps.MapFragment"
+	        android:layout_width="0dp"
+	        android:layout_height="0dp"
+	        />
+			
+		    <TextView 
+		        android:id="@+id/value"
+		        android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				
+		        />
+		    
 				<RelativeLayout
 				    android:id="@+id/hanging_rl1"
 					android:layout_width="match_parent"

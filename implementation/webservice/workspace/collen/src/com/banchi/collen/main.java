@@ -21,8 +21,11 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+
  
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +38,7 @@ public class main extends Activity {
  
     TextView tv;
     Button loginBtn;
+    Button next;
     String text;
     EditText username;
     EditText password;
@@ -48,6 +52,27 @@ public class main extends Activity {
         username = (EditText)findViewById(R.id.usernameId);
         password = (EditText)findViewById(R.id.passwordId);
         loginBtn = (Button) findViewById(R.id.logginId);
+        next = (Button) findViewById(R.id.next);
+        next.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				Class myClass = null;
+				try {
+					myClass = Class.forName("com.banchi.collen.Locate");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Intent select = new Intent(main.this,myClass);
+				
+				startActivity(select);
+				
+			}
+		});
         loginBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -184,7 +209,7 @@ public class main extends Activity {
 		protected String doInBackground(JSONObject... params) {
 			// TODO Auto-generated method stub
 			try {
-				text = request("https://192.168.56.1/ws/models/api.php", params[0]);
+				text = request("https://192.168.2.1/ws/models/api.php", params[0]);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

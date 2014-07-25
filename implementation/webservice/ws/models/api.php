@@ -953,9 +953,16 @@ private function addCase() {
                     $formData = $this->jsonToArray($this->_request['caseData']);   
                     if($formData != NULL){
                         $obj = new FromHeight($formData,$this);
+                        $error = array('status' => "Success", "msg" => "Request to add case was successful yeah.\n"+$formData);
+                    $this->response($this->json($error), 200);
+                    }else{
+                        
+                        $error = array('status' => "Failed", "msg" => "Request to add case was denied 1.\n"+$formData);
+                    $this->response($this->json($error), 400);
                     }
+                    
                 }else{
-                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                    $error = array('status' => "Failed", "msg" => "Request to add case was denied 2.\n"+$formData);
                     $this->response($this->json($error), 400);
                 }
                 break;

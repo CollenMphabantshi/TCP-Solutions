@@ -1,9 +1,12 @@
 package com.example.mobileforensics;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -18,10 +21,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mobileforensics.Blunt.Read;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +49,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 
-public class Hanging extends Activity{
+public class Hanging extends Activity implements OnMyLocationChangeListener{
 
 	private LinearLayout infoLayout;
 	private TextView tv_ioName;
@@ -182,6 +194,15 @@ public class Hanging extends Activity{
 	private String temperature;
 	private JSONObject currentDataSaved;
 	
+	GoogleMap map;
+	private JSONObject locate;
+	private double longitude;
+	private double latitude;
+	private int status;
+	private String myAddress;
+	private String Text;
+	private TextView value;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -189,147 +210,237 @@ public class Hanging extends Activity{
 		setContentView(R.layout.hanging);
 		
 		GlobalValues.setPages(7);
-		pageCount = 1;
-		username = "p11111111";
-		Date d = new Date();
-		time = ""+d.getTime();
-		date = "2014-01-02";
-		location = "1242523, -13332";
-		temperature = "23 C";
-		
-		infoLayout = (LinearLayout)findViewById(R.id.hanging_infoLayout);
-		tv_ioName = (TextView)findViewById(R.id.hanging_tv_io_name);
-		ioName = (EditText)findViewById(R.id.hanging_io_name);
-		tv_ioSurname = (TextView)findViewById(R.id.hanging_tv_io_surname);
-		ioSurname = (EditText)findViewById(R.id.hanging_io_surname);
-		tv_ioRank = (TextView)findViewById(R.id.hanging_tv_io_rank);
-		ioRank = (EditText)findViewById(R.id.hanging_io_rank);
-		tv_ioCellNo = (TextView)findViewById(R.id.hanging_tv_io_cell);
-		ioCellNo = (EditText)findViewById(R.id.hanging_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.hanging_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.hanging_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.hanging_tv_foos_surname);
-		foosSurname = (EditText)findViewById(R.id.hanging_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.hanging_tv_foos_rank);
-		foosRank = (EditText)findViewById(R.id.hanging_foos_rank);
-		
-		tv_io = (TextView)findViewById(R.id.hanging_tv_io);
-		tv_foos = (TextView)findViewById(R.id.hanging_tv_foos);
 		
 		
-		demographicsLayout = (LinearLayout)findViewById(R.id.hanging_demographicLayout);
-		tv_victimInfo = (TextView)findViewById(R.id.hanging_tv_victimInfo);
-		tv_victimRace = (TextView)findViewById(R.id.hanging_tv_victimRace);
-		tv_victimGender = (TextView)findViewById(R.id.hanging_tv_victimGender);
-		tv_victimName = (TextView)findViewById(R.id.hanging_tv_victim_name);
-		victimName = (EditText)findViewById(R.id.hanging_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.hanging_tv_victim_surname);
-		victimSurname = (EditText)findViewById(R.id.hanging_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.hanging_tv_victim_id);
-		victimIDNo = (EditText)findViewById(R.id.hanging_victim_id);
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
-		rgbMale = (RadioButton)findViewById(R.id.hanging_rgbMale);
-		rgbFemale = (RadioButton)findViewById(R.id.hanging_rgbFemale);
-		rgbUnknownGender = (RadioButton)findViewById(R.id.hanging_rgbUnknownGender);
+		initializeVariables();
 		
-		rgbAsian = (RadioButton)findViewById(R.id.hanging_rgbAsian);
-		rgbBlack = (RadioButton)findViewById(R.id.hanging_rgbBlack);
-		rgbColoured = (RadioButton)findViewById(R.id.hanging_rgbColoured);
-		rgbWhite = (RadioButton)findViewById(R.id.hanging_rgbWhite);
-		rgbUnknownRace = (RadioButton)findViewById(R.id.hanging_rgbUnknownRace);
-		
-		theBodyLayout = (LinearLayout)findViewById(R.id.hanging_theBodyLayout);
-		theBody = (TextView)findViewById(R.id.hanging_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.hanging_tv_bodyDecomposed);
-		bodyDecomposed = (Spinner)findViewById(R.id.hanging_bodyDecomposed);
-		tv_medicalIntervention = (TextView)findViewById(R.id.hanging_tv_medicalIntervention);
-		medicalIntervention = (Spinner)findViewById(R.id.hanging_medicalIntervention);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.hanging_tv_whoFoundVictimBody);
-		whoFoundVictimBody = (EditText)findViewById(R.id.hanging_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.hanging_tv_closeToWater);
-		closeToWater = (Spinner)findViewById(R.id.hanging_closeToWater);
-		tv_rapeHomicide = (TextView)findViewById(R.id.hanging_tv_rapeHomicide);
-		rapeHomicide = (Spinner)findViewById(R.id.hanging_rapeHomicide);
-		tv_suicideSuspected = (TextView)findViewById(R.id.hanging_tv_suicideSuspected);
-		suicideSuspected = (Spinner)findViewById(R.id.hanging_suicideSuspected);
-		tv_previousAttempts = (TextView)findViewById(R.id.hanging_tv_previousAttempts);
-		previousAttempts = (Spinner)findViewById(R.id.hanging_previousAttempts);
-		tv_howManyAttempts = (TextView)findViewById(R.id.hanging_tv_howManyAttempts);
-		howManyAttempts = (EditText)findViewById(R.id.hanging_howManyAttempts);
-		
-		sceneOfInjuryLayout = (LinearLayout)findViewById(R.id.hanging_sceneOfInjuryLayout);
-		sceneOfInjury = (TextView)findViewById(R.id.hanging_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.hanging_tv_sceneIOType);
-		sceneIOType = (Spinner)findViewById(R.id.hanging_sceneIOType);
-		tv_whereInside = (TextView)findViewById(R.id.hanging_tv_whereInside);
-		sceneIType = (Spinner)findViewById(R.id.hanging_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.hanging_tv_sceneITypeOther);
-		sceneITypeOther = (EditText)findViewById(R.id.hanging_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.hanging_tv_doorLocked);
-		doorLocked = (Spinner)findViewById(R.id.hanging_doorLocked);
-		tv_windowsClosed = (TextView)findViewById(R.id.hanging_tv_windowsClosed);
-		windowsClosed = (Spinner)findViewById(R.id.hanging_windowsClosed);
-		tv_windowsBroken = (TextView)findViewById(R.id.hanging_tv_windowsBroken);
-		windowsBroken = (Spinner)findViewById(R.id.hanging_windowsBroken);
-		tv_victimAlone = (TextView)findViewById(R.id.hanging_tv_victimAlone);
-		victimAlone = (Spinner)findViewById(R.id.hanging_victimAlone);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.hanging_tv_peopleWithVictim);
-		peopleWithVictim = (EditText)findViewById(R.id.hanging_peopleWithVictim);
-		tv_sceneOType = (TextView)findViewById(R.id.hanging_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.hanging_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.hanging_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.hanging_sceneOTypeOther);
-		
-		sceneLookLayout = (LinearLayout)findViewById(R.id.hanging_sceneLookLayout);
-		sceneLook = (TextView)findViewById(R.id.hanging_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.hanging_tv_signsOfStruggle);
-		signsOfStruggle = (Spinner)findViewById(R.id.hanging_signsOfStruggle);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.hanging_tv_alcoholBottleAround);
-		alcoholBottleAround = (Spinner)findViewById(R.id.hanging_alcoholBottleAround);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.hanging_tv_drugParaphernalia);
-		drugParaphernalia = (Spinner)findViewById(R.id.hanging_drugParaphernalia);
-		
-		theSceneLayout = (LinearLayout)findViewById(R.id.hanging_theSceneLayout);
-		theScene = (TextView)findViewById(R.id.hanging_theScene);
-		tv_autoeroticAsphyxia = (TextView)findViewById(R.id.hanging_tv_autoeroticAsphyxia);
-		autoeroticAsphyxia = (Spinner)findViewById(R.id.hanging_autoeroticAsphyxia);
-		tv_partialHanging = (TextView)findViewById(R.id.hanging_tv_partialHanging);
-		partialHanging = (Spinner)findViewById(R.id.hanging_partialHanging);
-		tv_partialHangingOther = (TextView)findViewById(R.id.hanging_tv_partialHangingOther);
-		partialHangingOther = (EditText)findViewById(R.id.hanging_partialHangingOther);
-		tv_completeHanging = (TextView)findViewById(R.id.hanging_tv_completeHanging);
-		completeHanging = (Spinner)findViewById(R.id.hanging_completeHanging);
-		tv_ligatureAroundNeck = (TextView)findViewById(R.id.hanging_tv_ligatureAroundNeck);
-		ligatureAroundNeck = (Spinner)findViewById(R.id.hanging_ligatureAroundNeck);
-		tv_whoRemovedligature = (TextView)findViewById(R.id.hanging_tv_whoRemovedligature);
-		whoRemovedligature = (EditText)findViewById(R.id.hanging_whoRemovedligature);
-		tv_ligatureType = (TextView)findViewById(R.id.hanging_tv_ligatureType);
-		ligatureType = (Spinner)findViewById(R.id.hanging_ligatureType);
-		tv_ligatureTypeOther = (TextView)findViewById(R.id.hanging_tv_ligatureTypeOther);
-		ligatureTypeOther = (EditText)findViewById(R.id.hanging_ligatureTypeOther);
-		tv_strangulationSuspected = (TextView)findViewById(R.id.hanging_tv_strangulationSuspected);
-		strangulationSuspected = (Spinner)findViewById(R.id.hanging_strangulationSuspected);
-		tv_smotheringSuspected = (TextView)findViewById(R.id.hanging_tv_smotheringSuspected);
-		smotheringSuspected = (Spinner)findViewById(R.id.hanging_smotheringSuspected);
-		tv_chockingSuspected = (TextView)findViewById(R.id.hanging_tv_chockingSuspected);
-		chockingSuspected = (Spinner)findViewById(R.id.hanging_chockingSuspected);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.hanging_tv_suicideNoteFound);
-		suicideNoteFound = (Spinner)findViewById(R.id.hanging_suicideNoteFound);
-		tv_generalHistory = (TextView)findViewById(R.id.hanging_tv_generalHistory);
-		generalHistory = (EditText)findViewById(R.id.hanging_generalHistory);
-		
-		galleryLayout = (LinearLayout)findViewById(R.id.hanging_galleryLayout);
-		response = (TextView)findViewById(R.id.hanging_tv_response);
-		nextButton = (Button)findViewById(R.id.hanging_nextButton);
-		doneButton = (Button)findViewById(R.id.hanging_doneButton);
-		logoutButton = (Button)findViewById(R.id.hanging_logoutButton);
+		initialize();
 		
 		setOnClickEvents();
 		hidePage();
 		showPage();
 		showHideButtons();
 	}
+	
+	public void initialize(){
+		
+		if( status != ConnectionResult.SUCCESS){
+			int requestCode = 10;
+			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+			dialog.show();
+		}else{
+			
+			map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
+			map.setMyLocationEnabled(true);
+			map.setOnMyLocationChangeListener(this);
+			
+		}
+		
+	}
+
+@Override
+public void onMyLocationChange(Location loc) {
+	// TODO Auto-generated method stub
+	
+	locate = new JSONObject();
+	JSONObject object = new JSONObject();
+	//get geolactions, time and date
+	longitude = loc.getLongitude();
+	latitude = loc.getLatitude();
+	Calendar c = Calendar.getInstance();
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String formattedDate = df.format(c.getTime());
+    time = formattedDate.substring(11);
+    date = formattedDate.substring(0,11);
+	temperature = "23 C";
+    getAddress(longitude,latitude);
+    
+    try {
+		locate.accumulate("Longitude", longitude);
+		locate.accumulate("Latitude", latitude);
+		locate.accumulate("Bearing", loc.getBearing());
+		locate.accumulate("Altitude", loc.getAltitude());
+		locate.accumulate("Accuracy", loc.getAccuracy());
+		locate.accumulate("Address", myAddress);
+		
+		//object.accumulate("Time", time);
+		//object.accumulate("Date", date);
+		object.accumulate("Location", locate.toString());
+		//object.accumulate("Temperature", temperature);
+		
+		location = object.toString();
+		//value.setText(location);
+		
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
+
+public void getAddress(double longi, double lati){
+	
+	 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+
+       try {
+  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
+ 
+  if(addresses != null) {
+   Address returnedAddress = addresses.get(0);
+   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+   }
+   myAddress = strReturnedAddress.toString();
+  }
+  else{
+   myAddress = "No Address returned!";
+  }
+ } catch (IOException e) {
+  // TODO Auto-generated catch block
+  e.printStackTrace();
+  myAddress = "Canont get Address!";
+ }
+}
+
+public void initializeVariables(){
+	
+	pageCount = 1;
+	username = "p11111111";
+	
+	
+	infoLayout = (LinearLayout)findViewById(R.id.hanging_infoLayout);
+	tv_ioName = (TextView)findViewById(R.id.hanging_tv_io_name);
+	ioName = (EditText)findViewById(R.id.hanging_io_name);
+	tv_ioSurname = (TextView)findViewById(R.id.hanging_tv_io_surname);
+	ioSurname = (EditText)findViewById(R.id.hanging_io_surname);
+	tv_ioRank = (TextView)findViewById(R.id.hanging_tv_io_rank);
+	ioRank = (EditText)findViewById(R.id.hanging_io_rank);
+	tv_ioCellNo = (TextView)findViewById(R.id.hanging_tv_io_cell);
+	ioCellNo = (EditText)findViewById(R.id.hanging_io_cell);
+	
+	tv_foosName = (TextView)findViewById(R.id.hanging_tv_foos_name);
+	foosName = (EditText)findViewById(R.id.hanging_foos_name);
+	tv_foosSurname = (TextView)findViewById(R.id.hanging_tv_foos_surname);
+	foosSurname = (EditText)findViewById(R.id.hanging_foos_surname);
+	tv_foosRank = (TextView)findViewById(R.id.hanging_tv_foos_rank);
+	foosRank = (EditText)findViewById(R.id.hanging_foos_rank);
+	
+	tv_io = (TextView)findViewById(R.id.hanging_tv_io);
+	tv_foos = (TextView)findViewById(R.id.hanging_tv_foos);
+	
+	
+	demographicsLayout = (LinearLayout)findViewById(R.id.hanging_demographicLayout);
+	tv_victimInfo = (TextView)findViewById(R.id.hanging_tv_victimInfo);
+	tv_victimRace = (TextView)findViewById(R.id.hanging_tv_victimRace);
+	tv_victimGender = (TextView)findViewById(R.id.hanging_tv_victimGender);
+	tv_victimName = (TextView)findViewById(R.id.hanging_tv_victim_name);
+	victimName = (EditText)findViewById(R.id.hanging_victim_name);
+	tv_victimSurname = (TextView)findViewById(R.id.hanging_tv_victim_surname);
+	victimSurname = (EditText)findViewById(R.id.hanging_victim_surname);
+	tv_victimIDNo = (TextView)findViewById(R.id.hanging_tv_victim_id);
+	victimIDNo = (EditText)findViewById(R.id.hanging_victim_id);
+	
+	rgbMale = (RadioButton)findViewById(R.id.hanging_rgbMale);
+	rgbFemale = (RadioButton)findViewById(R.id.hanging_rgbFemale);
+	rgbUnknownGender = (RadioButton)findViewById(R.id.hanging_rgbUnknownGender);
+	
+	rgbAsian = (RadioButton)findViewById(R.id.hanging_rgbAsian);
+	rgbBlack = (RadioButton)findViewById(R.id.hanging_rgbBlack);
+	rgbColoured = (RadioButton)findViewById(R.id.hanging_rgbColoured);
+	rgbWhite = (RadioButton)findViewById(R.id.hanging_rgbWhite);
+	rgbUnknownRace = (RadioButton)findViewById(R.id.hanging_rgbUnknownRace);
+	
+	theBodyLayout = (LinearLayout)findViewById(R.id.hanging_theBodyLayout);
+	theBody = (TextView)findViewById(R.id.hanging_tv_the_body);
+	tv_bodyDecomposed = (TextView)findViewById(R.id.hanging_tv_bodyDecomposed);
+	bodyDecomposed = (Spinner)findViewById(R.id.hanging_bodyDecomposed);
+	tv_medicalIntervention = (TextView)findViewById(R.id.hanging_tv_medicalIntervention);
+	medicalIntervention = (Spinner)findViewById(R.id.hanging_medicalIntervention);
+	tv_whoFoundVictimBody = (TextView)findViewById(R.id.hanging_tv_whoFoundVictimBody);
+	whoFoundVictimBody = (EditText)findViewById(R.id.hanging_whoFoundVictimBody);
+	tv_closeToWater = (TextView)findViewById(R.id.hanging_tv_closeToWater);
+	closeToWater = (Spinner)findViewById(R.id.hanging_closeToWater);
+	tv_rapeHomicide = (TextView)findViewById(R.id.hanging_tv_rapeHomicide);
+	rapeHomicide = (Spinner)findViewById(R.id.hanging_rapeHomicide);
+	tv_suicideSuspected = (TextView)findViewById(R.id.hanging_tv_suicideSuspected);
+	suicideSuspected = (Spinner)findViewById(R.id.hanging_suicideSuspected);
+	tv_previousAttempts = (TextView)findViewById(R.id.hanging_tv_previousAttempts);
+	previousAttempts = (Spinner)findViewById(R.id.hanging_previousAttempts);
+	tv_howManyAttempts = (TextView)findViewById(R.id.hanging_tv_howManyAttempts);
+	howManyAttempts = (EditText)findViewById(R.id.hanging_howManyAttempts);
+	
+	sceneOfInjuryLayout = (LinearLayout)findViewById(R.id.hanging_sceneOfInjuryLayout);
+	sceneOfInjury = (TextView)findViewById(R.id.hanging_sceneOfInjury);
+	tv_sceneIOType = (TextView)findViewById(R.id.hanging_tv_sceneIOType);
+	sceneIOType = (Spinner)findViewById(R.id.hanging_sceneIOType);
+	tv_whereInside = (TextView)findViewById(R.id.hanging_tv_whereInside);
+	sceneIType = (Spinner)findViewById(R.id.hanging_sceneIType);
+	tv_sceneITypeOther = (TextView)findViewById(R.id.hanging_tv_sceneITypeOther);
+	sceneITypeOther = (EditText)findViewById(R.id.hanging_sceneITypeOther);
+	tv_doorLocked = (TextView)findViewById(R.id.hanging_tv_doorLocked);
+	doorLocked = (Spinner)findViewById(R.id.hanging_doorLocked);
+	tv_windowsClosed = (TextView)findViewById(R.id.hanging_tv_windowsClosed);
+	windowsClosed = (Spinner)findViewById(R.id.hanging_windowsClosed);
+	tv_windowsBroken = (TextView)findViewById(R.id.hanging_tv_windowsBroken);
+	windowsBroken = (Spinner)findViewById(R.id.hanging_windowsBroken);
+	tv_victimAlone = (TextView)findViewById(R.id.hanging_tv_victimAlone);
+	victimAlone = (Spinner)findViewById(R.id.hanging_victimAlone);
+	tv_peopleWithVictim = (TextView)findViewById(R.id.hanging_tv_peopleWithVictim);
+	peopleWithVictim = (EditText)findViewById(R.id.hanging_peopleWithVictim);
+	tv_sceneOType = (TextView)findViewById(R.id.hanging_tv_sceneOType);
+	sceneOType = (Spinner)findViewById(R.id.hanging_sceneOType);
+	tv_sceneOTypeOther = (TextView)findViewById(R.id.hanging_tv_sceneOTypeOther);
+	sceneOTypeOther = (EditText)findViewById(R.id.hanging_sceneOTypeOther);
+	
+	sceneLookLayout = (LinearLayout)findViewById(R.id.hanging_sceneLookLayout);
+	sceneLook = (TextView)findViewById(R.id.hanging_sceneLook);
+	tv_signsOfStruggle = (TextView)findViewById(R.id.hanging_tv_signsOfStruggle);
+	signsOfStruggle = (Spinner)findViewById(R.id.hanging_signsOfStruggle);
+	tv_alcoholBottleAround = (TextView)findViewById(R.id.hanging_tv_alcoholBottleAround);
+	alcoholBottleAround = (Spinner)findViewById(R.id.hanging_alcoholBottleAround);
+	tv_drugParaphernalia = (TextView)findViewById(R.id.hanging_tv_drugParaphernalia);
+	drugParaphernalia = (Spinner)findViewById(R.id.hanging_drugParaphernalia);
+	
+	theSceneLayout = (LinearLayout)findViewById(R.id.hanging_theSceneLayout);
+	theScene = (TextView)findViewById(R.id.hanging_theScene);
+	tv_autoeroticAsphyxia = (TextView)findViewById(R.id.hanging_tv_autoeroticAsphyxia);
+	autoeroticAsphyxia = (Spinner)findViewById(R.id.hanging_autoeroticAsphyxia);
+	tv_partialHanging = (TextView)findViewById(R.id.hanging_tv_partialHanging);
+	partialHanging = (Spinner)findViewById(R.id.hanging_partialHanging);
+	tv_partialHangingOther = (TextView)findViewById(R.id.hanging_tv_partialHangingOther);
+	partialHangingOther = (EditText)findViewById(R.id.hanging_partialHangingOther);
+	tv_completeHanging = (TextView)findViewById(R.id.hanging_tv_completeHanging);
+	completeHanging = (Spinner)findViewById(R.id.hanging_completeHanging);
+	tv_ligatureAroundNeck = (TextView)findViewById(R.id.hanging_tv_ligatureAroundNeck);
+	ligatureAroundNeck = (Spinner)findViewById(R.id.hanging_ligatureAroundNeck);
+	tv_whoRemovedligature = (TextView)findViewById(R.id.hanging_tv_whoRemovedligature);
+	whoRemovedligature = (EditText)findViewById(R.id.hanging_whoRemovedligature);
+	tv_ligatureType = (TextView)findViewById(R.id.hanging_tv_ligatureType);
+	ligatureType = (Spinner)findViewById(R.id.hanging_ligatureType);
+	tv_ligatureTypeOther = (TextView)findViewById(R.id.hanging_tv_ligatureTypeOther);
+	ligatureTypeOther = (EditText)findViewById(R.id.hanging_ligatureTypeOther);
+	tv_strangulationSuspected = (TextView)findViewById(R.id.hanging_tv_strangulationSuspected);
+	strangulationSuspected = (Spinner)findViewById(R.id.hanging_strangulationSuspected);
+	tv_smotheringSuspected = (TextView)findViewById(R.id.hanging_tv_smotheringSuspected);
+	smotheringSuspected = (Spinner)findViewById(R.id.hanging_smotheringSuspected);
+	tv_chockingSuspected = (TextView)findViewById(R.id.hanging_tv_chockingSuspected);
+	chockingSuspected = (Spinner)findViewById(R.id.hanging_chockingSuspected);
+	tv_suicideNoteFound = (TextView)findViewById(R.id.hanging_tv_suicideNoteFound);
+	suicideNoteFound = (Spinner)findViewById(R.id.hanging_suicideNoteFound);
+	tv_generalHistory = (TextView)findViewById(R.id.hanging_tv_generalHistory);
+	generalHistory = (EditText)findViewById(R.id.hanging_generalHistory);
+	
+	galleryLayout = (LinearLayout)findViewById(R.id.hanging_galleryLayout);
+	response = (TextView)findViewById(R.id.hanging_tv_response);
+	nextButton = (Button)findViewById(R.id.hanging_nextButton);
+	doneButton = (Button)findViewById(R.id.hanging_doneButton);
+	logoutButton = (Button)findViewById(R.id.hanging_logoutButton);
+	
+	value = (TextView) findViewById(R.id.value);
+}
 	
 	@Override
 	protected void onPause() {

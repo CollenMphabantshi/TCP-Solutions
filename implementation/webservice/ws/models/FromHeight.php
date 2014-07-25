@@ -65,15 +65,15 @@ class FromHeight extends Scene{
                  //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
-                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                     $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.  $sceneID".$sceneID);
                      $this->api->response($this->api->json($error), 400);
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 if($formData['object'][$i]['victims']['victimInside'] == "yes"){
-                    $this->addElectrocutionLightning($sceneID,TRUE,$formData['object'][$i]);
+                    $this->addHeight($sceneID,TRUE,$formData['object'][$i]);
                 }else{
-                    $this->addElectrocutionLightning($sceneID,FALSE,null);
+                    $this->addHeight($sceneID,FALSE,null);
                 }
             }
             
@@ -84,9 +84,9 @@ class FromHeight extends Scene{
     
     public function addHeight($sceneID,$inside,$object) {
         
-        $h_res = mysql_query("insert into height values(0,".$sceneID.",'$this->heightIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->fromWhat','$this->howHigh','$this->onWhatVictimLanded')");
-        if($h_res == FALSE){
-            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+        $h_res1 = mysql_query("insert into height values(0,".$sceneID.",'$this->heightIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->fromWhat','$this->howHigh','$this->onWhatVictimLanded')");
+        if($h_res1 == FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.1");
             $this->api->response($this->api->json($error), 400);
         }
         
@@ -105,6 +105,9 @@ class FromHeight extends Scene{
                 $hi_res = mysql_query("insert into heightinside values(0,".$heightID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+         $error = array('status' => "Success", "msg" => "Request to add case was successful.");
+        $this->api->response($this->api->json($error), 200);
         
     }
     
