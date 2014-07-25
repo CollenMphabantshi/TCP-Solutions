@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 INDEX VERSION 1.126+C:\Users\Latitude\Documents\cos301\TCP-Solutions\implementation\webservice\workspace\.metadata\.plugins\org.eclipse.jdt.core
-1856399511.index
-=======
-INDEX VERSION 1.126+C:\Users\BANCHI\Documents\GitHub\TCP-Solutions\implementation\webservice\workspace\.metadata\.plugins\org.eclipse.jdt.core
-1856399511.index
-4150414105.index
-3739246410.index
+3222614409.index
+3167989896.index
 3254200690.index
->>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6
+1856399511.index

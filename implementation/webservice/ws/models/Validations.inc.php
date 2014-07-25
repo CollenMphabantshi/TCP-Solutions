@@ -6,7 +6,7 @@ class Validations {
     }
     
     public function validateLogin($pass, $hashed_pass, $salt, $hash_method = 'sha1') {
-        if(function_exists('hash') && in_array($hash_method, hash_algos())) {
+        if(function_exists('hash') && in_array($hash_method, hash_algos())){
             return ($hashed_pass === hash($hash_method, $salt . $pass));
         }
         return ($hashed_pass === sha1($salt . $pass));
@@ -23,12 +23,19 @@ class Validations {
     }
     
     public function createHash($string, $hash_method = 'sha1', $salt_length = 8){
-         // generate random salt
-        $salt = randomSalt($salt_length);
+        $values = array();
+        // generate random salt
+        $salt = $this->randomSalt($salt_length);
         if (function_exists('hash') && in_array($hash_method, hash_algos()) ){
-            return hash($hash_method, $salt . $string);
+            
+            $values['hash'] = hash($hash_method, $salt . $string);
+            $values['salt'] = $salt;
+            return $values;
         }
-        return sha1($salt . $string);
+        
+        $values['hash'] = sha1($salt . $string);
+        $values['salt'] = $salt;
+        return $values;
     }
     
 }

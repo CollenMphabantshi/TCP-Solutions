@@ -84,20 +84,6 @@ function sendRequest(data){
         alert(request.responseText)
         
     }};
-    /*res = $.ajax({
-        type:"POST",
-        url: "models/api.php",
-        data: data,
-        processData:false,
-        async: false,
-        dataType: "json",
-        success: function (result){
-            alert(result);
-        },
-        error:function (result){
-            alert("error: "+result);
-        }
-    }).responseText;*/
     
     request.open("POST","../models/api.php");
     

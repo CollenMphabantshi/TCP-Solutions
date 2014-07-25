@@ -1,7 +1,7 @@
 
-drop database if exists mobileForensics;
-create database if not exists mobileForensics;
-use mobileForensics;
+drop database if exists forenlnm_mobileForensics;
+create database if not exists forenlnm_mobileForensics;
+use forenlnm_mobileForensics;
 
 
 create table if not exists userType
@@ -11,11 +11,17 @@ create table if not exists userType
     primary key(userTypeID)
 );
 
+create table if not exists accessMode(
+    uid int not null,
+    mode varchar(8),
+    primary key(uid,mode)
+);
+
 CREATE TABLE IF NOT EXISTS users
 (
 `userID` int NOT NULL AUTO_INCREMENT,
  userName varchar(200) not null,
- userPassword varchar(200) not null,
+ userPassword text not null,
 `userFirstname` varchar(200) NOT NULL,
 `userSurname` varchar(200) NOT NULL,
 `userTypeID` int NOT NULL,

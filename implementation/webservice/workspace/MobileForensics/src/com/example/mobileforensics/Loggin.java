@@ -128,6 +128,7 @@ public class Loggin extends Activity{
             }
             in.close();
             
+            System.out.println("OUTPUT: >>>>> "+sb.toString());
             JSONObject obj = new JSONObject(sb.toString());
             return obj;
     }
@@ -140,7 +141,7 @@ public class Loggin extends Activity{
 		protected JSONObject doInBackground(List<NameValuePair>... params) {
 			// TODO Auto-generated method stub
 			try {
-				json = request("https://192.168.56.1/ws/models/api.php", params[0]);
+				json = request(GlobalValues.WS_URL, params[0]);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

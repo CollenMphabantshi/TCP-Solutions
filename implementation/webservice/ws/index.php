@@ -1,11 +1,11 @@
 <?php
     if(('on' == $_SERVER['HTTPS']))
 	{
-		$uri = 'https://';
+		$uri = 'http://';
 	}else{
 		try{
 			$_SERVER['HTTPS'] = 'on';
-			$uri = 'https://';
+			$uri = 'http://';
 		}catch(Exception $exc){
 			$uri = 'http://';
 		}
