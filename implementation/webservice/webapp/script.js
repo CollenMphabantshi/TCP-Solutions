@@ -29,10 +29,10 @@ $(document).ready(function (p){
          if(name !== "" && pass !== "" && firstname !== "" && surname !== "" && combobox !== ""){
              if(combobox !== "Administrator")
              {
-                 var cell = form["cellphone"].value;
+                 var cell = document.getElementById("cellphone").value;
                  addUser(name,pass,firstname,surname,combobox,cell);
              }else{
-                 alert("ddd");
+                 ;
                  addUser(name,pass,firstname,surname,combobox,null);
              }
          }else{
@@ -68,6 +68,8 @@ function login(username,pass){
         var obj = JSON.parse(request.responseText);
         if(obj.status === "Success"){
             document.location = "adduser.php";
+        }else{
+            $("#login-form").before("<div class='response'><br/><br/></div>")
         }
     }};
     
@@ -79,8 +81,8 @@ function login(username,pass){
 }
 function getUserForm(){
   
-    var form = document.forms["adduserForm"];
-    var combobox = form["userType"].options[form["userType"].selectedIndex].value;
+   
+    var combobox = document.getElementById("userType").options[document.getElementById("userType").selectedIndex].value;
     //alert(form["userType"].options[form["userType"].selectedIndex].value);
      $("#removeTr").remove();
     if(combobox==="Forensic practitioner")
@@ -204,8 +206,10 @@ function sendRequest(data){
 
 function addUserResponse(req){
     var obj = JSON.parse(req.responseText);
-    $(".response").html("");
+    /*$(".response").html("");
     $(".response").html(obj.msg);
+    */
+   document.location.reload();
 }
 
             

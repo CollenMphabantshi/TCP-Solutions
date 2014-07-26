@@ -103,6 +103,50 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
                                                                                                
 \subsection{Quality requirements}
 \begin{itemize}
+\item\textbf{Security}
+\begin{itemize}
+	\item Authentication
+	\begin{itemize}
+		\item The users have to have an account in order access the application; this will
+		provide the users with a username and password. These associated pieces
+		of information are important as they will be required for the authentication
+		process i.e. logging.
+		– A user will have to provide his or her username as well as their
+		associated password in order for them to be logged in and for a session
+		to be created for them
+	\end{itemize}
+	\item Integrity
+	\begin{itemize}
+		\item Information captured will be encrypted before sent to the database.
+		\item The images that are captured on the device, should be checked if they were altered before they are uploaded to the server.
+	\end{itemize}
+		\item Authorization
+		\begin{itemize}
+			\item Tokens(Access Controls) will be assigned to each user, irrespective of the sort of account that they may hold. The tokens determine the users privileges, they also determine what the user is allowed to read e.g view all the cases or just specific ones.
+			\item 
+			\begin{tabular}{|l|l|}\hline
+				Tokens   & Privileges	\\\hline
+				1	& Administrator	\\\hline
+				2	& Forensic Practitioner \\\hline
+				3	& Forensic Officer \\\hline
+				4	& Students	\\\hline
+				n	& Guests	\\\hline
+			\end{tabular}
+		\end{itemize}
+	\item System users will have different permission.
+	\item Information stored by forensic officers will not be edited after the submission.
+\end{itemize}
+\item\textbf{Auditability}         
+\begin{itemize}
+	\item The system should record all the changes made to the data stored, by showing whom, when and what was changed.
+	\item It will also show old and new values.
+\end{itemize}
+\item\textbf{Scalability}
+\begin{itemize}
+	\item The web hosting server supports 500GB traffic.
+	\item It should allow additional templates.
+\end{itemize}
+
 \item\textbf{Performace}
 \begin{itemize}
 	\item The system should process all the reports within 10 seconds.
@@ -114,37 +158,17 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
   	\item The system should be up and running all the time.
   	\item Easy and fast access to the database.
   \end{itemize}
-\item\textbf{Scalability}
-\begin{itemize}
-  	\item The system should be able to handle all death scenes captured information.
-  	\item It should allow additional templates.
-  \end{itemize}
-\item\textbf{Security}
-\begin{itemize}
-  	\item The system is accessible to users who are authorized.
-  	\item System users will have different permission.
-  	\item Information about death scenes will be encrypted.
-  	\item Information stored by forensic officers will not be edited after the submission.
-  \end{itemize}
-\item\textbf{Flexibility} 
-\begin{itemize}
-  	\item If something happen when the forensic officer is capturing information, it should automatically be stored in the server.
-  \end{itemize}
-\item\textbf{Maintanability}					
- \begin{itemize}
-   	\item The system will be maintained every time the client needs new changes.
-   \end{itemize}        
-\item\textbf{Auditability}         
-      \begin{itemize}
-        	\item The system should record all the changes made to the data stored, by showing whom, when and what was changed.
-        	\item It will also show old and new values.
-        	
-        \end{itemize} 
+
 \item\textbf{Usability}
 \begin{itemize}
      \item Users should be able to use the system without prior
       training.                                                       \item The system will be in English.   
  \end{itemize}
+ 
+ \item\textbf{Maintanability}					
+ \begin{itemize}
+ 	\item The system will be maintained every time the client needs new changes.
+ \end{itemize}        
  
 \end{itemize}
 
@@ -473,6 +497,7 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 \begin{description}
 	\item [Forensic officer (FO)] – a specially trained crime scene officer that collects the finding evidence that will be analyzed back at the lab by forensic scientist or forensic practitioner. 
 	\item [Forensic practitioner (FP)] - also referred to as crime scene investigators and forensic science technicians examine pieces of evidence to provide crucial support in criminal investigations. Their professional expertise is sought in laboratories, crime scenes and courtrooms.
+	\item GB - gigabyte
 	\item [Stakeholders] - is anybody who can affect or is affected by an organization, strategy or project. They can be internal or external and they can be at senior or junior levels.
 	\item [Students] – honors and masters students who are doing research as part of their studies.
 	\item[MySQL] MySQL (Structured Query Language) is an open-source relational database management system.
