@@ -23,14 +23,19 @@ class User {
     private $userSurname;
     private $userTypeID;
     private $userActive;
+    private $salt;
     public $api;
     private $validation;
+    
     public function __construct($api,$userName=NULL,$userPassword=NULL,$userFirstname=NULL,$userSurname=NULL,$userTypeID=NULL,$userActive=NULL){
         $this->api = $api;
         $this->validation = new Validations();
         if($userName != null && $userPassword != null && $userFirstname != null && $userSurname != null){
             $this->userName = $userName;
+            $arr = $this->validation->createHash($userPassword, 'sha512');
+            //$this->userPassword = $arr['hash'];
             $this->userPassword = md5($userPassword);
+            $this->salt = $arr['salt'];
             $this->userFirstname = $userFirstname;
             $this->userSurname = $userSurname;
             $this->userTypeID = $userTypeID;
@@ -69,9 +74,10 @@ class User {
             $u_array = mysql_fetch_array($u_res);
             if($u_array['userID'] != NULL)
             {
+                //$u_res = mysql_query("insert into accessMode values(".$u_array['userID'].",'$this->salt')");
                 return $u_array['userID'];
             }else{
-                $error = array('status' => "Failed", "msg" => "Request to add user was denied. Unknown problem.");
+                $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
                 $this->api->response($this->api->json($error), 400);
             }
         }else{
@@ -163,8 +169,8 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
-    
-    public function login($userName,$userPassword,$platform){
+
+        public function login($userName,$userPassword,$platform){
         if($userName != NULL && $userPassword != NULL && $platform != NULL)
         {
             $this->userName = $userName;
@@ -197,10 +203,63 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
+    /*public function login($userName,$userPassword,$platform){
+        if($userName != NULL && $userPassword != NULL && $platform != NULL)
+        {
+            $validation = new Validations();
+            $this->userName = $userName;
+            $this->userPassword = $userPassword;
+            
+            $error = array('status' => "Failed", "msg" => "Request to login was denied. Invalid username or password.");
+            $am_res = mysql_query("select * from accessMode")
+                    or $this->api->response($this->api->json($error), 400);
+            while(($arr = mysql_fetch_array($am_res)))
+            {
+                $uid = $arr['uid'];
+                $u_res = mysql_query("select * from users where userID=$uid and userName='$this->userName'");
+                
+                if(mysql_num_rows($u_res) > 0){
+                    $u_array = mysql_fetch_array($u_res);
+                    if($this->validation->validateLogin($pass,$u_array['userPassword'], $arr['salt'],'sha512')){
+                        if($u_array['userActive'] == 1)
+                        {
+                            if($platform == "webapp")
+                            {
+                                $_SESSION['s_ip'] = $_SERVER['REMOTE_ADDR'];
+                                $_SESSION['s_ua'] = $_SERVER['HTTP_USER_AGENT'];
+                                $_SESSION['s_id'] = $u_array['userID'];
+                            }
+                            $error = array('status' => "Success", "msg" => "Request to login was accepted.");
+                            $this->api->response($this->api->json($error), 400);
+                        }else{
+                            $error = array('status' => "Failed", "msg" => "Request to login was denied. The User is not active.");
+                            $this->api->response($this->api->json($error), 400);
+                        }
+                    }else{
+                        $error = array('status' => "Failed", "msg" => "Request to login was denied.");
+                        $this->api->response($this->api->json($error), 400);
+                    }
+                }else{
+                    $error = array('status' => "Failed", "msg" => "Request to login was denied. Invalid Password or Username.");
+                    $this->api->response($this->api->json($error), 400);
+                }
+            }
+        }else {
+            $error = array('status' => "Failed", "msg" => "Request to login was denied. Please provide all the required details.");
+            $this->api->response($this->api->json($error), 400);
+        }
+    }*/
     
+ public function logout() {
+     session_destroy();
+     $error = array('status' => "Success", "msg" => "Request to logout was successfull.");
+     $this->api->response($this->api->json($error), 200);
+ }
     public function getUserID() {
         if($this->userID != NULL)
-        {return $this->userID;}
+        {
+            return $this->userID;
+        }
         else{
             $error = array('status' => "Failed", "msg" => "Request to get user was denied.");
             $this->api->response($this->api->json($error), 400);

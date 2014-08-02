@@ -1,35 +1,9 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
-<<<<<<< HEAD
->>>>>>>=9e79a44628c53011a6821a9f52d28e3b6f5dbbb0
-=======
->>>>>>>=4ff11ef5bd5eea62d3ecb965d2c5efba61f0b926
-<<<<<<< HEAD
+>>>>>>>=aa400d1e2542104e91e71592cdd1a549b6a5ec31
 com.android.ide.eclipse.adt.autoPickTarget=false
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.sdk=C\:\\Users\\Latitude\\Documents\\software\\new\\Android\\adt-bundle-windows-x86-20140702\\sdk
-com.android.ide.eclipse.adt.xmlEditor=true
-design.palette.flyout.width=150
-=======
->>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-com.android.ide.eclipse.adt.fixLegacyEditors=1
-com.android.ide.eclipse.adt.sdk=C\:\\adt-bundle-windows-x86_64-20140702\\adt-bundle-windows-x86_64-20140702\\sdk
-com.android.ide.eclipse.adt.xmlEditor=true
-=======
-<<<<<<< HEAD
->>>>>>> 194efa84e2d9d20c8d3ab19fed92f19f137ddbe6
-=\=\=\=\=\=\=
-<<<<<<<=HEAD
->>>>>>>=018933d2c4fa42345712afb414c3152ae7382a65
->>>>>>> 9e79a44628c53011a6821a9f52d28e3b6f5dbbb0
->>>>>>> aa400d1e2542104e91e71592cdd1a549b6a5ec31
-com.android.ide.eclipse.adt.autoPickTarget=false
-com.android.ide.eclipse.adt.fixLegacyEditors=1
-com.android.ide.eclipse.adt.sdk=C\:\\adt-bundle-windows-x86_64-20140702\\adt-bundle-windows-x86_64-20140702\\sdk
 com.android.ide.eclipse.adt.xmlEditor=true
 design.palette.flyout.width=150
 eclipse.preferences.version=1

@@ -91,3 +91,14 @@ body{
     max-width:20px;
     max-height:20px;
 }
+
+.warning{
+    font-family: sans-serif,monospace,fantasy;
+    font-size: 20pt;
+    font-weight:bold;
+}
+
+.warning label{
+    font-size: 24pt;
+}
+

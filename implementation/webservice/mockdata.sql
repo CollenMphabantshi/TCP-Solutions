@@ -1,20 +1,26 @@
 
-
-insert into userType values(100,"Administrator");
+use forenlnm_mobileforensics;
+insert into userType values(0,"Administrator");
 insert into userType values(0,"Forensic Practitioner");
 insert into userType values(0,"Forensic Officer");
 insert into userType values(0,"Student");
 
-insert into users values(0,"p11111111","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",100,1);
+select * from users;
+select * from forensicpractitioner;
+select * from forensicofficer;
+select * from student;
+select * from administrator;
+select * from accessmode;
+insert into users values(0,"p11111111","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",1,1);
 insert into administrator values("p11111111",1);
 
-insert into users values(0,"p22222222","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",101,1);
+insert into users values(0,"p22222222","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",2,1);
 insert into forensicPractitioner values("p22222222",2,"12345");
 
-insert into users values(0,"p33333333","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",102,1);
+insert into users values(0,"p33333333","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",3,1);
 insert into forensicOfficer values("p33333333",3,"12345");
 
-insert into users values(0,"p44444444","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",103,1);
+insert into users values(0,"p44444444","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",4,1);
 insert into student values("p44444444",4,"12345");
 
 insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");

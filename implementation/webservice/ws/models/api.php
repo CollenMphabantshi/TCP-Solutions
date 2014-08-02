@@ -1,4 +1,8 @@
+
 <?php
+/* File : Rest.inc.php
+    * Credit to : Arun Kumar Sekar
+*/
 error_reporting(E_ERROR | E_PARSE);
 require_once("Rest.inc.php");
 require_once("Administrator.php");
@@ -74,18 +78,33 @@ private function login()
 
         $this->response('',406);
     }
+    try {
+        $username = $this->_request['username'];
+        $password = $this->_request['password'];
+        $platform = $this->_request['platform'];
+        $user = new User($this);
+
+        $user->login($username, $password, $platform);
+    } catch (Exception $exc) {
+        $error = array('status' => "Failed", "msg" => "Bad Request.");
+        $this->response($this->json($error), 400);
+    }
+
     
-    $username = $this->_request['username'];
-    $password = $this->_request['password'];
-    $platform = $this->_request['platform'];
-    $user = new User($this);
-    
-    $user->login($username, $password, $platform);
     // If invalid inputs "Bad Request" status message and reason
     $error = array('status' => "Failed", "msg" => "Invalid username or Password");
     $this->response($this->json($error), 400);
 }
+private function logout() {
+    if($this->get_request_method() != "POST")
+    {
 
+        $this->response('',406);
+    }
+    $user = new User($this);
+
+        $user->logout();
+}
 private function addUser()
 {
     // Cross validation if the request method is GET else it will return "Not Acceptable" status
@@ -97,11 +116,15 @@ private function addUser()
     $type = $this->_request['utype'];
     switch ($type) {
         case "admin":
+            //$json = $this->jsonToArray($this->_request['userData']);
+            $un = $this->_request['userName'];
+            $up = $this->_request['userPassword'];
+            $uf = $this->_request['userFirstname'];
+            $us = $this->_request['userSurname'];
             
-            $json = $this->jsonToArray($this->_request['userData']);
-            $admin = new Administrator($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            $admin = new Administrator($this, $un, $up, $uf, $us, 1, 1);
             
-            if($admin->addUser($json['userName'], $admin->getUserID())){
+            if($admin->addUser($un, $admin->getUserID())){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -109,10 +132,14 @@ private function addUser()
             $this->response($this->json($error), 400);
             break;
         case "fo":
-            $json = $this->jsonToArray($this->_request['userData']);
-            $admin = new ForensicOfficer($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            $un = $this->_request['userName'];
+            $up = $this->_request['userPassword'];
+            $uf = $this->_request['userFirstname'];
+            $us = $this->_request['userSurname'];
+            $cell = $this->_request['cellphoneNumber'];
+            $admin = new ForensicOfficer($this, $un, $up, $uf, $us, 3, 1);
             
-            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+            if($admin->addUser($un, $admin->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -120,10 +147,14 @@ private function addUser()
             $this->response($this->json($error), 400);
             break;
         case "fp":
-            $json = $this->jsonToArray($this->_request['userData']);
-            $admin = new ForensicPractitioner($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            $un = $this->_request['userName'];
+            $up = $this->_request['userPassword'];
+            $uf = $this->_request['userFirstname'];
+            $us = $this->_request['userSurname'];
+            $cell = $this->_request['cellphoneNumber'];
+            $admin = new ForensicPractitioner($this, $un, $up, $uf, $us, 2, 1);
             
-            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+            if($admin->addUser($un, $admin->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -131,10 +162,14 @@ private function addUser()
             $this->response($this->json($error), 400);
             break;
         case "student":
-            $json = $this->jsonToArray($this->_request['userData']);
-            $admin = new Student($this, $json['userName'], $json['userPassword'], $json['userFirstname'], $json['userSurname'], $json['userTypeID'], $json['userActive']);
+            $un = $this->_request['userName'];
+            $up = $this->_request['userPassword'];
+            $uf = $this->_request['userFirstname'];
+            $us = $this->_request['userSurname'];
+            $cell = $this->_request['cellphoneNumber'];
+            $admin = new Student($this, $un, $up, $uf, $us, 4, 1);
             
-            if($admin->addUser($json['userName'], $admin->getUserID(),$json['cellphoneNumber'])){
+            if($admin->addUser($un, $admin->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }

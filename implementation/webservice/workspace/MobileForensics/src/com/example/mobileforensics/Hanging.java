@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -252,9 +253,9 @@ public void onMyLocationChange(Location loc) {
 	Calendar c = Calendar.getInstance();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String formattedDate = df.format(c.getTime());
-    time = formattedDate.substring(11);
+    /*time = formattedDate.substring(11);
     date = formattedDate.substring(0,11);
-	temperature = "23 C";
+	temperature = "23 C";*/
     getAddress(longitude,latitude);
     
     try {
@@ -270,8 +271,13 @@ public void onMyLocationChange(Location loc) {
 		object.accumulate("Location", locate.toString());
 		object.accumulate("Temperature", temperature);
 		
+
 		location = object.toString();
 		value.setText(location);
+
+		//location = object.toString();
+		//value.setText(location);
+
 		
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
@@ -309,7 +315,10 @@ public void initializeVariables(){
 	
 	pageCount = 1;
 	username = "p11111111";
-	
+	time = (new Random().nextLong())+"";
+    date = "2014-10-10";
+	temperature = "23 C";
+	location = (new Random().nextLong())+","+(new Random().nextLong());
 	
 	infoLayout = (LinearLayout)findViewById(R.id.hanging_infoLayout);
 	tv_ioName = (TextView)findViewById(R.id.hanging_tv_io_name);

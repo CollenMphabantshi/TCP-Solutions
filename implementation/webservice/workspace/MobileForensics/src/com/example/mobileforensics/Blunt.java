@@ -12,6 +12,7 @@ import java.util.Date;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -204,6 +205,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private String myAddress;
 	private String Text;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -223,7 +225,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		showHideButtons();
 	}
 	
-	public void initialize(){
+	public String initialize(){
 			
 			if( status != ConnectionResult.SUCCESS){
 				int requestCode = 10;
@@ -236,6 +238,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				map.setOnMyLocationChangeListener(this);
 				
 			}
+			return location;
 			
 		}
 	
@@ -251,9 +254,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        time = formattedDate.substring(11);
+        /*time = formattedDate.substring(11);
         date = formattedDate.substring(0,11);
-		temperature = "23 C";
+		temperature = "23 C";*/
         getAddress(longitude,latitude);
         
         try {
@@ -270,6 +273,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			object.accumulate("Temperature", temperature);
 			
 			location = object.toString();
+
 			value.setText(location);
 			
 		} catch (JSONException e) {
@@ -300,13 +304,19 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	 } catch (IOException e) {
 	  // TODO Auto-generated catch block
 	  e.printStackTrace();
-	  myAddress = "Canont get Address!";
+	  myAddress = "Cannot get Address!";
 	 }
 	}
 
 	private void variablesInitialization(){
 		pageCount = 1;
 		username = "p11111111";
+		
+		
+		time = (new Random().nextLong())+"";
+	    date = "2014-10-10";
+		temperature = "23 C";
+		location = (new Random().nextLong())+","+(new Random().nextLong());
 		
 		infoLayout = (LinearLayout)findViewById(R.id.blunt_infoLayout);
 		demographicsLayout = (LinearLayout)findViewById(R.id.blunt_demographicLayout);

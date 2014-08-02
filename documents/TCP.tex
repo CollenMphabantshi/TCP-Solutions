@@ -39,6 +39,8 @@ TP Solutions	& 16 May 2014	& Software Architecture\\\hline
 TP Solutions	& 23 May 2014	& Final Version\\\hline
 TP Solutions	& 26 June 2014	& Functional Requirements\\\hline
 TP Solutions	& 27 June 2014	& Domain Objects\\\hline
+TP Solutions	& 26 July 2014	& Updated Quality Requirements\\\hline
+TP Solutions	& 31 July 2014	& Updated Activity Diagram\\\hline
 \end{tabular}
 
 \end{center}
@@ -103,6 +105,50 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
                                                                                                
 \subsection{Quality requirements}
 \begin{itemize}
+\item\textbf{Security}
+\begin{itemize}
+	\item Authentication
+	\begin{itemize}
+		\item The users have to have an account in order access the application; this will
+		provide the users with a username and password. These associated pieces
+		of information are important as they will be required for the authentication
+		process i.e. logging.
+		– A user will have to provide his or her username as well as their
+		associated password in order for them to be logged in and for a session
+		to be created for them
+	\end{itemize}
+	\item Integrity
+	\begin{itemize}
+		\item Information captured will be encrypted before sent to the database.
+		\item The images that are captured on the device, should be checked if they were altered before they are uploaded to the server.
+	\end{itemize}
+		\item Authorization
+		\begin{itemize}
+			\item Tokens(Access Controls) will be assigned to each user, irrespective of the sort of account that they may hold. The tokens determine the users privileges, they also determine what the user is allowed to read e.g view all the cases or just specific ones.
+			\item 
+			\begin{tabular}{|l|l|}\hline
+				Tokens   & Privileges	\\\hline
+				1	& Administrator	\\\hline
+				2	& Forensic Practitioner \\\hline
+				3	& Forensic Officer \\\hline
+				4	& Students	\\\hline
+				n	& Guests	\\\hline
+			\end{tabular}
+		\end{itemize}
+	\item System users will have different permission.
+	\item Information stored by forensic officers will not be edited after the submission.
+\end{itemize}
+\item\textbf{Auditability}         
+\begin{itemize}
+	\item The system should record all the changes made to the data stored, by showing whom, when and what was changed.
+	\item It will also show old and new values.
+\end{itemize}
+\item\textbf{Scalability}
+\begin{itemize}
+	\item The web hosting server supports 500GB traffic.
+	\item It should allow additional templates.
+\end{itemize}
+
 \item\textbf{Performace}
 \begin{itemize}
 	\item The system should process all the reports within 10 seconds.
@@ -114,37 +160,17 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
   	\item The system should be up and running all the time.
   	\item Easy and fast access to the database.
   \end{itemize}
-\item\textbf{Scalability}
-\begin{itemize}
-  	\item The system should be able to handle all death scenes captured information.
-  	\item It should allow additional templates.
-  \end{itemize}
-\item\textbf{Security}
-\begin{itemize}
-  	\item The system is accessible to users who are authorized.
-  	\item System users will have different permission.
-  	\item Information about death scenes will be encrypted.
-  	\item Information stored by forensic officers will not be edited after the submission.
-  \end{itemize}
-\item\textbf{Flexibility} 
-\begin{itemize}
-  	\item If something happen when the forensic officer is capturing information, it should automatically be stored in the server.
-  \end{itemize}
-\item\textbf{Maintanability}					
- \begin{itemize}
-   	\item The system will be maintained every time the client needs new changes.
-   \end{itemize}        
-\item\textbf{Auditability}         
-      \begin{itemize}
-        	\item The system should record all the changes made to the data stored, by showing whom, when and what was changed.
-        	\item It will also show old and new values.
-        	
-        \end{itemize} 
+
 \item\textbf{Usability}
 \begin{itemize}
      \item Users should be able to use the system without prior
       training.                                                       \item The system will be in English.   
  \end{itemize}
+ 
+ \item\textbf{Maintanability}					
+ \begin{itemize}
+ 	\item The system will be maintained every time the client needs new changes.
+ \end{itemize}        
  
 \end{itemize}
 
@@ -177,25 +203,17 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 \textbf{Figure 2:Architectural Scope}
 \end{center}
 \item [Android app]
-
-\begin{itemize}
-\item The android application will be used to capture information on death scenes.
-\item View information based on clearance.
-\end{itemize}
+- The android application will be used to capture information on death scenes.
+Also used to view information based on clearance.
 
 \item [Web app]
+- will be used for data management, report generation,
+and system administration.
 
-\begin{itemize}
-\item will be used for data management.
-\item Report generation.
-\item System administration.
-\end{itemize}
 
 \item [Infrastructure]
+- Data storage, MySQL database on Afrihost.
 
-\begin{itemize}
-\item Data storage, MySQL database on Afrihost.
-\end{itemize}
 
 \end{description}
 
@@ -204,98 +222,84 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 
 \begin{description}
 \item [Security]
+- Only authorised people should be able to have access to the system.
+Only administrator should register people.
 
-\begin{itemize}
-\item Only authorised people should be able to have access to the system.
-\item Only administrator should register people.
-\end{itemize}
 
 \item [Auditability]
+- Any change made to data stored should be recorded.
+The system should record what, who and when changes were made.
 
-\begin{itemize}
-\item Any change made to data stored should be recorded.
-\item Record what, who and when changes were made.
-\end{itemize}
 
 \item [Performance]
+- Data should be sent in real time e.g. from forensic officer to forensic practitioner should receive it within 10 seconds.
 
-\begin{itemize}
-\item Data should be sent in real time e.g. from forensic officer to forensic practitioner should receive it within 10 seconds.
-\end{itemize}
 
 \item [Reliability]
+- The server should run all the time (24 hours a day) and the connection should always be active.
 
-\begin{itemize}
-\item The server should run all the time (24/7 - 365) and the connection should always be active.
-\item Only administrator should register users.
-\end{itemize}
 
 \item [Usability]
+- All the users should be able to use the system without any prior training.
 
-\begin{itemize}
-\item All the users should be able to use the system without any prior training.
-\end{itemize}
 
 \end{description}
 
 \item Integration and Access channel
 \begin{description}
 \item [Access Channel]
+- Accessible by humans through the following channels:	web application through web browsers and mobile application through android tablet device.
 
-\begin{itemize}
-\item Accessible by humans through the following channels:	Admin – the access it through web application and FO, FP and students – they show access the system through mobile application.
-\end{itemize}
 
 \item [Integration Channel]
+- The new SQL database will be created in Afrihost.
 
-\begin{itemize}
-\item The new SQL database will be created in Afrihost.
-\end{itemize}
 \end{description}
 
 \item Architectural constraints
 \begin{description}
-\item [The system will use the following constraints]
+\item [The system will use the following constraints:]
+- Android SDK and
+REST web services.
+The system will be deployed in Asus Nexus 7 OS Android 4.1 jelly bean.
 
-\begin{itemize}
-\item Android SDK
-\item REST web services
-\item The system will be deployed in Asus Nexus 7 OS Android 4.1 jelly bean.
-\end{itemize}
 
-\item [Technologies to be used]
+\item [Technologies to be used:]
+- Java, PHP, HTML, JavaScript, MySQL,  JQuery, CSS
 
-\begin{itemize}
-\item Java, PHP, HTML, JavaScript, MySQL,  JQuery, CSS
-\end{itemize}
 \end{description}
 
 \end{enumerate}
 \subsection{Architectural Pattern}
 
-
-\begin{center}
-\includegraphics[scale=0.4]{Architectural-Pattern.png}
-
-\textbf{Figure 3: Architectural layered pattern}
-\end{center}
-
 \begin{description}
 \item [The Architectural pattern]
-
+Looking at the nature of both applications: android and web application. We decided to choose a Three layered Architecture and Model View Controler(MVC) design pattern.
 \begin{itemize}
-\item Provides access to humans  - Client
-\item Provides Functionality  and objects required to client layer -> Web service
-\item Host database - Backend layer
+	\item Motivation for Three layered Architecture
+		\begin{center}
+			\includegraphics[scale=0.4]{Architectural-Pattern.png}
+			
+			\textbf{Figure 3: Architectural layered pattern}
+		\end{center}
+		\begin{itemize}
+		\item Provides access to humans  - Client
+		\item Provides Functionality  and objects required to client layer -> Web service
+		\item Host database - Backend layer
+		\end{itemize}
+	\item Motivation for MVC design pattern
+		\begin{itemize}
+			\item caters for extensible views and provides easily reusable code
+		\end{itemize}
 \end{itemize}
 
-\item [The communication protocol are also shown. They include]
 
-\begin{itemize}
-\item HTTP/HTTPS from the browser to the web module.
-\item Provides Functionality  and objects required to client layer - Web service
-\item JSON/REST/HTTP/HTTPS for the web services between the Android application and the database.
-\end{itemize}
+\item [The communication protocol are also shown. They include:]
+
+- HTTP/HTTPS from the browser to the web module.
+Provides Functionality  and objects required to client layer - Web service
+JSON/REST/HTTP/HTTPS for the web services between the Android application and the database.
+
 
 \end{description}
 
@@ -309,57 +313,62 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 
 \begin{description}
 \item [Presentation Layer]
+- This User interface Layer. The UI is responsible for creating and displaying the user interface and handling user interaction. It’s going to be in Android App and Web App. It gets data from Domain layer.
 
-\begin{itemize}
-\item This User interface Layer. The UI is responsible for creating and displaying the user interface and handling user interaction. It’s going to be in Android App and Web App. It gets data from Domain layer.
-\end{itemize}
 
 \item [Service Layer]
 
-\begin{itemize}
-\item This is the Web Service Layer. Responsible for showing web service API and returning method results as JSON. It gets data from Domain Layer.
-\end{itemize}
+
+- This is the Web Service Layer. Responsible for showing web service API and returning method results as JSON. It gets data from Domain Layer.
+
 
 \item [Domain Layer]
 
-\begin{itemize}
-\item This is the Business logic, it is responsible for business logic of the application. All functions and objects used are going to be modelled here. It gets data from Infrastructure layer.
-\end{itemize}
+
+- This is the Business logic, it is responsible for business logic of the application. All functions and objects used are going to be modeled here. It gets data from Infrastructure layer.
+
 
 \item [Infrastructure Layer]
 
-\begin{itemize}
-\item It responsible for querying database, calling web service and send emails.
-\end{itemize}
+
+- It is responsible for querying database, calling web service and send emails.
+
 \end{description}
 
 
 \section{Functional Requirements}
 \subsection{Introduction}
-
-
+This section introduces the detailed functional requirements of the proposed system. It also shows the use case diagrams for each sub system and the lower level processes that needs to be included to complete the functionality of the sub systems.  
+\begin{description}
+	\item [Overview of Functional Requirements]
+	\begin{center}
+		\includegraphics[scale=0.4]{main-overview.jpg}
+		
+		\textbf{Figure 5: Functional Requirements Overview Use Case}
+	\end{center}
+\end{description}
 \subsection{Required functionality}
 \begin{enumerate}
 	\item User Management functionality
 	\begin{center}
 		\includegraphics[scale=0.4]{UserManagementRequirementFunctionality.png}
 		
-		\textbf{Figure 5: User Management Use Case}
+		\textbf{Figure 6: User Management Use Case}
 	\end{center}
 	\begin{itemize}
-		\item The user management functionality allows the administrator to assign cases to students.
-		\item Allows the administrator to add new users.
-		\item Allows the administrator to modify user information.
-		\item Allows the administrator to remove users.
+		\item The user management functionality should allow the administrator to assign cases to students.
+		\item Allows the administrator to add new users and assign access controls.
+		\item Allows the administrator to modify user information (cellPhoneNumber, userPassword and other user personal details).
+		\item Allows the administrator to remove users, in the form of deactivating their access to all the applications.
 	\end{itemize}
 	\item Case Management functionality
 	\begin{center}
 		\includegraphics[scale=0.4]{CaseManagementUseCase.png}
 		
-		\textbf{Figure 6: Case Management Use Case}
+		\textbf{Figure 7: Case Management Use Case}
 	\end{center}
 	\begin{itemize}
-		\item The case management functionality allows the Forensic Officers to create new cases.
+		\item The case management functionality should allow the Forensic Officers to create new cases.
 		\item Allows the Forensic Officers to view basic information of the case they created after submission.
 		\item Allows the Forensic Practitioner to modify/add additional information on the case.
 		\item Allows the Forensic Practitioner to view all cases.
@@ -370,10 +379,10 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 		\begin{center}
 			\includegraphics[scale=0.4]{caseGeneratorReport.jpg}
 			
-			\textbf{Figure 7: Case Report Generator Use Case}
+			\textbf{Figure 8: Case Report Generator Use Case}
 		\end{center}
 		\begin{itemize}
-			\item The reporting functionality allows different users to generate reports about cases, users and audit logs.
+			\item The reporting functionality should allow different users to generate reports about cases, users and audit logs.
 			\item It allows users to generate a report rendered on the web.
 			\item It allows users to generate a report rendered on the android device.
 			\item It allows users to generate a report rendered to pdf file.
@@ -389,9 +398,9 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 			
 		\end{description}
 		\begin{center}
-			\includegraphics[scale=0.4]{ClassDiagram1.jpg}
+			\includegraphics[scale=0.4]{MainClassDiagram.png}
 			
-			\textbf{Figure 8: Overview of data structures and relationships for the core domain objects}
+			\textbf{Figure 9: Overview of data structures and relationships for the core domain objects}
 		\end{center}
 		
 		\item Users
@@ -458,7 +467,7 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
    \begin{center}
    	\includegraphics[scale=0.4]{LoginServiceContract.png}
    	
-   	\textbf{Figure 9: Login Service Contract}
+   	\textbf{Figure 10: Login Service Contract}
    \end{center}
 \subsection{Process Specification}
 \begin{center}
@@ -473,12 +482,13 @@ Pictures that demonstrate how the incident happed are excluded on this phase, ma
 \begin{description}
 	\item [Forensic officer (FO)] – a specially trained crime scene officer that collects the finding evidence that will be analyzed back at the lab by forensic scientist or forensic practitioner. 
 	\item [Forensic practitioner (FP)] - also referred to as crime scene investigators and forensic science technicians examine pieces of evidence to provide crucial support in criminal investigations. Their professional expertise is sought in laboratories, crime scenes and courtrooms.
+	\item GB - gigabyte
 	\item [Stakeholders] - is anybody who can affect or is affected by an organization, strategy or project. They can be internal or external and they can be at senior or junior levels.
 	\item [Students] – honors and masters students who are doing research as part of their studies.
 	\item[MySQL] MySQL (Structured Query Language) is an open-source relational database management system.
 	
-	\item[PDF] Portable Document Format is a file format for capturing and sending electronic documents in exactly the intended format.
-	\item[UML] Unified Modelling Language is a general-purpose modelling language in the field of software engineering. It provides a set of graphic notation techniques to create visual models of object-oriented software-intensive systems. 
+	\item[PDF] Portable Document Format - is a file format for capturing and sending electronic documents in exactly the intended format.
+	\item[UML] Unified Modeling Language is a general-purpose modeling language in the field of software engineering. It provides a set of graphic notation techniques to create visual models of object-oriented software-intensive systems. 
 	
 
 \end{description}
