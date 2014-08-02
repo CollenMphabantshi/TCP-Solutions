@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.7.26)  26 JUL 2014 15:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.7.26)  1 AUG 2014 13:36
 entering extended mode
 **TCP.tex
 (C:\Users\Latitude\Documents\cos301\TCP-Solutions\documents\TCP.tex
@@ -389,7 +389,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 34.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (109.35266pt too wide) in paragraph at lines 34--43
+Overfull \hbox (109.35266pt too wide) in paragraph at lines 34--45
  [][] 
  []
 
@@ -402,27 +402,27 @@ Overfull \hbox (109.35266pt too wide) in paragraph at lines 34--43
 <DRUC.jpg, id=14, 1181.41376pt x 548.0475pt>
 File: DRUC.jpg Graphic file (type jpg)
  <use DRUC.jpg>
-Package pdftex.def Info: DRUC.jpg used on input line 63.
+Package pdftex.def Info: DRUC.jpg used on input line 65.
 (pdftex.def)             Requested size: 472.55713pt x 219.2151pt.
 
-Overfull \hbox (127.55713pt too wide) in paragraph at lines 63--64
+Overfull \hbox (127.55713pt too wide) in paragraph at lines 65--66
 [] 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 71.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 73.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 73.
  [2 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/DRUC.jpg>] [3]
-Overfull \hbox (7.86719pt too wide) in paragraph at lines 120--121
+Overfull \hbox (7.86719pt too wide) in paragraph at lines 122--123
 []\OT1/cmr/m/n/10 Information cap-tured will be en-crypted be-fore sent to the 
 database. 
  []
 
 [4]
-Overfull \hbox (5.58379pt too wide) in paragraph at lines 171--172
+Overfull \hbox (5.58379pt too wide) in paragraph at lines 172--173
 []\OT1/cmr/m/n/10 The sys-tem will be main-tained ev-ery time the client needs 
 new changes. 
  []
@@ -431,7 +431,7 @@ new changes.
 File: Architecture-scope.png Graphic file (type png)
 
 <use Architecture-scope.png>
-Package pdftex.def Info: Architecture-scope.png used on input line 201.
+Package pdftex.def Info: Architecture-scope.png used on input line 202.
 (pdftex.def)             Requested size: 289.07487pt x 216.80615pt.
  [6 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/Architecture-sc
 ope.png>]
@@ -439,86 +439,90 @@ ope.png>]
 File: Architectural-Pattern.png Graphic file (type png)
 
 <use Architectural-Pattern.png>
-Package pdftex.def Info: Architectural-Pattern.png used on input line 303.
+Package pdftex.def Info: Architectural-Pattern.png used on input line 281.
 (pdftex.def)             Requested size: 289.07487pt x 162.60461pt.
 
-Overfull \hbox (46.06378pt too wide) in paragraph at lines 320--321
-[]\OT1/cmr/m/n/10 HTTP/HTTPS
+Overfull \hbox (32.81375pt too wide) in paragraph at lines 299--302
+[]\OT1/cmr/m/n/10 - HTTP/HTTPS
  []
 
 <Framework.png, id=36, 722.7pt x 542.025pt>
 File: Framework.png Graphic file (type png)
  <use Framework.png>
-Package pdftex.def Info: Framework.png used on input line 330.
+Package pdftex.def Info: Framework.png used on input line 309.
 (pdftex.def)             Requested size: 289.07487pt x 216.80615pt.
  [7 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/Architectural-P
 attern.png>]
-<UserManagementRequirementFunctionality.png, id=40, 678.28406pt x 566.115pt>
+<main-overview.jpg, id=40, 730.22812pt x 417.05812pt>
+File: main-overview.jpg Graphic file (type jpg)
+ <use main-overview.jpg>
+Package pdftex.def Info: main-overview.jpg used on input line 345.
+(pdftex.def)             Requested size: 292.08607pt x 166.82028pt.
+
+[8 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/Framework.png>]
+<UserManagementRequirementFunctionality.png, id=45, 678.28406pt x 566.115pt>
 File: UserManagementRequirementFunctionality.png Graphic file (type png)
 
 <use UserManagementRequirementFunctionality.png>
 Package pdftex.def Info: UserManagementRequirementFunctionality.png used on inp
-ut line 370.
+ut line 354.
 (pdftex.def)             Requested size: 271.3088pt x 226.44199pt.
- [8 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/Framework.png>]
-
-<CaseManagementUseCase.png, id=45, 587.19376pt x 368.87813pt>
+ [9 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/main-overview.j
+pg> <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/UserManagementR
+equirementFunctionality.png>]
+<CaseManagementUseCase.png, id=49, 587.19376pt x 368.87813pt>
 File: CaseManagementUseCase.png Graphic file (type png)
 
 <use CaseManagementUseCase.png>
-Package pdftex.def Info: CaseManagementUseCase.png used on input line 382.
+Package pdftex.def Info: CaseManagementUseCase.png used on input line 366.
 (pdftex.def)             Requested size: 234.87334pt x 147.54863pt.
- [9 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/UserManagementR
-equirementFunctionality.png> <C:/Users/Latitude/Documents/cos301/TCP-Solutions/
-documents/CaseManagementUseCase.png (PNG copy)>] <caseGeneratorReport.jpg, id=4
-9, 758.835pt x 387.4475pt>
+
+<caseGeneratorReport.jpg, id=50, 758.835pt x 387.4475pt>
 File: caseGeneratorReport.jpg Graphic file (type jpg)
 
 <use caseGeneratorReport.jpg>
-Package pdftex.def Info: caseGeneratorReport.jpg used on input line 396.
+Package pdftex.def Info: caseGeneratorReport.jpg used on input line 380.
 (pdftex.def)             Requested size: 303.52863pt x 154.97624pt.
+ [10 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/CaseManagement
+UseCase.png (PNG copy)> <C:/Users/Latitude/Documents/cos301/TCP-Solutions/docum
+ents/caseGeneratorReport.jpg>]
+<MainClassDiagram.png, id=54, 807.7678pt x 484.05844pt>
+File: MainClassDiagram.png Graphic file (type png)
 
-<ClassDiagram1.jpg, id=50, 1195.46625pt x 636.3775pt>
-File: ClassDiagram1.jpg Graphic file (type jpg)
- <use ClassDiagram1.jpg>
-Package pdftex.def Info: ClassDiagram1.jpg used on input line 417.
-(pdftex.def)             Requested size: 478.17802pt x 254.5465pt.
+<use MainClassDiagram.png>
+Package pdftex.def Info: MainClassDiagram.png used on input line 401.
+(pdftex.def)             Requested size: 323.1014pt x 193.61993pt.
 
-Overfull \hbox (180.17805pt too wide) in paragraph at lines 417--418
+Overfull \hbox (25.10143pt too wide) in paragraph at lines 401--402
  [] 
  []
 
-[10 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/caseGeneratorRe
-port.jpg>] [11 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/Clas
-sDiagram1.jpg>] <LoginServiceContract.png, id=57, 722.7pt x 406.51875pt>
+[11 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/MainClassDiagra
+m.png>] <LoginServiceContract.png, id=58, 722.7pt x 406.51875pt>
 File: LoginServiceContract.png Graphic file (type png)
 
 <use LoginServiceContract.png>
-Package pdftex.def Info: LoginServiceContract.png used on input line 484.
+Package pdftex.def Info: LoginServiceContract.png used on input line 468.
 (pdftex.def)             Requested size: 289.07487pt x 162.60461pt.
  [12]
-<loginActivity.jpg, id=62, 1130.2225pt x 578.16pt>
+<loginActivity.jpg, id=63, 860.46469pt x 452.4403pt>
 File: loginActivity.jpg Graphic file (type jpg)
  <use loginActivity.jpg>
-Package pdftex.def Info: loginActivity.jpg used on input line 490.
-(pdftex.def)             Requested size: 452.081pt x 231.2599pt.
-
-Overfull \hbox (107.081pt too wide) in paragraph at lines 490--492
- [] 
- []
+Package pdftex.def Info: loginActivity.jpg used on input line 474.
+(pdftex.def)             Requested size: 344.17978pt x 180.97292pt.
 
 [13 <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/LoginServiceCon
 tract.png> <C:/Users/Latitude/Documents/cos301/TCP-Solutions/documents/loginAct
 ivity.jpg>] [14]
 (C:\Users\Latitude\Documents\cos301\TCP-Solutions\documents\TCP.aux) ) 
 Here is how much of TeX's memory you used:
- 2302 strings out of 493921
- 28442 string characters out of 3147273
+ 2307 strings out of 493921
+ 28561 string characters out of 3147273
  82436 words of memory out of 3000000
- 5567 multiletter control sequences out of 15000+200000
+ 5571 multiletter control sequences out of 15000+200000
  11672 words of font info for 46 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,6n,24p,465b,403s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,24p,465b,320s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 
@@ -527,9 +531,9 @@ am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files
 blic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmtt12.pfb>
-Output written on TCP.pdf (15 pages, 823733 bytes).
+Output written on TCP.pdf (15 pages, 661784 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 93 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
