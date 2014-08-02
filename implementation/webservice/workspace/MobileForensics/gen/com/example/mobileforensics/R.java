@@ -2858,21 +2858,22 @@ containing a value of this type.
         public static final int foetusabandoned=0x7f030020;
         public static final int fromheight=0x7f030021;
         public static final int gassing=0x7f030022;
-        public static final int hanging=0x7f030023;
-        public static final int home=0x7f030024;
-        public static final int ingestionoverdosepoisoning=0x7f030025;
-        public static final int loggin=0x7f030026;
-        public static final int mba=0x7f030027;
-        public static final int motorvehicleaccident=0x7f030028;
-        public static final int pedestrian=0x7f030029;
-        public static final int railway=0x7f03002a;
-        public static final int scenemenu=0x7f03002b;
-        public static final int sect48=0x7f03002c;
-        public static final int sharp=0x7f03002d;
-        public static final int sid=0x7f03002e;
-        public static final int suda=0x7f03002f;
-        public static final int sudc=0x7f030030;
-        public static final int support_simple_spinner_dropdown_item=0x7f030031;
+        public static final int generic=0x7f030023;
+        public static final int hanging=0x7f030024;
+        public static final int home=0x7f030025;
+        public static final int ingestionoverdosepoisoning=0x7f030026;
+        public static final int loggin=0x7f030027;
+        public static final int mba=0x7f030028;
+        public static final int motorvehicleaccident=0x7f030029;
+        public static final int pedestrian=0x7f03002a;
+        public static final int railway=0x7f03002b;
+        public static final int scenemenu=0x7f03002c;
+        public static final int sect48=0x7f03002d;
+        public static final int sharp=0x7f03002e;
+        public static final int sid=0x7f03002f;
+        public static final int suda=0x7f030030;
+        public static final int sudc=0x7f030031;
+        public static final int support_simple_spinner_dropdown_item=0x7f030032;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;

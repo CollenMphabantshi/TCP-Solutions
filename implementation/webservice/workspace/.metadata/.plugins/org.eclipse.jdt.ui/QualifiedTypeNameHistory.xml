@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
-<qualifiedTypeNameHistroy/>
-=======
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
-<fullyQualifiedTypeName name="android.support.v4.app.Fragment"/>
-<fullyQualifiedTypeName name="com.google.android.gms.maps.MapFragment"/>
-<fullyQualifiedTypeName name="android.app.Activity"/>
-<fullyQualifiedTypeName name="com.banchi.googlemapsv2.R.layout"/>
-<fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="com.google.android.gms.maps.GoogleMap"/>
-<fullyQualifiedTypeName name="android.app.Fragment"/>
-<fullyQualifiedTypeName name="com.banchi.googlemapsv2.R.id"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="org.apache.http.HttpEntity"/>
 </qualifiedTypeNameHistroy>
->>>>>>> 62b648a9addd3a2024bd5e2027bd26b1dc4d3dc6
