@@ -75,9 +75,10 @@ private function login()
         // Cross validation if the request method is POST else it will return "Not Acceptable" status
     if($this->get_request_method() != "POST")
     {
-
+        
         $this->response('',406);
     }
+    
     try {
         $username = $this->_request['username'];
         $password = $this->_request['password'];
@@ -269,6 +270,8 @@ private function viewCases() {
             
         switch ($category) {
             case "all":
+                $cases = new Cases();
+                $this->response($this->json($cases->getAllCases()),200);
                 break;
             case "hanging":
                 $hanging = new Hanging(null,$this);
@@ -1121,9 +1124,37 @@ private function addCase() {
     }
 }
 
-
+private function getSceneData() {
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
+    try {
+        $cn = $this->_request['caseNumber'];
+        $cn = intval($cn);
+        if(is_int($cn))
+        {
+            
+            if($cn > 0){
+                $cn = $cn/4501;
+                
+                $scene = new Scene();
+                
+                $arr = $scene->getSceneByID($cn);
+                $arr['victim'] = $scene->getSceneVictim($cn);
+                $this->response($this->json($arr), 200);
+            }
+        }
+        $error = array('status' => "Failed", "msg" => "Request to get scene information was denied.");
+        $this->response($this->json($error), 400);
+    }catch(Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request was denied.");
+        $this->response($this->json($error), 400);
+    }
+    
+}
 //Encode array into JSON
-    public function json($data)
+public function json($data)
 {
     if(is_array($data)){
         return json_encode($data);

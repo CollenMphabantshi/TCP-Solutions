@@ -106,9 +106,10 @@ insert into bicycletype values(0,'Bicycle- truck accident');
 insert into bicycletype values(0,'Bicycle- still standing object accident');
 insert into bicycletype values(0,'Bicycle- train accident');
 
-insert into users values(0,"p12345678","7cef8a734855777c2a9d0caf42666e69","admin","myadmin",1,1);
-insert into administrator values("p11111111",1);
+insert into users values(0,"p12345678","c3e96de1e365c156727b77b2782f473a","admin","myadmin",1,1);
+insert into administrator values("p12345678",1);
 
+select * from cases;
 select * from scene;
 select * from hanging;
 select * from hanginginside;

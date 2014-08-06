@@ -13,8 +13,17 @@ create table if not exists userType
 
 create table if not exists accessMode(
     uid int not null,
-    mode varchar(8),
-    primary key(uid,mode)
+    mode text,
+    primary key(uid)
+);
+
+create table if not exists audit_log(
+    audit_id int not null auto_increment,
+    audit_uid int not null,
+    audit_date date,
+    audit_time time,
+    audit_action text,
+    primary key(audit_id)
 );
 
 CREATE TABLE IF NOT EXISTS users
