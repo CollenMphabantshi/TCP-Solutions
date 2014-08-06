@@ -272,8 +272,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			object.accumulate("Location", locate.toString());
 			object.accumulate("Temperature", temperature);
 			
-			//location = object.toString();
-			
+			location = object.toString();
+
 			value.setText(location);
 			
 		} catch (JSONException e) {

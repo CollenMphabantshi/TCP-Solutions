@@ -266,13 +266,18 @@ public void onMyLocationChange(Location loc) {
 		locate.accumulate("Accuracy", loc.getAccuracy());
 		locate.accumulate("Address", myAddress);
 		
-		//object.accumulate("Time", time);
-		//object.accumulate("Date", date);
+		object.accumulate("Time", time);
+		object.accumulate("Date", date);
 		object.accumulate("Location", locate.toString());
-		//object.accumulate("Temperature", temperature);
+		object.accumulate("Temperature", temperature);
 		
+
+		location = object.toString();
+		value.setText(location);
+
 		//location = object.toString();
 		//value.setText(location);
+
 		
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block

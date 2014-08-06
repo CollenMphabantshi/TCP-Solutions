@@ -1,6 +1,6 @@
 <?php
-$target_path1 = "controls/";
-$target_path2 = "controls/";
+$target_path1 = "uploads/";
+$target_path2 = "uploads/";
 /* Add the original filename to our target path.
 Result is "uploads/filename.extension" */
 $target_path1 = $target_path1 . basename( $_FILES['uploadedfile1']['name']);

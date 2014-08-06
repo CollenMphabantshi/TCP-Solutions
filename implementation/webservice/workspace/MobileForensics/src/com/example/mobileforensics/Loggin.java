@@ -58,7 +58,14 @@ public class Loggin extends Activity{
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					startLogin();
+					//startLogin();
+					
+					try {
+						startMenu();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 			});
@@ -82,17 +89,17 @@ public class Loggin extends Activity{
 	}
 
 	private void startMenu() throws JSONException{
-		if(json != null)
+		/*if(json != null)
 		{
 			String status = json.getString("status");
 			String message = json.getString("msg");
 			
 			
 			if(status.toLowerCase().equals("success"))
-			{
+			{*/
 				Intent open = new Intent("com.example.mobileforensics.HOME");
 				startActivity(open);
-			}else{
+			/*}else{
 				
 				Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
 				
@@ -100,7 +107,7 @@ public class Loggin extends Activity{
 		}else{
 			
 			Toast.makeText(getApplicationContext(),"Server connection problem detected. Please contact admin.", Toast.LENGTH_LONG).show();
-		}
+		}*/
 		
 	}
 	public void intialiseVariable(){

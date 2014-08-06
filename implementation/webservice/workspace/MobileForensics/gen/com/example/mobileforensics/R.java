@@ -1700,20 +1700,21 @@ containing a value of this type.
         public static final int foetusabandoned=0x7f030008;
         public static final int fromheight=0x7f030009;
         public static final int gassing=0x7f03000a;
-        public static final int hanging=0x7f03000b;
-        public static final int home=0x7f03000c;
-        public static final int ingestionoverdosepoisoning=0x7f03000d;
-        public static final int loggin=0x7f03000e;
-        public static final int mba=0x7f03000f;
-        public static final int motorvehicleaccident=0x7f030010;
-        public static final int pedestrian=0x7f030011;
-        public static final int railway=0x7f030012;
-        public static final int scenemenu=0x7f030013;
-        public static final int sect48=0x7f030014;
-        public static final int sharp=0x7f030015;
-        public static final int sid=0x7f030016;
-        public static final int suda=0x7f030017;
-        public static final int sudc=0x7f030018;
+        public static final int generic=0x7f03000b;
+        public static final int hanging=0x7f03000c;
+        public static final int home=0x7f03000d;
+        public static final int ingestionoverdosepoisoning=0x7f03000e;
+        public static final int loggin=0x7f03000f;
+        public static final int mba=0x7f030010;
+        public static final int motorvehicleaccident=0x7f030011;
+        public static final int pedestrian=0x7f030012;
+        public static final int railway=0x7f030013;
+        public static final int scenemenu=0x7f030014;
+        public static final int sect48=0x7f030015;
+        public static final int sharp=0x7f030016;
+        public static final int sid=0x7f030017;
+        public static final int suda=0x7f030018;
+        public static final int sudc=0x7f030019;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
