@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
+<<<<<<< HEAD
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1407228751225_0" label="Window Working Set" name="Aggregate for window 1407228751220"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1407240300215_1" label="Window Working Set" name="Aggregate for window 1407240300215"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1407314255103_2" label="Window Working Set" name="Aggregate for window 1407314255103"/>
@@ -10,4 +11,16 @@
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1408005723466_7" label="Window Working Set" name="Aggregate for window 1408005723465"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1408020032657_8" label="Window Working Set" name="Aggregate for window 1408020032656"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1408049383614_9" label="Window Working Set" name="Aggregate for window 1408049383614"/>
+=======
+<<<<<<< HEAD
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1406609523573_0" label="Window Working Set" name="Aggregate for window 1406609523571"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1406974166017_1" label="Window Working Set" name="Aggregate for window 1406974166016"/>
+=======
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1406286898648_0" label="Window Working Set" name="Aggregate for window 1406286898648"/>
+<<<<<<< HEAD
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1406970791821_1" label="Window Working Set" name="Aggregate for window 1406970791821"/>
+=======
+>>>>>>> 4b6a3f60464fb63501d8532c886f8568c6da4f2e
+>>>>>>> 76e6ebabca34d36ca1631295fa8c53e2db654b60
+>>>>>>> e5c42c1fe429064ee91300a9abb5a4fa16972abe
 </workingSetManager>

@@ -1,6 +1,7 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
-
+    error_reporting(E_ERROR | E_PARSE);
+    require_once './secure.php';
+    try{
         $DB_SERVER = "localhost";
         $DB_USER = "root";
         $DB_PASSWORD = "latitude@mysql";
@@ -8,10 +9,17 @@ error_reporting(E_ERROR | E_PARSE);
         $database = mysql_connect($DB_SERVER ,$DB_USER ,$DB_PASSWORD);
 	if ( !($database))
 	{
-            die( "Could not connect to database" );
+            $error = array('status' => "Failed", "msg" => "Sorry we could not establish connection. Please contact administrator.");
+            $secure->response($secure->json($error));
+            //die( "Could not connect to database" );
         }	
 	if ( !mysql_select_db( $DB_NAME) ){
-		die( "Could not open database" );
+            $error = array('status' => "Failed", "msg" => "Sorry we could not establish connection. Please contact administrator.");
+            $secure->response($secure->json($error));
         }
+    }catch(Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Sorry we could not establish connection. Please contact administrator.");
+        $secure->response($secure->json($error));
+    }
        
 ?>

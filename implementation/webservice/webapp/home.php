@@ -10,24 +10,30 @@
     </head>
     <body>
         <div class="main">
-        <nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Add User</a>
-        <!-- First Tier Drop Down -->
-        <!--ul>
-            <li><a href="#">Add Administrator</a></li>
-            <li><a href="#">Add Forensic officer</a></li>
-            <li><a href="#">Add Forensic practitioner</a></li>
-            <li><a href="#">Add student</a></li>
-            <li><a href="#">Add guest</a></li>
-        </ul-->        
-        </li>
-        <li><a href="#">Remove</a>
-        <li><a href="#">Search</a></li>
-        <li><a href="#" id="logout">Logout</a></li>
-    </ul>
-</nav>
-            </div>  
+            <nav>
+                <ul>
+                    <?php
+                        $sac = $_SESSION[md5('s_ac')];
+                        
+                        if($sac === md5("1")) // Admin
+                        {
+                            echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
+                            <li><a href="#" id="2" class="pages">Add User</a></li>
+                            <li><a href="#" id="3" class="pages">Remove Users</a>';
+                        }else if($sac === md5("2")){ // FP
+                            echo '<li><a href="#" class="pages" id="1"class="active">Cases</a></li>
+                            ';
+                        }else {//if($sac === md5("6")){ // Admin and FP
+                            echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
+                            <li><a href="#" id="2" class="pages">Add User</a></li>
+                            <li><a href="#" id="3" class="pages">Remove Users</a>
+                            <li><a href="#" id="4"class="pages">List Cases</a></li>
+                            <li><a href="#" id="5" class="pages">Assign Death Register</a></li>';
+                        }   
+                    ?>
+                    <li><a href="#" id="logout">Logout</a></li>
+                </ul>
+            </nav>
+        </div>  
     </body>
 </html>

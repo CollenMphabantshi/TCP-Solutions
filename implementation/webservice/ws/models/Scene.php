@@ -107,12 +107,18 @@ class Scene{
         return $scene_array;
     }
     
+    
     public function setVictim($sceneID,$victims){
         $this->sceneVictim = new SceneVictims($sceneID,$victims,$this->api);
     }
     
     public function setCase($sceneID,$FOPersonelNumber) {
         $this->case = new Cases($sceneID,$FOPersonelNumber,$this->api);
+    }
+    
+    public function getSceneVictim($sceneID) {
+        $this->sceneVictim = new SceneVictims();
+        return $this->sceneVictim->getSceneVictims($sceneID);
     }
     public function isEmpty() {
         return $this->time == "";

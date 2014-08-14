@@ -10,6 +10,19 @@
 		<list key="orderedElements">
 		</list>
 		<list key="textEntries">
+<<<<<<< HEAD
+=======
+=======
+		<item value="625" key="dialogHeight"/>
+		<item value="1080" key="dialogWidth"/>
+		<list key="textEntries">
+		</list>
+		<list key="orderedElements">
+		</list>
+		<list key="orderedProviders">
+		</list>
+		<list key="textArray">
+>>>>>>> e5c42c1fe429064ee91300a9abb5a4fa16972abe
 		</list>
 	</section>
 	<section name="WorkbenchPreferenceDialogSettings">

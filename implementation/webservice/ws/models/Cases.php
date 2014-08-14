@@ -45,11 +45,14 @@ class Cases {
         $cases = array();
         
         while($c_array = mysql_fetch_array($c_res)){
+            $res = mysql_query("select * from scene s, sceneType st where sceneID=".$c_array['sceneID']." and s.sceneTypeID=st.sceneTypeID");
+            
+            $c_array['sceneType'] = mysql_result($res, 0, 'sceneTypeDescription');
             $cases[] = $c_array; 
         }
         return $cases;
     }
-    
+
     public function getCase($caseNumber) {
         $c_res = mysql_query("select * from cases where caseNumber=".$caseNumber);
         $c_array = mysql_fetch_array($c_res);

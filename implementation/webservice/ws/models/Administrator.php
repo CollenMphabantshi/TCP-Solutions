@@ -12,10 +12,13 @@ require_once './User.php';
  * @author Latitude
  */
 
-require_once './connect.php';
 
 class Administrator  extends User{
     //put your code here
+    public function __construct($api,$userName=NULL,$userPassword=NULL,$userFirstname=NULL,$userSurname=NULL,$userTypeID=NULL,$userActive=NULL){
+        parent::__construct($api, $userName, $userPassword, $userFirstname, $userSurname, $userTypeID, $userActive);
+       
+    }
     public function addUser($personelNumber,$userID) {
         
         $a_res = mysql_query("insert into administrator values('$personelNumber',$userID)");

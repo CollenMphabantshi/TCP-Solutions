@@ -40,7 +40,7 @@ class User {
             $this->userSurname = $userSurname;
             $this->userTypeID = $userTypeID;
             $this->userActive = $userActive;
-            $userID = $this->addUser();
+            $userID = $this->add();
             
             $this->userID = $userID;
         }
@@ -63,7 +63,7 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
-    private function addUser() {
+    private function add() {
         
         $u_res = mysql_query("select * from users where userName='$this->userName'");
         if (mysql_num_rows($u_res) <= 0) {
@@ -182,14 +182,23 @@ class User {
                 $u_array = mysql_fetch_array($u_res);
                 if($u_array['userActive'] == 1)
                 {
-                    if($platform == "webapp")
+                    if($platform === "webapp")
                     {
-                        $_SESSION['s_ip'] = $_SERVER['REMOTE_ADDR'];
-                        $_SESSION['s_ua'] = $_SERVER['HTTP_USER_AGENT'];
-                        $_SESSION['s_id'] = $u_array['userID'];
+                        $_SESSION[md5('s_ip')] = md5($_SERVER['REMOTE_ADDR']);
+                        $_SESSION[md5('s_ua')] = md5($_SERVER['HTTP_USER_AGENT']);
+                        $_SESSION[md5('s_nomor')] = 4881*$u_array['userID'];
+                        $_SESSION[md5('s_ac')] = md5("".$u_array['userTypeID']);
+                        //session_set_cookie_params(60);
+                        $error = array('status' => "Success", "msg" => "Request to login was accepted.");
+                        $this->api->response($this->api->json($error), 400);
+                    }else if($platform === "droid"){
+                        // Generate session key for android session
+                        $gen_key = hash("sha512", "key:1");
+                        $am_res = mysql_query("insert into accessMode values(".$u_array['userID'].",'$gen_key')");
+                        $error = array('status' => "Success", "msg" => "Request to login was accepted.", "key" => "sess_key:1");
+                        $this->api->response($this->api->json($error), 400);
                     }
-                    $error = array('status' => "Success", "msg" => "Request to login was accepted.");
-                    $this->api->response($this->api->json($error), 400);
+                    
                 }else{
                     $error = array('status' => "Failed", "msg" => "Request to login was denied. The User is not active.");
                     $this->api->response($this->api->json($error), 400);
@@ -203,54 +212,9 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
-    /*public function login($userName,$userPassword,$platform){
-        if($userName != NULL && $userPassword != NULL && $platform != NULL)
-        {
-            $validation = new Validations();
-            $this->userName = $userName;
-            $this->userPassword = $userPassword;
-            
-            $error = array('status' => "Failed", "msg" => "Request to login was denied. Invalid username or password.");
-            $am_res = mysql_query("select * from accessMode")
-                    or $this->api->response($this->api->json($error), 400);
-            while(($arr = mysql_fetch_array($am_res)))
-            {
-                $uid = $arr['uid'];
-                $u_res = mysql_query("select * from users where userID=$uid and userName='$this->userName'");
-                
-                if(mysql_num_rows($u_res) > 0){
-                    $u_array = mysql_fetch_array($u_res);
-                    if($this->validation->validateLogin($pass,$u_array['userPassword'], $arr['salt'],'sha512')){
-                        if($u_array['userActive'] == 1)
-                        {
-                            if($platform == "webapp")
-                            {
-                                $_SESSION['s_ip'] = $_SERVER['REMOTE_ADDR'];
-                                $_SESSION['s_ua'] = $_SERVER['HTTP_USER_AGENT'];
-                                $_SESSION['s_id'] = $u_array['userID'];
-                            }
-                            $error = array('status' => "Success", "msg" => "Request to login was accepted.");
-                            $this->api->response($this->api->json($error), 400);
-                        }else{
-                            $error = array('status' => "Failed", "msg" => "Request to login was denied. The User is not active.");
-                            $this->api->response($this->api->json($error), 400);
-                        }
-                    }else{
-                        $error = array('status' => "Failed", "msg" => "Request to login was denied.");
-                        $this->api->response($this->api->json($error), 400);
-                    }
-                }else{
-                    $error = array('status' => "Failed", "msg" => "Request to login was denied. Invalid Password or Username.");
-                    $this->api->response($this->api->json($error), 400);
-                }
-            }
-        }else {
-            $error = array('status' => "Failed", "msg" => "Request to login was denied. Please provide all the required details.");
-            $this->api->response($this->api->json($error), 400);
-        }
-    }*/
     
  public function logout() {
+     session_unset();
      session_destroy();
      $error = array('status' => "Success", "msg" => "Request to logout was successfull.");
      $this->api->response($this->api->json($error), 200);
