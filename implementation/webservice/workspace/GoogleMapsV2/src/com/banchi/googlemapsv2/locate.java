@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 public class locate extends Activity  implements OnMyLocationChangeListener{
 	Button next;
-	Button upload;
+	
 	TextView value;
 	GoogleMap map;
 	private double longitude;
@@ -50,7 +50,7 @@ public class locate extends Activity  implements OnMyLocationChangeListener{
 		
 		next = (Button) findViewById(R.id.nextButton);
 		value = (TextView) findViewById(R.id.value);
-		upload = (Button) findViewById(R.id.upload);
+		
 		
 		
 		next.setOnClickListener(new View.OnClickListener() {
@@ -62,17 +62,7 @@ public class locate extends Activity  implements OnMyLocationChangeListener{
 			}
 		});
 		
-		upload.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
-			}
-		});
+		
 	}
 	
 	

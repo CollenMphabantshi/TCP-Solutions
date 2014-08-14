@@ -11,5 +11,5 @@ logcat.view.colsize.PID=50
 logcat.view.colsize.TID=50
 logcat.view.colsize.Tag=107
 logcat.view.colsize.Text=543
-logcat.view.colsize.Time=111
+logcat.view.colsize.Time=140
 logcat.view.display.filters=false

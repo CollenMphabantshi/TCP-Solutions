@@ -213,7 +213,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		setContentView(R.layout.blunt);
 		
 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		/*status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		variablesInitialization();
 		
@@ -222,7 +222,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		setOnClickEvents();
 		hidePage();
 		showPage();
-		showHideButtons();
+		showHideButtons();*/
 	}
 	
 	public String initialize(){

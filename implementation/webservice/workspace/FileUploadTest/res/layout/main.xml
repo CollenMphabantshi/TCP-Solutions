@@ -1,43 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Multiple File Upload from CoderzHeaven"
-    />
-<Button
-    android:id="@+id/Button01"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Get First File">
-</Button>
-<Button
-    android:id="@+id/Button02"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Get Second File">
-</Button>
-<Button
-    android:id="@+id/upload"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Start Upload">
-</Button>
-<TextView
-    android:id="@+id/tv"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Selected File path : "
-    />
- 
-<TextView
-    android:id="@+id/res"
-   android:layout_width="fill_parent"
-   android:layout_height="wrap_content"
-   android:text=""
-   />
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <Button android:id="@+id/selectBtn"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Select" android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:minWidth="200px" />
+    <GridView android:id="@+id/PhoneImageGrid"
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:numColumns="auto_fit" android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp" android:columnWidth="90dp"
+        android:stretchMode="columnWidth" android:gravity="center"
+        android:layout_above="@id/selectBtn" />
+</RelativeLayout>

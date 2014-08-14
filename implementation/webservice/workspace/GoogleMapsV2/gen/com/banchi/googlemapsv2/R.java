@@ -1471,7 +1471,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f080028;
         public static final int action_menu_presenter=0x7f080029;
         public static final int action_mode_close_button=0x7f080036;
-        public static final int action_settings=0x7f080053;
+        public static final int action_settings=0x7f080052;
         public static final int activity_chooser_view_content=0x7f080037;
         public static final int always=0x7f08001e;
         public static final int beginning=0x7f080023;
@@ -1539,7 +1539,6 @@ containing a value of this type.
         public static final int title=0x7f08003d;
         public static final int top_action_bar=0x7f080032;
         public static final int up=0x7f080033;
-        public static final int upload=0x7f080052;
         public static final int useLogo=0x7f080016;
         public static final int value=0x7f080051;
         public static final int withText=0x7f08001f;

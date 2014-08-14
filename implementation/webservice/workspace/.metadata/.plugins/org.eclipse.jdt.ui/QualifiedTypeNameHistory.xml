@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<<<<<<< HEAD
 <fullyQualifiedTypeName name="org.apache.http.HttpEntity"/>
-=======
-<fullyQualifiedTypeName name="android.widget.TextView"/>
-<fullyQualifiedTypeName name="java.util.Random"/>
->>>>>>> 4b6a3f60464fb63501d8532c886f8568c6da4f2e
+<fullyQualifiedTypeName name="android.app.Activity"/>
+<fullyQualifiedTypeName name="com.example.mobileforensics.R.layout"/>
+<fullyQualifiedTypeName name="android.support.v4.app.FragmentActivity"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;MultiImageChooser-master&apos;" deleteContents="false" description="Delete resource &apos;MultiImageChooser-master&apos;" element1="/MultiImageChooser-master" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1408014471580"/>
+</session>
