@@ -64,7 +64,7 @@ function createJSON(){
 		"Email" : document.getElementById("email").value,
 		"Password" : document.getElementById("password").value,
 		"Level" : document.querySelector('input[name="level"]:checked').value,
-		"AuthenticationCode" : "555hedj",
+		"AuthenticationCode" : "555hedj"+randomIntFromInterval()+makeid(),
 	
 }
    
@@ -95,7 +95,22 @@ else{
 	}
 }
 
+function randomIntFromInterval()
+{
+	var min = 1000; var max = 100000;
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
 
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 </script>
 
@@ -112,9 +127,9 @@ else{
 <tr><td><input type="password" id="confirmPassword" placeholder="Confirm password" autofocus="autofocus"/></td></tr>
 
 <tr><td>
-<input type="radio" id="level" name="level" value="level one" autofocus="autofocus"/>Student</br>
-<input type="radio" id="level"  name="level" value="level two"/>Lecture</br>
-<input type="radio" id="level"  name="level" value="level three"/>Admin</br></td></tr>
+<input type="radio" id="level" name="level" value="1" autofocus="autofocus"/>Student</br>
+<input type="radio" id="level"  name="level" value="2"/>Lecture</br>
+<input type="radio" id="level"  name="level" value="3"/>Admin</br></td></tr>
 <input type="hidden" name="formValues"  id="formValues" />
 <tr><td><input type="button" value="Register" onClick="javascript:SubmitForm()" /></td></tr>
 <tr><td><a href="index.html">click here to login</a></td></tr>

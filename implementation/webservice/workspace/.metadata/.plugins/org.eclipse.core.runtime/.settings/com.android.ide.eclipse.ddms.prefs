@@ -4,7 +4,11 @@
 ddms.logcat.auotmonitor.level=error
 ddms.logcat.automonitor=false
 ddms.logcat.automonitor.userprompt=true
+devicePanel.Col0=183
+devicePanel.Col1=51
+devicePanel.Col4=68
 eclipse.preferences.version=1
+lastImageSaveDir=C\:\\adt-bundle-windows-x86_64-20140702\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\support\\v4
 logcat.view.colsize.Application=212
 logcat.view.colsize.Level=98
 logcat.view.colsize.PID=50

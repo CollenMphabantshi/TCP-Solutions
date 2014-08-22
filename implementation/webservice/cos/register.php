@@ -1,5 +1,5 @@
 <?php
-
+error_reporting (E_ALL ^ E_WARNING);
 $formData=$_REQUEST["formValues"];
 $formObj=json_decode($formData);
 
@@ -29,7 +29,7 @@ if (mysqli_connect_errno())
 		$result = mysqli_query($db_handle,"SELECT * FROM users");						
 		while($row = mysqli_fetch_array($result))
 		{
-			if($row['username'] == $Username && $row['email'] == $Email && $row['code'] == $AuthenticationCode  )
+			if($row['username'] == $Username)
 			{
 				$bool = true;
 				echo "<script>  
@@ -44,18 +44,20 @@ if (mysqli_connect_errno())
 		}
 		if($bool == false)
 		{
-			echo $bool;
-		
 			mysqli_query($db_handle,"INSERT INTO users (username,email,password,level,code) VALUES ('".$Username."','".$Email."','".$Password."','".$Level."','".$AuthenticationCode."')");
 			
 			echo "<script>  
 				alert('Thank you . ".$Username." your have successfully registered!');  
 				</script>";
-								
-			echo "
+				
+				@session_start();
+				
+				$_SESSION['code'] = $AuthenticationCode;
+				echo "
 				<script>  
-				window.location = 'index.html';  
+				window.location = 'access.php';  
 				</script>";
+				
 		}
 		else
 		{

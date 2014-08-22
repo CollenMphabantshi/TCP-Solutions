@@ -36,13 +36,13 @@
 				
 				android:visibility="visible"
 			/>
-			
-			<!--  <fragment 
+			<!-- Geolocation and weather -->
+			<fragment 
 	        android:id="@+id/fragId"
 	        android:name="com.google.android.gms.maps.MapFragment"
 	        android:layout_width="500dp"
 	        android:layout_height="500dp"
-	        />-->
+	        />
 			
 		    <TextView 
 		        android:id="@+id/value"
@@ -50,6 +50,79 @@
 				android:layout_height="wrap_content"
 				android:text=""
 		        />
+		    <Button 
+		        android:id="@+id/geolocation"
+		        android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="get loaction"
+		        />
+		    
+		    <TextView
+				  android:id="@+id/cityText"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				  android:text="city"
+				         />
+		    <ImageView
+				  android:id="@+id/condIcon"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				/>
+		    <TextView
+				  android:id="@+id/condDescr"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				 />
+			<TextView
+				 android:id="@+id/temp"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				/>
+			
+			 <TextView
+				        android:id="@+id/pressLab"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_marginTop="15dp" />
+				
+				    <TextView
+				        android:id="@+id/press"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				       
+				        />
+				
+				    <TextView
+				        android:id="@+id/humLab"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Humidity" />
+				
+				    <TextView
+				        android:id="@+id/hum"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				       />
+				
+				    <TextView
+				        android:id="@+id/windLab"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Wind" />
+				
+				    <TextView
+				        android:id="@+id/windSpeed"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        />
+				
+				    <TextView
+				        android:id="@+id/windDeg"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        />
+				
+		    <!--  -->
 			
 			<GridLayout
 			    android:id="@+id/blunt_rl1"
@@ -471,7 +544,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_MedicalInterventionYes"
+				    android:id="@+id/blunt_medicalInterventionYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -480,7 +553,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_MedicalInterventionNo"
+				    android:id="@+id/blunt_medicalInterventionNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -535,7 +608,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_CloseToWaterYes"
+				    android:id="@+id/blunt_closeToWaterYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -544,7 +617,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_CloseToWaterNo"
+				    android:id="@+id/blunt_closeToWaterNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -577,7 +650,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_RapeHomicideYes"
+				    android:id="@+id/blunt_rapeHomicideYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -586,7 +659,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_RapeHomicideNo"
+				    android:id="@+id/blunt_rapeHomicideNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -619,7 +692,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_SuicideSuspectedYes"
+				    android:id="@+id/blunt_suicideSuspectedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -628,7 +701,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_SuicideSuspectedNo"
+				    android:id="@+id/blunt_suicideSuspectedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -662,7 +735,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_PreviousAttemptsYes"
+				    android:id="@+id/blunt_previousAttemptsYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -671,7 +744,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_PreviousAttemptsNo"
+				    android:id="@+id/blunt_previousAttemptsNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1280,7 +1353,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is the blunt force object still on scene? (if yes, take a photo of object)"
+					android:text="Is the blunt force object still on scene?"
 					android:layout_row="2"
             	android:layout_column="0"
 					/>
@@ -1446,7 +1519,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is there a Suicide note on scene? (if yes with who(police / with body))"
+					android:text="Is there a Suicide note on scene?"
 					android:layout_row="6"
             	android:layout_column="0"
 					/>
@@ -1511,10 +1584,112 @@
 				    android:id="@+id/blunt_theGallery"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
-					
 					android:text="@string/the_gallery"
 					
 					/>
+				
+				       
+				     <TextView
+				         android:layout_width="fill_parent"
+				         android:layout_height="wrap_content"
+				         android:text=""
+				         android:id="@+id/messageText"
+				         android:textColor="#000000"
+				         android:textStyle="bold"
+				     />
+				     
+				     
+				     <GridLayout 
+				         android:layout_width="match_parent"
+				         android:layout_height="match_parent"
+				         android:layout_margin="5dp"
+				         android:padding="5dp"
+				         android:columnCount="3"
+				         android:rowCount="4"
+				         android:visibility="visible">
+				         
+				       
+				         <ImageView
+				        android:id="@+id/imgView0"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="0"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView1"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="0"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView2"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="0"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView3"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="1"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView4"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="1"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView5"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="1"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView6"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="2"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView7"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="2"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView8"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="2"/>
+				      
+				     </GridLayout>
+				    <Button
+				        android:id="@+id/buttonLoadPicture"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="0"
+				        android:text="Select image from gallery"
+				        android:layout_gravity="center"></Button>
+				
 				</LinearLayout>
 				
 				<TextView
@@ -1526,7 +1701,7 @@
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="@string/send_response"
-					android:visibility="visible"
+					android:visibility="gone"
 					/>
 				<Button
 				    android:id="@+id/blunt_nextButton"
@@ -1534,7 +1709,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="NEXT PAGE"
-				    android:visibility="visible" 
+				    android:visibility="gone" 
 				    />
 				
 				<Button
@@ -1543,7 +1718,7 @@
 				    android:layout_height="wrap_content"
 				    android:layout_gravity="center_horizontal"
 				    android:text="DONE"
-				     android:visibility="gone"
+				     android:visibility="visible"
 				    />
 				<Button
 				    android:id="@+id/blunt_logoutButton"

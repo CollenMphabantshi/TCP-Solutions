@@ -1,8 +1,14 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -28,19 +34,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
+import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
+import com.example.mobileforensics.JSONWeatherParser;
+import com.example.mobileforensics.WeatherHttpClient;
+import com.example.mobileforensics.models.Weather;
+
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -48,6 +69,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -63,10 +86,10 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	private LinearLayout infoLayout;
 	private LinearLayout demographicsLayout;
-	private LinearLayout theBodyLayout;
-	private LinearLayout sceneOfInjuryLayout;
-	private LinearLayout sceneLookLayout;
-	private LinearLayout theSceneLayout;
+	private GridLayout theBodyLayout;
+	private GridLayout sceneOfInjuryLayout;
+	private GridLayout sceneLookLayout;
+	private GridLayout theSceneLayout;
 	private LinearLayout galleryLayout;
 	
 	private TextView tv_ioName;
@@ -111,37 +134,48 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	private TextView theBody;
 	private TextView tv_bodyDecomposed;
-	private Spinner bodyDecomposed;
+	private RadioButton bodyDecomposedYes;
+	private RadioButton bodyDecomposedNo;
 	private TextView tv_medicalIntervention;
-	private Spinner medicalIntervention;
+	private RadioButton medicalInterventionYes;
+	private RadioButton medicalInterventionNo;
 	private TextView tv_whoFoundVictimBody;
 	private EditText whoFoundVictimBody;
 	private TextView tv_closeToWater;
-	private Spinner closeToWater;
+	private RadioButton closeToWaterYes;
+	private RadioButton closeToWaterNo;
 	private TextView tv_rapeHomicide;
-	private Spinner rapeHomicide;
+	private RadioButton rapeHomicideYes;
+	private RadioButton rapeHomicideNo;
 	private TextView tv_suicideSuspected;
-	private Spinner suicideSuspected;
+	private RadioButton suicideSuspectedYes;
+	private RadioButton suicideSuspectedNo;
 	private TextView tv_previousAttempts;
-	private Spinner previousAttempts;
+	private RadioButton previousAttemptsYes;
+	private RadioButton previousAttemptsNo;
 	private TextView tv_howManyAttempts;
 	private EditText howManyAttempts;
 	
 	private TextView sceneOfInjury;
 	private TextView tv_sceneIOType;
-	private Spinner sceneIOType;
+	private RadioButton sceneIOTypeInside;
+	private RadioButton sceneIOTypeOutside;
 	private TextView tv_whereInside;
 	private Spinner sceneIType;
 	private TextView tv_sceneITypeOther;
 	private EditText sceneITypeOther;
 	private TextView tv_doorLocked;
-	private Spinner doorLocked;
+	private RadioButton doorLockedYes;
+	private RadioButton doorLockedNo;
 	private TextView tv_windowsClosed;
-	private Spinner windowsClosed;
+	private RadioButton windowsClosedYes;
+	private RadioButton windowsClosedNo;
 	private TextView tv_windowsBroken;
-	private Spinner windowsBroken;
+	private RadioButton windowsBrokenYes;
+	private RadioButton windowsBrokenNo;
 	private TextView tv_victimAlone;
-	private Spinner victimAlone;
+	private RadioButton victimAloneYes;
+	private RadioButton victimAloneNo;
 	private TextView tv_peopleWithVictim;
 	private EditText peopleWithVictim;
 	private TextView tv_sceneOType;
@@ -151,27 +185,36 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	private TextView sceneLook;
 	private TextView tv_signsOfStruggle;
-	private Spinner signsOfStruggle;
+	private RadioButton signsOfStruggleYes;
+	private RadioButton signsOfStruggleNo;
 	private TextView tv_alcoholBottleAround;
-	private Spinner alcoholBottleAround;
+	private RadioButton alcoholBottleAroundYes;
+	private RadioButton alcoholBottleAroundNo;
 	private TextView tv_drugParaphernalia;
-	private Spinner drugParaphernalia;
+	private RadioButton drugParaphernaliaYes;
+	private RadioButton drugParaphernaliaNo;
 	
 	private TextView theScene;
 	private TextView tv_communityAssault;
-	private Spinner communityAssault;
+	private RadioButton communityAssaultYes;
+	private RadioButton communityAssaultNo;
 	private TextView tv_bluntObjectUsed;
 	private EditText bluntObjectUsed;
 	private TextView tv_bluntForceObjectOnScene;
-	private Spinner bluntForceObjectOnScene;
+	private RadioButton bluntForceObjectOnSceneYes;
+	private RadioButton bluntForceObjectOnSceneNo;
 	private TextView tv_strangulationSuspected;
-	private Spinner strangulationSuspected;
+	private RadioButton strangulationSuspectedYes;
+	private RadioButton strangulationSuspectedNo;
 	private TextView tv_smotheringSuspected;
-	private Spinner smotheringSuspected;
+	private RadioButton smotheringSuspectedYes;
+	private RadioButton smotheringSuspectedNo;
 	private TextView tv_chockingSuspected;
-	private Spinner chockingSuspected;
+	private RadioButton chockingSuspectedYes;
+	private RadioButton chockingSuspectedNo;
 	private TextView tv_suicideNoteFound;
-	private Spinner suicideNoteFound;
+	private RadioButton suicideNoteFoundYes;
+	private RadioButton suicideNoteFoundNo;
 	private TextView tv_generalHistory;
 	private EditText generalHistory;
 	
@@ -182,7 +225,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	private JSONObject json;
 
-	private final static String WS_URL = "https://192.168.2.1/ws/models/api.php";
+	
 	private final static int PAGES = 6;
 
 	private final static int VISIBLE = View.VISIBLE;
@@ -205,6 +248,32 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private String myAddress;
 	private String Text;
 	
+	Button geolocation;
+	
+	//upload image parameters still to be arranged
+	TextView messageText;
+    Button uploadButton,selectImages,buttonLoadImage;
+    ImageView imageView0,imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8;
+    int serverResponseCode = 0;
+    ProgressDialog dialog = null;
+    Uri currImageURI;
+    String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
+    private static int RESULT_LOAD_IMAGE = 1;
+    int count = 0;
+    ArrayList<String> uploadFileName = new ArrayList<String>();
+    String filename ;
+    
+    //weather section
+    private TextView cityText;
+	private TextView condDescr;
+	private TextView temp;
+	private TextView press;
+	private TextView windSpeed;
+	private TextView windDeg;
+	
+	private TextView hum;
+	private ImageView imgView;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -212,17 +281,19 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
 		
-
-		/*status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
+		
+		
+		//initialize();
+		System.out.println("Start init");
 		variablesInitialization();
-		
-		initialize();
-		
 		setOnClickEvents();
-		hidePage();
-		showPage();
-		showHideButtons();*/
+		
+		//hidePage();
+		//showPage();
+		//showHideButtons();
+	
 	}
 	
 	public String initialize(){
@@ -302,28 +373,28 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	   myAddress = "No Address returned!";
 	  }
 	 } catch (IOException e) {
-	  // TODO Auto-generated catch block
-	  e.printStackTrace();
-	  myAddress = "Cannot get Address!";
+		  // TODO Auto-generated catch block
+		  e.printStackTrace();
+		  myAddress = "Cannot get Address!";
 	 }
 	}
 
 	private void variablesInitialization(){
 		pageCount = 1;
-		username = "p11111111";
-		
+		username = "p33333333";
+		try{
 		
 		time = (new Random().nextLong())+"";
 	    date = "2014-10-10";
 		temperature = "23 C";
 		location = (new Random().nextLong())+","+(new Random().nextLong());
-		
+		geolocation = (Button) findViewById(R.id.geolocation);
 		infoLayout = (LinearLayout)findViewById(R.id.blunt_infoLayout);
 		demographicsLayout = (LinearLayout)findViewById(R.id.blunt_demographicLayout);
-		theBodyLayout = (LinearLayout)findViewById(R.id.blunt_theBodyLayout);
-		sceneOfInjuryLayout = (LinearLayout)findViewById(R.id.blunt_sceneOfInjuryLayout);
-		sceneLookLayout = (LinearLayout)findViewById(R.id.blunt_sceneLookLayout);
-		theSceneLayout = (LinearLayout)findViewById(R.id.blunt_theSceneLayout);
+		theBodyLayout = (GridLayout)findViewById(R.id.blunt_theBodyLayout);
+		sceneOfInjuryLayout = (GridLayout)findViewById(R.id.blunt_sceneOfInjuryLayout);
+		sceneLookLayout = (GridLayout)findViewById(R.id.blunt_sceneLookLayout);
+		theSceneLayout = (GridLayout)findViewById(R.id.blunt_theSceneLayout);
 		galleryLayout = (LinearLayout)findViewById(R.id.blunt_galleryLayout);
 		
 		tv_ioName = (TextView)findViewById(R.id.blunt_tv_io_name);
@@ -365,39 +436,52 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		rgbWhite = (RadioButton)findViewById(R.id.blunt_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.blunt_rgbUnknownRace);
 		
+		
 		theBody = (TextView)findViewById(R.id.blunt_tv_the_body);
 		tv_bodyDecomposed = (TextView)findViewById(R.id.blunt_tv_bodyDecomposed);
-		bodyDecomposed = (Spinner)findViewById(R.id.blunt_bodyDecomposed);
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.blunt_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.blunt_bodyDecomposedNo);
 		tv_medicalIntervention = (TextView)findViewById(R.id.blunt_tv_medicalIntervention);
-		medicalIntervention = (Spinner)findViewById(R.id.blunt_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.blunt_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.blunt_medicalInterventionNo);
 		tv_whoFoundVictimBody = (TextView)findViewById(R.id.blunt_tv_whoFoundVictimBody);
 		whoFoundVictimBody = (EditText)findViewById(R.id.blunt_whoFoundVictimBody);
 		tv_closeToWater = (TextView)findViewById(R.id.blunt_tv_closeToWater);
-		closeToWater = (Spinner)findViewById(R.id.blunt_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.blunt_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.blunt_closeToWaterNo);
 		tv_rapeHomicide = (TextView)findViewById(R.id.blunt_tv_rapeHomicide);
-		rapeHomicide = (Spinner)findViewById(R.id.blunt_rapeHomicide);
+		rapeHomicideYes = (RadioButton)findViewById(R.id.blunt_rapeHomicideYes);
+		rapeHomicideNo = (RadioButton)findViewById(R.id.blunt_rapeHomicideNo);
 		tv_suicideSuspected = (TextView)findViewById(R.id.blunt_tv_suicideSuspected);
-		suicideSuspected = (Spinner)findViewById(R.id.blunt_suicideSuspected);
+		suicideSuspectedYes = (RadioButton)findViewById(R.id.blunt_suicideSuspectedYes);
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.blunt_suicideSuspectedNo);
 		tv_previousAttempts = (TextView)findViewById(R.id.blunt_tv_previousAttempts);
-		previousAttempts = (Spinner)findViewById(R.id.blunt_previousAttempts);
+		previousAttemptsYes = (RadioButton)findViewById(R.id.blunt_previousAttemptsYes);
+		previousAttemptsNo = (RadioButton)findViewById(R.id.blunt_previousAttemptsNo);
 		tv_howManyAttempts = (TextView)findViewById(R.id.blunt_tv_howManyAttempts);
 		howManyAttempts = (EditText)findViewById(R.id.blunt_howManyAttempts);
 		
+		
 		sceneOfInjury = (TextView)findViewById(R.id.blunt_sceneOfInjury);
 		tv_sceneIOType = (TextView)findViewById(R.id.blunt_tv_sceneIOType);
-		sceneIOType = (Spinner)findViewById(R.id.blunt_sceneIOType);
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeOutside);
 		tv_whereInside = (TextView)findViewById(R.id.blunt_tv_whereInside);
 		sceneIType = (Spinner)findViewById(R.id.blunt_sceneIType);
 		tv_sceneITypeOther = (TextView)findViewById(R.id.blunt_tv_sceneITypeOther);
 		sceneITypeOther = (EditText)findViewById(R.id.blunt_sceneITypeOther);
 		tv_doorLocked = (TextView)findViewById(R.id.blunt_tv_doorLocked);
-		doorLocked = (Spinner)findViewById(R.id.blunt_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.blunt_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.blunt_DoorLockedNo);
 		tv_windowsClosed = (TextView)findViewById(R.id.blunt_tv_windowsClosed);
-		windowsClosed = (Spinner)findViewById(R.id.blunt_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.blunt_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.blunt_WindowsClosedNo);
 		tv_windowsBroken = (TextView)findViewById(R.id.blunt_tv_windowsBroken);
-		windowsBroken = (Spinner)findViewById(R.id.blunt_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.blunt_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.blunt_WindowsBrokenNo);
 		tv_victimAlone = (TextView)findViewById(R.id.blunt_tv_victimAlone);
-		victimAlone = (Spinner)findViewById(R.id.blunt_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.blunt_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.blunt_VictimAloneNo);
 		tv_peopleWithVictim = (TextView)findViewById(R.id.blunt_tv_peopleWithVictim);
 		peopleWithVictim = (EditText)findViewById(R.id.blunt_peopleWithVictim);
 		tv_sceneOType = (TextView)findViewById(R.id.blunt_tv_sceneOType);
@@ -405,31 +489,42 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		tv_sceneOTypeOther = (TextView)findViewById(R.id.blunt_tv_sceneOTypeOther);
 		sceneOTypeOther = (EditText)findViewById(R.id.blunt_sceneOTypeOther);
 		
+		System.out.println("after page 3");
 		sceneLook = (TextView)findViewById(R.id.blunt_sceneLook);
 		tv_signsOfStruggle = (TextView)findViewById(R.id.blunt_tv_signsOfStruggle);
-		signsOfStruggle = (Spinner)findViewById(R.id.blunt_signsOfStruggle);
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleNo);
 		tv_alcoholBottleAround = (TextView)findViewById(R.id.blunt_tv_alcoholBottleAround);
-		alcoholBottleAround = (Spinner)findViewById(R.id.blunt_alcoholBottleAround);
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundNo);
 		tv_drugParaphernalia = (TextView)findViewById(R.id.blunt_tv_drugParaphernalia);
-		drugParaphernalia = (Spinner)findViewById(R.id.blunt_drugParaphernalia);
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaNo);
+		
 		
 		theScene = (TextView)findViewById(R.id.blunt_theScene);
 		tv_communityAssault = (TextView)findViewById(R.id.blunt_tv_communityAssault);
-		communityAssault = (Spinner)findViewById(R.id.blunt_communityAssault);
+		communityAssaultYes = (RadioButton)findViewById(R.id.blunt_CommunityAssaultYes);
+		communityAssaultNo = (RadioButton)findViewById(R.id.blunt_CommunityAssaultNo);
 		tv_bluntObjectUsed = (TextView)findViewById(R.id.blunt_tv_bluntObjectUsed);
 		bluntObjectUsed = (EditText)findViewById(R.id.blunt_bluntObjectUsed);
 		tv_bluntForceObjectOnScene = (TextView)findViewById(R.id.blunt_tv_bluntForceObjectOnScene);
-		bluntForceObjectOnScene = (Spinner)findViewById(R.id.blunt_bluntForceObjectOnScene);
+		bluntForceObjectOnSceneYes = (RadioButton)findViewById(R.id.blunt_BluntForceObjectOnSceneYes);
+		bluntForceObjectOnSceneNo = (RadioButton)findViewById(R.id.blunt_BluntForceObjectOnSceneNo);
 		tv_strangulationSuspected = (TextView)findViewById(R.id.blunt_tv_strangulationSuspected);
-		strangulationSuspected = (Spinner)findViewById(R.id.blunt_strangulationSuspected);
+		strangulationSuspectedYes = (RadioButton)findViewById(R.id.blunt_StrangulationSuspectedYes);
+		strangulationSuspectedNo = (RadioButton)findViewById(R.id.blunt_StrangulationSuspectedNo);
 		tv_smotheringSuspected = (TextView)findViewById(R.id.blunt_tv_smotheringSuspected);
-		smotheringSuspected = (Spinner)findViewById(R.id.blunt_smotheringSuspected);
+		smotheringSuspectedYes = (RadioButton)findViewById(R.id.blunt_SmotheringSuspectedYes);
+		smotheringSuspectedNo = (RadioButton)findViewById(R.id.blunt_SmotheringSuspectedNo);
 		tv_chockingSuspected = (TextView)findViewById(R.id.blunt_tv_chockingSuspected);
-		chockingSuspected = (Spinner)findViewById(R.id.blunt_chockingSuspected);
+		chockingSuspectedYes = (RadioButton)findViewById(R.id.blunt_ChockingSuspectedYes);
+		chockingSuspectedNo = (RadioButton)findViewById(R.id.blunt_ChockingSuspectedNo);
 		tv_suicideNoteFound = (TextView)findViewById(R.id.blunt_tv_suicideNoteFound);
-		suicideNoteFound = (Spinner)findViewById(R.id.blunt_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundYes);
 		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
 		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
+		
 		
 		response = (TextView)findViewById(R.id.blunt_tv_response);
 		nextButton = (Button)findViewById(R.id.blunt_nextButton);
@@ -438,7 +533,39 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		//next = (Button) findViewById(R.id.nextButton);
 		value = (TextView) findViewById(R.id.value);
+		
+		//upload pictures part
+			//uploadButton = (Button)findViewById(R.id.uploadButton);
+	       messageText  = (TextView)findViewById(R.id.messageText);
+	       buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
+	       imageView0 = (ImageView) findViewById(R.id.imgView0);
+	       imageView1 = (ImageView) findViewById(R.id.imgView1);
+	       imageView2 = (ImageView) findViewById(R.id.imgView2);
+	       imageView3 = (ImageView) findViewById(R.id.imgView3);
+	       imageView4 = (ImageView) findViewById(R.id.imgView4);
+	       imageView5 = (ImageView) findViewById(R.id.imgView5);
+	       imageView6 = (ImageView) findViewById(R.id.imgView6);
+	       imageView7 = (ImageView) findViewById(R.id.imgView7);
+	       imageView8 = (ImageView) findViewById(R.id.imgView8);
+	       
+	       
+	       // weather section
+	       	cityText = (TextView) findViewById(R.id.cityText);
+			condDescr = (TextView) findViewById(R.id.condDescr);
+			temp = (TextView) findViewById(R.id.temp);
+			hum = (TextView) findViewById(R.id.hum);
+			press = (TextView) findViewById(R.id.press);
+			windSpeed = (TextView) findViewById(R.id.windSpeed);
+			windDeg = (TextView) findViewById(R.id.windDeg);
+			imgView = (ImageView) findViewById(R.id.condIcon);
+		
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
+	
+	
 	
 	@Override
 	protected void onPause() {
@@ -448,24 +575,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	public void setOnClickEvents(){
 		
-		nextButton.setOnClickListener(new OnClickListener() {
+		geolocation.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View view) {
+			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				try{
-					System.out.println("Page: "+pageCount);
-					if(validateNextPage())
-					{
-						pageCount++;
-						hidePage();
-						showPage();
-						showHideButtons();
-					}else{
-						Toast.makeText(getApplicationContext(), "Please Fill in all Questions.", Toast.LENGTH_LONG).show();
-					}
-					
-				}catch(Exception e){e.printStackTrace();}
+				initialize();
 			}
 		});
 		
@@ -479,17 +594,50 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
-						
-						new Read().execute(postdata);
+						try{
+							new Read().execute(postdata);
+							
+							dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
+			                 
+			                new Thread(new Runnable() {
+			                        public void run() {
+			                             runOnUiThread(new Runnable() {
+			                                    public void run() {
+			                                        messageText.setText("uploading started.....");
+			                                    }
+			                                });                      
+			                             for(int i=0; i < uploadFileName.size(); i++){
+			                            	 filename = uploadFileName.get(i);
+			                            	 uploadFile( filename );
+			                            	 
+			                             }                   
+			                        }
+			                      }).start(); 
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 						
 					}
 					
-					nextButton.setVisibility(GONE);
+					//nextButton.setVisibility(GONE);
 					doneButton.setVisibility(GONE);
 					logoutButton.setVisibility(VISIBLE);
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
+		
+		buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+                 
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                 
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			
@@ -509,98 +657,81 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		 * 	Spinner onclick event
 		 */
 		
-		
-		previousAttempts.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("yes"))
-						{
-							tv_howManyAttempts.setVisibility(VISIBLE);
-							howManyAttempts.setVisibility(VISIBLE);
-						}else{
-							tv_howManyAttempts.setVisibility(GONE);
-							howManyAttempts.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		sceneIOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+		previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
+			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("outside"))
-						{
-							tv_whereInside.setVisibility(GONE);
-							sceneIType.setVisibility(GONE);
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-							tv_doorLocked.setVisibility(GONE);
-							doorLocked.setVisibility(GONE);
-							tv_windowsClosed.setVisibility(GONE);
-							windowsClosed.setVisibility(GONE);
-							tv_windowsBroken.setVisibility(GONE);
-							windowsBroken.setVisibility(GONE);
-							tv_victimAlone.setVisibility(GONE);
-							victimAlone.setVisibility(GONE);
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-							
-							tv_sceneOType.setVisibility(VISIBLE);
-							sceneOType.setVisibility(VISIBLE);
-							
-						}else{
-							tv_whereInside.setVisibility(VISIBLE);
-							sceneIType.setVisibility(VISIBLE);
-							tv_doorLocked.setVisibility(VISIBLE);
-							doorLocked.setVisibility(VISIBLE);
-							tv_windowsClosed.setVisibility(VISIBLE);
-							windowsClosed.setVisibility(VISIBLE);
-							tv_windowsBroken.setVisibility(VISIBLE);
-							windowsBroken.setVisibility(VISIBLE);
-							tv_victimAlone.setVisibility(VISIBLE);
-							victimAlone.setVisibility(VISIBLE);
-							
-							tv_sceneOType.setVisibility(GONE);
-							sceneOType.setVisibility(GONE);
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
+				tv_howManyAttempts.setVisibility(VISIBLE);
+				howManyAttempts.setVisibility(VISIBLE);
 			}
 		});
+		previousAttemptsNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				tv_howManyAttempts.setVisibility(GONE);
+				howManyAttempts.setVisibility(GONE);
+			}
+		});
+
+		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_whereInside.setVisibility(VISIBLE);
+				sceneIType.setVisibility(VISIBLE);
+				tv_doorLocked.setVisibility(VISIBLE);
+				doorLockedYes.setVisibility(VISIBLE);
+				doorLockedNo.setVisibility(VISIBLE);
+				tv_windowsClosed.setVisibility(VISIBLE);
+				windowsClosedYes.setVisibility(VISIBLE);
+				windowsClosedNo.setVisibility(VISIBLE);
+				tv_windowsBroken.setVisibility(VISIBLE);
+				windowsBrokenYes.setVisibility(VISIBLE);
+				windowsBrokenNo.setVisibility(VISIBLE);
+				tv_victimAlone.setVisibility(VISIBLE);
+				victimAloneYes.setVisibility(VISIBLE);
+				victimAloneNo.setVisibility(VISIBLE);
+				
+				tv_sceneOType.setVisibility(GONE);
+				sceneOType.setVisibility(GONE);
+				tv_sceneOTypeOther.setVisibility(GONE);
+				sceneOTypeOther.setVisibility(GONE);
+			}
+		});
+		sceneIOTypeOutside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_whereInside.setVisibility(GONE);
+				sceneIType.setVisibility(GONE);
+				tv_sceneITypeOther.setVisibility(GONE);
+				sceneITypeOther.setVisibility(GONE);
+				tv_doorLocked.setVisibility(GONE);
+				doorLockedYes.setVisibility(GONE);
+				doorLockedNo.setVisibility(GONE);
+				tv_windowsClosed.setVisibility(GONE);
+				windowsClosedYes.setVisibility(GONE);
+				windowsClosedNo.setVisibility(GONE);
+				tv_windowsBroken.setVisibility(GONE);
+				windowsBrokenYes.setVisibility(GONE);
+				windowsBrokenNo.setVisibility(GONE);
+				tv_victimAlone.setVisibility(GONE);
+				victimAloneYes.setVisibility(GONE);
+				victimAloneNo.setVisibility(GONE);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+				
+				tv_sceneOType.setVisibility(VISIBLE);
+				sceneOType.setVisibility(VISIBLE);
+			}
+		});
+
+		
 		
 		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
@@ -632,36 +763,26 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			}
 		});
 		
-		victimAlone.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+		victimAloneYes.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
+			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("no"))
-						{
-							tv_peopleWithVictim.setVisibility(VISIBLE);
-							peopleWithVictim.setVisibility(VISIBLE);
-						}else{
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
 			}
 		});
+		victimAloneNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_peopleWithVictim.setVisibility(VISIBLE);
+				peopleWithVictim.setVisibility(VISIBLE);
+			}
+		});
+
+
 		
 		
 		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -696,195 +817,197 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 	}
 	
-	public void showHideButtons(){
-		if(pageCount > GlobalValues.PAGES)
-		{
-			response.setVisibility(GONE);
-			nextButton.setVisibility(GONE);
-			doneButton.setVisibility(VISIBLE);
-			logoutButton.setVisibility(GONE);
-		}
-	}
-	public void hidePage(){
-		try{
-			
-			
-			//if not first page disable
-			if(pageCount != 1)
-			{
-				infoLayout.setVisibility(GONE);
-				
-			}
-			
-			//if not second page disable
-			if(pageCount != 2){
-				demographicsLayout.setVisibility(GONE);
-			}
-			
-			//if not third page disable
-			if(pageCount != 3){
-				theBodyLayout.setVisibility(GONE);
-			}
-	
-			//if not fourth page disable
-			if(pageCount != 4){
-				sceneOfInjuryLayout.setVisibility(GONE);
-			}
-	
-			//if not fifth page disable
-			if(pageCount != 5){
-				sceneLookLayout.setVisibility(GONE);
-			}
-	
-			//if not sixth page disable
-			if(pageCount != 6){
-				theSceneLayout.setVisibility(GONE);
-			}
-			
-			//if not seventh page disable
-			if(pageCount != 7){
-				galleryLayout.setVisibility(GONE);
-			}
-		}catch(Exception e){e.printStackTrace();}
-	}
-	
-	public void showPage(){
-		try{
-			//if first page show
-			if(pageCount == 1)
-			{
-				infoLayout.setVisibility(VISIBLE);
-				
-			}
-			
-			//if second page show
-			if(pageCount == 2){
-				
-				
-				demographicsLayout.setVisibility(VISIBLE);
-			}
-			
-			//if third page show
-			if(pageCount == 3){
-				theBodyLayout.setVisibility(VISIBLE);
-			}
-	
-			//if not fourth page disable
-			if(pageCount == 4){
-				sceneOfInjuryLayout.setVisibility(VISIBLE);
-			}
-	
-			//if fifth page show
-			if(pageCount == 5){
-				sceneLookLayout.setVisibility(VISIBLE);
-			}
-	
-			//if sixth page show
-			if(pageCount == 6){
-				theSceneLayout.setVisibility(VISIBLE);
-			}
-			
-			//if seventh page show
-			if(pageCount == 7){
-				galleryLayout.setVisibility(VISIBLE);
-			}
-		}catch(Exception e){e.printStackTrace();}
-	}
+
 	
 	
-	public boolean validateNextPage(){
-		try{
-			switch(pageCount)
-			{
-				case 1:
-					if(!ioName.getText().toString().equals("") && !ioSurname.getText().toString().equals("") && !ioRank.getText().toString().equals("")
-							&& !ioCellNo.getText().toString().equals("") && !foosName.getText().toString().equals("") && !foosSurname.getText().toString().equals("")
-							&& !foosRank.getText().toString().equals("")){
-						return true;
-					}
-					break;
-				case 2:
-					if(((!victimName.getText().toString().equals("") && !victimSurname.getText().toString().equals("") && !victimIDNo.getText().toString().equals(""))
-						|| (victimName.getText().toString().equals("") && victimSurname.getText().toString().equals("") && victimIDNo.getText().toString().equals("")))	
-							&& (rgbMale.isChecked() || rgbFemale.isChecked() ||rgbUnknownGender.isChecked())
-							&& (rgbAsian.isChecked() || rgbBlack.isChecked() || rgbColoured.isChecked()
-								|| rgbWhite.isChecked() || rgbUnknownRace.isChecked())){
-						
-						return true;
-					}
-					break;
-				case 3:
-					try{
-						if(!whoFoundVictimBody.getText().toString().equals(""))
-						{
-							String item = (String)previousAttempts.getSelectedItem();
-							if(item != null){
-								if(item.toLowerCase().equals("yes") && !howManyAttempts.getText().toString().equals(""))
-								{
-									return true;
-								}else if(item.toLowerCase().equals("no")){
-									return true;
-								}
-							}
-						}
-					}catch(Exception ex){
-						ex.printStackTrace();
-					}
-					break;
-				case 4:
-					try{
-						String siot = (String)sceneIOType.getSelectedItem();
-						String sit = (String)sceneIType.getSelectedItem();
-						String sot = (String)sceneOType.getSelectedItem();
-						String va = (String)victimAlone.getSelectedItem();
-						
-						if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes"))
-						{
-								return true;
-						}else if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("no")){
-							if(!peopleWithVictim.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}else if(siot.toLowerCase().equals("inside") && sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes")){
-							if(!sceneITypeOther.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}else if(siot.toLowerCase().equals("inside") && sit.toLowerCase().equals("other") && va.toLowerCase().equals("no")){
-							if(!sceneITypeOther.getText().toString().equals("") && !peopleWithVictim.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}
-						////
-						else if(siot.toLowerCase().equals("outside") && !sot.toLowerCase().equals("other"))
-						{
-							return true;
-						}else if(siot.toLowerCase().equals("outside") && sot.toLowerCase().equals("other")){
-							if(!sceneOTypeOther.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}
-						
-					}catch(Exception ex){ex.printStackTrace();}
-					break;
-				case 5:
-					return true;
-				case 6:
-					try{
-						if(!bluntObjectUsed.getText().toString().equals("") && !generalHistory.getText().toString().equals("")){
-							return true;
-						}
-					}catch(Exception ex){ex.printStackTrace();}
-					break;
-				case 7:
-					return true;
-			}
-		}catch(Exception e){e.printStackTrace();}
-		return false;
-	}
+	    
+	    @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        super.onActivityResult(requestCode, resultCode, data);
+	         
+	        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+	            Uri selectedImage = data.getData();
+	            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+	 
+	            Cursor cursor = getContentResolver().query(selectedImage,
+	            filePathColumn, null, null, null);
+	            cursor.moveToFirst();
+	 
+	            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+	            String picturePath = cursor.getString(columnIndex);
+	            cursor.close();
+	           
+	            uploadFileName.add(picturePath);
+	           // messageText.setText("Path : "+uploadFileName);
+	            
+	            if(count == 0){
+	            	imageView0.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 1){
+	            	imageView1.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 2){
+	            	imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 3){
+	            	imageView3.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 4){
+	            	imageView4.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 5){
+	            	imageView5.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 6){
+	            	imageView6.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 7){
+	            	imageView7.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }else if(count == 8){
+	            	imageView8.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            }
+	            count++;
+	        }
+	     
+	     
+	    }
+	   
+	   
+	 
+	    public int uploadFile(String sourceFileUri) {
+	           
+	           
+	          String fileName = sourceFileUri;
+	  
+	          HttpURLConnection conn = null;
+	          DataOutputStream dos = null;  
+	          String lineEnd = "\r\n";
+	          String twoHyphens = "--";
+	          String boundary = "*****";
+	          int bytesRead, bytesAvailable, bufferSize;
+	          byte[] buffer;
+	          int maxBufferSize = 1 * 1024 * 1024; 
+	          File sourceFile = new File(sourceFileUri); 
+	           
+	          if (!sourceFile.isFile()) {
+	               
+	               dialog.dismiss(); 
+	                
+	               Log.e("uploadFile", "Source File not exist :" + filename);
+	                
+	               runOnUiThread(new Runnable() {
+	                   public void run() {
+	                       messageText.setText("Source File not exist :"+ filename);
+	                   }
+	               }); 
+	                
+	               return 0;
+	            
+	          }
+	          else
+	          {
+	               try { 
+	                    
+	                     // open a URL connection to the Servlet
+	                   FileInputStream fileInputStream = new FileInputStream(sourceFile);
+	                   URL url = new URL(upLoadServerUri);
+	                    
+	                   // Open a HTTP  connection to  the URL
+	                   conn = (HttpURLConnection) url.openConnection(); 
+	                   conn.setDoInput(true); // Allow Inputs
+	                   conn.setDoOutput(true); // Allow Outputs
+	                   conn.setUseCaches(false); // Don't use a Cached Copy
+	                   conn.setRequestMethod("POST");
+	                   conn.setRequestProperty("Connection", "Keep-Alive");
+	                   conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+	                   conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+	                   conn.setRequestProperty("uploaded_file", fileName); 
+	                    
+	                   dos = new DataOutputStream(conn.getOutputStream());
+	          
+	                   dos.writeBytes(twoHyphens + boundary + lineEnd); 
+	                   dos.writeBytes("Content-Disposition: form-data; name= uploaded_file ;filename="+fileName+ lineEnd);
+	                    
+	                   dos.writeBytes(lineEnd);
+	          
+	                   // create a buffer of  maximum size
+	                   bytesAvailable = fileInputStream.available(); 
+	          
+	                   bufferSize = Math.min(bytesAvailable, maxBufferSize);
+	                   buffer = new byte[bufferSize];
+	          
+	                   // read file and write it into form...
+	                   bytesRead = fileInputStream.read(buffer, 0, bufferSize);  
+	                      
+	                   while (bytesRead > 0) {
+	                        
+	                     dos.write(buffer, 0, bufferSize);
+	                     bytesAvailable = fileInputStream.available();
+	                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
+	                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);   
+	                      
+	                    }
+	          
+	                   // send multipart form data necesssary after file data...
+	                   dos.writeBytes(lineEnd);
+	                   dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+	          
+	                   // Responses from the server (code and message)
+	                   serverResponseCode = conn.getResponseCode();
+	                   String serverResponseMessage = conn.getResponseMessage();
+	                     
+	                   Log.i("uploadFile", "HTTP Response is : "
+	                           + serverResponseMessage + ": " + serverResponseCode);
+	                    
+	                   if(serverResponseCode == 200){
+	                        
+	                       runOnUiThread(new Runnable() {
+	                            public void run() {
+	                                 
+	                                String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
+	                                              +" http://forensicsapp.co.za/webapp/images/uploads/"
+	                                              +filename;
+	                                 
+	                                messageText.setText(msg);
+	                                Toast.makeText(Blunt.this, "File Upload Complete.", 
+	                                             Toast.LENGTH_SHORT).show();
+	                            }
+	                        });                
+	                   }    
+	                    
+	                   //close the streams //
+	                   fileInputStream.close();
+	                   dos.flush();
+	                   dos.close();
+	                     
+	              } catch (MalformedURLException ex) {
+	                   
+	                  dialog.dismiss();  
+	                  ex.printStackTrace();
+	                   
+	                  runOnUiThread(new Runnable() {
+	                      public void run() {
+	                          messageText.setText("MalformedURLException Exception : check script url.");
+	                          Toast.makeText(Blunt.this, "MalformedURLException", 
+	                                                              Toast.LENGTH_SHORT).show();
+	                      }
+	                  });
+	                   
+	                  Log.e("Upload file to server", "error: " + ex.getMessage(), ex);  
+	              } catch (Exception e) {
+	                   
+	                  dialog.dismiss();  
+	                  e.printStackTrace();
+	                   
+	                  runOnUiThread(new Runnable() {
+	                      public void run() {
+	                          messageText.setText("Got Exception : see logcat ");
+	                          Toast.makeText(Blunt.this, "Got Exception : see logcat ", 
+	                                  Toast.LENGTH_SHORT).show();
+	                      }
+	                  });
+	                  Log.e("Upload file to server Exception", "Exception : "
+	                                                   + e.getMessage(), e);  
+	              }
+	              dialog.dismiss();       
+	              return serverResponseCode; 
+	               
+	           } // End else block 
+	         }
+	
 	
 	public List<NameValuePair> getPostData(){
 		try{
@@ -917,45 +1040,161 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        victims.accumulate("victimSurname", victimSurname.getText().toString());
 	        victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
 	        victims.accumulate("scenePhoto", null);
-	        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
-	        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
+	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	        if(bodyDecomposedYes.isChecked())
+	        {
+	        	victims.accumulate("bodyDecomposed", "Yes");
+	        }else{
+	        	victims.accumulate("bodyDecomposed", "No");
+	        }
+	        
+	        if(medicalInterventionYes.isChecked())
+	        {
+	        	victims.accumulate("medicalIntervention", "yes");
+	        }else{
+	        	victims.accumulate("medicalIntervention", "no");
+	        }
+	        
 	        victims.accumulate("bodyBurned", null);
 	        victims.accumulate("bodyIntact", null);
 	        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
-	        victims.accumulate("victimFoundCloseToWater", (String)closeToWater.getSelectedItem());
-	        victims.accumulate("suicideSuspected", (String)suicideSuspected.getSelectedItem());
-	        victims.accumulate("victimSuicideNoteFound", (String)suicideNoteFound.getSelectedItem());
-	        victims.accumulate("previousAttempts", (String)previousAttempts.getSelectedItem());
-	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
-	        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
-	        String item = (String)sceneIOType.getSelectedItem();
-	        if(item.toLowerCase().equals("inside"))
+	        
+	        if(closeToWaterYes.isChecked())
 	        {
-		        victims.accumulate("victimInside", "yes");
+	        	victims.accumulate("victimFoundCloseToWater", "yes");
+	        }else{
+	        	victims.accumulate("victimFoundCloseToWater", "no");
+	        }
+	        
+	        if(suicideSuspectedYes.isChecked())
+	        {
+	        	victims.accumulate("suicideSuspected", "yes");
+	        }else{
+	        	victims.accumulate("suicideSuspected", "no");
+	        }
+	        
+	        if(suicideNoteFoundYes.isChecked())
+	        {
+	        	victims.accumulate("victimSuicideNoteFound", "yes");
+	        }else{
+	        	victims.accumulate("victimSuicideNoteFound", "no");
+	        }
+	        
+	        if(previousAttemptsYes.isChecked())
+	        {
+	        	victims.accumulate("previousAttempts", "yes");
+	        }else{
+	        	victims.accumulate("previousAttempts", "no");
+	        }
+	        
+	        
+	        
+	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+	        if(rapeHomicideYes.isChecked())
+	        {
+	        	victims.accumulate("rapeHomicideSuspected", "yes");
+	        }else{
+	        	victims.accumulate("rapeHomicideSuspected", "no");
+	        }
+	        
+	        if(sceneIOTypeInside.isChecked())
+	        {
+	        	victims.accumulate("victimInside", "yes");
 		        victims.accumulate("victimOutside", "no");
 	        }else{
 	        	victims.accumulate("victimInside", "no");
 		        victims.accumulate("victimOutside", "yes");
 	        }
+	        
+	       
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
 	        info.accumulate("bluntIOType",getIOType() );
-	        info.accumulate("signsOfStruggle", (String)signsOfStruggle.getSelectedItem());
-	        info.accumulate("alcoholBottleAround", (String)alcoholBottleAround.getSelectedItem());
-	        info.accumulate("drugParaphernalia", (String)drugParaphernalia.getSelectedItem());
-	        info.accumulate("strangulationSuspected", (String)strangulationSuspected.getSelectedItem());
-	        info.accumulate("smotheringSuspected", (String)smotheringSuspected.getSelectedItem());
-	        info.accumulate("chockingSuspected", (String)chockingSuspected.getSelectedItem());
-	        info.accumulate("doorLocked", (String)doorLocked.getSelectedItem());
-	        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
-	        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
-	        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
+	        if(signsOfStruggleYes.isChecked())
+	        {
+	        	info.accumulate("signsOfStruggle", "yes");
+	        }else{
+	        	info.accumulate("signsOfStruggle", "no");
+	        }
+	        if(alcoholBottleAroundYes.isChecked())
+	        {
+	        	info.accumulate("alcoholBottleAround", "yes");
+	        }else{
+	        	info.accumulate("alcoholBottleAround", "no");
+	        }
+	        
+	        if(drugParaphernaliaYes.isChecked())
+	        {
+	        	info.accumulate("drugParaphernalia", "yes");
+	        }else{
+	        	info.accumulate("drugParaphernalia", "no");
+	        }
+	        
+	        if(strangulationSuspectedYes.isChecked())
+	        {
+	        	info.accumulate("strangulationSuspected", "yes");
+	        }else{
+	        	info.accumulate("strangulationSuspected", "no");
+	        }
+	        
+	        if(smotheringSuspectedYes.isChecked())
+	        {
+	        	info.accumulate("smotheringSuspected", "yes");
+	        }else{
+	        	info.accumulate("smotheringSuspected", "no");
+	        }
+	        
+	        if(chockingSuspectedYes.isChecked())
+	        {
+	        	info.accumulate("chockingSuspected", "yes");
+	        }else{
+	        	info.accumulate("chockingSuspected", "no");
+	        }
+	        
+	        if(doorLockedYes.isChecked())
+	        {
+	        	info.accumulate("doorLocked", "yes");
+	        }else{
+	        	info.accumulate("doorLocked", "no");
+	        }
+	        
+	        if(windowsClosedYes.isChecked())
+	        {
+	        	info.accumulate("windowsClosed", "yes");
+	        }else{
+	        	info.accumulate("windowsClosed", "no");
+	        }
+	        if(windowsBrokenYes.isChecked())
+	        {
+	        	info.accumulate("windowsBroken", "yes");
+	        }else{
+	        	info.accumulate("windowsBroken", "no");
+	        }
+	        if(victimAloneYes.isChecked())
+	        {
+	        	info.accumulate("victimAlone", "yes");
+	        }else{
+	        	info.accumulate("victimAlone", "no");
+	        }
+	        
+	        
 	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
 	        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
-	        info.accumulate("bluntForceObjectStillOnScene", (String)bluntForceObjectOnScene.getSelectedItem());
-	        info.accumulate("wasCommunityAssult", (String)communityAssault.getSelectedItem());
+	        if(bluntForceObjectOnSceneYes.isChecked())
+	        {
+	        	info.accumulate("bluntForceObjectStillOnScene", "yes");
+	        }else{
+	        	info.accumulate("bluntForceObjectStillOnScene", "no");
+	        }
+	        
+	        if(communityAssaultYes.isChecked())
+	        {
+	        	info.accumulate("wasCommunityAssult", "yes");
+	        }else{
+	        	info.accumulate("wasCommunityAssult", "no");
+	        }
 	        
 	        array.put(info);
 	        obj.accumulate("object", array);
@@ -973,8 +1212,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	public String getIOType(){
 		try{
 			String type = "";
-			String item = (String)sceneIOType.getSelectedItem();
-			if(item.toLowerCase().equals("inside"))
+			
+			if(sceneIOTypeInside.isChecked())
 			{
 				type = (String)sceneIType.getSelectedItem();
 				if(type.toLowerCase().equals("other")){
@@ -1055,8 +1294,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	public int getAttempts(){
 		try{
-			String item = (String)previousAttempts.getSelectedItem();
-			if(item.toLowerCase().equals("yes"))
+			
+			if(previousAttemptsYes.isChecked())
 			{
 				int attempts = Integer.parseInt(howManyAttempts.getText().toString());
 				return attempts;
@@ -1070,8 +1309,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	public String getPeopleWithVictim(){
 		try{
 			
-			String item = (String)victimAlone.getSelectedItem();
-			if(item.toLowerCase().equals("no"))
+			
+			if(victimAloneNo.isChecked())
 			{
 				return peopleWithVictim.getText().toString();
 			}else{
@@ -1090,6 +1329,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         JSONArray vicArray = new JSONArray();
         JSONObject victims = new JSONObject();
         
+    
         
         info.accumulate("FOPersonelNumber", username);
         info.accumulate("sceneTime", time);
@@ -1109,45 +1349,160 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         victims.accumulate("victimSurname", victimSurname.getText().toString());
         victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
         victims.accumulate("scenePhoto", null);
-        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
-        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
+        if(bodyDecomposedYes.isChecked())
+        {
+        	victims.accumulate("bodyDecomposed", "Yes");
+        }else{
+        	victims.accumulate("bodyDecomposed", "No");
+        }
+        
+        if(medicalInterventionYes.isChecked())
+        {
+        	victims.accumulate("medicalIntervention", "yes");
+        }else{
+        	victims.accumulate("medicalIntervention", "no");
+        }
+        
         victims.accumulate("bodyBurned", null);
         victims.accumulate("bodyIntact", null);
         victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
-        victims.accumulate("victimFoundCloseToWater", (String)closeToWater.getSelectedItem());
-        victims.accumulate("suicideSuspected", (String)suicideSuspected.getSelectedItem());
-        victims.accumulate("victimSuicideNoteFound", (String)suicideNoteFound.getSelectedItem());
-        victims.accumulate("previousAttempts", (String)previousAttempts.getSelectedItem());
-        victims.accumulate("numberOfPreviousAttempts", getAttempts());
-        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
-        String item = (String)sceneIOType.getSelectedItem();
-        if(item.toLowerCase().equals("inside"))
+        
+        if(closeToWaterYes.isChecked())
         {
-	        victims.accumulate("victimInside", "yes");
+        	victims.accumulate("victimFoundCloseToWater", "yes");
+        }else{
+        	victims.accumulate("victimFoundCloseToWater", "no");
+        }
+        
+        if(suicideSuspectedYes.isChecked())
+        {
+        	victims.accumulate("suicideSuspected", "yes");
+        }else{
+        	victims.accumulate("suicideSuspected", "no");
+        }
+        
+        if(suicideNoteFoundYes.isChecked())
+        {
+        	victims.accumulate("victimSuicideNoteFound", "yes");
+        }else{
+        	victims.accumulate("victimSuicideNoteFound", "no");
+        }
+        
+        if(previousAttemptsYes.isChecked())
+        {
+        	victims.accumulate("previousAttempts", "yes");
+        }else{
+        	victims.accumulate("previousAttempts", "no");
+        }
+        
+        
+        
+        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+        if(rapeHomicideYes.isChecked())
+        {
+        	victims.accumulate("rapeHomicideSuspected", "yes");
+        }else{
+        	victims.accumulate("rapeHomicideSuspected", "no");
+        }
+        
+        if(sceneIOTypeInside.isChecked())
+        {
+        	victims.accumulate("victimInside", "yes");
 	        victims.accumulate("victimOutside", "no");
         }else{
         	victims.accumulate("victimInside", "no");
 	        victims.accumulate("victimOutside", "yes");
         }
+        
+       
        
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
         info.accumulate("bluntIOType",getIOType() );
-        info.accumulate("signsOfStruggle", (String)signsOfStruggle.getSelectedItem());
-        info.accumulate("alcoholBottleAround", (String)alcoholBottleAround.getSelectedItem());
-        info.accumulate("drugParaphernalia", (String)drugParaphernalia.getSelectedItem());
-        info.accumulate("strangulationSuspected", (String)strangulationSuspected.getSelectedItem());
-        info.accumulate("smotheringSuspected", (String)smotheringSuspected.getSelectedItem());
-        info.accumulate("chockingSuspected", (String)chockingSuspected.getSelectedItem());
-        info.accumulate("doorLocked", (String)doorLocked.getSelectedItem());
-        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
-        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
-        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
+        if(signsOfStruggleYes.isChecked())
+        {
+        	info.accumulate("signsOfStruggle", "yes");
+        }else{
+        	info.accumulate("signsOfStruggle", "no");
+        }
+        if(alcoholBottleAroundYes.isChecked())
+        {
+        	info.accumulate("alcoholBottleAround", "yes");
+        }else{
+        	info.accumulate("alcoholBottleAround", "no");
+        }
+        
+        if(drugParaphernaliaYes.isChecked())
+        {
+        	info.accumulate("drugParaphernalia", "yes");
+        }else{
+        	info.accumulate("drugParaphernalia", "no");
+        }
+        
+        if(strangulationSuspectedYes.isChecked())
+        {
+        	info.accumulate("strangulationSuspected", "yes");
+        }else{
+        	info.accumulate("strangulationSuspected", "no");
+        }
+        
+        if(smotheringSuspectedYes.isChecked())
+        {
+        	info.accumulate("smotheringSuspected", "yes");
+        }else{
+        	info.accumulate("smotheringSuspected", "no");
+        }
+        
+        if(chockingSuspectedYes.isChecked())
+        {
+        	info.accumulate("chockingSuspected", "yes");
+        }else{
+        	info.accumulate("chockingSuspected", "no");
+        }
+        
+        if(doorLockedYes.isChecked())
+        {
+        	info.accumulate("doorLocked", "yes");
+        }else{
+        	info.accumulate("doorLocked", "no");
+        }
+        
+        if(windowsClosedYes.isChecked())
+        {
+        	info.accumulate("windowsClosed", "yes");
+        }else{
+        	info.accumulate("windowsClosed", "no");
+        }
+        if(windowsBrokenYes.isChecked())
+        {
+        	info.accumulate("windowsBroken", "yes");
+        }else{
+        	info.accumulate("windowsBroken", "no");
+        }
+        if(victimAloneYes.isChecked())
+        {
+        	info.accumulate("victimAlone", "yes");
+        }else{
+        	info.accumulate("victimAlone", "no");
+        }
+        
+        
         info.accumulate("peopleWithVictim", getPeopleWithVictim());
         info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
-        info.accumulate("bluntForceObjectStillOnScene", (String)bluntForceObjectOnScene.getSelectedItem());
-        info.accumulate("wasCommunityAssult", (String)communityAssault.getSelectedItem());
+        if(bluntForceObjectOnSceneYes.isChecked())
+        {
+        	info.accumulate("bluntForceObjectStillOnScene", "yes");
+        }else{
+        	info.accumulate("bluntForceObjectStillOnScene", "no");
+        }
+        
+        if(communityAssaultYes.isChecked())
+        {
+        	info.accumulate("wasCommunityAssult", "yes");
+        }else{
+        	info.accumulate("wasCommunityAssult", "no");
+        }
         
         array.put(info);
         obj.accumulate("object", array);
@@ -1269,6 +1624,51 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
     }
 
-	
+	@Override
+	public void hidePage() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void showPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean validateNextPage() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void showHideButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+			
+			@Override
+			protected Weather doInBackground(String... params) {
+				Weather weather = new Weather();
+				String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+	
+				try {
+					weather = JSONWeatherParser.getWeather(data);
+					
+					// Let's retrieve the icon
+					weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+					
+				} catch (JSONException e) {				
+					e.printStackTrace();
+				}
+				return weather;
+			
+		}
+		}
+	
+	
+	
 }

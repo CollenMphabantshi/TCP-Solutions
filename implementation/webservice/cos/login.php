@@ -1,5 +1,5 @@
 <?php
-
+error_reporting (E_ALL ^ E_WARNING);
 $formData=$_REQUEST["formValues"];
 $formObj=json_decode($formData);
 
@@ -12,6 +12,10 @@ $user_name = "root";
 $password = "";
 $database = "COS330";
 $server = "localhost";
+
+$_SESSION['Username'] = $Username;
+$_SESSION['code'] = $AuthenticationCode;
+$_COOKIE['Username'] = $Username;
 
 
 $db_handle= mysqli_connect($server,$user_name ,$password,$database);
@@ -35,32 +39,20 @@ if (mysqli_connect_errno())
 		}
 		if($bool == true)
 		{
-			echo $bool;
-		
-			echo "<script>  
-				alert('Thank you . ".$Username." your have successfully logged!');  
-				</script>";
+			
 				
 					@session_start();
-					include('sessions.php');
+					
 					$_SESSION['Username'] = $Username;
 					$_SESSION['code'] = $AuthenticationCode;
 					
 					
-			echo "
-				<script>  
-				window.location = 'home.php';  
-				</script>";
+				header('Location: home.php');
 		}
-		else
+		else if($bool == false)
 		{
-			echo "<script>  
-				alert('Sorry User ".$Username." doesn't exist');  
-				</script>";
-			echo "
-				<script>  
-				window.location = 'index.html'; 
-				</script>";
+			
+			header('Location: index.html');
 		}
 	
 	mysqli_close($db_handle);
