@@ -41,7 +41,7 @@
 	        android:id="@+id/fragId"
 	        android:name="com.google.android.gms.maps.MapFragment"
 	        android:layout_width="500dp"
-	        android:layout_height="500dp"
+	        android:layout_height="300dp"
 	        />
 			
 		    <TextView 
@@ -49,78 +49,18 @@
 		        android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:text=""
+				android:visibility="gone"
 		        />
-		    <Button 
-		        android:id="@+id/geolocation"
-		        android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="get loaction"
-		        />
+		   
 		    
 		    <TextView
-				  android:id="@+id/cityText"
+				  android:id="@+id/bluntWeatherInfo"
 				  android:layout_width="wrap_content"
 				  android:layout_height="wrap_content"
-				  android:text="city"
+				  android:text="weather Info"
+				  android:visibility="gone"
 				         />
-		    <ImageView
-				  android:id="@+id/condIcon"
-				  android:layout_width="wrap_content"
-				  android:layout_height="wrap_content"
-				/>
-		    <TextView
-				  android:id="@+id/condDescr"
-				  android:layout_width="wrap_content"
-				  android:layout_height="wrap_content"
-				 />
-			<TextView
-				 android:id="@+id/temp"
-				 android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"
-				/>
-			
-			 <TextView
-				        android:id="@+id/pressLab"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_marginTop="15dp" />
-				
-				    <TextView
-				        android:id="@+id/press"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				       
-				        />
-				
-				    <TextView
-				        android:id="@+id/humLab"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Humidity" />
-				
-				    <TextView
-				        android:id="@+id/hum"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				       />
-				
-				    <TextView
-				        android:id="@+id/windLab"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Wind" />
-				
-				    <TextView
-				        android:id="@+id/windSpeed"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        />
-				
-				    <TextView
-				        android:id="@+id/windDeg"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        />
+		   
 				
 		    <!--  -->
 			

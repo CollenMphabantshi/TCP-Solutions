@@ -42,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
+
 import com.example.mobileforensics.JSONWeatherParser;
 import com.example.mobileforensics.WeatherHttpClient;
 import com.example.mobileforensics.models.Weather;
@@ -84,21 +85,15 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	TextView value;
 
-	private LinearLayout infoLayout;
-	private LinearLayout demographicsLayout;
-	private GridLayout theBodyLayout;
-	private GridLayout sceneOfInjuryLayout;
-	private GridLayout sceneLookLayout;
-	private GridLayout theSceneLayout;
-	private LinearLayout galleryLayout;
 	
-	private TextView tv_ioName;
+	
+
 	private EditText ioName;
-	private TextView tv_ioSurname;
+	
 	private EditText ioSurname;
-	private TextView tv_ioRank;
+	
 	private EditText ioRank;
-	private TextView tv_ioCellNo;
+	
 	private EditText ioCellNo;
 	
 	private TextView tv_foosName;
@@ -115,11 +110,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
 	
-	private TextView tv_victimInfo;
-	private TextView tv_victimRace;
-	private TextView tv_victimGender;
-	private TextView tv_foos;
-	private TextView tv_io;
+	
 	
 	
 	private RadioButton rgbMale;
@@ -219,7 +210,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private EditText generalHistory;
 	
 	private TextView response;
-	private Button nextButton;
+
 	private Button doneButton;
 	private Button logoutButton;
 	
@@ -231,13 +222,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
-	private int pageCount;
+	
 	
 	private String username;
 	private String time;
 	private String date;
 	private String location;
-	private String temperature;
+	
 	private JSONObject currentDataSaved;
 	
 	GoogleMap map;
@@ -246,9 +237,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private double latitude;
 	private int status;
 	private String myAddress;
-	private String Text;
 	
-	Button geolocation;
 	
 	//upload image parameters still to be arranged
 	TextView messageText;
@@ -264,20 +253,16 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     String filename ;
     
     //weather section
-    private TextView cityText;
-	private TextView condDescr;
-	private TextView temp;
-	private TextView press;
-	private TextView windSpeed;
-	private TextView windDeg;
+    private String WeatherInfo="";
+    private TextView weatherInfo;
 	
-	private TextView hum;
-	private ImageView imgView;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		//String city = "lat=-25.7547642&lon=28.2146178";
+		String city = "";
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
 		
@@ -285,14 +270,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		
 		
-		//initialize();
+		initialize();
 		System.out.println("Start init");
 		variablesInitialization();
 		setOnClickEvents();
 		
-		//hidePage();
-		//showPage();
-		//showHideButtons();
+		
 	
 	}
 	
@@ -308,6 +291,10 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				map.setMyLocationEnabled(true);
 				map.setOnMyLocationChangeListener(this);
 				
+				String city = "lat="+latitude+"&lon="+longitude;
+				JSONWeatherTask task = new JSONWeatherTask();
+				task.execute(new String[]{city});
+				location +="\n"+WeatherInfo;
 			}
 			return location;
 			
@@ -325,9 +312,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-        /*time = formattedDate.substring(11);
-        date = formattedDate.substring(0,11);
-		temperature = "23 C";*/
+       
         getAddress(longitude,latitude);
         
         try {
@@ -341,11 +326,10 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			object.accumulate("Time", time);
 			object.accumulate("Date", date);
 			object.accumulate("Location", locate.toString());
-			object.accumulate("Temperature", temperature);
 			
 			location = object.toString();
 
-			value.setText(location);
+			//value.setText(location);
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -380,30 +364,24 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	}
 
 	private void variablesInitialization(){
-		pageCount = 1;
+
 		username = "p33333333";
 		try{
 		
 		time = (new Random().nextLong())+"";
 	    date = "2014-10-10";
-		temperature = "23 C";
-		location = (new Random().nextLong())+","+(new Random().nextLong());
-		geolocation = (Button) findViewById(R.id.geolocation);
-		infoLayout = (LinearLayout)findViewById(R.id.blunt_infoLayout);
-		demographicsLayout = (LinearLayout)findViewById(R.id.blunt_demographicLayout);
-		theBodyLayout = (GridLayout)findViewById(R.id.blunt_theBodyLayout);
-		sceneOfInjuryLayout = (GridLayout)findViewById(R.id.blunt_sceneOfInjuryLayout);
-		sceneLookLayout = (GridLayout)findViewById(R.id.blunt_sceneLookLayout);
-		theSceneLayout = (GridLayout)findViewById(R.id.blunt_theSceneLayout);
-		galleryLayout = (LinearLayout)findViewById(R.id.blunt_galleryLayout);
 		
-		tv_ioName = (TextView)findViewById(R.id.blunt_tv_io_name);
+		location = (new Random().nextLong())+","+(new Random().nextLong());
+		
+		
+		
+	
 		ioName = (EditText)findViewById(R.id.blunt_io_name);
-		tv_ioSurname = (TextView)findViewById(R.id.blunt_tv_io_surname);
+		
 		ioSurname = (EditText)findViewById(R.id.blunt_io_surname);
-		tv_ioRank = (TextView)findViewById(R.id.blunt_tv_io_rank);
+		
 		ioRank = (EditText)findViewById(R.id.blunt_io_rank);
-		tv_ioCellNo = (TextView)findViewById(R.id.blunt_tv_io_cell);
+		
 		ioCellNo = (EditText)findViewById(R.id.blunt_io_cell);
 		
 		tv_foosName = (TextView)findViewById(R.id.blunt_tv_foos_name);
@@ -413,11 +391,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		tv_foosRank = (TextView)findViewById(R.id.blunt_tv_foos_rank);
 		foosRank = (EditText)findViewById(R.id.blunt_foos_rank);
 		
-		tv_io = (TextView)findViewById(R.id.blunt_tv_io);
-		tv_foos = (TextView)findViewById(R.id.blunt_tv_foos);
-		tv_victimInfo = (TextView)findViewById(R.id.blunt_tv_victimInfo);
-		tv_victimRace = (TextView)findViewById(R.id.blunt_tv_victimRace);
-		tv_victimGender = (TextView)findViewById(R.id.blunt_tv_victimGender);
+	
 		
 		tv_victimName = (TextView)findViewById(R.id.blunt_tv_victim_name);
 		victimName = (EditText)findViewById(R.id.blunt_victim_name);
@@ -527,7 +501,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		
 		response = (TextView)findViewById(R.id.blunt_tv_response);
-		nextButton = (Button)findViewById(R.id.blunt_nextButton);
+		
 		doneButton = (Button)findViewById(R.id.blunt_doneButton);
 		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
 		
@@ -550,14 +524,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	       
 	       
 	       // weather section
-	       	cityText = (TextView) findViewById(R.id.cityText);
-			condDescr = (TextView) findViewById(R.id.condDescr);
-			temp = (TextView) findViewById(R.id.temp);
-			hum = (TextView) findViewById(R.id.hum);
-			press = (TextView) findViewById(R.id.press);
-			windSpeed = (TextView) findViewById(R.id.windSpeed);
-			windDeg = (TextView) findViewById(R.id.windDeg);
-			imgView = (ImageView) findViewById(R.id.condIcon);
+	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
+		
 		
 		
 		}catch(Exception e){
@@ -575,14 +543,6 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	public void setOnClickEvents(){
 		
-		geolocation.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				initialize();
-			}
-		});
 		
 		doneButton.setOnClickListener(new OnClickListener() {
 			
@@ -1026,7 +986,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        info.accumulate("sceneTime", time);
 	        info.accumulate("sceneDate", date);
 	        info.accumulate("sceneLocation", location);
-	        info.accumulate("sceneTemparature", temperature);
+	        info.accumulate("sceneTemparature", WeatherInfo);
 	        info.accumulate("investigatingOfficerName", ioName.getText().toString());
 	        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
 	        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
@@ -1335,7 +1295,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         info.accumulate("sceneTime", time);
         info.accumulate("sceneDate", date);
         info.accumulate("sceneLocation", location);
-        info.accumulate("sceneTemparature", temperature);
+        info.accumulate("sceneTemparature", WeatherInfo);
         info.accumulate("investigatingOfficerName", ioName.getText().toString());
         info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
         info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
@@ -1659,7 +1619,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					weather = JSONWeatherParser.getWeather(data);
 					
 					// Let's retrieve the icon
-					weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+					//weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
 					
 				} catch (JSONException e) {				
 					e.printStackTrace();
@@ -1667,7 +1627,30 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				return weather;
 			
 		}
+			
+			
+			@Override
+			protected void onPostExecute(Weather weather) {			
+				super.onPostExecute(weather);
+				
+				/*if (weather.iconData != null && weather.iconData.length > 0) {
+					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
+					imgView.setImageBitmap(img);
+				}*/
+				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				//weatherInfo.setText(WeatherInfo);
+				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
+				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
+				press.setText("" + weather.currentCondition.getPressure() + " hPa");
+				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+				windDeg.setText("" + weather.wind.getDeg() + "�");*/
+					
+			}
 		}
+	
+	
 	
 	
 	
