@@ -24,7 +24,7 @@ and open the template in the editor.
                         echo $_SERVER['REMOTE_ADDR'].'<br/>';
                         echo $_SERVER['HTTP_USER_AGENT'].'<br/>';
                         //echo $_SERVER['HTTP_HOST'].'<br/>';
-                        echo '<a href="#" class="ui-button" id="logout">Login Page</a>';
+                        echo '<br/><a href="#" class="ui-button" id="logout">Login Page</a>';
                 ?>
             </p>
         </div>

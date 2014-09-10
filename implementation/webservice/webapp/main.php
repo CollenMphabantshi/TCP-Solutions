@@ -3,18 +3,27 @@
 ?>
 <?php
     session_start();
-    if(!empty($_SESSION[md5('s_nomor')])){
-        if($_SESSION[md5('s_ac')] === md5("1")){
+    require_once './encryptions.php';
+    $enc = new Encryption();
+    if(!empty($_SESSION[$enc->md5_encrypt('s_nomor')])){
+        if($_SESSION[$enc->md5_encrypt('s_ac')] === $enc->md5_encrypt("1")){
             // Admin page
-            header("Location: /webapp/controlPanel.php");
-        }else if($_SESSION[md5('s_ac')] === md5("2")){
+            
+            header("Location: /webapp/ControlPanel.php");
+        }else if($_SESSION[$enc->md5_encrypt('s_ac')] === $enc->md5_encrypt("2")){
             // Forensic Practitioner page
             header("Location: /webapp/fpHome.php");
-        }else if($_SESSION[md5('s_ac')] === md5("6")){
+        }else if($_SESSION[$enc->md5_encrypt('s_ac')] === $enc->md5_encrypt("4")){
+            // Student page
+            header("Location: /webapp/studentHome.php");
+        }
+        else if($_SESSION[$enc->md5_encrypt('s_ac')] === $enc->md5_encrypt("6")){
             // Both Admin and FP page
             header("Location: /webapp/afpHome.php");
         }else{
             header("Location: /webapp/errorPage.php");
         }
+    }else{
+    	header("Location: /webapp/errorPage.php");
     }
 ?>

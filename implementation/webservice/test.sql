@@ -1,21 +1,25 @@
 
-drop database if exists forenlnm_mobileForensics;
-create database if not exists forenlnm_mobileForensics;
-use forenlnm_mobileForensics;
+drop database if exists forenlnm_mobileforensics;
+create database if not exists forenlnm_mobileforensics;
+use forenlnm_mobileforensics;
+
+
 
 
 create table if not exists userType
 (
     userTypeID int not null auto_increment,
-    userTypeDescription varchar(100) not null,
+    userTypeDescription text not null,
     primary key(userTypeID)
 );
+
 
 create table if not exists accessMode(
     uid int not null,
     mode text,
     primary key(uid)
 );
+
 
 create table if not exists audit_log(
     audit_id int not null auto_increment,
@@ -26,53 +30,59 @@ create table if not exists audit_log(
     primary key(audit_id)
 );
 
+
 CREATE TABLE IF NOT EXISTS users
 (
 `userID` int NOT NULL AUTO_INCREMENT,
- userName varchar(200) not null,
+ userName text not null,
  userPassword text not null,
-`userFirstname` varchar(200) NOT NULL,
-`userSurname` varchar(200) NOT NULL,
+`userFirstname` text NOT NULL,
+`userSurname` text NOT NULL,
 `userTypeID` int NOT NULL,
 userActive tinyint not null,
 FOREIGN KEY (userTypeID) REFERENCES userType(userTypeID),
 PRIMARY KEY (`userID`)
 );
 
+
 create table if not exists forensicOfficer
 (
-    personelNumber varchar(100) not null,
+    personelNumber varchar(500) not null,
     userID int not null,
-    cellphoneNumber varchar(15) not null,
+    cellphoneNumber text not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(personelNumber)
 );
+
 
 create table if not exists forensicPractitioner
 (
-    personelNumber varchar(100) not null,
+    personelNumber varchar(500) not null,
     userID int not null,
-    cellphoneNumber varchar(15) not null,
+    cellphoneNumber text not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(personelNumber)
 );
 
+
 create table if not exists student
 (
-    studentNumber varchar(100) not null,
+    studentNumber varchar(500) not null,
     userID int not null,
-    cellphoneNumber varchar(15) not null,
+    cellphoneNumber text not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(studentNumber)
 );
 
+
 create table if not exists administrator
 (
-    personelNumber varchar(100) not null,
+    personelNumber varchar(500) not null,
     userID int not null,
     FOREIGN KEY (userID) REFERENCES users(userID),
     primary key(personelNumber)
 );
+
 
 create table if not exists sceneType
 (
@@ -81,33 +91,36 @@ create table if not exists sceneType
     primary key(sceneTypeID)
 );
 
+
 create table if not exists scene
 (
     sceneID int not null auto_increment,
     sceneTypeID int not null,
     sceneTime text not null,
-    sceneDate date not null,
+    sceneDate text not null,
     sceneLocation text not null,
     sceneTemparature text not null,
-    sceneInvestigatingOfficerName varchar(200) not null,
-    sceneInvestigatingOfficerRank varchar(200) not null,
-    sceneInvestigatingOfficerCellNumber varchar(15) not null,
-    firstOfficerOnSceneName varchar(200) not null,
-    firstOfficerOnSceneRank varchar(200) not null,
+    sceneInvestigatingOfficerName text not null,
+    sceneInvestigatingOfficerRank text not null,
+    sceneInvestigatingOfficerCellNumber text not null,
+    firstOfficerOnSceneName text not null,
+    firstOfficerOnSceneRank text not null,
     FOREIGN KEY (sceneTypeID) REFERENCES sceneType(sceneTypeID),
     primary key(sceneID)
 ); 
+
 
 
 create table if not exists cases
 (
     caseNumber int not null auto_increment,
     sceneID int not null,
-    FOPersonelNumber varchar(200) not null,
+    FOPersonelNumber varchar(500) not null,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
     FOREIGN KEY (FOPersonelNumber) REFERENCES forensicOfficer(personelNumber),
     primary key(caseNumber)
 );
+
 
 
 create table if not exists deathRegister
@@ -125,30 +138,32 @@ create table if not exists victimType(
 	primary key(victimTypeID)
 );
 
+
 create table if not exists victims
 (
     victimID int not null auto_increment,
-    victimIdentityNumber varchar(200) not null,
-    victimGender varchar(10) not null,
-    victimRace varchar(200) not null,
-    victimName varchar(200) not null,
-    victimSurname varchar(200) not null,
+    victimIdentityNumber text not null,
+    victimGender text not null,
+    victimRace text not null,
+    victimName text not null,
+    victimSurname text not null,
     `whoFoundVictimBody` text NOT NULL,
-    bodyDecompose varchar(5) NOT NULL,
-    medicalIntervention varchar(5) NOT NULL,
-    bodyBurned varchar(5) NULL,
-    bodyIntact varchar(5) NULL,
-    `victimInside` varchar(5) NOT NULL,
-    `victimOutside` varchar(5) NOT NULL,
-    `victimFoundCloseToWater` varchar(5) NOT NULL,
-    `victimSuicideNoteFound` varchar(5) NOT NULL,
+    bodyDecompose text NOT NULL,
+    medicalIntervention text NOT NULL,
+    bodyBurned text NULL,
+    bodyIntact text NULL,
+    `victimInside` text NOT NULL,
+    `victimOutside` text NOT NULL,
+    `victimFoundCloseToWater` text NOT NULL,
+    `victimSuicideNoteFound` text NOT NULL,
     `victimGeneralHistory` text NOT NULL,
-    `rapeHomicideSuspected` varchar(5) NOT NULL,
-    `suicideSuspected` varchar(5) NOT NULL,
-    previousAttempts varchar(5) NOT NULL,
+    `rapeHomicideSuspected` text NOT NULL,
+    `suicideSuspected` text NOT NULL,
+    previousAttempts text NOT NULL,
     numberOfPreviousAttempts int not null,
-    primary key(victimID,victimIdentityNumber)
+    primary key(victimID)
 );
+
 
 create table if not exists sceneVictims
 (
@@ -172,6 +187,7 @@ create table if not exists victimScenePhotos
     primary key(photoID)
 );
 
+
 create table if not exists scenePhotos
 (
     photoID int not null auto_increment,
@@ -181,10 +197,12 @@ create table if not exists scenePhotos
     primary key(photoID)
 );
 
+
 CREATE TABLE IF NOT EXISTS `insideScenes` (
   `insideSceneID` int NOT NULL auto_increment primary key,
    insideSceneDescription text not null
 );
+
 
 CREATE TABLE IF NOT EXISTS `outsideScenes` (
   `outsideSceneID` int NOT NULL auto_increment primary key,
@@ -236,24 +254,24 @@ CREATE TABLE IF NOT EXISTS `blunt` (
    sceneID int not null,
   `bluntIOType` text NOT NULL,
   `bluntForceObjectSuspected` text NOT NULL,
-  `bluntForceObjectStillOnScene` varchar(5) NOT NULL,
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `wasCommunityAssult` varchar(5) NOT NULL,
-  `strangulationSuspected` varchar(5) NOT NULL,
-  `smotheringSuspected` varchar(5) NOT NULL,
-  `chockingSuspected` varchar(5) NOT NULL,
+  `bluntForceObjectStillOnScene` text NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+  `wasCommunityAssult` text NOT NULL,
+  `strangulationSuspected` text NOT NULL,
+  `smotheringSuspected` text NOT NULL,
+  `chockingSuspected` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `bluntInside` (
   insideID int not null auto_increment primary key,
   `bluntID` int NOT NULL,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (bluntID) REFERENCES blunt(bluntID)
 );
@@ -263,14 +281,14 @@ CREATE TABLE IF NOT EXISTS `burn` (
   `burnID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    burnIOType text NOT NULL,
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `accelerantsAtScene` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+  `accelerantsAtScene` text NOT NULL,
    accelerantsUsed text null,
-  `igniterAtScene` varchar(5) NOT NULL,
+  `igniterAtScene` text NOT NULL,
    igniterUsed text null,
-   foulPlaySuspected varchar(5) not null,
+   foulPlaySuspected text not null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -278,10 +296,10 @@ CREATE TABLE IF NOT EXISTS `burn` (
 CREATE TABLE IF NOT EXISTS `burninside` (
   insideID int not null auto_increment primary key,
   burnID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (burnID) REFERENCES burn(burnID)
 );
@@ -289,20 +307,20 @@ CREATE TABLE IF NOT EXISTS `burninside` (
 CREATE TABLE IF NOT EXISTS `crushinjury` (
   `crushinjuryID` int NOT NULL auto_increment primary key,
    sceneID int not null,
-  `crushIO` varchar(5) NOT NULL,
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+  `crushIOType` text NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `crushinjuryinside` (
   insideID int not null auto_increment primary key,
   crushinjuryID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (crushinjuryID) REFERENCES crushinjury(crushinjuryID)
 );
@@ -310,21 +328,21 @@ CREATE TABLE IF NOT EXISTS `crushinjuryinside` (
 CREATE TABLE IF NOT EXISTS `drowning` (
   `drowningID` int NOT NULL auto_increment primary key,
    sceneID int not null,
-  `drowningIO` text NOT NULL,
+  `drowningIOType` text NOT NULL,
   `drowningType` text NOT NULL,
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `drowninginside` (
   insideID int not null auto_increment primary key,
   drowningID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (drowningID) REFERENCES drowning(drowningID)
 );
@@ -334,12 +352,12 @@ CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
    sceneID int not null,
   `electrocutionLightningIOType` text NOT NULL,
   
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `anyOpenWire` varchar(5) NOT NULL,
-  `sceneWet` varchar(5) NOT NULL,
-  `deBarkingOfTrees` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+  `anyOpenWire` text NOT NULL,
+  `sceneWet` text NOT NULL,
+  `deBarkingOfTrees` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -347,10 +365,10 @@ CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
 CREATE TABLE IF NOT EXISTS `electrocutionlightninginside` (
    insideID int not null auto_increment primary key,
    electrocutionLightningID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
     FOREIGN KEY (electrocutionLightningID) REFERENCES electrocutionLightning(electrocutionLightningID)
 );
@@ -360,15 +378,15 @@ CREATE TABLE IF NOT EXISTS `electrocutionlightninginside` (
 CREATE TABLE IF NOT EXISTS `firearm` (
   `firearmID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-   `firearmIOType` int NOT NULL,
+   `firearmIOType` text NOT NULL,
   
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
   `gunshotWounds` text NOT NULL,
   `gunshotWoundsLocation` text NOT NULL,
   `gunshotWoundsArea` text NOT NULL,
-  `firearmOnScene` varchar(5) NOT NULL,
+  `firearmOnScene` text NOT NULL,
   `firearmCalibre` text NOT NULL,
   FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
@@ -377,10 +395,10 @@ CREATE TABLE IF NOT EXISTS `firearm` (
 CREATE TABLE IF NOT EXISTS `firearmInside` (
   insideID int not null auto_increment primary key,
    firearmID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (firearmID) REFERENCES firearm(firearmID)
 ) ;
@@ -390,7 +408,7 @@ CREATE TABLE IF NOT EXISTS `firearmInside` (
 CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `foetusabandonedbabyID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-  `babyIO` text NOT NULL,
+  `babyIOType` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
 
@@ -398,26 +416,25 @@ CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
 CREATE TABLE IF NOT EXISTS `gassing` (
   `gassingID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-   `gassingIOType` text NOT NULL,
-  
-   `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-      FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
+  `gassingIOType` text NOT NULL, 
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 
 CREATE TABLE IF NOT EXISTS `gassinginside` (
    insideID int not null auto_increment primary key,
    gassingID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
-  `gassingAppliances` varchar(5) NOT NULL,
+  `gassingAppliances` text NOT NULL,
   `gassingAppliancesUsed` text null,
-  `gassingSmell` varchar(5) NOT NULL,
+  `gassingSmell` text NOT NULL,
       FOREIGN KEY (gassingID) REFERENCES gassing(gassingID)
 );
 
@@ -425,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `gassinginside` (
 CREATE TABLE IF NOT EXISTS `gassingoutside` (
   outsideID int not null auto_increment primary key,
    gassingID int not null,
-  `gassingVictimInCar` varchar(5) NOT NULL,
+  `gassingVictimInCar` text NOT NULL,
    victimInCarDescription text null,
       FOREIGN KEY (gassingID) REFERENCES gassing(gassingID)
 );
@@ -444,18 +461,18 @@ CREATE TABLE IF NOT EXISTS `hanging` (
   `hangingID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    hangingIOType text NOT NULL,
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `autoeroticAsphyxia` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+  `autoeroticAsphyxia` text NOT NULL,
   `partialHangingType` text NOT NULL,
   `completeHanging` text NOT NULL,
-  `ligatureAroundNeck` varchar(5) NOT NULL,
+  `ligatureAroundNeck` text NOT NULL,
   whoRemovedLigature text null,
   `ligatureType` text NOT NULL,
-  `strangulationSuspected` varchar(5) NOT NULL,
-  `smotheringSuspected` varchar(5) NOT NULL,
-  `chockingSuspected` varchar(5) NOT NULL,
+  `strangulationSuspected` text NOT NULL,
+  `smotheringSuspected` text NOT NULL,
+  `chockingSuspected` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`hangingID`)
 );
@@ -465,10 +482,10 @@ CREATE TABLE IF NOT EXISTS `hanging` (
 CREATE TABLE IF NOT EXISTS `hanginginside` (
   insideID int not null auto_increment primary key,
    hangingID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (hangingID) REFERENCES hanging(hangingID)
 ) ;
@@ -478,9 +495,9 @@ CREATE TABLE IF NOT EXISTS `height` (
    sceneID int not null,
    `heightIOType` text NOT NULL,
   
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
   `fromWhat` text NOT NULL,
   `howHigh` text NOT NULL,
   `onWhatVictimLanded` text NOT NULL,
@@ -490,10 +507,10 @@ CREATE TABLE IF NOT EXISTS `height` (
 CREATE TABLE IF NOT EXISTS `heightinside` (
   insideID int not null auto_increment primary key,
    heightID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
       FOREIGN KEY (heightID) REFERENCES height(heightID)
 );
@@ -503,19 +520,19 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoning` (
    sceneID int not null,
    `ingestionOverdosePoisoningIOType` text NOT NULL,
   
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoningInside` (
   insideID int not null auto_increment primary key,
    ingestionOverdosePoisoningID int not null,
-  `doorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `doorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
     FOREIGN KEY (ingestionOverdosePoisoningID) REFERENCES ingestionOverdosePoisoning(ingestionOverdosePoisoningID)
 );
@@ -524,7 +541,7 @@ CREATE TABLE IF NOT EXISTS `mba` (
   `mbaID` int NOT NULL,
    sceneID int not null,
   
-  `victimWearingProtectiveClothing` varchar(5) NOT NULL,
+  `victimWearingProtectiveClothing` text NOT NULL,
   `mbaOutsideType` text NOT NULL,
   `victimsOnMotorcycle` text NOT NULL,
   `motorbikeHitFrom` text NOT NULL,
@@ -535,26 +552,26 @@ CREATE TABLE IF NOT EXISTS `mba` (
 CREATE TABLE IF NOT EXISTS `mva` (
   `mvaID` int NOT NULL,
    sceneID int not null,
-  `victimFoundInCar` varchar(5) NOT NULL,
+  `victimFoundInCar` text NOT NULL,
   `mvaOutsideType` text NOT NULL,
   `occupants` text NOT NULL,
   `numberOfOccupants` int NOT NULL,
   `victimWas` text NOT NULL,
   `carWasHitFrom` text NOT NULL,
   `victimType` text NOT NULL,
-  `carBurnt` varchar(5) NOT NULL,
+  `carBurnt` text NOT NULL,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `pedestrian` (
   `perdestrianID` int NOT NULL,
    sceneID int not null,  
-  `perdestrianOutside` text NOT NULL,
-  `hitAndRun` varchar(5) NOT NULL,
+  `perdestrianOutsideType` text NOT NULL,
+  `hitAndRun` text NOT NULL,
   `pedestrianType` int NOT NULL,
   `numberOfCarsDroveOverBody` int NOT NULL,
-  `weatherConditionType` int NOT NULL,
-  `weatherCondition` int NOT NULL,
+  `weatherConditionType` text NOT NULL,
+  `weatherCondition` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -562,8 +579,7 @@ CREATE TABLE IF NOT EXISTS `pedestrian` (
 CREATE TABLE IF NOT EXISTS `railway` (
   `railwayID` int NOT NULL,
    sceneID int not null,
-  
-  `sceneOfInjury` text NOT NULL,
+  `railwayIOType` text NOT NULL,
   `victimType` text NOT NULL,
   `railwayType` text NOT NULL,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
@@ -575,8 +591,8 @@ CREATE TABLE IF NOT EXISTS `sec48` (
   `sec48ID` int NOT NULL AUTO_INCREMENT,
   `sceneID` int NOT NULL,
   `victimHospitalized` text NOT NULL,
-  `medicalEquipmentInSitu` varchar(5) NOT NULL,
-  `gw714file` varchar(5) NOT NULL,
+  `medicalEquipmentInSitu` text NOT NULL,
+  `gw714file` text NOT NULL,
   `DrNames` text NOT NULL,
   `DrCellNumber` text NOT NULL,
   `NurseNames` text NOT NULL,
@@ -590,23 +606,22 @@ CREATE TABLE IF NOT EXISTS `sharp`(
   `sharpID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    `sharpIOType` text NOT NULL,
-  
-  `sharpObjectAtScene` varchar(5) NOT NULL,
+  `sharpObjectAtScene` text NOT NULL,
   `sharpForceInjuries` text NOT NULL,
   `theInjury` text NOT NULL,
-    `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
+    `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
      FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `sharpinside` (
   insideID int not null auto_increment primary key,
   sharpID int not null,
-  `wasDoorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `wasDoorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null, 
       FOREIGN KEY (sharpID) REFERENCES sharp(sharpID)
 );
@@ -615,23 +630,22 @@ CREATE TABLE IF NOT EXISTS `sid` (
   `sidID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    `sidIOType` text NOT NULL,
-  `resuscitationAttemped` varchar(5) NOT NULL,
-  `infantSickLately` varchar(5) NOT NULL,
+  `resuscitationAttemped` text NOT NULL,
+  `infantSickLately` text NOT NULL,
   `infantSickLatelyDescription` text NOT NULL,
-  `infantOnMedication` varchar(5) NOT NULL,
-  `fallsOrInjuryExperience` varchar(5) NOT NULL,
-  `infantWearing` varchar(5) NOT NULL,
-  `infantTightlyWrapped` varchar(5) NOT NULL,
+  `infantOnMedication` text NOT NULL,
+  `fallsOrInjuryExperience` text NOT NULL,
+  `infantWearing` text NOT NULL,
+  `infantTightlyWrapped` text NOT NULL,
   `beddingOverInfant` text NOT NULL,
-  `whoFoundVictimBody`varchar(5) NOT NULL,
-  `dateAndTimeLastPlaced` varchar(5) NOT NULL,
-  `dateAndTimeDeathDiscovered` varchar(5) NOT NULL,
-  `dateAndTimeLastSeenAlive` varchar(5) NOT NULL,
-  `anySIDSdeeaths` varchar(5) NOT NULL,
+  `dateAndTimeLastPlaced` text NOT NULL,
+  `dateAndTimeDeathDiscovered` text NOT NULL,
+  `dateAndTimeLastSeenAlive` text NOT NULL,
+  `anySIDSdeaths` text NOT NULL,
   `photoAfterBodyRemoved` text NOT NULL,
    `infantLastPlaced` text NOT NULL,
   `infantLastSeenAlive` text NOT NULL,
-  `whereInfantFoundDead` varchar(5) NOT NULL,
+  `whereInfantFoundDead` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sidID`)
 );
@@ -641,14 +655,14 @@ CREATE TABLE IF NOT EXISTS `suda` (
    sceneID int not null,
    `sudaIOType` text NOT NULL,
   
-   `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-  `strangulationSuspected` varchar(5) NOT NULL,
-  `smotheringSuspected` varchar(5) NOT NULL,
-  `chockingSuspected` varchar(5) NOT NULL,
-   `sudaAppliances` varchar(5) NOT NULL,
-  `wierdSmellInAir` varchar(5) NOT NULL,
+   `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+  `strangulationSuspected` text NOT NULL,
+  `smotheringSuspected` text NOT NULL,
+  `chockingSuspected` text NOT NULL,
+   `sudaAppliances` text NOT NULL,
+  `wierdSmellInAir` text NOT NULL,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sudaID`)
 );
@@ -656,10 +670,10 @@ CREATE TABLE IF NOT EXISTS `suda` (
 CREATE TABLE IF NOT EXISTS `sudainside` (
   insideID int not null auto_increment primary key,
    sudaID int not null,
-  `wasDoorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `wasDoorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,   
     FOREIGN KEY (sudaID) REFERENCES suda(sudaID)
 );
@@ -669,24 +683,24 @@ CREATE TABLE IF NOT EXISTS `sudc` (
    sceneID int not null,
    `sudcIOType` text NOT NULL,
   
-  `signsOfStruggle` varchar(5) NOT NULL,
-  `alcoholBottleAround` varchar(5) NOT NULL,
-  `drugParaphernalia` varchar(5) NOT NULL,
-   `strangulationSuspected` varchar(5) NOT NULL,
-  `smotheringSuspected` varchar(5) NOT NULL,
-  `chockingSuspected` varchar(5) NOT NULL,
-   `sudcAppliances` varchar(5) NOT NULL,
-   `wierdSmellInAir` varchar(5) NOT NULL,
+  `signsOfStruggle` text NOT NULL,
+  `alcoholBottleAround` text NOT NULL,
+  `drugParaphernalia` text NOT NULL,
+   `strangulationSuspected` text NOT NULL,
+  `smotheringSuspected` text NOT NULL,
+  `chockingSuspected` text NOT NULL,
+   `sudcAppliances` text NOT NULL,
+   `wierdSmellInAir` text NOT NULL,
      FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `sudcinside` (
   insideID int not null auto_increment primary key,
    sudcID int not null,
-  `wasDoorLocked` varchar(5) NOT NULL,
-  `windowsClosed` varchar(5) NOT NULL,
-  `windowsBroken` varchar(5) NOT NULL,
-  `victimAlone` varchar(5) NOT NULL,
+  `wasDoorLocked` text NOT NULL,
+  `windowsClosed` text NOT NULL,
+  `windowsBroken` text NOT NULL,
+  `victimAlone` text NOT NULL,
    peopleWithVictim text null,
    FOREIGN KEY (sudcID) REFERENCES sudc(sudcID)
 );

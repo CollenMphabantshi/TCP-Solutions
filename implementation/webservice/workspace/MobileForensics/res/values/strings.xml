@@ -2,21 +2,19 @@
 <resources>
 
     <string name="app_name">Medical Forensics</string>
-    
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="username">username</string>
     <string name="loggin">Loggin</string>
     <string name="password">password</string>
     <string name="choose">Choose option</string>
-    
     <string name="the_body">THE BODY</string>
     <string name="scene_of_injury">SCENE OF INJURY</string>
     <string name="scene_look">HOW DO THE SCENE LOOK</string>
     <string name="the_scene">THE SCENE</string>
     <string name="the_gallery">THE GALLERY</string>
     <string name="send_response">Your data was successfully sent.</string>
-    
+
     <string-array name="question">
         <item>Yes</item>
         <item>No</item>
@@ -68,7 +66,7 @@
         <item>Feet still touching the floor</item>
         <item>Other</item>
     </string-array>
-	<string-array name="completeHanging">
+    <string-array name="completeHanging">
         <item>feet of ground</item>
         <item>fully suspended</item>
     </string-array>
@@ -96,7 +94,7 @@
         <item>Inside aircraft</item>
         <item>Outside aircraft</item>
     </string-array>
-	<string-array name="weatherConditions">
+    <string-array name="weatherConditions">
         <item>Sunny</item>
         <item>Misty</item>
         <item>Rainy</item>
@@ -111,45 +109,41 @@
         <item>Dusk</item>
         <item>Dawn</item>
     </string-array>
-         
+
     <string name="chooseYN"> choose </string>
-    
+
     <string-array name="yesorno">
         <item>yes</item>
         <item>no</item>
     </string-array>
-    
     <string-array name="singlemultiple">
         <item>single</item>
         <item>multiple</item>
     </string-array>
-    
     <string-array name="hitfrom">
         <item>Front</item>
         <item>Back</item>
         <item>Right side</item>
         <item>Left side</item>
     </string-array>
-    
     <string-array name="railwaysceneofinjury">
-        
-        <item>On the train tracks </item>   
+        <item>On the train tracks </item>
         <item>At the station </item>
         <item>In the train</item>
         <item>Place unknown </item>
         <item>Other</item>
     </string-array>
-    
     <string-array name="sharpinjuries">
-        <item >Head</item>
-        <item >Thorax</item>
-        <item >Abdomen</item>
-        <item >Arm</item>
-        <item >Legs </item> 
-        <item >Front</item>
-        <item >Back</item>
-        <item >Front and back </item>   
+        <item>Head</item>
+        <item>Thorax</item>
+        <item>Abdomen</item>
+        <item>Arm</item>
+        <item>Legs </item>
+        <item>Front</item>
+        <item>Back</item>
+        <item>Front and back </item>
     </string-array>
 
-</resources>
+    <string name="title_activity_basic_case_data">BasicCaseData</string>
 
+</resources>

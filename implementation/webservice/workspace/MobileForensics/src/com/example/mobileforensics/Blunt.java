@@ -61,6 +61,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -255,7 +256,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     //weather section
     private String WeatherInfo="";
     private TextView weatherInfo;
-	
+	private Encryption enc;
 	
 	
 	@Override
@@ -305,18 +306,19 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	public void onMyLocationChange(Location loc) {
 		// TODO Auto-generated method stub
 		
-		locate = new JSONObject();
-		JSONObject object = new JSONObject();
-		//get geolactions, time and date
-		longitude = loc.getLongitude();
-		latitude = loc.getLatitude();
-		Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
-       
-        getAddress(longitude,latitude);
-        
+		
         try {
+        	locate = new JSONObject();
+    		JSONObject object = new JSONObject();
+    		//get geolactions, time and date
+    		longitude = loc.getLongitude();
+    		latitude = loc.getLatitude();
+    		Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            time = formattedDate.substring(11);
+            date = formattedDate.substring(0, formattedDate.length()-9);
+            getAddress(longitude,latitude);
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
 			locate.accumulate("Bearing", loc.getBearing());
@@ -365,14 +367,21 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	}
 
 	private void variablesInitialization(){
-
-		username = "p33333333";
 		try{
+		enc = new Encryption();
+		try{
+			username = getIntent().getExtras().getString("USERNAME");
+		}catch(Exception e){e.printStackTrace();}
 		
-		time = (new Random().nextLong())+"";
-	    date = "2014-10-10";
-		
-		location = (new Random().nextLong())+","+(new Random().nextLong());
+		try{
+			//time = new Time().format("%H:%M:%S");
+			System.out.println("TIME: "+time);
+		    //date = new Time().format("%Y-%m-%d");
+		    System.out.println("TIME: "+date);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
 		
 		
 		
@@ -557,7 +566,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-						/*try{
+						try{
 							new Read().execute(postdata);
 							
 							dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
@@ -576,12 +585,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			                             }                   
 			                        }
 			                      }).start(); 
-						}catch(Exception e){
-							e.printStackTrace();
-						}*/
-							doneButton.setVisibility(GONE);
+			                doneButton.setVisibility(GONE);
 							logoutButton.setVisibility(VISIBLE);
 							Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+							
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -981,8 +991,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-	        pairs.add(new BasicNameValuePair("rquest","addCase"));
-	        pairs.add(new BasicNameValuePair("category","blunt"));
+			pairs.add(new BasicNameValuePair("rquest","addCase"));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -990,88 +1000,93 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        JSONObject victims = new JSONObject();
 	        
 	        
-	        info.accumulate("FOPersonelNumber", username);
-	        info.accumulate("sceneTime", time);
-	        info.accumulate("sceneDate", date);
-	        info.accumulate("sceneLocation", location);
-	        info.accumulate("sceneTemparature", WeatherInfo);
-	        info.accumulate("investigatingOfficerName", ioName.getText().toString());
-	        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
-	        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
-	        info.accumulate("firstOfficerOnSceneName", foosName.getText().toString());
-	        info.accumulate("firstOfficerOnSceneRank", foosRank.getText().toString());
+	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+	        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+	        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+	        if(WeatherInfo != null && WeatherInfo.length() != 0 )
+	        {
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+	        }else{
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        }
+	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
 	        knownVictim();
-	        victims.accumulate("victimIdentityNumber", victimIDNo.getText().toString());
-	        victims.accumulate("victimGender", getVictimGender());
-	        victims.accumulate("victimRace", getVictimRace());
-	        victims.accumulate("victimName", victimName.getText().toString());
-	        victims.accumulate("victimSurname", victimSurname.getText().toString());
-	        victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
-	        victims.accumulate("scenePhoto", null);
+	        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+	        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
 	        if(bodyDecomposedYes.isChecked())
 	        {
-	        	victims.accumulate("bodyDecomposed", "Yes");
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("bodyDecomposed", "No");
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(medicalInterventionYes.isChecked())
 	        {
-	        	victims.accumulate("medicalIntervention", "yes");
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("medicalIntervention", "no");
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        victims.accumulate("bodyBurned", null);
-	        victims.accumulate("bodyIntact", null);
-	        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
+	        victims.accumulate("bodyBurned", "null");
+	        victims.accumulate("bodyIntact","null");
+	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	        
 	        if(closeToWaterYes.isChecked())
 	        {
-	        	victims.accumulate("victimFoundCloseToWater", "yes");
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimFoundCloseToWater", "no");
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(suicideSuspectedYes.isChecked())
 	        {
-	        	victims.accumulate("suicideSuspected", "yes");
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("suicideSuspected", "no");
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(suicideNoteFoundYes.isChecked())
 	        {
-	        	victims.accumulate("victimSuicideNoteFound", "yes");
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimSuicideNoteFound", "no");
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(previousAttemptsYes.isChecked())
 	        {
-	        	victims.accumulate("previousAttempts", "yes");
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("previousAttempts", "no");
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        
 	        
-	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
 	        if(rapeHomicideYes.isChecked())
 	        {
-	        	victims.accumulate("rapeHomicideSuspected", "yes");
+	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("rapeHomicideSuspected", "no");
+	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(sceneIOTypeInside.isChecked())
 	        {
-	        	victims.accumulate("victimInside", "yes");
-		        victims.accumulate("victimOutside", "no");
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
 	        }else{
-	        	victims.accumulate("victimInside", "no");
-		        victims.accumulate("victimOutside", "yes");
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }
 	        
 	       
@@ -1082,86 +1097,86 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        info.accumulate("bluntIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
 	        {
-	        	info.accumulate("signsOfStruggle", "yes");
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("signsOfStruggle", "no");
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        if(alcoholBottleAroundYes.isChecked())
 	        {
-	        	info.accumulate("alcoholBottleAround", "yes");
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("alcoholBottleAround", "no");
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(drugParaphernaliaYes.isChecked())
 	        {
-	        	info.accumulate("drugParaphernalia", "yes");
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("drugParaphernalia", "no");
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(strangulationSuspectedYes.isChecked())
 	        {
-	        	info.accumulate("strangulationSuspected", "yes");
+	        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("strangulationSuspected", "no");
+	        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(smotheringSuspectedYes.isChecked())
 	        {
-	        	info.accumulate("smotheringSuspected", "yes");
+	        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("smotheringSuspected", "no");
+	        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(chockingSuspectedYes.isChecked())
 	        {
-	        	info.accumulate("chockingSuspected", "yes");
+	        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("chockingSuspected", "no");
+	        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(doorLockedYes.isChecked())
 	        {
-	        	info.accumulate("doorLocked", "yes");
+	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("doorLocked", "no");
+	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(windowsClosedYes.isChecked())
 	        {
-	        	info.accumulate("windowsClosed", "yes");
+	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("windowsClosed", "no");
+	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        if(windowsBrokenYes.isChecked())
 	        {
-	        	info.accumulate("windowsBroken", "yes");
+	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("windowsBroken", "no");
+	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        if(victimAloneYes.isChecked())
 	        {
-	        	info.accumulate("victimAlone", "yes");
+	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("victimAlone", "no");
+	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        
 	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
-	        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
+	        info.accumulate("bluntForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(bluntObjectUsed.getText().toString())));
 	        if(bluntForceObjectOnSceneYes.isChecked())
 	        {
-	        	info.accumulate("bluntForceObjectStillOnScene", "yes");
+	        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("bluntForceObjectStillOnScene", "no");
+	        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(communityAssaultYes.isChecked())
 	        {
-	        	info.accumulate("wasCommunityAssult", "yes");
+	        	info.accumulate("wasCommunityAssult", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("wasCommunityAssult", "no");
+	        	info.accumulate("wasCommunityAssult", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        array.put(info);
@@ -1187,13 +1202,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				if(type.toLowerCase().equals("other")){
 					type = sceneITypeOther.getText().toString();
 				}
-				return type;
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}else{
 				type = (String)sceneOType.getSelectedItem();
 				if(type.toLowerCase().equals("other")){
 					type = sceneOTypeOther.getText().toString();
 				}
-				return type;
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1203,8 +1218,6 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	public String getVictimGender(){
 		try{
-			
-			
 			if(rgbMale.isChecked())
 			{
 				return "Male";
@@ -1280,7 +1293,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			
 			if(victimAloneNo.isChecked())
 			{
-				return peopleWithVictim.getText().toString();
+				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
 			}else{
 				
 				return null;
@@ -1299,87 +1312,93 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         
     
         
-        info.accumulate("FOPersonelNumber", username);
-        info.accumulate("sceneTime", time);
-        info.accumulate("sceneDate", date);
-        info.accumulate("sceneLocation", location);
-        info.accumulate("sceneTemparature", WeatherInfo);
-        info.accumulate("investigatingOfficerName", ioName.getText().toString());
-        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
-        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
-        info.accumulate("firstOfficerOnSceneName", foosName.getText().toString());
-        info.accumulate("firstOfficerOnSceneRank", foosRank.getText().toString());
+        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+        if(WeatherInfo != null && WeatherInfo.length() != 0 )
+        {
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+        }else{
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        }
+        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
         knownVictim();
-        victims.accumulate("victimIdentityNumber", victimIDNo.getText().toString());
-        victims.accumulate("victimGender", getVictimGender());
-        victims.accumulate("victimRace", getVictimRace());
-        victims.accumulate("victimName", victimName.getText().toString());
-        victims.accumulate("victimSurname", victimSurname.getText().toString());
-        victims.accumulate("victimGeneralHistory", generalHistory.getText().toString());
-        victims.accumulate("scenePhoto", null);
+        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+        
+        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
         if(bodyDecomposedYes.isChecked())
         {
-        	victims.accumulate("bodyDecomposed", "Yes");
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("bodyDecomposed", "No");
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(medicalInterventionYes.isChecked())
         {
-        	victims.accumulate("medicalIntervention", "yes");
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("medicalIntervention", "no");
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("bodyBurned", null);
-        victims.accumulate("bodyIntact", null);
-        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
+        victims.accumulate("bodyBurned", "null");
+        victims.accumulate("bodyIntact", "null");
+        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
         
         if(closeToWaterYes.isChecked())
         {
-        	victims.accumulate("victimFoundCloseToWater", "yes");
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimFoundCloseToWater", "no");
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(suicideSuspectedYes.isChecked())
         {
-        	victims.accumulate("suicideSuspected", "yes");
+        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("suicideSuspected", "no");
+        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(suicideNoteFoundYes.isChecked())
         {
-        	victims.accumulate("victimSuicideNoteFound", "yes");
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimSuicideNoteFound", "no");
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(previousAttemptsYes.isChecked())
         {
-        	victims.accumulate("previousAttempts", "yes");
+        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("previousAttempts", "no");
+        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         
         
-        victims.accumulate("numberOfPreviousAttempts", getAttempts());
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
         if(rapeHomicideYes.isChecked())
         {
-        	victims.accumulate("rapeHomicideSuspected", "yes");
+        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("rapeHomicideSuspected", "no");
+        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(sceneIOTypeInside.isChecked())
         {
-        	victims.accumulate("victimInside", "yes");
-	        victims.accumulate("victimOutside", "no");
+        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
         }else{
-        	victims.accumulate("victimInside", "no");
-	        victims.accumulate("victimOutside", "yes");
+        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
         }
         
        
@@ -1390,86 +1409,86 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         info.accumulate("bluntIOType",getIOType() );
         if(signsOfStruggleYes.isChecked())
         {
-        	info.accumulate("signsOfStruggle", "yes");
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("signsOfStruggle", "no");
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
         }
         if(alcoholBottleAroundYes.isChecked())
         {
-        	info.accumulate("alcoholBottleAround", "yes");
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("alcoholBottleAround", "no");
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(drugParaphernaliaYes.isChecked())
         {
-        	info.accumulate("drugParaphernalia", "yes");
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("drugParaphernalia", "no");
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(strangulationSuspectedYes.isChecked())
         {
-        	info.accumulate("strangulationSuspected", "yes");
+        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("strangulationSuspected", "no");
+        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(smotheringSuspectedYes.isChecked())
         {
-        	info.accumulate("smotheringSuspected", "yes");
+        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("smotheringSuspected", "no");
+        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(chockingSuspectedYes.isChecked())
         {
-        	info.accumulate("chockingSuspected", "yes");
+        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("chockingSuspected", "no");
+        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(doorLockedYes.isChecked())
         {
-        	info.accumulate("doorLocked", "yes");
+        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("doorLocked", "no");
+        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(windowsClosedYes.isChecked())
         {
-        	info.accumulate("windowsClosed", "yes");
+        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("windowsClosed", "no");
+        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
         }
         if(windowsBrokenYes.isChecked())
         {
-        	info.accumulate("windowsBroken", "yes");
+        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("windowsBroken", "no");
+        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
         }
         if(victimAloneYes.isChecked())
         {
-        	info.accumulate("victimAlone", "yes");
+        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("victimAlone", "no");
+        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         
         info.accumulate("peopleWithVictim", getPeopleWithVictim());
-        info.accumulate("bluntForceObjectSuspected", bluntObjectUsed.getText().toString());
+        info.accumulate("bluntForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(bluntObjectUsed.getText().toString())));
         if(bluntForceObjectOnSceneYes.isChecked())
         {
-        	info.accumulate("bluntForceObjectStillOnScene", "yes");
+        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("bluntForceObjectStillOnScene", "no");
+        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(communityAssaultYes.isChecked())
         {
-        	info.accumulate("wasCommunityAssult", "yes");
+        	info.accumulate("wasCommunityAssult", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("wasCommunityAssult", "no");
+        	info.accumulate("wasCommunityAssult", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         array.put(info);

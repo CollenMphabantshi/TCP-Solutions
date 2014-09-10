@@ -1,5 +1,4 @@
-@import "compass/css3";
-@import url(http://fonts.googleapis.com/css?family=Patua+One|Open+Sans);
+
 
 .main
 {
@@ -148,15 +147,15 @@ table td{
     
 }
 
-#Page1{width:100%;}
+#Page1{width:100%;height:100%;}
 #Page1-left{
     position:absolute;
     left:0;
     margin:0;
     margin-left:1%;
     width:35%;
-    height:100%;
-    border-right:2px solid grey; 
+    height:auto;
+    border-right:2px solid grey;
 }
 #Page1-right{
     position:absolute;
@@ -171,18 +170,39 @@ table td{
     width: 80%;
 }
 #cases tr th{
-    padding:2%;
-    padding-left:3%;
-    padding-right:3%;
+    padding: 0.25rem;
     background-color:#006666;
     color:white;
     
 }
+#cases table{
+    padding: 0.25rem;
+    text-align: left;
+    width:100%;
+}
 #cases tr td{
-    padding:2%;
-    padding-left:5%;
-    padding-right:5%;
-    text-align:center;
+   padding: 0.25rem;
+   text-align: left;
+    
+}
+
+#users{
+    width: 100%;
+}
+#users tr th{
+    padding: 0.25rem;
+    background-color:#006666;
+    color:white;
+    
+}
+#users table{
+    padding: 0.25rem;
+    text-align: left;
+    width:100%;
+}
+#users tr td{
+   padding: 0.25rem;
+   text-align: left;
     
 }
 
@@ -197,22 +217,25 @@ h1,h2{
 }
 
 .caseList{
+    width:100%;
     overflow-x:hidden;
-    overflow-y:auto;
+    height:600px;
+}
+.userList{
+    width:100%;
+    overflow-x:hidden;
+    height:600px;
 }
 
 .right-content{
     position:absolute;
-    height:530px;
-    overflow:scroll;
-    overflow-y:auto;
+    width:90%;
+    height:600px;
     overflow-x:hidden;
 }
 .right-content table{
     border-collapse: collapse;
     width: 100%;
-    
-    
 }
 .right-content table, .right-content table td{
     border:1px solid gray;
@@ -228,8 +251,7 @@ h1,h2{
     text-align:center;
 }
 .photos{
-    
-  
+     
 }
 
 .highlight {

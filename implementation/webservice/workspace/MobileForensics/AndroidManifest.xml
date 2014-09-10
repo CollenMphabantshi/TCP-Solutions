@@ -3,24 +3,22 @@
     package="com.example.mobileforensics"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <permission
         android:name="com.example.mobileforensics.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
- 
+
     <uses-permission android:name="com.example.mobileforensics.permission.MAPS_RECEIVE" />
- 
- 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
- 
+
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
- 
+
     <!-- Required OpenGL ES 2.0. for Maps V2 -->
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -29,18 +27,19 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="16" />
-	<uses-permission android:name="android.permission.INTERNET">
-	</uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <meta-data
-	    android:name="com.google.android.gms.version"
-	    android:value="@integer/google_play_services_version" />
-        
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".Loggin"
             android:label="@string/app_name" >
@@ -50,7 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Home"
             android:label="@string/app_name" >
@@ -60,7 +58,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".SceneMenu"
             android:label="@string/app_name" >
@@ -70,7 +67,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Aviation"
             android:label="@string/app_name" >
@@ -80,7 +76,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".BasicReport"
             android:label="@string/app_name" >
@@ -90,7 +85,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Bicycle"
             android:label="@string/app_name" >
@@ -100,7 +94,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Blunt"
             android:label="@string/app_name" >
@@ -110,7 +103,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Burn"
             android:label="@string/app_name" >
@@ -120,7 +112,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Crushinjury"
             android:label="@string/app_name" >
@@ -130,7 +121,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Drowning"
             android:label="@string/app_name" >
@@ -140,7 +130,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Electrocutionlightining"
             android:label="@string/app_name" >
@@ -150,7 +139,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Firearm"
             android:label="@string/app_name" >
@@ -160,7 +148,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Foetusabandonedbaby"
             android:label="@string/app_name" >
@@ -170,7 +157,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Fromheight"
             android:label="@string/app_name" >
@@ -180,7 +166,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Gassing"
             android:label="@string/app_name" >
@@ -190,7 +175,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Hanging"
             android:label="@string/app_name" >
@@ -200,7 +184,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Ingestionoverdosepoisoning"
             android:label="@string/app_name" >
@@ -210,7 +193,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Mba"
             android:label="@string/app_name" >
@@ -220,7 +202,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Mva"
             android:label="@string/app_name" >
@@ -230,7 +211,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Pedestrian"
             android:label="@string/app_name" >
@@ -240,7 +220,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".PreviousCaseBasicInfo"
             android:label="@string/app_name" >
@@ -250,7 +229,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Railway"
             android:label="@string/app_name" >
@@ -260,7 +238,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Sec48"
             android:label="@string/app_name" >
@@ -270,7 +247,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Sharp"
             android:label="@string/app_name" >
@@ -280,7 +256,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Suda"
             android:label="@string/app_name" >
@@ -290,7 +265,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Sudc"
             android:label="@string/app_name" >
@@ -300,7 +274,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name=".Sudi"
             android:label="@string/app_name" >
@@ -310,11 +283,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <meta-data
+
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDRyblF84A2IFa8xL8ze_mIUcThzDrYg8w" />
-        
+
+        <activity
+            android:name=".BasicCaseData"
+            android:label="@string/title_activity_basic_case_data"
+            android:parentActivityName=".PreviousCaseBasicInfo" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.mobileforensics.PreviousCaseBasicInfo" />
+        </activity>
     </application>
 
 </manifest>

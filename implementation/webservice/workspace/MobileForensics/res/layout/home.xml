@@ -55,10 +55,10 @@
 					    android:paddingLeft="55dp"
 					    android:paddingRight="55dp"
 					    android:gravity="center"
-					    android:text="View Previous Case Basic Info"
-					    />
+					    android:text="View Previous Basic Case Info"
+			/>
     		
-    		<Button
+    		<!--   <Button
 					    android:id="@+id/basicReportId"
 					    android:layout_width="fill_parent"
 					    android:layout_height="wrap_content"
@@ -67,8 +67,7 @@
 					    android:paddingLeft="55dp"
 					    android:paddingRight="55dp"
 					    android:gravity="center"
-					    android:text="Generate Basic Report"
-					    />
+					    android:text="Generate Basic Report" -->
     		</LinearLayout>
     
 

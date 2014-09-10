@@ -22,7 +22,7 @@ public class Home extends Activity{
 		
 		createCase = (Button) findViewById(R.id.createCaseId);
 		previousCase = (Button) findViewById(R.id.previousCaseId);
-		generalReport = (Button) findViewById(R.id.basicReportId);
+		//generalReport = (Button) findViewById(R.id.basicReportId);
 	}
 	
 	public void selectClass(){
@@ -33,6 +33,9 @@ public class Home extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent open = new Intent("com.example.mobileforensics.SCENEMENU");
+				try{
+					open.putExtra("USERNAME", getIntent().getExtras().getString("USERNAME"));
+				}catch(Exception e){e.printStackTrace();}
 				startActivity(open);
 				
 			}
@@ -43,18 +46,22 @@ public class Home extends Activity{
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						
+						Intent open = new Intent("com.example.mobileforensics.PREVIOUSCASEBASICINFO");
+						try{
+							open.putExtra("USERNAME", getIntent().getExtras().getString("USERNAME"));
+						}catch(Exception e){e.printStackTrace();}
+						startActivity(open);
 					}
 				});
 		
-		generalReport.setOnClickListener(new View.OnClickListener() {
+		/*generalReport.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+		});*/
 	}
 	
 	

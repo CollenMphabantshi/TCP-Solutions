@@ -13,22 +13,27 @@
             <nav>
                 <ul>
                     <?php
-                        $sac = $_SESSION[md5('s_ac')];
+                        require_once './encryptions.php';
+                        $enc = new Encryption(); 
+                        $sac = $_SESSION[$enc->md5_encrypt('s_ac')];
                         
-                        if($sac === md5("1")) // Admin
+                        if($sac === $enc->md5_encrypt("1")) // Admin
                         {
                             echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
-                            <li><a href="#" id="3" class="pages">Remove Users</a>';
-                        }else if($sac === md5("2")){ // FP
+                            ';
+                        }else if($sac === $enc->md5_encrypt("2")){ // FP
                             echo '<li><a href="#" class="pages" id="1"class="active">Cases</a></li>
                             ';
-                        }else {//if($sac === md5("6")){ // Admin and FP
+                        }else if($sac === $enc->md5_encrypt("4")){ // Student
+                            echo '<li><a href="#" class="pages" id="1"class="active">Cases</a></li>
+                            ';
+                        }
+                        else if($sac === $enc->md5_encrypt("6")){ // Admin and FP
                             echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
-                            <li><a href="#" id="3" class="pages">Remove Users</a>
-                            <li><a href="#" id="4"class="pages">List Cases</a></li>
-                            <li><a href="#" id="5" class="pages">Assign Death Register</a></li>';
+                            <li><a href="#" id="3"class="pages">List Cases</a></li>
+                            ';
                         }   
                     ?>
                     <li><a href="#" id="logout">Logout</a></li>

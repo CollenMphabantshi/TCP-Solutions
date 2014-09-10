@@ -1,65 +1,54 @@
 
 use forenlnm_mobileforensics;
+
+
 insert into userType values(0,"Administrator");
 insert into userType values(0,"Forensic Practitioner");
 insert into userType values(0,"Forensic Officer");
 insert into userType values(0,"Student");
+insert into userType values(0,"Guest");
+insert into userType values(0,"Forensic Practitioner/Administrator");
 
-select * from users;
-select * from forensicpractitioner;
-select * from forensicofficer;
-select * from student;
-select * from administrator;
-select * from accessmode;
-insert into users values(0,"p11111111","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",1,1);
+
+insert into users values(0,"p11111111","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",1,1);
 insert into administrator values("p11111111",1);
 
-insert into users values(0,"p22222222","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",2,1);
+insert into users values(0,"p22222222","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",2,1);
 insert into forensicPractitioner values("p22222222",2,"12345");
 
-insert into users values(0,"p33333333","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",3,1);
+insert into users values(0,"p33333333","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",3,1);
 insert into forensicOfficer values("p33333333",3,"12345");
 
-insert into users values(0,"p44444444","7cef8a734855777c2a9d0caf42666e69","myname","mysurname",4,1);
+insert into users values(0,"p44444444","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",4,1);
 insert into student values("p44444444",4,"12345");
 
-insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
-insert into sceneType values(0,"Sudden unexpected death of a child  (1 – 18 years)");
-insert into sceneType values(0,"Sudden unexpected death of an adult/ found dead");
-insert into sceneType values(0,"Foetus / Abandoned baby");
-insert into sceneType values(0,"Section 48  death –surgical case");
-insert into sceneType values(0,"Pedestrian vehicle accident");
-insert into sceneType values(0,"Bicycle accident");
-insert into sceneType values(0,"Motorbike accident");
-insert into sceneType values(0,"Motor vehicle accident");
-insert into sceneType values(0,"Railway accident");
+insert into users values(0,"talie","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",6,1);
+insert into forensicPractitioner values("talie",5,"1234");
+insert into administrator values("talie",5);
+
 insert into sceneType values(0,"Aviation accident");
-insert into sceneType values(0,"Fall/push/jump from height");
-insert into sceneType values(0,"Crush injury");
-insert into sceneType values(0,"Firearm discharge/  gunshot wound");
-insert into sceneType values(0,"Sharp force injury/ stab injury");
+insert into sceneType values(0,"Bicycle accident");
 insert into sceneType values(0,"Blunt force injury/ assault");
+insert into sceneType values(0,"Burns");
+insert into sceneType values(0,"Crush injury");
 insert into sceneType values(0,"Drowning");
+insert into sceneType values(0,"Fall/push/jump from height");
+insert into sceneType values(0,"Firearm discharge/  gunshot wound");
+insert into sceneType values(0,"Foetus / Abandoned baby");
 insert into sceneType values(0,"Gassing");
 insert into sceneType values(0,"Hanging");
 insert into sceneType values(0,"Ingestion/overdose /poisoning");
-insert into sceneType values(0,"Burns");
 insert into sceneType values(0,"Lightning/ electrocution");
+insert into sceneType values(0,"Motorbike accident");
+insert into sceneType values(0,"Motor vehicle accident");
+insert into sceneType values(0,"Pedestrian vehicle accident");
+insert into sceneType values(0,"Railway accident");
+insert into sceneType values(0,"Section 48  death –surgical case");
+insert into sceneType values(0,"Sharp force injury/ stab injury");
+insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
+insert into sceneType values(0,"Sudden unexpected death of a child  (1 – 18 years)");
+insert into sceneType values(0,"Sudden unexpected death of an adult/ found dead");
 
-insert into scene values(0,19,"00:00:12","2014-01-01","Hatfield plaza","30 C","Cobi Timoty","Surgent","0223333","Ramzi Cooper","Detective");
-insert into scene values(0,19,"12:10:10","2014-04-03","Lacansda","40 C","Folo Gola","Luetanent","01244355","Dony Lamda","Detective");
-insert into scene values(0,11,"12:10:10","2014-04-03","Pretoria","24 C","Sikhitha Talifhani","Luetanent","01244355","Dony Lamda","Detective");
-insert into scene values(0,21,"12:10:10","2014-04-03","Jhb","30 C","zeee Dister","John","01244367","Joseph Stiip","Detective");
-
-
-
-insert into cases values(0,1,"p33333333");
-insert into cases values(0,2,"p33333333");
-insert into cases values(0,3,"p33333333");
-insert into cases values(0,4,"p33333333");
-
-
- 
 insert into victimType values(0,"Pilot");
 insert into victimType values(0,"Co-Pilot");
 insert into victimType values(0,"Crew");
@@ -111,84 +100,42 @@ insert into aviationOutsideType values(0,"Commercial aircraft");
 insert into aviationOutsideType values(0,"Light aircraft");
 insert into aviationOutsideType values(0,"Helicopter");
 
+insert into ligatureType values(0, 'Rope');
+insert into ligatureType values(0, 'Tie');
+insert into ligatureType values(0, 'Wire');
+insert into ligatureType values( 0,'Hosepipe');
+insert into ligatureType values( 0,'Material/fabric/towel/bedding');
+insert into ligatureType values( 0,'other');
 
-insert into victims values(0,"29300201201","Male","White","Tony","Coola","Roomi Jane","no","no","no","no","no","no","no","no","Violance and weird","no","no","no",0);
-insert into victims values(0,"12300201201","Male","Indian","Ramzy","Palar","Soliu Jin","yes","yes","no","no","yes","yes","no","no","Violance and weird","yes","no","no",0);
-insert into victims values(0,"45300201201","Female","White","Sally","Joomla","Lee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
-insert into victims values(0,"23432561524","Female","Black","Talie","Fiona","Azee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
-insert into victims values(0,"23432561524","Female","Black","Talie","Fiona","Azee Poo","no","yes","no","no","yes","yes","no","no","Violance and weird","no","yes","no",0);
+insert into partialHanging values( 0,'Sitting');
+insert into partialHanging values( 0,'Kneeling');
+insert into partialHanging values( 0,'Half-lying');
+insert into partialHanging values( 0,'Feet still touching the floor');
+insert into partialHanging values(0,'other');
 
 
-insert into sceneVictims values(0,1,1,null);
-insert into sceneVictims values(0,1,3,null);
-insert into sceneVictims values(0,2,2,null);
-insert into sceneVictims values(0,3,4,"Crew");
-insert into sceneVictims values(0,4,5,null);
+insert into weatherConditions values(0,'Sunny');
+insert into weatherConditions values(0,'Misty');
+insert into weatherConditions values(0,'Rainy');
+insert into weatherConditions values(0,'Cloudy');
+insert into weatherConditions values(0,'Snowy');
+insert into weatherConditions values(0,'Thunderstorm');
+insert into weatherConditions values(0,'Hail');
 
-insert into hanging values(0,1,'Private house','yes','no','no','no','Feet still touching the floor','feet of ground','yes','Toso cookoo','Rope','yes','yes','yes');
-insert into hanging values(0,2,'Industrial & construction area, mine','yes','no','no','no','Feet still touching the floor','feet of ground','yes','Toso cookoo','Rope','yes','yes','yes');
+insert into bicycleType values(0,'Bicycle only accident');
+insert into bicycleType values(0,'Bicycle- motorcycle accident');
+insert into bicycleType values(0,'Bicycle- car accident');
+insert into bicycleType values(0,'Bicycle- truck accident');
+insert into bicycleType values(0,'Bicycle- still standing object accident');
+insert into bicycleType values(0,'Bicycle- train accident');
 
-insert into hanginginside values(0,1,'yes','yes','yes','no','Tony Lee, The Neighbour');
 
-insert into foetusabandonedbaby values(0,2,'Near River');
-insert into aviation values(0,3,'Commercial aircraft','Plane','6','Rainy','Hail');
-insert into burn values(0,4,'inside','No','No','No','Yes','No','no','no','no');
-
-select * from aviation;
+select * from cases;
+select * from scene;
+select * from users;
 select * from victims;
-select * from foetusabandonedbaby;
-
-insert into ligaturetype values(0, 'Rope');
-insert into ligaturetype values(0, 'Tie');
-insert into ligaturetype values(0, 'Wire');
-insert into ligaturetype values( 0,'Hosepipe');
-insert into ligaturetype values( 0,'Material/fabric/towel/bedding');
-insert into ligaturetype values( 0,'other');
-
-insert into partialhanging values( 0,'Sitting');
-insert into partialhanging values( 0,'Kneeling');
-insert into partialhanging values( 0,'Half-lying');
-insert into partialhanging values( 0,'Feet still touching the floor');
-insert into partialhanging values(0,'other');
-
-
-insert into weatherconditions values(0,'Sunny');
-insert into weatherconditions values(0,'Misty');
-insert into weatherconditions values(0,'Rainy');
-insert into weatherconditions values(0,'Cloudy');
-insert into weatherconditions values(0,'Snowy');
-insert into weatherconditions values(0,'Thunderstorm');
-insert into weatherconditions values(0,'Hail');
-
-insert into bicycletype values(0,'Bicycle only accident');
-insert into bicycletype values(0,'Bicycle- motorcycle accident');
-insert into bicycletype values(0,'Bicycle- car accident');
-insert into bicycletype values(0,'Bicycle- truck accident');
-insert into bicycletype values(0,'Bicycle- still standing object accident');
-insert into bicycletype values(0,'Bicycle- train accident');
-
-
-
-
-INSERT INTO `scene` (`sceneID`, `sceneTypeID`, `sceneTime`, `sceneDate`, `sceneLocation`, `sceneTemparature`, `sceneInvestigatingOfficerName`, `sceneInvestigatingOfficerRank`, `sceneInvestigatingOfficerCellNumber`, `firstOfficerOnSceneName`, `firstOfficerOnSceneRank`) VALUES
-(0, 1, '10:00:00', '2014-06-10', 'Steve Biko Hospital', '18 C', 'Pulle Legodi', 'Constable', '078886895', 'Collen Mphabantshi', 'Traineer');
-
-INSERT INTO `sec48` (`sec48ID`, `sceneID`, `victimHospitalized`, `medicalEquipmentInSitu`, `gw714file`, `DrNames`, `DrCellNumber`, `NurseNames`, `NurseCellNumber`) VALUES
-(2, 1, 'victim hospitalized for 20 years', 'yes', 'yes', 'Dr Sekoaere Malatji', '0468889999', 'Aluwani Bege', '0124457887');
-
-INSERT INTO `victims` (`victimID`,victimIdentityNumber, `victimGender`, `victimRace`, `victimName`, `victimSurname`,whoFoundVictimBody ,`bodyDecompose`, `medicalIntervention`, `bodyBurned`, `bodyIntact`, `victimInside`, `victimOutside`, `victimFoundCloseToWater`, `victimSuicideNoteFound`, `victimGeneralHistory`, `rapeHomicideSuspected`, `suicideSuspected`, `previousAttempts`, `numberOfPreviousAttempts`) VALUES
-(0, '89658971524552','male', 'Asian', 'Ashim', 'Khali','me', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 0);
-
-INSERT INTO `victimScenePhotos` (`photoID`, `victimID`, `photoFilename`) VALUES
-(0, 1, 'photo/pic.jpg');
-
+select * from sceneVictims;
 select * from hanging;
 select * from hanginginside;
 select * from blunt;
-select * from bluntinside;
-
-select * from victims;
-
-select * from scene;
-select * from sceneType;
-select * from cases;
+select * from bluntInside;

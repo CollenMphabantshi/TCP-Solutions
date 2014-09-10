@@ -3,7 +3,7 @@
     //session_start();
     require_once 'ph.php';
     $vu = new PreventHijack();
-    if($vu->isValidUser())
+    if($vu->isValidUser("admin"))
     {
         
 ?>
@@ -14,20 +14,39 @@
         <title>Control Panel</title>
         <link rel="stylesheet" type="text/css" href="styles.css"/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script type="text/javascript" src="aes.js"></script>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="script.js"></script>
         
 </head>
 
-<body>
+<body onload="loadUsers();">
         <?php include_once("home.php");?>
         <div class="response"></div>
         <div class="center">    
             <div id="Page1" class="page">
-            
-                <br/>
-                <br/>
-                <table class="insert">
+                <div id="afpHome-left">
+                    <div class="searchForm">
+
+                        <input type="search" name="search" id="search"  /> <input type="image" name="searchButton" id="searchButton" src="images/icons/search-black.png" />
+                        <br/> <br/> <br/>
+                    </div>
+                    <div class="userList">
+                        <table id="users">
+                            <tr class="table-headers">
+                                <th>User Name </th>
+                                <th>User Firstname </th>
+                                <th>User Surname </th>
+                                <th>User Active </th>
+                                <th>Options </th>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="Page2" class="page">
+                 <table class="insert">
                     <tr>
                         <td>User Name:<br/> 
                             <input type="text" class="formInput" id="name" name="name" placeholder="Username" /></td>
@@ -57,6 +76,7 @@
 				<option>Forensic officer</option>
 				<option>Student</option>
                                 <option>Guest</option>
+                                <option>Forensic practitioner/Administrator</option>
                             </select>
                         </td>
                     </tr>
@@ -69,11 +89,12 @@
                         </td>
                     </tr>
                 </table>
-            
             <br/><br/>
+                
             </div>
-            <div id="Page2" class="page">xxxxxxxxx</div>
-            <div id="Page3" class="page">dddddddddddd</div>
+            <div id="Page3" class="page">
+                
+            </div>
             
         </div>
     
