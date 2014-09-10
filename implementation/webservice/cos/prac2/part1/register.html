@@ -1,0 +1,123 @@
+<!DOCTYPE  HTML>
+<html>
+<head>
+
+<title>Collen Banchi Mphabantshi</title>
+
+<script type="text/javascript">
+
+function EmailValidation()
+{
+var x=document.forms["MyForm"]["email"].value
+var atpos=x.indexOf("@");
+var dotpos=x.lastIndexOf(".");
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+
+	alert("invalid email address...");
+	return false; 
+	}
+
+return true;
+  
+}
+
+function CheckEmptyFields(){
+
+var username=document.forms["MyForm"]["username"].value
+var email=document.forms["MyForm"]["email"].value
+var password=document.forms["MyForm"]["password"].value
+var confirmPassword=document.forms["MyForm"]["confirmPassword"].value
+var bank=document.forms["MyForm"]["bank"].value
+
+if((username == null || username =="") || (email == null || email == "") 
+|| (password == null || password =="") ||(confirmPassword == null || confirmPassword == "") 
+ || (bank == null || bank == "" ))
+	{
+		alert("sorry!! all fields must be filled");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function VAlidatePassword(){
+	var password=document.forms["MyForm"]["password"].value
+	var confirmPassword=document.forms["MyForm"]["confirmPassword"].value
+	
+	if(password == confirmPassword){
+		
+		return true;
+	}else{
+	
+		alert("password not the same...");
+		return false;
+	}
+
+}
+
+
+
+function createJSON(){ 
+  var myJSONobj={ 
+		
+        "Username" : document.getElementById("username").value,
+		"Email" : document.getElementById("email").value,
+		"Password" : document.getElementById("password").value,
+		"bank" : document.getElementById("bank").value,
+	
+}
+   
+var myJSONstr =JSON.stringify(myJSONobj);
+
+return myJSONstr;
+}
+
+function SubmitForm(){
+
+if(!CheckEmptyFields()){
+	document.MyForm.clear();
+	return false;
+	
+}else if(!EmailValidation()){
+	document.MyForm.clear();
+	return false;
+	
+}else if(!VAlidatePassword()){
+	document.MyForm.clear();
+	return false;
+	
+}
+else{
+	document.getElementById('formValues').value = createJSON();
+	alert(document.getElementById('formValues').value);
+	document.MyForm.submit();
+	}
+}
+
+
+
+
+</script>
+
+</head>
+<body align="center">
+
+<h2 align="center"> PLEASE FILL IN YOUR DETAILS TO REGISTER</h2>
+
+<table border="0" align="center">
+<form  action="web/register.php"  id="MyForm" name="MyForm"  method="post" autocomplete="on"   >
+<tr><td> <input type="text" id="username" name="username" placeholder="account number" autofocus="autofocus"/></td></tr>
+<tr><td><input type="text" id="email" name="email" autocomplete="off" placeholder="Email" autofocus="autofocus"  /></td></tr>
+<tr><td><input type="password" id="password" name="password" placeholder="Password"  autofocus="autofocus" /></td></tr>
+<tr><td><input type="password" id="confirmPassword" placeholder="Confirm password" autofocus="autofocus"/></td></tr>
+<tr><td><input type="text" id="bank" name="bank"  placeholder="bank" autofocus="autofocus"/></td></tr>
+
+<input type="hidden" name="formValues"  id="formValues" />
+<tr><td><input type="button" value="Register" onClick="javascript:SubmitForm()" /></td></tr>
+<tr><td><a href="index.html">click here to login</a></td></tr>
+</form>
+
+</table>
+
+</body>
+</html>

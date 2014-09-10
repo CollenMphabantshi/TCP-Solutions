@@ -273,6 +273,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		initialize();
 		System.out.println("Start init");
 		variablesInitialization();
+		CheckRadioButtons();
 		setOnClickEvents();
 		
 		
@@ -496,6 +497,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		chockingSuspectedNo = (RadioButton)findViewById(R.id.blunt_ChockingSuspectedNo);
 		tv_suicideNoteFound = (TextView)findViewById(R.id.blunt_tv_suicideNoteFound);
 		suicideNoteFoundYes = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundNo);
 		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
 		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
 		
@@ -554,7 +556,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
-						try{
+						if(ValidateFields()){
+						/*try{
 							new Read().execute(postdata);
 							
 							dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
@@ -575,13 +578,18 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			                      }).start(); 
 						}catch(Exception e){
 							e.printStackTrace();
+						}*/
+							doneButton.setVisibility(GONE);
+							logoutButton.setVisibility(VISIBLE);
+							Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+						}else{
+							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
 					
 					//nextButton.setVisibility(GONE);
-					doneButton.setVisibility(GONE);
-					logoutButton.setVisibility(VISIBLE);
+					
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
@@ -1650,6 +1658,199 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			}
 		}
 	
+
+	
+	private boolean ValidateFields(){
+		
+		if(ioName.getText().toString().length() == 0){
+			ioName.requestFocus();
+			ioName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( ioSurname.getText().toString().length() == 0){
+			ioSurname.requestFocus();
+			ioSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		
+		if( ioRank.getText().toString().length() == 0){
+			ioRank.requestFocus();
+			ioRank.setError("sorry empty field");
+			return false;
+		}
+
+		
+		if( ioCellNo.getText().toString().length() == 0){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry empty field");
+			return false;
+		}
+		if(!CellNoValidation(ioCellNo.getText().toString()) || ioCellNo.getText().toString().length() != 10){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry invalid cell no");
+			return false;
+		}
+		
+		if( foosName.getText().toString().length() == 0){
+			foosName.requestFocus();
+			foosName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosSurname.getText().toString().length() == 0){
+			foosSurname.requestFocus();
+			foosSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosRank.getText().toString().length() == 0){
+			foosRank.requestFocus();
+			foosRank.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimName.getText().toString().length() == 0){
+			victimName.requestFocus();
+			victimName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimSurname.getText().toString().length() == 0){
+			victimSurname.requestFocus();
+			victimSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimIDNo.getText().toString().length() == 0){
+			victimIDNo.requestFocus();
+			victimIDNo.setError("sorry empty field");
+			return false;
+		}
+		
+		
+			
+		if( whoFoundVictimBody.getText().toString().length() == 0){
+			whoFoundVictimBody.requestFocus();
+			whoFoundVictimBody.setError("sorry empty field");
+			return false;
+		}
+		
+		
+			
+		
+		if(sceneIOTypeInside.isChecked()){
+			
+			doorLockedNo.setChecked(true);
+			
+			windowsClosedNo.setChecked(true);
+		
+			windowsBrokenNo.setChecked(true);
+		
+			victimAloneNo.setChecked(true);
+			
+			if(previousAttemptsYes.isChecked()){
+				if( howManyAttempts.getText().toString().length() == 0){
+					howManyAttempts.requestFocus();
+					howManyAttempts.setError("sorry empty field");
+					return false;
+				}
+			}
+			
+			
+			
+				
+				
+		}
+		
+		
+			
+		if( bluntObjectUsed.getText().toString().length() == 0){
+			bluntObjectUsed.requestFocus();
+			bluntObjectUsed.setError("sorry empty field");
+			return false;
+		}
+		
+		
+			
+		
+		if( generalHistory.getText().toString().length() == 0){
+			generalHistory.requestFocus();
+			generalHistory.setError("sorry empty field");
+			return false;
+		}
+		return true;
+	}
+	
+	private void CheckRadioButtons(){
+		
+		rgbUnknownGender.setChecked(true);
+		rgbUnknownRace.setChecked(true);
+		
+		//outside selected by default
+		sceneIOTypeOutside.setChecked(true);
+		tv_whereInside.setVisibility(GONE);
+		sceneIType.setVisibility(GONE);
+		tv_sceneITypeOther.setVisibility(GONE);
+		sceneITypeOther.setVisibility(GONE);
+		tv_doorLocked.setVisibility(GONE);
+		doorLockedYes.setVisibility(GONE);
+		doorLockedNo.setVisibility(GONE);
+		tv_windowsClosed.setVisibility(GONE);
+		windowsClosedYes.setVisibility(GONE);
+		windowsClosedNo.setVisibility(GONE);
+		tv_windowsBroken.setVisibility(GONE);
+		windowsBrokenYes.setVisibility(GONE);
+		windowsBrokenNo.setVisibility(GONE);
+		tv_victimAlone.setVisibility(GONE);
+		victimAloneYes.setVisibility(GONE);
+		victimAloneNo.setVisibility(GONE);
+		tv_peopleWithVictim.setVisibility(GONE);
+		peopleWithVictim.setVisibility(GONE);
+		
+		tv_sceneOType.setVisibility(VISIBLE);
+		sceneOType.setVisibility(VISIBLE);
+		
+		suicideNoteFoundNo.setChecked(true);
+		
+		bodyDecomposedNo.setChecked(true);
+	
+		medicalInterventionNo.setChecked(true);
+	
+		closeToWaterNo.setChecked(true);
+		
+		rapeHomicideNo.setChecked(true);
+	
+		suicideSuspectedNo.setChecked(true);
+		
+		//previous attempts is none by default
+		previousAttemptsNo.setChecked(true);
+		tv_howManyAttempts.setVisibility(GONE);
+		howManyAttempts.setVisibility(GONE);
+	
+		signsOfStruggleNo.setChecked(true);
+		
+		alcoholBottleAroundNo.setChecked(true);
+	
+		drugParaphernaliaNo.setChecked(true);
+	
+		communityAssaultNo.setChecked(true);
+	
+		bluntForceObjectOnSceneNo.setChecked(true);
+		
+		strangulationSuspectedNo.setChecked(true);
+	
+		smotheringSuspectedNo.setChecked(true);
+		
+		chockingSuspectedNo.setChecked(true);
+	
+		 
+	}
+	
+	private  boolean CellNoValidation(String cell) {
+		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
+		}
 	
 	
 	
