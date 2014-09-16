@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:text="Search by date(2014-09-20), time(12:00:00), or location)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/previousCase_searchBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingLeft="10dp"
+        android:layout_marginBottom="40dp"
+        android:hint="  search case"
+        
+         />
+
+    <GridLayout
+			    android:id="@+id/previousCase"
+			    android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_margin="5dp"
+				android:padding="5dp"
+				android:rowCount="1"
+        		android:columnCount="3"
+			    >
+			    <TextView 
+				    
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Scene Type"
+					android:layout_marginLeft="15dp"
+					android:layout_row="0"
+            		android:layout_column="0"
+            		android:textSize="25dp"
+					
+					/>
+			    <TextView 
+				    
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="\t Date"
+					android:layout_marginLeft="55dp"
+					android:layout_row="0"
+            		android:layout_column="1"
+					android:textSize="25dp"
+					/>
+			    <TextView 
+				    
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="\t Time"
+					android:layout_marginLeft="55dp"
+					android:layout_row="0"
+            		android:layout_column="2"
+            		android:textSize="25dp"
+					
+					/>
+</GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/previousCase_lv"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+                
+            </ListView>
+        </LinearLayout>
+    
+
+</LinearLayout>

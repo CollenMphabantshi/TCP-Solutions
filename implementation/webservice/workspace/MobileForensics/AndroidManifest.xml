@@ -14,6 +14,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -102,6 +103,13 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            
+            <!-- Back to home functionality enabled -->
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.mobileforensics.HOME" />
+            
         </activity>
         <activity
             android:name=".Burn"

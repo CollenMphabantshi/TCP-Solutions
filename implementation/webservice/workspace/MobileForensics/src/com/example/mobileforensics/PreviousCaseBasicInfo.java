@@ -164,8 +164,11 @@ public class PreviousCaseBasicInfo  extends Activity{
 			caseData.clear();
 		}catch(Exception e){e.printStackTrace();}
 		for(int i =0; i < json.length();i++){
+			String sceneType = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTypeID");
+			String mDate = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneDate");
+			String mTime = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTime");
 			System.out.println("------("+i+") : "+(new String(enc.decrypt(json.getJSONObject(i).getString("caseNumber")))));
-			caseData.add(new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTypeID"))));
+			caseData.add(new String(enc.decrypt(sceneType))+" \t\t"+new String(enc.decrypt(mDate))+"\t"+new String(enc.decrypt(mTime)));
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 		        android.R.layout.simple_list_item_1, android.R.id.text1,caseData.toArray(new String[]{}));

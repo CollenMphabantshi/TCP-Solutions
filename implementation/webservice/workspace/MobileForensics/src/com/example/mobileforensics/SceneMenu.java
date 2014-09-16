@@ -3,7 +3,9 @@ package com.example.mobileforensics;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -20,6 +22,13 @@ public class SceneMenu extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scenemenu);
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
 		
 		//get Listview from xml
 		list = (ListView) findViewById(R.id.list);

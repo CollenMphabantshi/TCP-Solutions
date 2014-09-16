@@ -54,13 +54,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.NavUtils;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -71,7 +76,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -82,7 +89,7 @@ import android.widget.Toast;
 
 public class Blunt extends Activity implements GlobalMethods, OnMyLocationChangeListener{
 	
-	Button next;
+	
 	
 	TextView value;
 
@@ -214,7 +221,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	private Button doneButton;
 	private Button logoutButton;
-	
+	private Button BackToMenu;
+	private GridLayout Gallery;
 	private JSONObject json;
 
 	
@@ -257,7 +265,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     private String WeatherInfo="";
     private TextView weatherInfo;
 	private Encryption enc;
+	private int index_gallery= 0;
 	
+	private String mCurrentPhotoPath;
+	static final int REQUEST_TAKE_PHOTO = 1;
+	//ImageView mImageView;
+	private static final String TAG = "upload";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -266,7 +279,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		String city = "";
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
-		
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
 		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		
@@ -302,6 +321,92 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			
 		}
 	
+	private File createImageFile() throws IOException{
+		// Create an image file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String imageFileName = "Blunt_" + timeStamp + "_";
+	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
+	    File dir = new File(storageDir);
+	    if (!dir.exists())
+	    	dir.mkdir();
+	    
+	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
+
+	    // Save a file: path for use with ACTION_VIEW intents
+	    mCurrentPhotoPath = image.getAbsolutePath();
+	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	    return image;
+		
+	}
+	
+	private void dispatchTakePictureIntent(){
+		
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+			
+			File photoFile = null;
+			try{
+				photoFile = createImageFile();
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			if(photoFile != null){
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+			}
+		}
+	}
+	
+	private void setPic(ImageView mImageView){
+		// Get the dimensions of the View
+	    int targetW = 300;
+	    int targetH = 300;
+
+	    // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+
+	    // Determine how much to scale down the image
+	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+	    // Decode the image file into a Bitmap sized to fill the View
+	    bmOptions.inJustDecodeBounds = false;
+	    bmOptions.inSampleSize = scaleFactor << 1;
+	    bmOptions.inPurgeable = true;
+
+	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    
+	    Matrix mtx = new Matrix();
+	    mtx.postRotate(90);
+	    // Rotating Bitmap
+	    Bitmap rotatedBMP = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mtx, true);
+
+	    if (rotatedBMP != bitmap)
+	    	bitmap.recycle();
+	    
+	    mImageView.setImageBitmap(rotatedBMP);
+	    galleryAddPic(mCurrentPhotoPath);
+		
+	}
+	
+	private void galleryAddPic(String locat){
+		
+		Intent mediaScanerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		
+		File f = new File(locat);
+		
+		Uri counterUri = Uri.fromFile(f);
+		
+		mediaScanerIntent.setData(counterUri);
+		
+		this.sendBroadcast(mediaScanerIntent);
+	}
+	
 	@Override
 	public void onMyLocationChange(Location loc) {
 		// TODO Auto-generated method stub
@@ -318,7 +423,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
             String formattedDate = df.format(c.getTime());
             time = formattedDate.substring(11);
             date = formattedDate.substring(0, formattedDate.length()-9);
+         
             getAddress(longitude,latitude);
+            
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
 			locate.accumulate("Bearing", loc.getBearing());
@@ -334,7 +441,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 			//value.setText(location);
 			
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -516,7 +623,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		doneButton = (Button)findViewById(R.id.blunt_doneButton);
 		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
 		
-		//next = (Button) findViewById(R.id.nextButton);
+		BackToMenu = (Button)findViewById(R.id.blunt_BackToMenu);
+		
 		value = (TextView) findViewById(R.id.value);
 		
 		//upload pictures part
@@ -533,7 +641,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       
+	       Gallery = (GridLayout) findViewById(R.id.blunt_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -566,32 +674,44 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-						try{
-							new Read().execute(postdata);
-							
-							dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
-			                 
-			                new Thread(new Runnable() {
-			                        public void run() {
-			                             runOnUiThread(new Runnable() {
-			                                    public void run() {
-			                                        messageText.setText("uploading started.....");
-			                                    }
-			                                });                      
-			                             for(int i=0; i < uploadFileName.size(); i++){
-			                            	 filename = uploadFileName.get(i);
-			                            	 uploadFile( filename );
-			                            	 
-			                             }                   
-			                        }
-			                      }).start(); 
-			                doneButton.setVisibility(GONE);
-							logoutButton.setVisibility(VISIBLE);
-							Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
-						}catch(Exception e){
-							e.printStackTrace();
-						}
-							
+							if(uploadFileName.size() > 0){
+								
+									try{
+										
+										new Read().execute(postdata);
+										
+										dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
+						                 
+						                new Thread(new Runnable() {
+						                        public void run() {
+						                             runOnUiThread(new Runnable() {
+						                                    public void run() {
+						                                        
+						                                        Toast.makeText(Blunt.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                    }
+						                                });                      
+						                             for(int i=0; i < uploadFileName.size(); i++){
+						                            	 filename = uploadFileName.get(i);
+						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
+						                            	 uploadFile( filename );
+						                            	 
+						                             }                   
+						                        }
+						                      }).start(); 
+						                doneButton.setVisibility(VISIBLE);
+										logoutButton.setVisibility(VISIBLE);
+										clearFilelds();
+										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+									}catch(Exception e){
+										e.printStackTrace();
+									}
+										
+							}
+							else{
+								
+								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
+								
+							}
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -608,14 +728,50 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
             
             @Override
             public void onClick(View arg0) {
-                 
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            	if(index_gallery < 9){
+            	
+	            	if(index_gallery == 0){
+	            		imageView0.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 1){
+	            		imageView1.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 2){
+	            		imageView2.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 3){
+	            		imageView3.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 4){
+	            		imageView4.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 5){
+	            		imageView5.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 6){
+	            		imageView6.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 7){
+	            		imageView7.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 8){
+	            		imageView8.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}
+            	}
+            	
             }
         });
+	
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			
@@ -630,6 +786,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		        new Read().execute(pairs);
 			}
 		});
+		
+		
 		
 		/**
 		 * 	Spinner onclick event
@@ -795,7 +953,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 	}
 	
-
+		
 	
 	
 	    
@@ -803,39 +961,39 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	        super.onActivityResult(requestCode, resultCode, data);
 	         
-	        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-	            Uri selectedImage = data.getData();
-	            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-	 
-	            Cursor cursor = getContentResolver().query(selectedImage,
-	            filePathColumn, null, null, null);
-	            cursor.moveToFirst();
-	 
-	            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-	            String picturePath = cursor.getString(columnIndex);
-	            cursor.close();
+	        Log.i(TAG, "onActivityResult: " + this);
+			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+	        	
+	            uploadFileName.add(mCurrentPhotoPath);
+	            System.out.println("******************   "+mCurrentPhotoPath);
 	           
-	            uploadFileName.add(picturePath);
-	           // messageText.setText("Path : "+uploadFileName);
-	            
 	            if(count == 0){
-	            	imageView0.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView0);
+	            	
 	            }else if(count == 1){
-	            	imageView1.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView1);
+	            	
 	            }else if(count == 2){
-	            	imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView2);
+	            	
 	            }else if(count == 3){
-	            	imageView3.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView3);
+	            	
 	            }else if(count == 4){
-	            	imageView4.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView4);
+	            	
 	            }else if(count == 5){
-	            	imageView5.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView5);
+	            	
 	            }else if(count == 6){
-	            	imageView6.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView6);
+	            	
 	            }else if(count == 7){
-	            	imageView7.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView7);
+	            	
 	            }else if(count == 8){
-	            	imageView8.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView8);
+	            	
 	            }
 	            count++;
 	        }
@@ -1524,9 +1682,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-            
-            
-            
+          
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1680,84 +1836,79 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	
 	private boolean ValidateFields(){
-		
-		if(ioName.getText().toString().length() == 0){
+		System.out.println("**********    ****************    "+uploadFileName);
+		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( ioSurname.getText().toString().length() == 0){
+		if( ioSurname.getText().toString().trim().length() == 0){
 			ioSurname.requestFocus();
 			ioSurname.setError("sorry empty field");
 			return false;
 		}
 		
 		
-		if( ioRank.getText().toString().length() == 0){
+		if( ioRank.getText().toString().trim().length() == 0){
 			ioRank.requestFocus();
 			ioRank.setError("sorry empty field");
 			return false;
 		}
 
 		
-		if( ioCellNo.getText().toString().length() == 0){
+		if( ioCellNo.getText().toString().trim().length() == 0){
 			ioCellNo.requestFocus();
 			ioCellNo.setError("sorry empty field");
 			return false;
 		}
-		if(!CellNoValidation(ioCellNo.getText().toString()) || ioCellNo.getText().toString().length() != 10){
+		if(!CellNoValidation(ioCellNo.getText().toString().trim()) || ioCellNo.getText().toString().trim().length() != 10){
 			ioCellNo.requestFocus();
 			ioCellNo.setError("sorry invalid cell no");
 			return false;
 		}
 		
-		if( foosName.getText().toString().length() == 0){
+		if( foosName.getText().toString().trim().length() == 0){
 			foosName.requestFocus();
 			foosName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( foosSurname.getText().toString().length() == 0){
+		if( foosSurname.getText().toString().trim().length() == 0){
 			foosSurname.requestFocus();
 			foosSurname.setError("sorry empty field");
 			return false;
 		}
 		
-		if( foosRank.getText().toString().length() == 0){
+		if( foosRank.getText().toString().trim().length() == 0){
 			foosRank.requestFocus();
 			foosRank.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimName.getText().toString().length() == 0){
+		if( victimName.getText().toString().trim().length() == 0){
 			victimName.requestFocus();
 			victimName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimSurname.getText().toString().length() == 0){
+		if( victimSurname.getText().toString().trim().length() == 0){
 			victimSurname.requestFocus();
 			victimSurname.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimIDNo.getText().toString().length() == 0){
+		if( victimIDNo.getText().toString().trim().length() == 0){
 			victimIDNo.requestFocus();
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-		
-		
 			
-		if( whoFoundVictimBody.getText().toString().length() == 0){
+		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
 			whoFoundVictimBody.requestFocus();
 			whoFoundVictimBody.setError("sorry empty field");
 			return false;
 		}
-		
-		
-			
 		
 		if(sceneIOTypeInside.isChecked()){
 			
@@ -1776,23 +1927,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					return false;
 				}
 			}
-			
-			
-			
-				
-				
 		}
 		
-		
-			
 		if( bluntObjectUsed.getText().toString().length() == 0){
 			bluntObjectUsed.requestFocus();
 			bluntObjectUsed.setError("sorry empty field");
 			return false;
 		}
-		
-		
-			
 		
 		if( generalHistory.getText().toString().length() == 0){
 			generalHistory.requestFocus();
@@ -1800,6 +1941,80 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			return false;
 		}
 		return true;
+	}
+	
+	public void clearFilelds(){
+		
+		victimName.setText("Unknown");
+		
+		victimSurname.setText("Unknown");
+		
+		victimIDNo.setText("Unknown");
+			
+		whoFoundVictimBody.setText("");
+		
+		if(sceneIOTypeInside.isChecked()){
+			sceneIOTypeInside.setChecked(false);
+			doorLockedNo.setChecked(false);
+			
+			windowsClosedNo.setChecked(false);
+		
+			windowsBrokenNo.setChecked(false);
+		
+			victimAloneNo.setChecked(false);
+			//outside selected by default
+			sceneIOTypeOutside.setChecked(true);
+			tv_whereInside.setVisibility(GONE);
+			sceneIType.setVisibility(GONE);
+			tv_sceneITypeOther.setVisibility(GONE);
+			sceneITypeOther.setVisibility(GONE);
+			tv_doorLocked.setVisibility(GONE);
+			doorLockedYes.setVisibility(GONE);
+			doorLockedNo.setVisibility(GONE);
+			tv_windowsClosed.setVisibility(GONE);
+			windowsClosedYes.setVisibility(GONE);
+			windowsClosedNo.setVisibility(GONE);
+			tv_windowsBroken.setVisibility(GONE);
+			windowsBrokenYes.setVisibility(GONE);
+			windowsBrokenNo.setVisibility(GONE);
+			tv_victimAlone.setVisibility(GONE);
+			victimAloneYes.setVisibility(GONE);
+			victimAloneNo.setVisibility(GONE);
+			tv_peopleWithVictim.setVisibility(GONE);
+			peopleWithVictim.setVisibility(GONE);
+		}
+		howManyAttempts.setText("");
+		
+		bluntObjectUsed.setText("");
+	
+		generalHistory.setText("");
+		
+		uploadFileName = null;
+		
+		uploadFileName = new ArrayList<String>();
+		
+	    imageView0.setImageBitmap(null);
+	    imageView1.setImageBitmap(null);
+	    imageView2.setImageBitmap(null);
+	    imageView3.setImageBitmap(null);
+	    imageView4.setImageBitmap(null);
+	    imageView5.setImageBitmap(null);
+	    imageView6.setImageBitmap(null);
+	    imageView7.setImageBitmap(null);
+	    imageView8.setImageBitmap(null);
+	    
+	    imageView0.setVisibility(GONE);
+	    imageView1.setVisibility(GONE);
+	    imageView2.setVisibility(GONE);
+	    imageView3.setVisibility(GONE);
+	    imageView4.setVisibility(GONE);
+	    imageView5.setVisibility(GONE);
+	    imageView6.setVisibility(GONE);
+	    imageView7.setVisibility(GONE);
+	    imageView8.setVisibility(GONE);
+			
+	   index_gallery = 0;
+	   count = 0;
 	}
 	
 	private void CheckRadioButtons(){

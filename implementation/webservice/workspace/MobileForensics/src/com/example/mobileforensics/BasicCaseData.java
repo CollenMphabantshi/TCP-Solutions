@@ -67,21 +67,21 @@ public class BasicCaseData extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
+		/*Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
 		try{
 			select.putExtra("USERNAME", username);
 		}catch(Exception e){e.printStackTrace();}
-		startActivity(select);
+		startActivity(select);*/
 	}
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
+		/*Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
 		try{
 			select.putExtra("USERNAME", username);
 		}catch(Exception e){e.printStackTrace();}
-		startActivity(select);
+		startActivity(select);*/
 	}
 }
