@@ -13,18 +13,22 @@ require_once("Scene.php");
  */
 class sudaParameters{
     
-    private $sudaID;
-    private $sceneID;
-    private $sudaIOType;
-    private $signsOfStruggle;
-    private $alcoholBottleAround;
-    private $drugParaphernalia;
-    private $strangulationSuspected;
-    private $smotheringSuspected;
-    private $chockingSuspected;
-    private $sudaAppliances;
-    private $wierdSmellInAir;
-   
+    public $sudaID;
+    public $sceneID;
+    public $sudaIOType;
+    public $signsOfStruggle;
+    public $alcoholBottleAround;
+    public $drugParaphernalia;
+    public $strangulationSuspected;
+    public $smotheringSuspected;
+    public $chockingSuspected;
+    public $anyHeatingDevices;
+    public $wierdSmellInAir;
+    public $victimHistory;
+    public $victimTakeMedication;
+    public $victimHadAnySymptoms;
+    public $familyMedicalHistory;
+    
     public  $sudaCases;
     public $caseObj;
     public $victimsObj;
@@ -39,10 +43,10 @@ class Suda extends Scene{
     //put your code here
      public function __construct($formData,$api){
         $this->api = $api;
-	$paraObj = new sudaParameters();
-        $paraObjAll =new sudaParameters();
+	$this->paraObj = new sudaParameters();
+        $this->paraObjAll =new sudaParameters();
         
-        $sudaCases = array();
+        $this->paraObjAll->sudaCases = array();
         
         if($formData == NULL)
         {
@@ -52,15 +56,19 @@ class Suda extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->sudaIOType = $formData['object'][$i]['sudaIOType'];
-                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
-                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
-                $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
-                $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
-                $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
-                $this->sudaAppliances = $formData['object'][$i]['sudaAppliances'];
-                $this->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
+                $paraObjAll->sudaIOType = $formData['object'][$i]['sudaIOType'];
+                $paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $paraObjAll->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
+                $paraObjAll->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
+                $paraObjAll->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
+                $paraObjAll->anyHeatingDevices = $formData['object'][$i]['anyHeatingDevices'];
+                $paraObjAll->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
+                $paraObjAll->victimHistory = $formData['object'][$i]['victimHistory'];
+                $paraObjAll->victimTakeMedication = $formData['object'][$i]['victimTakeMedication'];
+                $paraObjAll->victimHadAnySymptoms = $formData['object'][$i]['victimHadAnySymptoms'];
+               $paraObjAll->familyMedicalHistory = $formData['object'][$i]['familyMedicalHistory'];
                 
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -82,7 +90,7 @@ class Suda extends Scene{
     
     public function addSuda($sceneID,$inside,$object) {
         
-        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$this->sudaIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->sudaAppliances','$this->wierdSmellInAir')");
+        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$this->paraObjAll->sudaIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->strangulationSuspected','$this->paraObjAll->smotheringSuspected','$this->paraObjAll->chockingSuspected','$this->paraObjAll->anyHeatingDevices','$this->paraObjAll->wierdSmellInAir','$this->paraObjAll->victimHistory','$this->paraObjAll->victimTakeMedication','$this->paraObjAll->victimHadAnySymptoms','$this->paraObjAll->familyMedicalHistory')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -113,11 +121,11 @@ class Suda extends Scene{
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->sudaCases[] = $this->getSudaCases($info['sudaID']);
+                $this->paraObjAll->sudaCases[] = $this->getSudaCases($info['sudaID']);
                
             }
             
-            return $paraObjAll;
+            return $this->paraObjAll;
         
     }
     
@@ -148,41 +156,39 @@ class Suda extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->sudaID = $info['sudaID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->sudaIOType = $info['sudaIOType'];
-                        $paraObj->signsOfStruggle = $info['signsOfStruggle'];
-                        $paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
-                        $paraObj->drugParaphernalia = $info['drugParaphernalia'];
-                        $paraObj->strangulationSuspected = $info['strangulationSuspected'];
-                        $paraObj->smotheringSuspected = $info['smotheringSuspected'];
-                        $paraObj->chockingSuspected = $info['chockingSuspected'];
-                        $paraObj->sudaAppliances = $info['sudaAppliances'];
-                        $paraObj->wierdSmellInAir = $info['wierdSmellInAir'];
-                        
-                        
-                        
-                        
+                        $this->paraObj->sudaID = $info['sudaID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->sudaIOType = $info['sudaIOType'];
+                        $this->paraObj->signsOfStruggle = $info['signsOfStruggle'];
+                        $this->paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
+                        $this->paraObj->drugParaphernalia = $info['drugParaphernalia'];
+                        $this->paraObj->strangulationSuspected = $info['strangulationSuspected'];
+                        $this->paraObj->smotheringSuspected = $info['smotheringSuspected'];
+                        $this->paraObj->chockingSuspected = $info['chockingSuspected'];
+                        $this->paraObj->anyHeatingDevices = $info['anyHeatingDevices'];
+                        $this->paraObj->wierdSmellInAir = $info['wierdSmellInAir'];
+                        $this->paraObj->victimHistory = $info['victimHistory'];
+                        $this->paraObj->victimTakeMedication = $info['victimTakeMedication'];
+                        $this->paraObj->victimHadAnySymptoms = $info['victimHadAnySymptoms'];
+                        $this->paraObj->familyMedicalHistory = $info['familyMedicalHistory'];
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj-> sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj->caseObj = $case ; 
                         
-
-
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
                        }
 
         
-            return $paraObj;
+            return $this->paraObj;
         
     }
     

@@ -14,7 +14,11 @@ require_once("Scene.php");
 class FoetusabandonedBaby extends Scene{
     //put your code here
      private $foetusabandonedbabyID;
-     
+     private $sceneID;
+     private $foetusabandonedbabyIOType;
+     private $howWasBodyDiscovered;
+     private $wasBodyCovered;
+     private $coveredWith;
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -25,6 +29,10 @@ class FoetusabandonedBaby extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"FoetusabandonedBaby",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                $this->foetusabandonedbabyIOType = $formData['object'][$i]['foetusabandonedbabyIOType'];
+                $this->howWasBodyDiscovered = $formData['object'][$i]['howWasBodyDiscovered'];
+                $this->wasBodyCovered = $formData['object'][$i]['wasBodyCovered'];
+                $this->coveredWith = $formData['object'][$i]['coveredWith'];
                     //
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
@@ -33,7 +41,7 @@ class FoetusabandonedBaby extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
+                
                 if($formData['object'][$i]['victims']['victimInside'] == "yes"){
                     $this->addFoetusabandonedBaby($sceneID,TRUE,$formData['object'][$i]);
                 }else{
@@ -45,8 +53,7 @@ class FoetusabandonedBaby extends Scene{
         }
     }
     private function addFoetusabandonedBaby($sceneID) {
-            $h_res = mysql_query("insert into foetusabandonedbaby values(0,".$sceneID.",'$this->foetusabandonedbabyID')");
-        
+            $h_res = mysql_query("insert into foetusabandonedbaby values(0,".$sceneID.",'$this->foetusabandonedbabyIOType','$this->howWasBodyDiscovered','$this->wasBodyCovered','$this->coveredWith')");    
     }
     public function getAllFoetusabandonedBaby() {
         try{
@@ -67,7 +74,11 @@ class FoetusabandonedBaby extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['babyIOType'] = $array['babyIOType'];
+                $h_array['foetusabandonedbabyIOType'] = $array['foetusabandonedbabyIOType'];
+                $h_array['howWasBodyDiscovered'] = $array['howWasBodyDiscovered'];
+                $h_array['wasBodyCovered'] = $array['wasBodyCovered'];
+                $h_array['coveredWith'] = $array['coveredWith'];
+                
                 $f_array[] = $h_array; 
  
                 $tmp = $this->sceneVictim->getSceneVictims($h_array['sceneID']);
@@ -99,7 +110,7 @@ class FoetusabandonedBaby extends Scene{
      public function getFoetusabandonedBaby($foetusabandonedbabyID) {
         try{
             
-            $h_res = mysql_query("select * from foetusabandonedbaby where foetusabandonedbabyID=".foetusabandonedbabyID);
+            $h_res = mysql_query("select * from foetusabandonedbaby where foetusabandonedbabyID=".$foetusabandonedbabyID);
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
             $sv_i = 0;
@@ -115,7 +126,10 @@ class FoetusabandonedBaby extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['babyIOType'] = $array['babyIOType'];
+                $h_array['foetusabandonedbabyIOType'] = $array['foetusabandonedbabyIOType'];
+                $h_array['howWasBodyDiscovered'] = $array['howWasBodyDiscovered'];
+                $h_array['wasBodyCovered'] = $array['wasBodyCovered'];
+                $h_array['coveredWith'] = $array['coveredWith'];
                 
                 $hi_res = mysql_query("select * from foetusabandonedbaby where foetusabandonedbabyID=".$h_array['foetusabandonedbabyID']);
                 $f_array[] = $h_array; 

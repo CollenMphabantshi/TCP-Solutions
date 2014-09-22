@@ -25,7 +25,10 @@ class Hanging extends Scene{
     private $ligatureType;
     private $strangulationSuspected;
     private $smotheringSuspected;
-    private $chockingSuspected;
+    private $chockingSuspected; 
+    private $bodyCutDown;
+    private $whoCutDownBody;
+    private $suspensionPointUsed;
     
     public function __construct($formData,$api){
         $this->api = $api;
@@ -51,6 +54,9 @@ class Hanging extends Scene{
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
                 $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
                 $this->whoRemovedLigature = $formData['object'][$i]['whoRemovedLigature'];
+                $this->bodyCutDown = $formData['object'][$i]['bodyCutDown'];
+                $this->whoCutDownBody = $formData['object'][$i]['whoCutDownBody'];
+                $this->suspensionPointUsed = $formData['object'][$i]['suspensionPointUsed'];
                     //
                 $sceneID = $this->createScene();
                 
@@ -81,10 +87,12 @@ class Hanging extends Scene{
          
         if($this->whoRemovedLigature != NULL)
         {
-            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+            $h_res = mysql_query("insert into hanging values(0,"
+            .$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->bodyCutDown','$this->whoCutDownBody','$this->suspensionPointUsed')")
                 or $this->api->response($this->api->json($error), 400);
         }else{
-            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+            $h_res = mysql_query("insert into hanging values(0,"
+            .$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->bodyCutDown','$this->whoCutDownBody','$this->suspensionPointUsed')")
               or  $this->api->response($this->api->json($error), 400);
         }
         
@@ -138,6 +146,9 @@ class Hanging extends Scene{
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['bodyCutDown'] = $array['bodyCutDown'];
+                $h_array['whoCutDownBody'] = $array['whoCutDownBody'];
+                $h_array['suspensionPointUsed'] = $array['suspensionPointUsed'];
                 
                 $hi_res = mysql_query("select * from hanginginside where hangingID=".$h_array['hangingID']) or $this->api->response($this->api->json($error), 400);
                 if(mysql_num_rows($hi_res) > 0)
@@ -204,6 +215,9 @@ class Hanging extends Scene{
                 $h_array['strangulationSuspected'] = $enc->decrypt_request($h_array['strangulationSuspected']);
                 $h_array['smotheringSuspected'] = $enc->decrypt_request($h_array['smotheringSuspected']);
                 $h_array['chockingSuspected'] = $enc->decrypt_request($h_array['chockingSuspected']);
+                $h_array['bodyCutDown'] = $enc->decrypt_request($h_array['bodyCutDown']);
+                $h_array['whoCutDownBody'] = $enc->decrypt_request($h_array['whoCutDownBody']);
+                $h_array['suspensionPointUsed'] = $enc->decrypt_request($h_array['suspensionPointUsed']);
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
@@ -243,6 +257,9 @@ class Hanging extends Scene{
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['bodyCutDown'] = $array['bodyCutDown'];
+                $h_array['whoCutDownBody'] = $array['whoCutDownBody'];
+                $h_array['suspensionPointUsed'] = $array['suspensionPointUsed'];
                 
                 $hi_res = mysql_query("select * from hanginginside where hangingID=".$h_array['hangingID']);
                 if(mysql_num_rows($hi_res) > 0)

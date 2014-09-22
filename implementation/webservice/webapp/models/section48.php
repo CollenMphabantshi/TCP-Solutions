@@ -22,11 +22,11 @@ class parameters {
     public $NurseNames;
     public $NurseCellNumber;
     
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
 
-    private $secCases;
+    public $secCases;
     
 
     function __construct() {
@@ -56,13 +56,19 @@ class section48 extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->victimHospitalized = $formData['object'][$i]['victimHospitalized'];
-                $this->medicalEquipmentInSitu = $formData['object'][$i]['medicalEquipmentInSitu'];
-                $this->gw714file = $formData['object'][$i]['gw714file'];
-                $this->DrNames = $formData['object'][$i]['DrNames'];
-                $this->DrCellNumber = $formData['object'][$i]['DrCellNumber'];
-                $this->NurseNames = $formData['object'][$i]['NurseNames'];
-                $this->NurseCellNumber = $formData['object'][$i]['NurseCellNumber'];
+                
+                $this->paraObjAll->victimHospitalized = $formData['object'][$i]['victimHospitalized'];
+                $this->paraObjAll->medicalEquipmentInSitu = $formData['object'][$i]['medicalEquipmentInSitu'];
+                $this->paraObjAll->gw7_24file = $formData['object'][$i]['gw7_24file'];
+                $this->paraObjAll->DrNames = $formData['object'][$i]['DrNames'];
+                $this->paraObjAll->DrCellNumber = $formData['object'][$i]['DrCellNumber'];
+                $this->paraObjAll->NurseNames = $formData['object'][$i]['NurseNames'];
+                $this->paraObjAll->NurseCellNumber = $formData['object'][$i]['NurseCellNumber'];
+                $this->paraObjAll->hospitalName = $formData['object'][$i]['hospitalName'];
+                $this->paraObjAll->whoRemovedEquipment = $formData['object'][$i]['whoRemovedEquipment'];
+                $this->paraObjAll->gw7_24fileFullyComplete = $formData['object'][$i]['gw7_24fileFullyComplete'];
+                $this->paraObjAll->medicalRecords = $formData['object'][$i]['medicalRecords'];
+                $this->paraObjAll->importantInfoFromMedicalStuff = $formData['object'][$i]['importantInfoFromMedicalStuff'];
                 
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -81,7 +87,8 @@ class section48 extends Scene{
     
     public function addSection48($sceneID) {
        
-        $h_res = mysql_query("insert into sec48 values(0,".$sceneID.",'$this->victimHospitalized','$this->medicalEquipmentInSitu','$this->gw714file','$this->DrNames','$this->DrCellNumber','$this->NurseNames','$this->NurseCellNumber')");
+        $h_res = mysql_query("insert into sec48 values(0,"
+        .$sceneID.",'$this->paraObjAll->victimHospitalized','$this->paraObjAll->medicalEquipmentInSitu','$this->paraObjAll->gw7_24file','$this->paraObjAll->DrNames','$this->paraObjAll->DrCellNumber','$this->paraObjAll->NurseNames','$this->paraObjAll->NurseCellNumber','$this->paraObjAll->hospitalName','$this->paraObjAll->whoRemovedEquipment','$this->paraObjAll->gw7_24fileFullyComplete','$this->paraObjAll->medicalRecords','$this->paraObjAll->importantInfoFromMedicalStuff')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -96,11 +103,11 @@ class section48 extends Scene{
        
         while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->secCases []= $this->getSection48Case($info['sec48ID']);
+            $this->paraObjAll->secCases []= $this->getSection48Case($info['sec48ID']);
                
             }
             
-            return $paraObjAll;
+            return $this->paraObjAll;
     }
     
     public function getDataBySceneID($sceneID) {
@@ -124,36 +131,40 @@ class section48 extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->sec48ID = $info['sec48ID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->victimHospitalized = $info['victimHospitalized'];
-                        $paraObj->medicalEquipmentInSitu = $info['medicalEquipmentInSitu'];
-                        $paraObj->gw714file = $info['gw714file'];
-                        $paraObj->DrNames = $info['DrNames'];
-                        $paraObj->DrCellNumber = $info['DrCellNumber'];
-                        $paraObj->NurseNames = $info['NurseNames'];
-                        $paraObj->NurseCellNumber = $info['NurseCellNumber'];
-                        
+                        $this->paraObj->sec48ID = $info['sec48ID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->victimHospitalized = $info['victimHospitalized'];
+                        $this->paraObj->medicalEquipmentInSitu = $info['medicalEquipmentInSitu'];
+                        $this->paraObj->gw7_24file = $info['gw7_24file'];
+                        $this->paraObj->DrNames = $info['DrNames'];
+                        $this->paraObj->DrCellNumber = $info['DrCellNumber'];
+                        $this->paraObj->NurseNames = $info['NurseNames'];
+                        $this->paraObj->NurseCellNumber = $info['NurseCellNumber'];
+                        $this->paraObj->hospitalName = $info['hospitalName'];
+                        $this->paraObj->whoRemovedEquipment = $info['whoRemovedEquipment'];
+                        $this->paraObj->gw7_24fileFullyComplete = $info['gw7_24fileFullyComplete'];
+                        $this->paraObj->medicalRecords = $info['medicalRecords'];
+                        $this->paraObj->importantInfoFromMedicalStuff = $info['importantInfoFromMedicalStuff'];
                         
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj->sceneObj =  $scene;
                         
 
                         //get case related data
-                        $case = new Cases($paraObj->sceneID, null);
-                        $caseObj = $case->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $caseObj;
+                        $case = new Cases($this->paraObj->sceneID, null);
+                        $caseObj = $case->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj->caseObj = $caseObj;
 
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
                        }
 
-            return $paraObj;
+            return $this->paraObj;
         
     }
 }

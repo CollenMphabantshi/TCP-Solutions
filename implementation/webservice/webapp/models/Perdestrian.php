@@ -13,12 +13,17 @@ require_once("Scene.php");
  */
 class Perdestrian extends Scene{
     //put your code here
-    private $perdestrianOutside;
+    private $perdestrianOutsideType;
     private $hitAndRun;
     private $pedestrianType;
     private $numberOfCarsDroveOverBody;
-    private $weatherConditionType;
+    private $weatherType;
     private $weatherCondition;
+    private $typeOfCar;
+    private $anyWitnesses;
+    private $bodyMoved;
+    private $victimJumped;
+    private $anyStrangeCircumstances;
     
       public function __construct($formData,$api){
         $this->api = $api;
@@ -31,12 +36,18 @@ class Perdestrian extends Scene{
                 parent::__construct($formData['object'][$i]['sceneTime'],"Pedestrian",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                
-                $this->perdestrianOutside = $formData['object'][$i]['perdestrianOutside'];
+                $this->perdestrianOutsideType = $formData['object'][$i]['perdestrianOutsideType'];
                 $this->hitAndRun = $formData['object'][$i]['hitAndRun'];
                 $this->pedestrianType = $formData['object'][$i]['pedestrianType'];
                 $this->numberOfCarsDroveOverBody = $formData['object'][$i]['numberOfCarsDroveOverBody'];
-                $this->weatherConditionType = $formData['object'][$i]['weatherConditionType'];
+                $this->weatherType = $formData['object'][$i]['weatherType'];
                 $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
+                $this->typeOfCar = $formData['object'][$i]['typeOfCar'];
+                $this->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
+                $this->bodyMoved = $formData['object'][$i]['bodyMoved'];
+                $this->victimJumped = $formData['object'][$i]['victimJumped'];
+                $this->anyStrangeCircumstances = $formData['object'][$i]['anyStrangeCircumstances'];
+                
                     //
                 $sceneID = $this->createScene();
                 
@@ -56,7 +67,8 @@ class Perdestrian extends Scene{
     
     private function addPedestrian($sceneID) {
         
-            $h_res = mysql_query("insert into pedestrian values(0,".$sceneID.",'$this->perdestrianOutside','$this->hitAndRun','$this->pedestrianType','$this->numberOfCarsDroveOverBody','$this->weatherConditionType','$this->weatherCondition')");
+            $h_res = mysql_query("insert into pedestrian values(0,"
+            .$sceneID.",'$this->perdestrianOutsideType','$this->hitAndRun','$this->pedestrianType','$this->numberOfCarsDroveOverBody','$this->weatherType','$this->weatherCondition','$this->typeOfCar','$this->anyWitnesses','$this->bodyMoved','$this->victimJumped','$this->anyStrangeCircumstances')");
     }
     public function getAllPedestrian() {
         try{
@@ -81,9 +93,14 @@ class Perdestrian extends Scene{
                 $h_array['hitAndRun'] = $array['hitAndRun'];
                 $h_array['pedestrianType'] = $array['pedestrianType'];
                 $h_array['numberOfCarsDroveOverBody'] = $array['numberOfCarsDroveOverBody'];
-                $h_array['weatherConditionType'] = $array['weatherConditionType'];
+                $h_array['weatherType'] = $array['weatherType'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];
-               
+                $h_array['typeOfCar'] = $array['typeOfCar'];
+                $h_array['anyWitnesses'] = $array['anyWitnesses'];
+                $h_array['bodyMoved'] = $array['bodyMoved'];
+                $h_array['victimJumped'] = $array['victimJumped'];
+                $h_array['anyStrangeCircumstances'] = $array['anyStrangeCircumstances'];
+                
                 $f_array[] = $h_array; 
                 
                 
@@ -137,8 +154,13 @@ class Perdestrian extends Scene{
                 $h_array['hitAndRun'] = $array['hitAndRun'];
                 $h_array['pedestrianType'] = $array['pedestrianType'];
                 $h_array['numberOfCarsDroveOverBody'] = $array['numberOfCarsDroveOverBody'];
-                $h_array['weatherConditionType'] = $array['weatherConditionType'];
+                $h_array['weatherType'] = $array['weatherType'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];
+                $h_array['typeOfCar'] = $array['typeOfCar'];
+                $h_array['anyWitnesses'] = $array['anyWitnesses'];
+                $h_array['bodyMoved'] = $array['bodyMoved'];
+                $h_array['victimJumped'] = $array['victimJumped'];
+                $h_array['anyStrangeCircumstances'] = $array['anyStrangeCircumstances'];
                 
                
                 $f_array[] = $h_array; 

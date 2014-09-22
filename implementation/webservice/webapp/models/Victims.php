@@ -21,6 +21,7 @@ class Victims {
     private $victimRace;
     private $victimName;
     private $victimSurname;
+    private $victimAge;
     private $whoFoundVictimBody;
     private $bodyDecompose;
     private $medicalIntervention;
@@ -46,6 +47,7 @@ class Victims {
             $this->victimRace = $formData['victimRace'];
             $this->victimName = $formData['victimName'];
             $this->victimSurname = $formData['victimSurname'];
+            $this->victimAge = $formData['victimAge'];
             $this->whoFoundVictimBody = $formData['whoFoundVictimBody'];
             $this->bodyDecompose = $formData['bodyDecomposed'];
             $this->medicalIntervention = $formData['medicalIntervention'];
@@ -85,13 +87,13 @@ class Victims {
        
        if($this->bodyIntact != null && $this->bodyBurned != null)
        {
-        $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention','$this->bodyBurned','$this->bodyIntact','$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.")");
+        $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention','$this->bodyBurned','$this->bodyIntact','$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }else if($this->bodyIntact == null && $this->bodyBurned != null){
-           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention','$this->bodyBurned',null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.")");
+           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention','$this->bodyBurned',null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }else if($this->bodyIntact != null && $this->bodyBurned == null){
-           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,'$this->bodyIntact','$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.")");
+           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,'$this->bodyIntact','$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }else {
-           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.")");
+           $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }
        if($v)
        {
@@ -125,6 +127,7 @@ class Victims {
             $arr['victimRace'] = $v_array['victimRace'];
             $arr['victimName'] = $v_array['victimName'];
             $arr['victimSurname'] = $v_array['victimSurname'];
+            $arr['victimAge'] = $v_array['victimAge'];
             $arr['whoFoundVictimBody'] = $v_array['whoFoundVictimBody'];
             $arr['bodyDecompose'] = $v_array['bodyDecompose'];
             $arr['medicalIntervention'] = $v_array['medicalIntervention'];

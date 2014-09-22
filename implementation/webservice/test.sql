@@ -25,7 +25,7 @@ create table if not exists audit_log(
     audit_id int not null auto_increment,
     audit_uid int not null,
     audit_date date,
-    audit_time time,
+    audit_time text,
     audit_action text,
     primary key(audit_id)
 );
@@ -127,8 +127,9 @@ create table if not exists deathRegister
 (
     deathRegisterNumber int not null auto_increment,
     caseNumber int not null,
+    assignedDRNumber varchar(200),
     FOREIGN KEY (caseNumber) REFERENCES cases(caseNumber),
-    primary key(deathRegisterNumber)
+    primary key(deathRegisterNumber,assignedDRNumber)
 );
 
 
@@ -161,6 +162,7 @@ create table if not exists victims
     `suicideSuspected` text NOT NULL,
     previousAttempts text NOT NULL,
     numberOfPreviousAttempts int not null,
+    victimAge text not null,
     primary key(victimID)
 );
 
@@ -244,7 +246,9 @@ CREATE TABLE IF NOT EXISTS `bicycle`(
   `bicycleHit` text NOT NULL,
   `bicycleType` text NOT NULL,
   `weatherCondition` text NOT NULL,
-   `bicycleOutputType` text NOT NULL,
+   `weatherType` text NOT NULL,
+   `eyewitnesses` text NOT NULL,
+    `wasBodyMoved` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -262,6 +266,8 @@ CREATE TABLE IF NOT EXISTS `blunt` (
   `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,
   `chockingSuspected` text NOT NULL,
+    injuriesConcentratedOn text not null,
+    injuriesMainlyOn text not null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -289,6 +295,12 @@ CREATE TABLE IF NOT EXISTS `burn` (
   `igniterAtScene` text NOT NULL,
    igniterUsed text null,
    foulPlaySuspected text not null,
+   wasBodyHospitilized text not null,
+   howBurnWoundsSustained text not null,
+   bodyCharred text not null,
+   wierdSmell text not null,
+   anyPotentialWeapons text not null,
+   wasItCommunityAssault text not null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -301,6 +313,7 @@ CREATE TABLE IF NOT EXISTS `burninside` (
   `windowsBroken` text NOT NULL,
   `victimAlone` text NOT NULL,
    peopleWithVictim text null,
+    buildingDamaged text not null,
    FOREIGN KEY (burnID) REFERENCES burn(burnID)
 );
 
@@ -311,6 +324,10 @@ CREATE TABLE IF NOT EXISTS `crushinjury` (
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
+   wasBodyMoved text not null,
+   betweenWhichObjects text not null,
+    anyWitness text not null,
+    whatWasVictimDoing text not null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -333,6 +350,14 @@ CREATE TABLE IF NOT EXISTS `drowning` (
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
+   wasBodyInsideWater text not null,
+   whoRemovedBody text null,
+   fencedOff text not null,
+   wasGateClosed null,
+   waterType not null,
+   `strangulationSuspected` text NOT NULL,
+  `smotheringSuspected` text NOT NULL,
+  `chockingSuspected` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -351,13 +376,18 @@ CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
   `electrocutionLightningID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
   `electrocutionLightningIOType` text NOT NULL,
-  
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
   `anyOpenWire` text NOT NULL,
   `sceneWet` text NOT NULL,
   `deBarkingOfTrees` text NOT NULL,
+   `anyWitnesses` text NOT NULL,
+   `whenDidVictimDie` text NULL,
+    `whatWasVictimDoing` text NOT NULL,
+    `victimFallFromHeight` text NOT NULL,
+    `voltage` text NOT NULL,
+    `anyOtherEvidence` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -379,7 +409,6 @@ CREATE TABLE IF NOT EXISTS `firearm` (
   `firearmID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
    `firearmIOType` text NOT NULL,
-  
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
@@ -388,6 +417,10 @@ CREATE TABLE IF NOT EXISTS `firearm` (
   `gunshotWoundsArea` text NOT NULL,
   `firearmOnScene` text NOT NULL,
   `firearmCalibre` text NOT NULL,
+    `firedThroughObject` text NOT NULL,
+    `firearmUsed` text NOT NULL,
+    `cartridgesFound` text NOT NULL,
+    `howManyCartridgesFound` text NULL,
   FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
 
@@ -408,7 +441,10 @@ CREATE TABLE IF NOT EXISTS `firearmInside` (
 CREATE TABLE IF NOT EXISTS `foetusabandonedbaby` (
   `foetusabandonedbabyID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-  `babyIOType` text NOT NULL,
+  `foetusabandonedbabyIOType` text NOT NULL,
+    howWasBodyDiscovered text not null,
+    wasBodyCovered text not null,
+    coveredWith text null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 ) ;
 
@@ -420,6 +456,11 @@ CREATE TABLE IF NOT EXISTS `gassing` (
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
+   foundInCar text not null,
+    wasCarRunning text null,
+    carWindowClosed text null,
+    pipeConnected text null,
+    medicationPoisonOnScene text null,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -439,13 +480,6 @@ CREATE TABLE IF NOT EXISTS `gassinginside` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `gassingoutside` (
-  outsideID int not null auto_increment primary key,
-   gassingID int not null,
-  `gassingVictimInCar` text NOT NULL,
-   victimInCarDescription text null,
-      FOREIGN KEY (gassingID) REFERENCES gassing(gassingID)
-);
 
 CREATE TABLE IF NOT EXISTS partialHanging (
   partialHangingID int NOT NULL AUTO_INCREMENT primary key,
@@ -464,8 +498,8 @@ CREATE TABLE IF NOT EXISTS `hanging` (
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
-  `autoeroticAsphyxia` text NOT NULL,
-  `partialHangingType` text NOT NULL,
+  `pornographicMaterial` text NOT NULL,
+  `partialHangingType` text NULL,
   `completeHanging` text NOT NULL,
   `ligatureAroundNeck` text NOT NULL,
   whoRemovedLigature text null,
@@ -473,6 +507,9 @@ CREATE TABLE IF NOT EXISTS `hanging` (
   `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,
   `chockingSuspected` text NOT NULL,
+   bodyCutDown text not null,
+   whoCutDownBody text null,
+   suspensionPointUsed text not null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`hangingID`)
 );
@@ -493,14 +530,14 @@ CREATE TABLE IF NOT EXISTS `hanginginside` (
 CREATE TABLE IF NOT EXISTS `height` (
   `heightID` int NOT NULL AUTO_INCREMENT primary key,
    sceneID int not null,
-   `heightIOType` text NOT NULL,
-  
+   `heightIOType` text NOT NULL,  
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
   `fromWhat` text NOT NULL,
   `howHigh` text NOT NULL,
-  `onWhatVictimLanded` text NOT NULL,
+  `onWhatSurface` text NOT NULL,
+   anyWitnesses text null,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -519,10 +556,12 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoning` (
   `ingestionOverdosePoisoningID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    `ingestionOverdosePoisoningIOType` text NOT NULL,
-  
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
+    suspectedDrug text not null,
+    suspectedDrugOnScene text not null,
+    whyIngestionOverdoseSuspected text null,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -540,12 +579,20 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoningInside` (
 CREATE TABLE IF NOT EXISTS `mba` (
   `mbaID` int NOT NULL,
    sceneID int not null,
-  
   `victimWearingProtectiveClothing` text NOT NULL,
   `mbaOutsideType` text NOT NULL,
   `victimsOnMotorcycle` text NOT NULL,
   `motorbikeHitFrom` text NOT NULL,
   `typeOfAccident` text NOT NULL,
+    victimFlungRoad text null,
+    victimFlungBanister text null,
+    victimFlungCar text null,
+    motorBikeFellOnVictim text null,
+    anyWitnesses text null,
+    bodyMoved text null,
+    victimWearingHelmet text null,
+    weatherType text null,
+    weatherCondition text null,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -560,6 +607,14 @@ CREATE TABLE IF NOT EXISTS `mva` (
   `carWasHitFrom` text NOT NULL,
   `victimType` text NOT NULL,
   `carBurnt` text NOT NULL,
+   weatherType text null,
+    weatherCondition text null,
+    anyWitnesses text not null,
+    seatBeltOn text null,
+    airbagDiploid text null,
+    trappedInCar text null,
+    bodyHit text null,
+    numberOfHit text null,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -570,8 +625,13 @@ CREATE TABLE IF NOT EXISTS `pedestrian` (
   `hitAndRun` text NOT NULL,
   `pedestrianType` int NOT NULL,
   `numberOfCarsDroveOverBody` int NOT NULL,
-  `weatherConditionType` text NOT NULL,
+  `weatherType` text NOT NULL,
   `weatherCondition` text NOT NULL,
+   typeOfCar text null,
+   anyWitnesses text null,
+   bodyMoved text null,
+   victimJumped text null,
+   anyStrangeCircumstances text null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -582,6 +642,10 @@ CREATE TABLE IF NOT EXISTS `railway` (
   `railwayIOType` text NOT NULL,
   `victimType` text NOT NULL,
   `railwayType` text NOT NULL,
+   anyWitnesses text not null,
+    driverSeeWhatHappened text null,
+    `weatherType` text NOT NULL,
+  `weatherCondition` text NOT NULL,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
  
 );
@@ -592,11 +656,16 @@ CREATE TABLE IF NOT EXISTS `sec48` (
   `sceneID` int NOT NULL,
   `victimHospitalized` text NOT NULL,
   `medicalEquipmentInSitu` text NOT NULL,
-  `gw714file` text NOT NULL,
+  `gw7_24file` text NOT NULL,
   `DrNames` text NOT NULL,
   `DrCellNumber` text NOT NULL,
   `NurseNames` text NOT NULL,
   `NurseCellNumber` text NOT NULL,
+   hospitalName text null,
+   whoRemovedEquipment text null,
+   gw7_24fileFullyComplete text null,
+   medicalRecords text null,
+   importantInfoFromMedicalStuff text null,
   FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sec48ID`)
 ) ;
@@ -606,9 +675,11 @@ CREATE TABLE IF NOT EXISTS `sharp`(
   `sharpID` int NOT NULL auto_increment primary key,
    sceneID int not null,
    `sharpIOType` text NOT NULL,
+   sharpObjectSuspected text not null,
   `sharpObjectAtScene` text NOT NULL,
   `sharpForceInjuries` text NOT NULL,
-  `theInjury` text NOT NULL,
+  `theInjuryConcentrated` text NOT NULL,
+   `theInjuryMainlyOn` text NOT NULL,
     `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
@@ -646,6 +717,15 @@ CREATE TABLE IF NOT EXISTS `sid` (
    `infantLastPlaced` text NOT NULL,
   `infantLastSeenAlive` text NOT NULL,
   `whereInfantFoundDead` text NOT NULL,
+   dieDuringSleep text null,
+   whatWasInfantDoing text null,
+   whatHappenedToInfant text null,
+   relationshiptoInfant text null,
+   whoAttempedResuscitation text null,
+   anyHeatingDevices text null,
+   anyWeirdSmell text null,
+    anySmokeSmell text null,
+    infantOneOfTwins text null,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sidID`)
 );
@@ -654,15 +734,18 @@ CREATE TABLE IF NOT EXISTS `suda` (
   `sudaID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    `sudaIOType` text NOT NULL,
-  
    `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
   `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,
   `chockingSuspected` text NOT NULL,
-   `sudaAppliances` text NOT NULL,
+   anyHeatingDevices text null,
   `wierdSmellInAir` text NOT NULL,
+    victimHistory text NOT NULL,
+    victimTakeMedication text NOT NULL,
+    victimHadAnySymptoms text NOT NULL,
+    familyMedicalHistory text NOT NULL,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
   PRIMARY KEY (`sudaID`)
 );
@@ -682,15 +765,22 @@ CREATE TABLE IF NOT EXISTS `sudc` (
   `sudcID` int NULL auto_increment primary key,
    sceneID int not null,
    `sudcIOType` text NOT NULL,
-  
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
    `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,
   `chockingSuspected` text NOT NULL,
-   `sudcAppliances` text NOT NULL,
+   `anyHeatingDevices` text NOT NULL,
    `wierdSmellInAir` text NOT NULL,
+    physicalExercise text NOT NULL,
+    familyMedicalHistory text NOT NULL,
+    familyMembersSufferingFrom text not null,
+    victimSustainInjury text not null,
+    victimHadSymptomsBefore text not null,
+    victimTakeMedication text not null,
+    suspisionOfAssault text not null,
+    suspisionOfOverdose text not null,
      FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 

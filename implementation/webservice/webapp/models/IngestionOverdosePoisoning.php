@@ -12,18 +12,20 @@ require_once("Scene.php");
  * @author BANCHI
  */
 class ingestionParameters{
-    private $ingestionOverdosePoisoningID;
-    private $sceneID;
-    private $ingestionOverdosePoisoningIOType;
-    private $signsOfStruggle;
-    private $alcoholBottleAround;
-    private $drugParaphernalia;
+    public $ingestionOverdosePoisoningID;
+    public $sceneID;
+    public $ingestionOverdosePoisoningIOType;
+    public $signsOfStruggle;
+    public $alcoholBottleAround;
+    public $drugParaphernalia;
+    public $suspectedDrug;
+    public $suspectedDrugOnScene;
+    public $whyIngestionOverdoseSuspected;
     
-    
-    public  $ingestionCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $ingestionCases;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
 }
 class IngestionOverdosePoisoning extends Scene{
@@ -33,10 +35,10 @@ class IngestionOverdosePoisoning extends Scene{
     
      public function __construct($formData,$api){
         $this->api = $api;
-        $paraObj = new ingestionParameters();
-        $paraObjAll =new ingestionParameters();
+        $this->paraObj = new ingestionParameters();
+        $this->paraObjAll =new ingestionParameters();
         
-        $ingestionCases = array();
+        $this->paraObjAll->ingestionCases = array();
         
         if($formData == NULL)
         {
@@ -46,10 +48,13 @@ class IngestionOverdosePoisoning extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->ingestionOverdosePoisoningIOType = $formData['object'][$i]['ingestionOverdosePoisoningIOType'];
-                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
-                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->paraObjAll->ingestionOverdosePoisoningIOType = $formData['object'][$i]['ingestionOverdosePoisoningIOType'];
+                $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];   
+                $this->paraObjAll->suspectedDrug = $formData['object'][$i]['suspectedDrug'];
+                $this->paraObjAll->suspectedDrugOnScene = $formData['object'][$i]['suspectedDrugOnScene'];
+                $this->paraObjAll->whyIngestionOverdoseSuspected = $formData['object'][$i]['whyIngestionOverdoseSuspected'];
                 
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -72,7 +77,10 @@ class IngestionOverdosePoisoning extends Scene{
     
     public function addIngestionOverdosePoisoning($sceneID,$inside,$object) {
         
-        $h_res = mysql_query("insert into ingestionoverdosepoisoning values(0,".$sceneID.",'$this->ingestionOverdosePoisoningIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia')");
+        $h_res = mysql_query("insert into ingestionoverdosepoisoning values(0,"
+        .$sceneID.",'$this->paraObjAll->ingestionOverdosePoisoningIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAlls->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->suspectedDrug','$this->paraObjAll->suspectedDrugOnScene','$this->paraObjAll->whyIngestionOverdoseSuspected')");
+        
+        
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -99,16 +107,14 @@ class IngestionOverdosePoisoning extends Scene{
     
     public function getAllIngestionOverdosePoisoningCases() {
         $query ="SELECT * FROM ingestionoverdosepoisoning";
-
         $result = mysql_query($query);
        
        while($info = mysql_fetch_array($result))
-            {
-                $paraObjAll->ingestionCases[] = $this->getRailwayCases($info['ingestionOverdosePoisoningID']);
-               
-            }
+        {
+            $this->paraObjAll->ingestionCases[] = $this->getRailwayCases($info['ingestionOverdosePoisoningID']);
+        }
             
-            return $paraObjAll;
+        return $this->paraObjAll;
         
     }
     
@@ -138,34 +144,36 @@ class IngestionOverdosePoisoning extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->ingestionOverdosePoisoningID = $info['ingestionOverdosePoisoningID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->ingestionOverdosePoisoningIOType = $info['ingestionOverdosePoisoningIOType'];
-                        $paraObj->signsOfStruggle = $info['signsOfStruggle'];
-                        $paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
-                        $paraObj->drugParaphernalia = $info['drugParaphernalia'];
-                        
+                        $this->paraObj->ingestionOverdosePoisoningID = $info['ingestionOverdosePoisoningID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->ingestionOverdosePoisoningIOType = $info['ingestionOverdosePoisoningIOType'];
+                        $this->paraObj->signsOfStruggle = $info['signsOfStruggle'];
+                        $this->paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
+                        $this->paraObj->drugParaphernalia = $info['drugParaphernalia'];
+                        $this->paraObj->suspectedDrug = $info['suspectedDrug'];
+                        $this->paraObj->suspectedDrugOnScene = $info['suspectedDrugOnScene'];
+                        $this->paraObj->whyIngestionOverdoseSuspected = $info['whyIngestionOverdoseSuspected'];
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj-> sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj-> caseObj = $case ; 
                         
 
 
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
-                       }
+             }
 
         
-            return $paraObj;
+            return $this->paraObj;
         
     }
 }

@@ -674,7 +674,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							//if(uploadFileName.size() > 0){
 								
 									try{
 										
@@ -701,17 +701,17 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
-										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
+							//}
+							//else{
 								
-								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
+								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
 								
-							}
+							//}
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -1149,7 +1149,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();

@@ -3,8 +3,10 @@ var URL = "models/webapi.php";
 var LOGIN_PAGE = "/webapp/";
 var caseList = new Object();
 var victim_count = 0;
+var currentCaseNumber = -1;
+var currentCase = null;
 
-$(document).ready(function (p){
+$(document).ready(function (){
     
     showPage(1);
     $("#login-form-button").click(function(){
@@ -18,8 +20,9 @@ $(document).ready(function (p){
         }
     });
     
-       $("#addButton").click(function(p){
-        p.preventDefault();
+       $("#addUserButton").click(function(p){
+        //p.preventDefault();
+        
         var name = document.getElementById("name").value;
         var pass = document.getElementById("pass").value;
         var cpass = document.getElementById("cpass").value;
@@ -63,11 +66,76 @@ $(document).ready(function (p){
     $("#searchButton").click(function(){
         searchCase($("#search").val());
     });
+    $("#userSearchButton").click(function(){
+        searchUser($("#userSearch").val());
+        
+    });
+    $(".listUsers").click(function(){
+        $(".response").remove();
+        loadUsers();
+        
+    });
+    
+    $(".listCases").click(function(){
+        $(".response").remove();
+        loadCases();
+        
+    });
+    $("#assignDR").click(function(){ 
+        assignDeathRegister($("#deathreg").val());
+    });
+    $("#activeUsers").click(function(){ 
+        
+        sortBy($(this).attr("title"));
+    });
+    $("#deactiveUsers").click(function(){ 
+        sortBy($(this).attr("title"));
+    });
     $("#logout").click(function(){
         logout();
     });
 });
 
+function sortBy(by){
+    var query = new FormData();
+    query.append("rquest","sortUsers");
+    query.append("by",by);
+    query.append("platform","webapp");
+        
+    var request = new XMLHttpRequest();
+    var res = null;
+    request.onreadystatechange = function(){if(request.readyState == 4)
+    {
+            
+            var obj = JSON.parse(request.responseText);
+            var data = "";
+            
+            for(var i = 0; i < obj.length;i++)
+            {
+                
+                data += "<tr class='appendUser'>";
+                data += "<td>"+obj[i].userName+"</td>";
+                data += "<td>"+obj[i].userFirstname+"</td>";
+                data += "<td>"+obj[i].userSurname+"</td>";
+               
+                var sid = obj[i].userID;
+                //Add the delete.php to delete users by ID
+                if(obj[i].userActive === "1")
+                {
+                    data += "<td>"+"<a href='#' onclick='deactivateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Deactivate</a>"+"</td>";
+                }else{
+                    data += "<td>"+"<a href='#' onclick='activateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Activate</a>"+"</td>";
+                }
+                data += "</tr>";
+            }
+            if(obj.length > 0){
+                $(".appendUser").remove();
+            }
+            $("#users .table-headers").after(data);
+    }};
+    request.open("POST",URL);
+    request.send(query);
+}
 function loadafp(){
     loadUsers();
     loadCases();
@@ -87,7 +155,7 @@ function resetResponse(){
 
 function loadSceneInfo(view){
     try{
-       
+       currentCaseNumber = view.id;
         var query = new FormData();
         query.append("rquest","getSceneData");
         query.append("caseNumber",view.id);
@@ -100,7 +168,7 @@ function loadSceneInfo(view){
             var data = "<tr><td colspan='2' class='table-header'>Scene Information</td></tr>";
             
             var obj = JSON.parse(request.responseText);
-            
+            currentCase = obj;
             data += "<tr>";
             data += "<td>Time of scene:</td><td>"+obj.sceneTime+"</td>";
             data += "</tr>";
@@ -200,9 +268,9 @@ function loadSceneInfo(view){
     }
 }
 
-
 function loadCases(){
     try{
+        $(".response").remove();
         var query = new FormData();
         query.append("rquest","viewCases");
         query.append("category","all");
@@ -227,10 +295,21 @@ function loadCases(){
                 data += "</tr>";
             }
             
+            if(obj.length ==0){
+                $(".noresult").remove();
+                $("#cases").after("<span class='noresult'><br/>There are no cases available.</span>");
+                $("#assignDR").attr("disabled","true");
+                $("#print").attr("disabled","true");
+            }else{
+                $(".noresult").remove();
+                $("#assignDR").removeAttr("disabled");
+                $("#print").removeAttr("disabled");
+            }
+            $(".appendCase").remove();
             $("#cases .table-headers").after(data);
         }};
 
-
+        
         request.open("POST",URL);
 
         request.send(query);
@@ -239,8 +318,54 @@ function loadCases(){
     }
 }
 
+function searchUser(search){
+    try{
+        $(".response").remove();
+        var query = new FormData();
+        query.append("rquest","getUser");
+        query.append("search",search);
+        query.append("platform","webapp");
+        var request = new XMLHttpRequest();
+        var res = null;
+        request.onreadystatechange = function(){if(request.readyState == 4)
+        {
+            
+            var obj = JSON.parse(request.responseText);
+            var data = "";
+            
+            for(var i = 0; i < obj.length;i++)
+            {
+                
+                data += "<tr class='appendUser'>";
+                data += "<td>"+obj[i].userName+"</td>";
+                data += "<td>"+obj[i].userFirstname+"</td>";
+                data += "<td>"+obj[i].userSurname+"</td>";
+               
+                var sid = obj[i].userID;
+                //Add the delete.php to delete users by ID
+                if(obj[i].userActive === "1")
+                {
+                    data += "<td>"+"<a href='#' onclick='deactivateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Deactivate</a>"+"</td>";
+                }else{
+                    data += "<td>"+"<a href='#' onclick='activateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Activate</a>"+"</td>";
+                }
+                data += "</tr>";
+            }
+            if(obj.length > 0){
+                $(".appendUser").remove();
+            }
+            $("#users .table-headers").after(data);
+        }};
+        request.open("POST",URL);
+        request.send(query);
+    }catch(e){
+        
+    }
+}
+
 function searchCase(search){
     try{
+        $(".response").remove();
         var query = new FormData();
         query.append("rquest","viewCases");
         query.append("category","search");
@@ -279,6 +404,8 @@ function searchCase(search){
         
     }
 }
+
+
 function getSceneTypeData(type,sceneData){
     var data = "<tr><td colspan='2' class='table-header'>"+type+" Information</td></tr>";
     
@@ -1062,6 +1189,7 @@ function getSceneTypeData(type,sceneData){
 
 function loadUsers(){
     try{
+        $(".response").remove();
         var query = new FormData();
         query.append("rquest","users");
         query.append("utype","all");
@@ -1075,17 +1203,22 @@ function loadUsers(){
             var data = "";
             for(var i = 0; i < obj.count;i++)
             {
-                data += "<tr>";
+                data += "<tr class='appendUser'>";
                 data += "<td>"+obj[i].userName+"</td>";
                 data += "<td>"+obj[i].userFirstname+"</td>";
                 data += "<td>"+obj[i].userSurname+"</td>";
                // data += "<td>"+obj[i].userTypeDescription+"</td>";
                 var sid = obj[i].userID;
                 //Add the delete.php to delete users by ID
-                data += "<td>"+"<a href='#' onclick='deactivateUser(this);' title='"+obj[i].sceneType+"' id='"+sid+"'>deactivate</a>"+"</td>";
+                if(obj[i].userActive === "1")
+                {
+                    data += "<td>"+"<a href='#' onclick='deactivateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Deactivate</a>"+"</td>";
+                }else{
+                    data += "<td>"+"<a href='#' onclick='activateUser(this);' title='"+obj[i].userName+"' id='"+sid+"'>Activate</a>"+"</td>";
+                }
                 data += "</tr>";
             }
-            
+            $(".appendUser").remove();
             $("#users .table-headers").after(data);
         }};
 
@@ -1125,7 +1258,7 @@ function login(username,pass){
     query.append("username",username);
     query.append("password",pass);
     query.append("platform","webapp");
-    
+    /*
     $.ajax({
      url: URL,
      type: "POST",
@@ -1150,7 +1283,23 @@ function login(username,pass){
                $("#login-form").before("<div class='response error'>"+obj.msg+"<br/><br/></div>")
            }
      }
-   });
+   });*/
+   var request = new XMLHttpRequest();
+   request.onreadystatechange = function(){if(request.readyState == 4)
+    {
+       
+        var obj = JSON.parse(request.responseText);
+           if(obj.status === "Success"){
+               document.location = "main.php";
+           }else{
+               $("#login-form").before("<div class='response error'>"+obj.msg+"<br/><br/></div>")
+           }
+    }};
+    
+    
+    request.open("POST",URL);
+    
+    request.send(query);
 }
 
 function passwordCheck(pword1, pword2) {
@@ -1171,54 +1320,68 @@ function getUserForm(){
     $("#removeTr").remove();
     if(combobox==="Forensic practitioner")
     {
-        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <input class='formInput' type='tel' id='cellphone' name='cellphone'/></td></tr>");
+        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <br/><input class='formInput' placeholder='cellphone' type='tel' id='cellphone' name='cellphone'/></td></tr>");
         
     }else if(combobox==="Forensic officer")
     {
-        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <input class='formInput' type='tel' id='cellphone' name='cellphone'/></td></tr>");
+        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <br/><input class='formInput' placeholder='cellphone' type='tel' id='cellphone' name='cellphone'/></td></tr>");
     }else if(combobox==="Student")
     {
-        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <input class='formInput' type='tel' id='cellphone' name='cellphone'/></td></tr>");
+        $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <br/><input class='formInput' placeholder='cellphone' type='tel' id='cellphone' name='cellphone'/></td></tr>");
     }else if(combobox==="Guest")
     {
-       $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <input class='formInput' type='tel' id='cellphone' name='cellphone'/></td></tr>");
+       $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <br/><input class='formInput' placeholder='cellphone' type='tel' id='cellphone' name='cellphone'/></td></tr>");
     }else if(combobox==="Forensic practitioner/Administrator")
     {
-       $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <input class='formInput' type='tel' id='cellphone' name='cellphone'/></td></tr>");
+       $(".table tr:last").before("<tr id='removeTr'><td>Cell phone number: <br/><input class='formInput' placeholder='cellphone' type='tel' id='cellphone' name='cellphone'/></td></tr>");
     }  
 }
 
 function addUser(name,pass,firstname,surname,combobox,cell){
-    var add = new FormData();
-    add.append("rquest","addUser");
+    var query = new FormData();
+    query.append("rquest","addUser");
     if(combobox==="Administrator")
     {
-        add.append("utype","admin");
+        query.append("utype","admin");
         
     }else if(combobox==="Forensic practitioner")
     {
-        add.append("utype","fp");
-        add.append("cellphoneNumber",cell);
+        query.append("utype","fp");
+        query.append("cellphoneNumber",cell);
     }else if(combobox==="Forensic officer")
     {
-        add.append("utype","fo");
+        query.append("utype","fo");
         
     }else if(combobox==="Student")
     {
-        add.append("utype","student");
+        query.append("utype","student");
     }else if(combobox==="Guest")
     {
-        add.append("utype","guest");
+        query.append("utype","guest");
     }else if(combobox==="Forensic practitioner/Administrator")
     {
-        add.append("utype","afp");
-        add.append("cellphoneNumber",cell);
+        alert(cell);
+        query.append("utype","afp");
+        query.append("cellphoneNumber",cell);
     } 
-    add.append("userName",name);
-    add.append("userPassword",pass);
-    add.append("userFirstname",firstname);
-    add.append("userSurname",surname);
+    query.append("userName",name);
+    query.append("userPassword",pass);
+    query.append("userFirstname",firstname);
+    query.append("userSurname",surname);
     
+    /*$.ajax({
+     url: URL,
+     type: "POST",
+     data: query,
+     processData: false,  // tell jQuery not to process the data
+     contentType: false,   // tell jQuery not to set contentType
+     success:function(result){
+         addUserResponse(result);
+     },
+     error:function(result){
+         addUserResponse(result);
+     }
+   });*/
    var request = new XMLHttpRequest();
     var res = null;
     request.onreadystatechange = function(){if(request.readyState == 4)
@@ -1229,7 +1392,7 @@ function addUser(name,pass,firstname,surname,combobox,cell){
     
     
     request.open("POST",URL);
-    request.send(add);
+    request.send(query);
     
 }
 function alertResponse(message,status){
@@ -1299,7 +1462,8 @@ function sendRequest(data){
 
 function addUserResponse(req){
     var a = req.responseText;
-    var obj = JSON.parse(req.responseText);
+    
+    var obj = JSON.parse(a);
     if(obj.status === "Failed")
     {
         alertResponse(obj.msg,"error");
@@ -1309,4 +1473,75 @@ function addUserResponse(req){
    
 }
 
-            
+function deactivateUser(link){
+    var query = new FormData();
+    query.append("rquest","removeUser");
+    query.append("userID",link.id);
+    $.ajax({
+     url: URL,
+     type: "POST",
+     data: query,
+     processData: false,  // tell jQuery not to process the data
+     contentType: false,   // tell jQuery not to set contentType
+     success:function(result){
+            searchUser(link.title);
+     },
+     error:function(result){
+         searchUser(link.title);
+     }
+   });
+}
+
+function activateUser(link){
+    var query = new FormData();
+    query.append("rquest","activateUser");
+    query.append("userID",link.id);
+    $.ajax({
+     url: URL,
+     type: "POST",
+     data: query,
+     processData: false,  // tell jQuery not to process the data
+     contentType: false,   // tell jQuery not to set contentType
+     success:function(result){
+         searchUser(link.title);
+     },
+     error:function(result){
+         searchUser(link.title);
+     }
+   });
+}
+
+ function assignDeathRegister(dr){
+     if(currentCaseNumber > 0)
+     {
+        var query = new FormData();
+        query.append("rquest","addCase");
+        query.append("category","deathregister");
+        query.append("dr",dr);
+        query.append("cn",currentCaseNumber);
+        /*$.ajax({
+         url: URL,
+         type: "POST",
+         data: query,
+         processData: false,  // tell jQuery not to process the data
+         contentType: false,   // tell jQuery not to set contentType
+         success:function(result){
+                alert(result.responseText);
+         },
+         error:function(result){
+             alert(result.responseText);
+         }
+       });*/
+         var request = new XMLHttpRequest();
+        var res = null;
+        request.onreadystatechange = function(){if(request.readyState == 4)
+        {
+                alert(request.responseText);
+
+        }};
+
+
+        request.open("POST",URL);
+        request.send(query);
+   }
+ }           
