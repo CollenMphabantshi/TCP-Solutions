@@ -69,7 +69,7 @@ public function processApi()
     }
     else
     {
-       $this->response('Epic fail!!!'.$s,404);   
+       $this->response(''.$s,404);   
     }
 // If the method not exist with in this class, response would be "Page not found".
 }

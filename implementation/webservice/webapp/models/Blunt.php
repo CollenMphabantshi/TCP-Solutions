@@ -22,6 +22,8 @@ class Blunt extends Scene{
     private $strangulationSuspected;
     private $smotheringSuspected;
     private $chockingSuspected;
+    private $injuriesConcentratedOn;
+    private $injuriesMainlyOn;
     
     public function __construct($formData,$api){
         
@@ -45,6 +47,9 @@ class Blunt extends Scene{
                 $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
+                $this->injuriesConcentratedOn = $formData['object'][$i]['injuriesConcentratedOn'];
+                $this->injuriesMainlyOn = $formData['object'][$i]['injuriesMainlyOn'];
+                
                 if(count($formData['object'][$i]['victims']) >= 1)
                 {
                     $sceneID = $this->createScene();
@@ -77,7 +82,7 @@ class Blunt extends Scene{
     private function addBlunt($sceneID,$inside,$object) {
         $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
         
-        $h_res = mysql_query("insert into blunt values(0,".$sceneID.",'$this->bluntIOType','$this->bluntForceObjectSuspected','$this->bluntForceObjectStillOnScene','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasCommunityAssult','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')")
+        $h_res = mysql_query("insert into blunt values(0,".$sceneID.",'$this->bluntIOType','$this->bluntForceObjectSuspected','$this->bluntForceObjectStillOnScene','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasCommunityAssult','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->injuriesConcentratedOn','$this->injuriesMainlyOn')")
                 or $this->api->response($this->api->json($error), 400);
         
         if($inside == TRUE){
@@ -128,6 +133,8 @@ class Blunt extends Scene{
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['injuriesConcentratedOn'] = $array['injuriesConcentratedOn'];
+                $h_array['injuriesMainlyOn'] = $array['injuriesMainlyOn'];
                 
                 $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']) or $this->api->response($this->api->json($error), 400);
                 if(mysql_num_rows($hi_res) > 0)
@@ -191,6 +198,8 @@ class Blunt extends Scene{
                 $h_array['strangulationSuspected'] = $enc->decrypt_request($h_array['strangulationSuspected']);
                 $h_array['smotheringSuspected'] = $enc->decrypt_request($h_array['smotheringSuspected']);
                 $h_array['chockingSuspected'] = $enc->decrypt_request($h_array['chockingSuspected']);
+                $h_array['injuriesConcentratedOn'] = $enc->decrypt_request($h_array['injuriesConcentratedOn']);
+                $h_array['injuriesMainlyOn'] = $enc->decrypt_request($h_array['injuriesMainlyOn']);
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
@@ -226,6 +235,8 @@ class Blunt extends Scene{
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['injuriesConcentratedOn'] = $array['injuriesConcentratedOn'];
+                $h_array['injuriesMainlyOn'] = $array['injuriesMainlyOn'];
                 
                 $hi_res = mysql_query("select * from bluntInside where bluntID=".$h_array['bluntID']);
                 if(mysql_num_rows($hi_res) > 0)

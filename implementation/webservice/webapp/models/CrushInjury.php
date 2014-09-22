@@ -13,11 +13,14 @@ require_once("Scene.php");
  */
 class CrushInjury extends Scene{
     //put your code here
-    private $crushIO;
+    private $crushIOType;
     private $signsOfStruggle;
     private $alcoholBottleAround;
     private $drugParaphernalia;
-    
+    private $wasBodyMoved;
+    private $betweenWhichObjects;
+    private $anyWitness;
+    private $whatWasVictimDoing;
     
     public function __construct($formData,$api){
         $this->api = $api;
@@ -33,6 +36,10 @@ class CrushInjury extends Scene{
                  $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
                 $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->wasBodyMoved = $formData['object'][$i]['wasBodyMoved'];
+                $this->betweenWhichObjects = $formData['object'][$i]['betweenWhichObjects'];
+                $this->anyWitness = $formData['object'][$i]['anyWitness'];
+                $this->whatWasVictimDoing = $formData['object'][$i]['whatWasVictimDoing'];
                     //
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -54,16 +61,17 @@ class CrushInjury extends Scene{
     }
     
     private function addCrushInjury($sceneID,$inside,$object) {
-        
+        $c_res = mysql_query("insert into crushinjury values(0,$sceneID"
+        . ",'$this->crushIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasBodyMoved','$this->betweenWhichObjects','$this->anyWitness','$this->whatWasVictimDoing')");
         if($inside == TRUE){
-            $h_res = mysql_query("select crushinjuryID from crushinjury where sceneID=".$sceneID);
+            $h_res = mysql_query("select * from crushinjury where sceneID=".$sceneID);
             $crushinjuryID = mysql_result($h_res,0,'crushinjuryID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            if($va != "Yes")
             {
                 $hi_res = mysql_query("insert into crushinjuryinside values(0,".$crushinjuryID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
@@ -90,11 +98,14 @@ class CrushInjury extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['crushIO'] = $array['crushIO'];
+                $h_array['crushIOType'] = $array['crushIOType'];
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
-               
+                $h_array['wasBodyMoved'] = $array['wasBodyMoved'];
+                $h_array['betweenWhichObjects'] = $array['betweenWhichObjects'];
+                $h_array['anyWitness'] = $array['anyWitness'];
+                $h_array['whatWasVictimDoing'] = $array['whatWasVictimDoing'];
                 
                 $hi_res = mysql_query("select * from crushinjuryinside where crushinjuryID=".$h_array['crushinjuryID']);
                 if(mysql_num_rows($hi_res) > 0)
@@ -165,6 +176,10 @@ class CrushInjury extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
+                $h_array['wasBodyMoved'] = $array['wasBodyMoved'];
+                $h_array['betweenWhichObjects'] = $array['betweenWhichObjects'];
+                $h_array['anyWitness'] = $array['anyWitness'];
+                $h_array['whatWasVictimDoing'] = $array['whatWasVictimDoing'];
                 
                 $hi_res = mysql_query("select * from crushinjuryinside where crushinjuryID=".$h_array['crushinjuryID']);
                 if(mysql_num_rows($hi_res) > 0)

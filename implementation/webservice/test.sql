@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `weatherConditions` (
 CREATE TABLE IF NOT EXISTS aviation (
    aviationID int not null auto_increment primary key,
    sceneID int not null,
-  `aviationOutsideType` text NOT NULL,
+  `aviationOType` text NOT NULL,
   `aircraftType` text NOT NULL,
   `aircraftNumPeople` text NOT NULL,
   `weatherCondition` text NOT NULL,
@@ -242,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `bicycleType` (
 CREATE TABLE IF NOT EXISTS `bicycle`(
    bicycleID int not null, 
    sceneID int not null,
+   bicycleOType text not null,
   `bicycleNumPeople` text NOT NULL,
   `bicycleHit` text NOT NULL,
   `bicycleType` text NOT NULL,
@@ -354,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `drowning` (
    whoRemovedBody text null,
    fencedOff text not null,
    wasGateClosed null,
-   waterType not null,
+   waterType text not null,
    `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,
   `chockingSuspected` text NOT NULL,
