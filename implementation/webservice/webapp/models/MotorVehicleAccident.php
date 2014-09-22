@@ -21,6 +21,14 @@ class MotorVehicleAccident extends Scene{
     private $carWasHitFrom;
     private $victimType;
     private $carBurnt;
+    private $weatherType;
+    private $weatherCondition;
+    private $anyWitnessest;
+    private $seatBeltOnt;
+    private $airbagDiploid;
+    private $trappedInCar;
+    private $bodyHit;
+    private $numberOfHit;
     
      public function __construct($formData,$api){
          $this->api = $api;
@@ -40,7 +48,14 @@ class MotorVehicleAccident extends Scene{
                 $this->carWasHitFrom = $formData['object'][$i]['carWasHitFrom'];
                 $this->victimType = $formData['object'][$i]['victimType'];
                 $this->carBurnt = $formData['object'][$i]['carBurnt'];
-                
+                $this->weatherType = $formData['object'][$i]['weatherType'];
+                $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
+                $this->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
+                $this->seatBeltOn = $formData['object'][$i]['seatBeltOn'];
+                $this->airbagDiploid = $formData['object'][$i]['airbagDiploid'];
+                $this->trappedInCar = $formData['object'][$i]['trappedInCar'];
+                $this->bodyHit = $formData['object'][$i]['bodyHit'];
+                $this->numberOfHit = $formData['object'][$i]['numberOfHit'];
                     //
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
@@ -59,8 +74,8 @@ class MotorVehicleAccident extends Scene{
     
     private function addMotorVehicleAccident($sceneID) {
      
-            $h_res = mysql_query("insert into mva values(0,".$sceneID.",'$this->victimFoundInCar','$this->mvaOutsideType','$this->occupants','$this->numberOfOccupants','$this->victimWas','$this->carWasHitFrom','$this->victimType','$this->carBurnt')");
-        
+            $h_res = mysql_query("insert into mva values(0,"
+            .$sceneID.",'$this->victimFoundInCar','$this->mvaOutsideType','$this->occupants','$this->numberOfOccupants','$this->victimWas','$this->carWasHitFrom','$this->victimType','$this->carBurnt','$this->weatherType','$this->weatherCondition','$this->anyWitnesses','$this->seatBeltOn','$this->airbagDiploid','$this->trappedInCar','$this->bodyHit','$this->numberOfHit')");
     }
     public function getAllMotorVehicleAccident() {
         try{
@@ -89,7 +104,14 @@ class MotorVehicleAccident extends Scene{
                 $h_array['carWasHitFrom'] = $array['carWasHitFrom'];
                 $h_array['victimType'] = $array['victimType'];
                 $h_array['carBurnt'] = $array['carBurnt'];
-                
+                $h_array['weatherType'] = $array['weatherType'];
+                $h_array['weatherCondition'] = $array['weatherCondition'];
+                $h_array['anyWitnesses'] = $array['anyWitnesses'];
+                $h_array['seatBeltOn'] = $array['seatBeltOn'];
+                $h_array['airbagDiploid'] = $array['airbagDiploid'];
+                $h_array['trappedInCar'] = $array['trappedInCar'];
+                $h_array['bodyHit'] = $array['bodyHit'];
+                $h_array['numberOfHit'] = $array['numberOfHit'];
                 
                 $tmp = $this->sceneVictim->getSceneVictims($h_array['sceneID']);
                 $v_i = $v_i + count($tmp);
@@ -144,6 +166,14 @@ class MotorVehicleAccident extends Scene{
                 $h_array['carWasHitFrom'] = $array['carWasHitFrom'];
                 $h_array['victimType'] = $array['victimType'];
                 $h_array['carBurnt'] = $array['carBurnt'];
+                $h_array['weatherType'] = $array['weatherType'];
+                $h_array['weatherCondition'] = $array['weatherCondition'];
+                $h_array['anyWitnesses'] = $array['anyWitnesses'];
+                $h_array['seatBeltOn'] = $array['seatBeltOn'];
+                $h_array['airbagDiploid'] = $array['airbagDiploid'];
+                $h_array['trappedInCar'] = $array['trappedInCar'];
+                $h_array['bodyHit'] = $array['bodyHit'];
+                $h_array['numberOfHit'] = $array['numberOfHit'];
                 
                 $hi_res = mysql_query("select * from hanginginside where mvaID=".$h_array['mvaID']);
                 

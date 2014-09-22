@@ -134,9 +134,9 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             
-            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $user = new User($this, $un, $up, $uf, $us, 6, 1);
             $admin = new Administrator($this);
-            if($admin->addUser($un, $admin->getUserID())){
+            if($admin->addUser($un, $user->getUserID())){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -152,7 +152,7 @@ private function addUser()
             $user = new User($this, $un, $up, $uf, $us, 1, 1);
             $admin = new ForensicOfficer($this);
             
-            if($admin->addUser($un, $admin->getUserID(),$cell)){
+            if($admin->addUser($un, $user->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -167,7 +167,7 @@ private function addUser()
             $cell = $this->_request['cellphoneNumber'];
             $user = new User($this, $un, $up, $uf, $us, 1, 1);
             $admin = new ForensicPractitioner($this);
-            if($admin->addUser($un, $admin->getUserID(),$cell)){
+            if($admin->addUser($un, $user->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -183,7 +183,24 @@ private function addUser()
             $user = new User($this, $un, $up, $uf, $us, 1, 1);
             $admin = new Student($this);
             
-            if($admin->addUser($un, $admin->getUserID(),$cell)){
+            if($admin->addUser($un, $user->getUserID(),$cell)){
+                $error = array('status' => "Success", "msg" => "Request to add user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
+            $this->response($this->json($error), 400);
+            break;
+         case "afp":
+            $un = $this->_request['userName'];
+            $up = $this->_request['userPassword'];
+            $uf = $this->_request['userFirstname'];
+            $us = $this->_request['userSurname'];
+            $cell = $this->_request['cellphoneNumber'];
+            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $admin = new Administrator($this);
+            $fp = new ForensicPractitioner($this);
+            
+            if($admin->addUser($un, $user->getUserID()) && $fp->addUser($un, $user->getUserID())){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
                 $this->response($this->json($error), 400);
             }
@@ -223,6 +240,72 @@ private function removeUser()
     
 }
 
+private function activateUser() {
+    // Cross validation if the request method is GET else it will return "Not Acceptable" status
+    if($this->get_request_method() != "POST")
+    {
+        $this->response('',406);
+    }
+    if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
+            stripslashes_deep($_POST);
+            stripslashes_deep($_COOKIE);
+    }
+    try{
+        $un = $this->_request['userID'];
+        $admin = new User($this);
+            if($admin->activateUser($un)){
+                $error = array('status' => "Success", "msg" => "Request to activate user was successful.");
+                $this->response($this->json($error), 400);
+            }
+            $error = array('status' => "Failed", "msg" => "Request to activate user was denied.");
+            $this->response($this->json($error), 400);
+    }catch(Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request to activate user was denied.");
+        $this->response($this->json($error), 400);
+    }
+}
+
+private function sortUsers() {
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
+    if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
+        stripslashes_deep($_POST);
+        stripslashes_deep($_COOKIE);
+    }
+    
+    try {
+        $search = $this->_request['by'];
+        $users = new User(null, null,$this);
+        
+        $this->response($this->json($users->sortUsers($search)), 200);
+    } catch (Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request was denied.");
+        $this->response($this->json($error), 400); 
+    }
+}
+private function getUser() {
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
+    if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
+            stripslashes_deep($_POST);
+            stripslashes_deep($_COOKIE);
+    }
+    
+     try {
+        $search = $this->_request['search'];
+        
+        $users = new User(null, null,$this);
+        //$error = array('status' => "Success", "msg" => "Request was denied.");
+        $this->response($this->json($users->findUsers($search)), 200);
+     } catch (Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request was denied.");
+        $this->response($this->json($error), 400); 
+     }
+}
 
 private function users()
 {
@@ -956,17 +1039,16 @@ private function addCase() {
                 }
                 break;
             case "deathregister":
-                
-                if(!empty($this->_request['caseData']))
+                if(!empty($this->_request['dr']) && !empty($this->_request['cn']))
                 {
-                    $formData = $this->jsonToArray($this->_request['caseData']);   
-                    if($formData != NULL){
-                        $obj = new DeathRegister($formData,$this);
+                    $obj = new DeathRegister($this,$this->_request['dr'],$this->_request['cn']);
+                    if($obj->addToDR()){
+                        $error = array('status' => "Success", "msg" => "Request to add death register number was successful.");
+                        $this->response($this->json($error), 400);
                     }
-                }else{
-                    $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
-                    $this->response($this->json($error), 400);
                 }
+                $error = array('status' => "Failed", "msg" => "Request to add death register number was denied.");
+                $this->response($this->json($error), 400);
                 break;
             case "drowning":
                 

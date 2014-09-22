@@ -35,9 +35,9 @@ class User {
         $this->validation = new Validations();
         $this->enc = new Encryption();
         
-        if($userName != null && $userPassword != null && $userFirstname != null && $userSurname != null){
+        if($userName != NULL && $userPassword != NULL && $userFirstname != NULL && $userSurname != NULL){
             $this->userName = $userName;
-            $arr = $this->validation->createHash($userPassword, 'sha512');
+            //$arr = $this->validation->createHash($userPassword, 'sha512');
             
             //$this->userPassword = $arr['hash'];
             $this->userPassword = $this->enc->md5_encrypt($userPassword);
@@ -76,31 +76,30 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
-    private function add() {
+    public function add() {
         
         $u_res = mysql_query("select * from users where userName='$this->userName'");
         if (mysql_num_rows($u_res) <= 0) {
             
             $u_res = mysql_query("insert into users values(0,'$this->userName','$this->userPassword','$this->userFirstname','$this->userSurname',$this->userTypeID,$this->userActive)");
-            if($u_res === TRUE)
+            
+            
+            Audit::audit_log($this->enc->decrypt_request($_SESSION[$this->enc->md5_encrypt('s_nomor')]), "Added new user. DATA: ");
+            
+            if($u_res !== FALSE)
             {
-                $m_res = mysql_query("select * from users where userName='$this->userName'");
-                $m_arr = mysql_fetch_array($m_res);
-                Audit::audit_log($this->enc->decrypt_request($_SESSION[$this->enc->md5_encrypt('s_nomor')]), "Added new user. DATA: ".  var_dump($m_arr));
-            }
-            $u_res = mysql_query("select * from users where userName='$this->userName'");
-            $u_array = mysql_fetch_array($u_res);
-            if($u_array['userID'] != NULL)
-            {
+                $u_res2 = mysql_query("select * from users where userName='$this->userName'");
+                $u_array = mysql_fetch_array($u_res2);
                 //$u_res = mysql_query("insert into accessMode values(".$u_array['userID'].",'$this->salt')");
+                
                 return $u_array['userID'];
             }else{
                 $error = array('status' => "Failed", "msg" => "Request to add user was denied.");
                 $this->api->response($this->api->json($error), 400);
             }
         }else{
-            $error = array('status' => "Failed", "msg" => "Request to add user was denied. Duplication was detected.");
-            $this->api->response($this->api->json($error), 400);
+            $error = array('status' => "Failed", "msg" => "Request to add user was denied. Duplication detected,");
+            $this->api->response('', 400);
         }
         
     }
@@ -123,6 +122,23 @@ class User {
         return FALSE;
     }
     
+    public function activateUser($userID) {
+        if($userID > 0){
+            $m_res = mysql_query("select * from users where userID='$userID'");
+            $m_arr = mysql_fetch_array($m_res);
+            $a = mysql_query("update users set userActive=1 where userID='$userID'");
+            if($a){
+                
+                Audit::audit_log($this->enc->decrypt_request($_SESSION[$this->enc->md5_encrypt('s_nomor')]), "activated a user. DATA: ".  var_dump($m_arr));
+                $error = array('status' => "Success", "msg" => "Request to activate user was successful.");
+                $this->api->response($this->api->json($error), 200);
+            }else{
+                $error = array('status' => "Failed", "msg" => "Request to activate user was denied.");
+                $this->api->response($this->api->json($error), 400);
+            }
+        }
+        return FALSE;
+    }
     public function getAllUsers() {
         $u_res = mysql_query("select * from users");
         $r = mysql_num_rows($u_res);
@@ -181,8 +197,50 @@ class User {
             $this->api->response($this->api->json($error), 400);
         }
     }
-
-        public function login($userName,$userPassword,$platform){
+    public function findUsers($param) {
+        if(strlen($param) === 0 || $param === NULL) return null;
+        
+        $u_res = mysql_query("select * from users where userName LIKE '$param%' or userFirstname LIKE '$param%' or userSurname LIKE '$param%'");
+        if($u_res !== NULL){
+            $arr = array();
+            while($u_arr = mysql_fetch_array($u_res)){
+                $arr[] = $u_arr;
+            }
+            if(count($arr) > 0)
+            {
+                return $arr;
+            }
+        }
+        
+        $error = array('status' => "Failed", "msg" => "No result found for ther user: ".$param);
+        $this->api->response($this->api->json($error), 400);
+    }
+    
+    public function sortUsers($param) {
+        if(strlen($param) === 0 || $param === NULL) return null;
+        $u_res = null;
+        if($param === "active")
+        {
+            $u_res = mysql_query("select * from users where userActive=1");
+        }else{
+            $u_res = mysql_query("select * from users where userActive=0");
+        }
+        if($u_res !== NULL && $u_res !== FALSE){
+            $arr = array();
+            while($u_arr = mysql_fetch_array($u_res)){
+                $arr[] = $u_arr;
+            }
+            if(count($arr) > 0)
+            {
+                return $arr;
+            }
+        }
+        
+        $error = array('status' => "Failed", "msg" => "No result found for ther user: ".$param);
+        $this->api->response($this->api->json($error), 400);
+    }
+    
+    public function login($userName,$userPassword,$platform){
         if($userName != NULL && $userPassword != NULL && $platform != NULL)
         {
             $this->userName = $userName;

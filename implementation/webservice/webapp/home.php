@@ -19,20 +19,20 @@
                         
                         if($sac === $enc->md5_encrypt("1")) // Admin
                         {
-                            echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
+                            echo '<li><a href="#" id="1"class="pages active listUsers">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
                             ';
                         }else if($sac === $enc->md5_encrypt("2")){ // FP
-                            echo '<li><a href="#" class="pages" id="1"class="active">Cases</a></li>
+                            echo '<li><a href="#" class="pages" id="1"class="active listCases">Cases</a></li>
                             ';
                         }else if($sac === $enc->md5_encrypt("4")){ // Student
-                            echo '<li><a href="#" class="pages" id="1"class="active">Cases</a></li>
+                            echo '<li><a href="#" class="pages" id="1"class="active listCases">Cases</a></li>
                             ';
                         }
                         else if($sac === $enc->md5_encrypt("6")){ // Admin and FP
-                            echo '<li><a href="#" id="1"class="pages active">List Users</a></li>
+                            echo '<li><a href="#" id="1"class="pages active listUsers">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
-                            <li><a href="#" id="3"class="pages">List Cases</a></li>
+                            <li><a href="#" id="3"class="pages listCases">List Cases</a></li>
                             ';
                         }   
                     ?>

@@ -22,6 +22,10 @@ class Firearm extends Scene{
     private $gunshotWoundsArea;
     private $firearmOnScene;
     private $firearmCalibre;
+    private $firedThroughObject;
+    private $firearmUsed;
+    private $cartridgesFound;
+    private $howManyCartridgesFound;
     
      public function __construct($formData,$api){
          $this->api = $api;
@@ -41,7 +45,11 @@ class Firearm extends Scene{
                 $this->gunshotWoundsLocation = $formData['object'][$i]['gunshotWoundsLocation'];
                 $this->gunshotWoundsArea = $formData['object'][$i]['gunshotWoundsArea'];
                 $this->firearmOnScene = $formData['object'][$i]['firearmOnScene'];                
-                $this->firearmCalibre = $formData['object'][$i]['firearmCalibre'];              
+                $this->firearmCalibre = $formData['object'][$i]['firearmCalibre'];
+                $this->firedThroughObject = $formData['object'][$i]['firedThroughObject'];
+                $this->firearmUsed = $formData['object'][$i]['firearmUsed'];
+                $this->cartridgesFound = $formData['object'][$i]['cartridgesFound'];
+                $this->howManyCartridgesFound = $formData['object'][$i]['howManyCartridgesFound'];
                     //
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -64,7 +72,7 @@ class Firearm extends Scene{
     }
     
     private function addFirearm($sceneID,$inside,$object) {
-        
+        $f_res = mysql_query("insert into firearm values(0,$sceneID,'$this->firearmIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->gunshotWounds','$this->gunshotWoundsLocation','$this->gunshotWoundsArea','$this->firearmOnScene','$this->firearmCalibre','$this->firedThroughObject','$this->firearmUsed','$this->cartridgesFound','$this->howManyCartridgesFound')");
         if($inside == TRUE){
             $h_res = mysql_query("select firearmID from firearm where sceneID=".$sceneID);
             $firearmID = mysql_result($h_res,0,'firearmID');
@@ -109,7 +117,10 @@ class Firearm extends Scene{
                 $h_array['gunshotWoundsArea'] = $array['gunshotWoundsArea'];
                 $h_array['firearmOnScene'] = $array['firearmOnScene'];
                 $h_array['firearmCalibre'] = $array['firearmCalibre'];
-                
+                $h_array['firedThroughObject'] = $array['firedThroughObject'];
+                $h_array['firearmUsed'] = $array['firearmUsed'];
+                $h_array['cartridgesFound'] = $array['cartridgesFound'];
+                $h_array['howManyCartridgesFound'] = $array['howManyCartridgesFound'];
                 
                 $hi_res = mysql_query("select * from firearmInside where firearmID=".$h_array['firearmID']);
                 if(mysql_num_rows($hi_res) > 0)
@@ -185,6 +196,10 @@ class Firearm extends Scene{
                 $h_array['gunshotWoundsArea'] = $array['gunshotWoundsArea'];
                 $h_array['firearmOnScene'] = $array['firearmOnScene'];
                 $h_array['firearmCalibre'] = $array['firearmCalibre'];
+                $h_array['firedThroughObject'] = $array['firedThroughObject'];
+                $h_array['firearmUsed'] = $array['firearmUsed'];
+                $h_array['cartridgesFound'] = $array['cartridgesFound'];
+                $h_array['howManyCartridgesFound'] = $array['howManyCartridgesFound'];
                 
                 $hi_res = mysql_query("select * from firearmInside where firearmID=".$h_array['firearmID']);
                 if(mysql_num_rows($hi_res) > 0)

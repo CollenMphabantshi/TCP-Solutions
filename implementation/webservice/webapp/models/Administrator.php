@@ -22,10 +22,7 @@ class Administrator  extends User{
     public function addUser($personelNumber,$userID) {
         
         $a_res = mysql_query("insert into administrator values('$personelNumber',$userID)");
-        if($a_res !== NULL)
-        {
-            
-        }
+        
         return $a_res;
     }
     

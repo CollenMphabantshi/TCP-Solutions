@@ -83,8 +83,8 @@ public class Loggin extends Activity{
 		
         try {
         	List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
-
-            pairs.add(new BasicNameValuePair("rquest","login"));
+        	
+            pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("login"))));
 			pairs.add(new BasicNameValuePair("username",Encryption.bytesToHex(enc.encrypt(user))));
 			pairs.add(new BasicNameValuePair("password",Encryption.bytesToHex(enc.encrypt(pass))));  
 		    pairs.add(new BasicNameValuePair("platform",Encryption.bytesToHex(enc.encrypt("droid"))));

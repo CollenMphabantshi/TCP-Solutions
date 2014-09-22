@@ -12,20 +12,26 @@ require_once("Scene.php");
  * @author BANCHI
  */
 class ElectrocutionParameters{
-    private $electrocutionLightningID;
-    private $sceneID;
-    private $electrocutionLightningIOType;
-    private $signsOfStruggle;
-    private $alcoholBottleAround;
-    private $drugParaphernalia;
-    private $anyOpenWire;
-    private $sceneWet;
-    private $deBarkingOfTrees;
+    public $electrocutionLightningID;
+    public $sceneID;
+    public $electrocutionLightningIOType;
+    public $signsOfStruggle;
+    public $alcoholBottleAround;
+    public $drugParaphernalia;
+    public $anyOpenWire;
+    public $sceneWet;
+    public $deBarkingOfTrees;
+    public $anyWitnesses;
+    public $whenDidVictimDie;
+    public $whatWasVictimDoing;
+    public $victimFallFromHeight;
+    public $voltage;
+    public $anyOtherEvidence;
     
-    public  $ElectrocutionCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $ElectrocutionCases;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
     public function __construct(){}
 }
@@ -36,10 +42,10 @@ class ElectrocutionLightning extends Scene{
     
      public function __construct($formData,$api){
         $this->api = $api;
-        $paraObj = new ElectrocutionParameters();
-        $paraObjAll =new ElectrocutionParameters();
+        $this->paraObj = new ElectrocutionParameters();
+        $this->paraObjAll =new ElectrocutionParameters();
         
-        $ElectrocutionCases = array();
+        $this->paraObjAll->ElectrocutionCases = array();
         
         if($formData == NULL)
         {
@@ -56,6 +62,12 @@ class ElectrocutionLightning extends Scene{
                 $this->anyOpenWire = $formData['object'][$i]['anyOpenWire'];
                 $this->sceneWet = $formData['object'][$i]['sceneWet'];
                 $this->deBarkingOfTrees = $formData['object'][$i]['deBarkingOfTrees'];
+                $this->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
+                $this->whenDidVictimDie = $formData['object'][$i]['whenDidVictimDie'];
+                $this->whatWasVictimDoing = $formData['object'][$i]['whatWasVictimDoing'];
+                $this->victimFallFromHeight = $formData['object'][$i]['victimFallFromHeight'];
+                $this->voltage = $formData['object'][$i]['voltage'];
+                $this->anyOtherEvidence = $formData['object'][$i]['anyOtherEvidence'];
                  //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -79,7 +91,9 @@ class ElectrocutionLightning extends Scene{
     public function addElectrocutionLightning($sceneID,$inside,$object) {
         
        
-       $h_res = mysql_query("insert into electrocutionlightning values(0,".$sceneID.",'$this->electrocutionLightningIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->anyOpenWire','$this->sceneWet','$this->deBarkingOfTrees')");
+       $h_res = mysql_query("insert into electrocutionlightning values(0,"
+        .$sceneID.",'$this->paraObjAll->electrocutionLightningIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->anyOpenWire','$this->paraObjAll->sceneWet','$this->paraObjAll->deBarkingOfTrees','$this->paraObjAll->paraObjAll->anyWitnesses','$this->paraObjAll->paraObjAll->whenDidVictimDie','$this->paraObjAll->paraObjAll->whatWasVictimDoing','$this->paraObjAll->victimFallFromHeight','$this->paraObjAll->voltage','$this->paraObjAll->anyOtherEvidence')");
+        
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -110,11 +124,11 @@ class ElectrocutionLightning extends Scene{
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->ElectrocutionCases[] = $this->getElectrocutionLightningCases($info['electrocutionLightningID']);
+                $this->paraObjAll->ElectrocutionCases[] = $this->getElectrocutionLightningCases($info['electrocutionLightningID']);
                
             }
             
-        return $paraObjAll;
+        return $this->paraObjAll;
     }
     
     public function getDataBySceneID($sceneID) {
@@ -143,38 +157,40 @@ class ElectrocutionLightning extends Scene{
         
         while($info = mysql_fetch_array($result))
             {
-                        
-                        $paraObj->electrocutionLightningID = $info['electrocutionLightningID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->electrocutionLightningIOType = $info['electrocutionLightningIOType'];
-                        $paraObj->signsOfStruggle = $info['signsOfStruggle'];
-                        $paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
-                        $paraObj->drugParaphernalia = $info['drugParaphernalia'];
-                        $paraObj->anyOpenWire = $info['anyOpenWire'];
-                        $paraObj->sceneWet = $info['sceneWet'];
-                        $paraObj->deBarkingOfTrees = $info['deBarkingOfTrees'];
-                        
+                        $this->paraObj->electrocutionLightningID = $info['electrocutionLightningID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->electrocutionLightningIOType = $info['electrocutionLightningIOType'];
+                        $$this->paraObj->signsOfStruggle = $info['signsOfStruggle'];
+                        $this->paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
+                        $this->paraObj->drugParaphernalia = $info['drugParaphernalia'];
+                        $this->paraObj->anyOpenWire = $info['anyOpenWire'];
+                        $this->paraObj->sceneWet = $info['sceneWet'];
+                        $this->paraObj->deBarkingOfTrees = $info['deBarkingOfTrees'];
+                        $this->paraObj->anyWitnesses = $info['anyWitnesses'];
+                        $this->paraObj->whenDidVictimDie = $info['whenDidVictimDie'];
+                        $this->paraObj->whatWasVictimDoing = $info['whatWasVictimDoing'];
+                        $this->paraObj->victimFallFromHeight = $info['victimFallFromHeight'];
+                        $this->paraObj->voltage = $info['voltage'];
+                        $this->paraObj->anyOtherEvidence = $info['anyOtherEvidence'];
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj->sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj->caseObj = $case ; 
                         
-
-
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
                        }
 
             //print $query;
-            return $paraObj;
+            return $this->paraObj;
         
     }
 }

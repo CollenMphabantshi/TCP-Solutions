@@ -12,20 +12,22 @@ require_once("Scene.php");
  * @author BANCHI
  */
 class sharpParameters{
-    private $sharpID;
-    private $sceneID;
-    private $sharpIOType;
-    private $sharpObjectAtScene;
-    private $sharpForceInjuries;
-    private $theInjury;
-    private $signsOfStruggle;
-    private $alcoholBottleAround;
-    private $drugParaphernalia;
+    public $sharpID;
+    public $sceneID;
+    public $sharpIOType;
+    public $sharpObjectSuspected;
+    public $sharpObjectAtScene;
+    public $sharpForceInjuries;
+    public $theInjuryConcentrated;
+    public $theInjuryMainlyOn;
+    public $signsOfStruggle;
+    public $alcoholBottleAround;
+    public $drugParaphernalia;
     
     public  $sharpCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
 }
 class SharpForceInjury extends Scene{
@@ -35,10 +37,10 @@ class SharpForceInjury extends Scene{
     
      public function __construct($formData,$api){
         $this->api = $api;
-        $paraObj = new sharpParameters();
-        $paraObjAll =new sharpParameters();
+        $this->paraObj = new sharpParameters();
+        $this->paraObjAll =new sharpParameters();
         
-        $sharpCases = array();
+        $this->paraObjAll->sharpCases = array();
         
         if($formData == NULL)
         {
@@ -48,15 +50,17 @@ class SharpForceInjury extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->sharpIOType = $formData['object'][$i]['sharpIOType'];
-                $this->sharpObjectAtScene = $formData['object'][$i]['sharpObjectAtScene'];
-                $this->sharpForceInjuries = $formData['object'][$i]['sharpForceInjuries'];
-                $this->theInjury = $formData['object'][$i]['theInjury'];
-                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
-                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->paraObjAll->sharpIOType = $formData['object'][$i]['sharpIOType'];
+                $this->paraObjAll->sharpObjectSuspected = $formData['object'][$i]['sharpObjectSuspected'];
+                $this->paraObjAll->sharpObjectAtScene = $formData['object'][$i]['sharpObjectAtScene'];
+                $this->paraObjAll->sharpForceInjuries = $formData['object'][$i]['sharpForceInjuries'];
+                $this->paraObjAll->theInjuryConcentrated = $formData['object'][$i]['theInjuryConcentrated'];
+                $this->paraObjAll->theInjuryMainlyOn = $formData['object'][$i]['theInjuryMainlyOn'];
+                $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
                 
-               $sceneID = $this->createScene();
+                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);
@@ -77,7 +81,8 @@ class SharpForceInjury extends Scene{
     
     public function addSharpForceInjury($sceneID,$inside,$object) {
         
-        $h_res = mysql_query("insert into sharp values(0,".$sceneID.",'$this->sharpIOType','$this->sharpObjectAtScene','$this->sharpForceInjuries','$this->theInjury','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia')");
+        $h_res = mysql_query("insert into sharp values(0,"
+        .$sceneID.",'$this->paraObjAll->sharpIOType','$this->paraObjAll->sharpObjectSuspected','$this->paraObjAll->sharpObjectAtScene','$this->paraObjAll->sharpForceInjuries','$this->paraObjAll->theInjuryConcentrated','$this->paraObjAll->theInjuryMainlyOn','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -108,11 +113,11 @@ class SharpForceInjury extends Scene{
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->sharpCases [] = $this->getSharpForceInjuryCases($info['sharpID']);
+           $this->paraObjAll->sharpCases [] = $this->getSharpForceInjuryCases($info['sharpID']);
                
             }
             
-        return $paraObjAll;
+        return $this->paraObjAll;
         
     }
     
@@ -143,36 +148,38 @@ class SharpForceInjury extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->sharpID = $info['sharpID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->sharpIOType = $info['sharpIOType'];
-                        $paraObj->sharpObjectAtScene = $info['sharpObjectAtScene'];
-                        $paraObj->sharpForceInjuries = $info['sharpForceInjuries'];
-                        $paraObj->theInjury = $info['theInjury'];
-                        $paraObj->signsOfStruggle = $info['signsOfStruggle'];
-                        $paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
-                        $paraObj->drugParaphernalia = $info['drugParaphernalia'];
+                        $this->paraObj->sharpID = $info['sharpID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->sharpIOType = $info['sharpIOType'];
+                        $this->paraObj->sharpObjectSuspected = $info['sharpObjectSuspected'];
+                        $this->paraObj->sharpObjectAtScene = $info['sharpObjectAtScene'];
+                        $this->paraObj->sharpForceInjuries = $info['sharpForceInjuries'];
+                        $this->paraObj->theInjuryConcentrated = $info['theInjuryConcentrated'];
+                        $this->paraObj->theInjuryMainlyOn = $info['theInjuryMainlyOn'];
+                        $this->paraObj->signsOfStruggle = $info['signsOfStruggle'];
+                        $this->paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
+                        $this->paraObj->drugParaphernalia = $info['drugParaphernalia'];
                         
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj-> sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj->caseObj = $case ; 
                         
 
 
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
                        }
 
-            print $query;
-            return $paraObj;
+            
+            return $this->paraObj;
     }
 }

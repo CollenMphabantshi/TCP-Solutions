@@ -83,7 +83,7 @@ class Cases {
                     
                     $s_arr['vicName'] = $victim['vicName'];
                     $s_arr['vicID'] = $victim['victimIdentityNumber'];
-                    
+                    $s_arr['vicAge'] = $victim['victimAge'];
                     $st_res = mysql_query("select * from sceneType where sceneTypeID=".$scene['sceneTypeID']);
                     $s_arr['sceneTypeID'] = $enc->encrypt_request(mysql_result($st_res,0, 'sceneTypeDescription'));
                     $sceneID = $scene['sceneID'];
@@ -133,28 +133,9 @@ class Cases {
                     
                 $s_arr['vicName'] = $victim['vicName'];
                 $s_arr['vicID'] = $victim['victimIdentityNumber'];
+                $s_arr['vicAge'] = $victim['victimAge'];
                 
                 $st_res = mysql_query("select * from sceneType where sceneTypeID=".$scene['sceneTypeID']);
-                /*$s_arr['sceneTypeID'] = $enc->encrypt_request(mysql_result($st_res,0, 'sceneTypeDescription'));
-                $sceneID = $scene['sceneID'];
-                
-                $s_arr['sceneID'] = $enc->encrypt_request($scene['sceneID']);
-                $s_arr['sceneTime'] = $enc->encrypt_request($scene['sceneTime']);
-                $s_arr['sceneDate'] = $enc->encrypt_request($scene['sceneDate']);
-                $s_arr['sceneLocation'] = $enc->encrypt_request($scene['sceneLocation']);
-                $s_arr['sceneTemparature'] = $enc->encrypt_request($scene['sceneTemparature']);
-                $s_arr['ioName'] = $enc->encrypt_request($scene['sceneInvestigatingOfficerRank'].' '.$scene['sceneInvestigatingOfficerName']);
-                $s_arr['ioCellNumber'] = $enc->encrypt_request($scene['sceneInvestigatingOfficerCellNumber']);
-                $s_arr['foosName'] = $enc->encrypt_request($scene['firstOfficerOnSceneRank'].' '.$scene['firstOfficerOnSceneName']);
-                
-                $c_array[] = $s_arr;
-                $carr = array();
-                $ca_res = mysql_query("select * from cases where sceneID=".$sceneID);
-                if(mysql_num_rows($ca_res) > 0)
-                {
-                    $carr['caseNumber'] = $enc->encrypt_request(mysql_result($ca_res, 0,'caseNumber'));
-                }
-                */
                 
                 $s_arr['sceneTypeID'] = $enc->encrypt_request(mysql_result($st_res,0, 'sceneTypeDescription'));
                 $sceneID = $scene['sceneID'];
