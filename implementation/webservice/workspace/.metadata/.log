@@ -2429,3 +2429,6 @@ org.eclipse.jdi.TimeoutException: Timeout occurred while waiting for packet 1221
 	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:405)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 >>>>>>> fd15a9b6bf68eece943c0ff7a256399384001d24
+
+!ENTRY org.eclipse.ui 2 2 2014-09-22 20:51:05.361
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
