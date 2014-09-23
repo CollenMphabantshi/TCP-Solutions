@@ -93,11 +93,12 @@ class Burn extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
+            $bd = $object['buildingDamaged'];
             if($va != "yes")
             {
-                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va','$pv','$bd')");
             }else{
-                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null,'$bd')");
             }
         }
     }

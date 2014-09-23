@@ -475,7 +475,7 @@ CREATE TABLE IF NOT EXISTS `gassinginside` (
   `victimAlone` text NOT NULL,
    peopleWithVictim text null,
   `gassingAppliances` text NOT NULL,
-  `gassingAppliancesUsed` text null,
+  /*`gassingAppliancesUsed` text null,*/
   `gassingSmell` text NOT NULL,
       FOREIGN KEY (gassingID) REFERENCES gassing(gassingID)
 );

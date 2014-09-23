@@ -1,8 +1,24 @@
 package com.example.mobileforensics;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import java.util.Calendar;
+
+import java.util.Date;
+
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -17,31 +33,72 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mobileforensics.Blunt.Read;
+
+
+import com.example.mobileforensics.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
+
+
+import com.example.mobileforensics.JSONWeatherParser;
+import com.example.mobileforensics.WeatherHttpClient;
+import com.example.mobileforensics.models.Weather;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.NavUtils;
+import android.text.format.Time;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
+import android.widget.GridLayout;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
-public class Fromheight extends Activity{
-	private TextView tv_ioName;
+public class Fromheight extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+	
+	
+	
+	TextView value;
+
 	private EditText ioName;
-	private TextView tv_ioSurname;
+	
 	private EditText ioSurname;
-	private TextView tv_ioRank;
+	
 	private EditText ioRank;
-	private TextView tv_ioCellNo;
+	
 	private EditText ioCellNo;
 	
 	private TextView tv_foosName;
@@ -57,12 +114,8 @@ public class Fromheight extends Activity{
 	private EditText victimSurname;
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
+	private EditText victimAge;
 	
-	private TextView tv_victimInfo;
-	private TextView tv_victimRace;
-	private TextView tv_victimGender;
-	private TextView tv_foos;
-	private TextView tv_io;
 	
 	
 	private RadioButton rgbMale;
@@ -77,37 +130,54 @@ public class Fromheight extends Activity{
 
 	private TextView theBody;
 	private TextView tv_bodyDecomposed;
-	private Spinner bodyDecomposed;
+	private RadioButton bodyDecomposedYes;
+	private RadioButton bodyDecomposedNo;
 	private TextView tv_medicalIntervention;
-	private Spinner medicalIntervention;
+	private RadioButton medicalInterventionYes;
+	private RadioButton medicalInterventionNo;
 	private TextView tv_whoFoundVictimBody;
 	private EditText whoFoundVictimBody;
+	private TextView tv_anyWitnesses;
+	private RadioButton anyWitnessesYes;
+	private RadioButton anyWitnessesNo;
 	private TextView tv_closeToWater;
-	private Spinner closeToWater;
+	private RadioButton closeToWaterYes;
+	private RadioButton closeToWaterNo;
 	private TextView tv_rapeHomicide;
-	private Spinner rapeHomicide;
+	private RadioButton rapeHomicideYes;
+	private RadioButton rapeHomicideNo;
 	private TextView tv_suicideSuspected;
-	private Spinner suicideSuspected;
+	private RadioButton suicideSuspectedYes;
+	private RadioButton suicideSuspectedNo;
 	private TextView tv_previousAttempts;
-	private Spinner previousAttempts;
+	private RadioButton previousAttemptsYes;
+	private RadioButton previousAttemptsNo;
 	private TextView tv_howManyAttempts;
 	private EditText howManyAttempts;
+	private TextView tv_suicideNoteFound;
+	private RadioButton suicideNoteFoundYes;
+	private RadioButton suicideNoteFoundNo;
 	
 	private TextView sceneOfInjury;
 	private TextView tv_sceneIOType;
-	private Spinner sceneIOType;
+	private RadioButton sceneIOTypeInside;
+	private RadioButton sceneIOTypeOutside;
 	private TextView tv_whereInside;
 	private Spinner sceneIType;
 	private TextView tv_sceneITypeOther;
 	private EditText sceneITypeOther;
 	private TextView tv_doorLocked;
-	private Spinner doorLocked;
+	private RadioButton doorLockedYes;
+	private RadioButton doorLockedNo;
 	private TextView tv_windowsClosed;
-	private Spinner windowsClosed;
+	private RadioButton windowsClosedYes;
+	private RadioButton windowsClosedNo;
 	private TextView tv_windowsBroken;
-	private Spinner windowsBroken;
+	private RadioButton windowsBrokenYes;
+	private RadioButton windowsBrokenNo;
 	private TextView tv_victimAlone;
-	private Spinner victimAlone;
+	private RadioButton victimAloneYes;
+	private RadioButton victimAloneNo;
 	private TextView tv_peopleWithVictim;
 	private EditText peopleWithVictim;
 	private TextView tv_sceneOType;
@@ -117,89 +187,466 @@ public class Fromheight extends Activity{
 	
 	private TextView sceneLook;
 	private TextView tv_signsOfStruggle;
-	private Spinner signsOfStruggle;
+	private RadioButton signsOfStruggleYes;
+	private RadioButton signsOfStruggleNo;
 	private TextView tv_alcoholBottleAround;
-	private Spinner alcoholBottleAround;
+	private RadioButton alcoholBottleAroundYes;
+	private RadioButton alcoholBottleAroundNo;
 	private TextView tv_drugParaphernalia;
-	private Spinner drugParaphernalia;
+	private RadioButton drugParaphernaliaYes;
+	private RadioButton drugParaphernaliaNo;
 	
 	private TextView theScene;
-	private TextView tv_fromwhat;
-	private EditText fromwhat;
-	private TextView tv_howhigh;
-	private EditText howhigh;
-	private TextView tv_onwhat;
-	private EditText onwhat;
+	private TextView tv_fromWhat;
+	private EditText fromWhat;
+	private TextView tv_howHigh;
+	private EditText howHigh;
+	private TextView tv_onWhatSurface;
+	private EditText onWhatSurface;
 	
-	private TextView tv_suicideNoteFound;
-	private Spinner suicideNoteFound;
 	private TextView tv_generalHistory;
 	private EditText generalHistory;
 	
-	private LinearLayout fromheight_information_layout;
-	private LinearLayout fromheight_demographics_layout;
-	private LinearLayout fromheight_thebody_layout;
-	private LinearLayout fromheight_sceneOfInjury_layout;
-	private LinearLayout fromheight_SceneLook_layout;
-	private LinearLayout fromheight_theScene_layout;
-	private LinearLayout fromheight_gallery_layout;
-	
-	
-	private RelativeLayout rl1;
-	private Button nextButton;
+	private TextView response;
+
 	private Button doneButton;
 	private Button logoutButton;
-	
+	private Button BackToMenu;
+	private GridLayout Gallery;
 	private JSONObject json;
-	private final static String WS_URL = "https://192.168.2.1/ws/models/api.php";
-	private final static int PAGES = 7;
+
+	
+	private final static int PAGES = 6;
+
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
-	private int pageCount;
+	
 	
 	private String username;
 	private String time;
 	private String date;
 	private String location;
-	private String temperature;
-
+	
+	private JSONObject currentDataSaved;
+	
+	GoogleMap map;
+	private JSONObject locate;
+	private double longitude;
+	private double latitude;
+	private int status;
+	private String myAddress;
+	
+	
+	//upload image parameters still to be arranged
+	TextView messageText;
+    Button uploadButton,selectImages,buttonLoadImage;
+    ImageView imageView0,imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8;
+    int serverResponseCode = 0;
+    ProgressDialog dialog = null;
+    Uri currImageURI;
+    String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
+    private static int RESULT_LOAD_IMAGE = 1;
+    int count = 0;
+    ArrayList<String> uploadFileName = new ArrayList<String>();
+    String filename ;
+    
+    //weather section
+    private String WeatherInfo="";
+    private TextView weatherInfo;
+	private Encryption enc;
+	private int index_gallery= 0;
+	
+	private String mCurrentPhotoPath;
+	static final int REQUEST_TAKE_PHOTO = 1;
+	//ImageView mImageView;
+	private static final String TAG = "upload";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		//String city = "lat=-25.7547642&lon=28.2146178";
+		String city = "";
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fromheight);
-		initialiseParameters();
-		setOnclickEvents();
-		hidePage();
-		showPage();
-		showHideButtons();
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		
+		
+		
+		initialize();
+		variablesInitialization();
+		CheckRadioButtons();
+		setOnClickEvents();
+		
+		
+	
 	}
 	
-	private void setOnclickEvents(){
+	public String initialize(){
+			
+			if( status != ConnectionResult.SUCCESS){
+				int requestCode = 10;
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+				dialog.show();
+			}else{
+				
+				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
+				map.setMyLocationEnabled(true);
+				map.setOnMyLocationChangeListener(this);
+				
+				String city = "lat="+latitude+"&lon="+longitude;
+				JSONWeatherTask task = new JSONWeatherTask();
+				task.execute(new String[]{city});
+				location +="\n"+WeatherInfo;
+			}
+			return location;
+			
+	}
+	
+	private File createImageFile() throws IOException{
+		// Create an image file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String imageFileName = "height_" + timeStamp + "_";
+	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
+	    File dir = new File(storageDir);
+	    if (!dir.exists())
+	    	dir.mkdir();
+	    
+	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
+
+	    // Save a file: path for use with ACTION_VIEW intents
+	    mCurrentPhotoPath = image.getAbsolutePath();
+	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	    return image;
 		
-		nextButton.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View view) {
-						// TODO Auto-generated method stub
-						try{
-							System.out.println("Page: "+pageCount);
-							if(validateNextPage())
-							{
-								pageCount++;
-								hidePage();
-								showPage();
-								showHideButtons();
-							}else{
-								//Toast.makeText(Fromheight.this, "Please Fill in all Questions.", Toast.LENGTH_LONG);
-							}
-							
-						}catch(Exception e){e.printStackTrace();}
-					}
-				});
+	}
+	
+	private void dispatchTakePictureIntent(){
 		
-doneButton.setOnClickListener(new OnClickListener() {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+			
+			File photoFile = null;
+			try{
+				photoFile = createImageFile();
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			if(photoFile != null){
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+			}
+		}
+	}
+	
+	private void setPic(ImageView mImageView){
+		// Get the dimensions of the View
+	    int targetW = 300;
+	    int targetH = 300;
+
+	    // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+
+	    // Determine how much to scale down the image
+	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+	    // Decode the image file into a Bitmap sized to fill the View
+	    bmOptions.inJustDecodeBounds = false;
+	    bmOptions.inSampleSize = scaleFactor << 1;
+	    bmOptions.inPurgeable = true;
+
+	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    
+	    Matrix mtx = new Matrix();
+	    mtx.postRotate(90);
+	    // Rotating Bitmap
+	    Bitmap rotatedBMP = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mtx, true);
+
+	    if (rotatedBMP != bitmap)
+	    	bitmap.recycle();
+	    
+	    mImageView.setImageBitmap(rotatedBMP);
+	    galleryAddPic(mCurrentPhotoPath);
+		
+	}
+	
+	private void galleryAddPic(String locat){
+		
+		Intent mediaScanerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		
+		File f = new File(locat);
+		
+		Uri counterUri = Uri.fromFile(f);
+		
+		mediaScanerIntent.setData(counterUri);
+		
+		this.sendBroadcast(mediaScanerIntent);
+	}
+	
+	@Override
+	public void onMyLocationChange(Location loc) {
+		// TODO Auto-generated method stub
+		
+		
+        try {
+        	locate = new JSONObject();
+    		JSONObject object = new JSONObject();
+    		//get geolactions, time and date
+    		longitude = loc.getLongitude();
+    		latitude = loc.getLatitude();
+    		Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            time = formattedDate.substring(11);
+            date = formattedDate.substring(0, formattedDate.length()-9);
+         
+            getAddress(longitude,latitude);
+            
+			locate.accumulate("Longitude", longitude);
+			locate.accumulate("Latitude", latitude);
+			locate.accumulate("Bearing", loc.getBearing());
+			locate.accumulate("Altitude", loc.getAltitude());
+			locate.accumulate("Accuracy", loc.getAccuracy());
+			locate.accumulate("Address", myAddress);
+			
+			object.accumulate("Time", time);
+			object.accumulate("Date", date);
+			object.accumulate("Location", locate.toString());
+			
+			location = object.toString();
+
+			//value.setText(location);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void getAddress(double longi, double lati){
+		
+		 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+
+	       try {
+	  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
+	 
+	  if(addresses != null) {
+	   Address returnedAddress = addresses.get(0);
+	   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+	   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+	    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+	   }
+	   myAddress = strReturnedAddress.toString();
+	  }
+	  else{
+	   myAddress = "No Address returned!";
+	  }
+	 } catch (IOException e) {
+		  // TODO Auto-generated catch block
+		  e.printStackTrace();
+		  myAddress = "Cannot get Address!";
+	 }
+	}
+
+	private void variablesInitialization(){
+		try{
+		enc = new Encryption();
+		try{
+			username = getIntent().getExtras().getString("USERNAME");
+		}catch(Exception e){e.printStackTrace();}
+		
+		try{
+			//time = new Time().format("%H:%M:%S");
+			System.out.println("TIME: "+time);
+		    //date = new Time().format("%Y-%m-%d");
+		    System.out.println("TIME: "+date);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+	
+		ioName = (EditText)findViewById(R.id.height_io_name);
+		
+		ioSurname = (EditText)findViewById(R.id.height_io_surname);
+		
+		ioRank = (EditText)findViewById(R.id.height_io_rank);
+		
+		ioCellNo = (EditText)findViewById(R.id.height_io_cell);
+		
+		tv_foosName = (TextView)findViewById(R.id.height_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.height_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.height_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.height_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.height_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.height_foos_rank);
+		
+	
+		
+		tv_victimName = (TextView)findViewById(R.id.height_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.height_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.height_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.height_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.height_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.height_victim_id);
+		victimAge = (EditText)findViewById(R.id.height_victim_age);
+		
+		rgbMale = (RadioButton)findViewById(R.id.height_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.height_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.height_rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.height_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.height_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.height_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.height_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.height_rgbUnknownRace);
+		
+		
+		theBody = (TextView)findViewById(R.id.height_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.height_tv_bodyDecomposed);
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.height_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.height_bodyDecomposedNo);
+		tv_medicalIntervention = (TextView)findViewById(R.id.height_tv_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.height_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.height_medicalInterventionNo);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.height_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.height_whoFoundVictimBody);
+		tv_anyWitnesses = (TextView)findViewById(R.id.height_tv_anyWitnesses);
+		anyWitnessesYes = (RadioButton)findViewById(R.id.height_anyWitnessesYes);
+		anyWitnessesNo = (RadioButton)findViewById(R.id.height_anyWitnessesNo);
+		tv_closeToWater = (TextView)findViewById(R.id.height_tv_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.height_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.height_closeToWaterNo);
+		tv_rapeHomicide = (TextView)findViewById(R.id.height_tv_rapeHomicide);
+		rapeHomicideYes = (RadioButton)findViewById(R.id.height_rapeHomicideYes);
+		rapeHomicideNo = (RadioButton)findViewById(R.id.height_rapeHomicideNo);
+		tv_suicideSuspected = (TextView)findViewById(R.id.height_tv_suicideSuspected);
+		suicideSuspectedYes = (RadioButton)findViewById(R.id.height_suicideSuspectedYes);
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.height_suicideSuspectedNo);
+		tv_previousAttempts = (TextView)findViewById(R.id.height_tv_previousAttempts);
+		previousAttemptsYes = (RadioButton)findViewById(R.id.height_previousAttemptsYes);
+		previousAttemptsNo = (RadioButton)findViewById(R.id.height_previousAttemptsNo);
+		tv_howManyAttempts = (TextView)findViewById(R.id.height_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.height_howManyAttempts);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.height_tv_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.height_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.height_SuicideNoteFoundNo);
+		
+		
+		sceneOfInjury = (TextView)findViewById(R.id.height_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.height_tv_sceneIOType);
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.height_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.height_SceneIOTypeOutside);
+		tv_whereInside = (TextView)findViewById(R.id.height_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.height_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.height_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.height_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.height_tv_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.height_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.height_DoorLockedNo);
+		tv_windowsClosed = (TextView)findViewById(R.id.height_tv_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.height_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.height_WindowsClosedNo);
+		tv_windowsBroken = (TextView)findViewById(R.id.height_tv_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.height_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.height_WindowsBrokenNo);
+		tv_victimAlone = (TextView)findViewById(R.id.height_tv_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.height_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.height_VictimAloneNo);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.height_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.height_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.height_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.height_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.height_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.height_sceneOTypeOther);
+		
+		
+		sceneLook = (TextView)findViewById(R.id.height_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.height_tv_signsOfStruggle);
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.height_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.height_SignsOfStruggleNo);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.height_tv_alcoholBottleAround);
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.height_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.height_AlcoholBottleAroundNo);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.height_tv_drugParaphernalia);
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.height_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.height_DrugParaphernaliaNo);
+		
+		
+		theScene = (TextView)findViewById(R.id.height_theScene);
+		
+		tv_fromWhat = (TextView)findViewById(R.id.height_tv_fromWhat);
+		fromWhat = (EditText)findViewById(R.id.height_fromWhat);
+		tv_howHigh = (TextView)findViewById(R.id.height_tv_howHigh);
+		howHigh = (EditText)findViewById(R.id.height_howHigh);
+		tv_onWhatSurface = (TextView)findViewById(R.id.height_tv_onWhatSurface);
+		onWhatSurface = (EditText)findViewById(R.id.height_onWhatSurface);
+		tv_generalHistory = (TextView)findViewById(R.id.height_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.height_generalHistory);
+		
+		
+		response = (TextView)findViewById(R.id.height_tv_response);
+		
+		doneButton = (Button)findViewById(R.id.height_doneButton);
+		logoutButton = (Button)findViewById(R.id.height_logoutButton);
+		
+		BackToMenu = (Button)findViewById(R.id.height_BackToMenu);
+		
+		value = (TextView) findViewById(R.id.value);
+		
+		//upload pictures part
+			//uploadButton = (Button)findViewById(R.id.uploadButton);
+	       messageText  = (TextView)findViewById(R.id.messageText);
+	       buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
+	       imageView0 = (ImageView) findViewById(R.id.imgView0);
+	       imageView1 = (ImageView) findViewById(R.id.imgView1);
+	       imageView2 = (ImageView) findViewById(R.id.imgView2);
+	       imageView3 = (ImageView) findViewById(R.id.imgView3);
+	       imageView4 = (ImageView) findViewById(R.id.imgView4);
+	       imageView5 = (ImageView) findViewById(R.id.imgView5);
+	       imageView6 = (ImageView) findViewById(R.id.imgView6);
+	       imageView7 = (ImageView) findViewById(R.id.imgView7);
+	       imageView8 = (ImageView) findViewById(R.id.imgView8);
+	       
+	       Gallery = (GridLayout) findViewById(R.id.height_galleryLayout);
+	       // weather section
+	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
+		
+		
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+	
+	public void setOnClickEvents(){
+		
+		
+		doneButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
@@ -209,126 +656,201 @@ doneButton.setOnClickListener(new OnClickListener() {
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
-						new Read().execute(postdata);
-						if(json != null)
-						{
-							System.out.println("\n\n\n\n\n\n\n\nOUTPUT: "+json.toString()+"\n\n\n\n\n\n\n\n");
+						if(ValidateFields()){
+							//if(uploadFileName.size() > 0){
+								
+									try{
+										
+										new Read().execute(postdata);
+										
+										dialog = ProgressDialog.show(Fromheight.this, "", "Uploading file...", true);
+						                 
+						                new Thread(new Runnable() {
+						                        public void run() {
+						                             runOnUiThread(new Runnable() {
+						                                    public void run() {
+						                                        
+						                                        Toast.makeText(Fromheight.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                    }
+						                                });                      
+						                             for(int i=0; i < uploadFileName.size(); i++){
+						                            	 filename = uploadFileName.get(i);
+						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
+						                            	 uploadFile( filename );
+						                            	 
+						                             }                   
+						                        }
+						                      }).start(); 
+						                doneButton.setVisibility(VISIBLE);
+										logoutButton.setVisibility(VISIBLE);
+										clearFilelds();
+										Toast.makeText(Fromheight.this, "form successfully filled", Toast.LENGTH_LONG).show();
+									}catch(Exception e){
+										e.printStackTrace();
+									}
+										
+							//}
+							//else{
+								
+								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
+								
+							//}
+						}else{
+							Toast.makeText(Fromheight.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
+						
 					}
 					
+					//nextButton.setVisibility(GONE);
 					
-					nextButton.setVisibility(GONE);
-					doneButton.setVisibility(GONE);
-					logoutButton.setVisibility(VISIBLE);
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
+		
+		buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View arg0) {
+            	if(index_gallery < 9){
+            	
+	            	if(index_gallery == 0){
+	            		imageView0.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 1){
+	            		imageView1.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 2){
+	            		imageView2.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 3){
+	            		imageView3.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 4){
+	            		imageView4.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 5){
+	            		imageView5.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 6){
+	            		imageView6.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 7){
+	            		imageView7.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 8){
+	            		imageView8.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}
+            	}
+            	
+            }
+        });
+	
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
+				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
+		        pairs.add(new BasicNameValuePair("rquest","addCase"));
+		        pairs.add(new BasicNameValuePair("category","blunt"));
+		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
+		        new Read().execute(pairs);
 			}
 		});
+		
+		
 		
 		/**
 		 * 	Spinner onclick event
 		 */
 		
-		
-		previousAttempts.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("yes"))
-						{
-							tv_howManyAttempts.setVisibility(VISIBLE);
-							howManyAttempts.setVisibility(VISIBLE);
-						}else{
-							tv_howManyAttempts.setVisibility(GONE);
-							howManyAttempts.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		sceneIOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+		previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
+			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("outside"))
-						{
-							tv_whereInside.setVisibility(GONE);
-							sceneIType.setVisibility(GONE);
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-							tv_doorLocked.setVisibility(GONE);
-							doorLocked.setVisibility(GONE);
-							tv_windowsClosed.setVisibility(GONE);
-							windowsClosed.setVisibility(GONE);
-							tv_windowsBroken.setVisibility(GONE);
-							windowsBroken.setVisibility(GONE);
-							tv_victimAlone.setVisibility(GONE);
-							victimAlone.setVisibility(GONE);
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-							
-							tv_sceneOType.setVisibility(VISIBLE);
-							sceneOType.setVisibility(VISIBLE);
-							
-						}else{
-							tv_whereInside.setVisibility(VISIBLE);
-							sceneIType.setVisibility(VISIBLE);
-							tv_doorLocked.setVisibility(VISIBLE);
-							doorLocked.setVisibility(VISIBLE);
-							tv_windowsClosed.setVisibility(VISIBLE);
-							windowsClosed.setVisibility(VISIBLE);
-							tv_windowsBroken.setVisibility(VISIBLE);
-							windowsBroken.setVisibility(VISIBLE);
-							tv_victimAlone.setVisibility(VISIBLE);
-							victimAlone.setVisibility(VISIBLE);
-							
-							tv_sceneOType.setVisibility(GONE);
-							sceneOType.setVisibility(GONE);
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
+				tv_howManyAttempts.setVisibility(VISIBLE);
+				howManyAttempts.setVisibility(VISIBLE);
 			}
 		});
+		previousAttemptsNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				tv_howManyAttempts.setVisibility(GONE);
+				howManyAttempts.setVisibility(GONE);
+			}
+		});
+
+		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_whereInside.setVisibility(VISIBLE);
+				sceneIType.setVisibility(VISIBLE);
+				tv_doorLocked.setVisibility(VISIBLE);
+				doorLockedYes.setVisibility(VISIBLE);
+				doorLockedNo.setVisibility(VISIBLE);
+				tv_windowsClosed.setVisibility(VISIBLE);
+				windowsClosedYes.setVisibility(VISIBLE);
+				windowsClosedNo.setVisibility(VISIBLE);
+				tv_windowsBroken.setVisibility(VISIBLE);
+				windowsBrokenYes.setVisibility(VISIBLE);
+				windowsBrokenNo.setVisibility(VISIBLE);
+				tv_victimAlone.setVisibility(VISIBLE);
+				victimAloneYes.setVisibility(VISIBLE);
+				victimAloneNo.setVisibility(VISIBLE);
+				
+				tv_sceneOType.setVisibility(GONE);
+				sceneOType.setVisibility(GONE);
+				tv_sceneOTypeOther.setVisibility(GONE);
+				sceneOTypeOther.setVisibility(GONE);
+			}
+		});
+		sceneIOTypeOutside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_whereInside.setVisibility(GONE);
+				sceneIType.setVisibility(GONE);
+				tv_sceneITypeOther.setVisibility(GONE);
+				sceneITypeOther.setVisibility(GONE);
+				tv_doorLocked.setVisibility(GONE);
+				doorLockedYes.setVisibility(GONE);
+				doorLockedNo.setVisibility(GONE);
+				tv_windowsClosed.setVisibility(GONE);
+				windowsClosedYes.setVisibility(GONE);
+				windowsClosedNo.setVisibility(GONE);
+				tv_windowsBroken.setVisibility(GONE);
+				windowsBrokenYes.setVisibility(GONE);
+				windowsBrokenNo.setVisibility(GONE);
+				tv_victimAlone.setVisibility(GONE);
+				victimAloneYes.setVisibility(GONE);
+				victimAloneNo.setVisibility(GONE);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+				
+				tv_sceneOType.setVisibility(VISIBLE);
+				sceneOType.setVisibility(VISIBLE);
+			}
+		});
+
+		
 		
 		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
@@ -360,36 +882,26 @@ doneButton.setOnClickListener(new OnClickListener() {
 			}
 		});
 		
-		victimAlone.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+		victimAloneYes.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
+			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("no"))
-						{
-							tv_peopleWithVictim.setVisibility(VISIBLE);
-							peopleWithVictim.setVisibility(VISIBLE);
-						}else{
-							tv_peopleWithVictim.setVisibility(GONE);
-							peopleWithVictim.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
 			}
 		});
+		victimAloneNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tv_peopleWithVictim.setVisibility(VISIBLE);
+				peopleWithVictim.setVisibility(VISIBLE);
+			}
+		});
+
+
 		
 		
 		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -422,15 +934,206 @@ doneButton.setOnClickListener(new OnClickListener() {
 			}
 		});
 		
-		
 	}
 	
-	private List<NameValuePair> getPostData(){
+		
+	
+	
+	    
+	    @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        super.onActivityResult(requestCode, resultCode, data);
+	         
+	        Log.i(TAG, "onActivityResult: " + this);
+			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+	        	
+	            uploadFileName.add(mCurrentPhotoPath);
+	            System.out.println("******************   "+mCurrentPhotoPath);
+	           
+	            if(count == 0){
+	            	setPic(imageView0);
+	            	
+	            }else if(count == 1){
+	            	setPic(imageView1);
+	            	
+	            }else if(count == 2){
+	            	setPic(imageView2);
+	            	
+	            }else if(count == 3){
+	            	setPic(imageView3);
+	            	
+	            }else if(count == 4){
+	            	setPic(imageView4);
+	            	
+	            }else if(count == 5){
+	            	setPic(imageView5);
+	            	
+	            }else if(count == 6){
+	            	setPic(imageView6);
+	            	
+	            }else if(count == 7){
+	            	setPic(imageView7);
+	            	
+	            }else if(count == 8){
+	            	setPic(imageView8);
+	            	
+	            }
+	            count++;
+	        }
+	     
+	     
+	    }
+	   
+	   
+	 
+	    public int uploadFile(String sourceFileUri) {
+	           
+	           
+	          String fileName = sourceFileUri;
+	  
+	          HttpURLConnection conn = null;
+	          DataOutputStream dos = null;  
+	          String lineEnd = "\r\n";
+	          String twoHyphens = "--";
+	          String boundary = "*****";
+	          int bytesRead, bytesAvailable, bufferSize;
+	          byte[] buffer;
+	          int maxBufferSize = 1 * 1024 * 1024; 
+	          File sourceFile = new File(sourceFileUri); 
+	           
+	          if (!sourceFile.isFile()) {
+	               
+	               dialog.dismiss(); 
+	                
+	               Log.e("uploadFile", "Source File not exist :" + filename);
+	                
+	               runOnUiThread(new Runnable() {
+	                   public void run() {
+	                       messageText.setText("Source File not exist :"+ filename);
+	                   }
+	               }); 
+	                
+	               return 0;
+	            
+	          }
+	          else
+	          {
+	               try { 
+	                    
+	                     // open a URL connection to the Servlet
+	                   FileInputStream fileInputStream = new FileInputStream(sourceFile);
+	                   URL url = new URL(upLoadServerUri);
+	                    
+	                   // Open a HTTP  connection to  the URL
+	                   conn = (HttpURLConnection) url.openConnection(); 
+	                   conn.setDoInput(true); // Allow Inputs
+	                   conn.setDoOutput(true); // Allow Outputs
+	                   conn.setUseCaches(false); // Don't use a Cached Copy
+	                   conn.setRequestMethod("POST");
+	                   conn.setRequestProperty("Connection", "Keep-Alive");
+	                   conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+	                   conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+	                   conn.setRequestProperty("uploaded_file", fileName); 
+	                    
+	                   dos = new DataOutputStream(conn.getOutputStream());
+	          
+	                   dos.writeBytes(twoHyphens + boundary + lineEnd); 
+	                   dos.writeBytes("Content-Disposition: form-data; name= uploaded_file ;filename="+fileName+ lineEnd);
+	                    
+	                   dos.writeBytes(lineEnd);
+	          
+	                   // create a buffer of  maximum size
+	                   bytesAvailable = fileInputStream.available(); 
+	          
+	                   bufferSize = Math.min(bytesAvailable, maxBufferSize);
+	                   buffer = new byte[bufferSize];
+	          
+	                   // read file and write it into form...
+	                   bytesRead = fileInputStream.read(buffer, 0, bufferSize);  
+	                      
+	                   while (bytesRead > 0) {
+	                        
+	                     dos.write(buffer, 0, bufferSize);
+	                     bytesAvailable = fileInputStream.available();
+	                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
+	                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);   
+	                      
+	                    }
+	          
+	                   // send multipart form data necesssary after file data...
+	                   dos.writeBytes(lineEnd);
+	                   dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+	          
+	                   // Responses from the server (code and message)
+	                   serverResponseCode = conn.getResponseCode();
+	                   String serverResponseMessage = conn.getResponseMessage();
+	                     
+	                   Log.i("uploadFile", "HTTP Response is : "
+	                           + serverResponseMessage + ": " + serverResponseCode);
+	                    
+	                   if(serverResponseCode == 200){
+	                        
+	                       runOnUiThread(new Runnable() {
+	                            public void run() {
+	                                 
+	                                String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
+	                                              +" http://forensicsapp.co.za/webapp/images/uploads/"
+	                                              +filename;
+	                                 
+	                                messageText.setText(msg);
+	                                Toast.makeText(Fromheight.this, "File Upload Complete.", 
+	                                             Toast.LENGTH_SHORT).show();
+	                            }
+	                        });                
+	                   }    
+	                    
+	                   //close the streams //
+	                   fileInputStream.close();
+	                   dos.flush();
+	                   dos.close();
+	                     
+	              } catch (MalformedURLException ex) {
+	                   
+	                  dialog.dismiss();  
+	                  ex.printStackTrace();
+	                   
+	                  runOnUiThread(new Runnable() {
+	                      public void run() {
+	                          messageText.setText("MalformedURLException Exception : check script url.");
+	                          Toast.makeText(Fromheight.this, "MalformedURLException", 
+	                                                              Toast.LENGTH_SHORT).show();
+	                      }
+	                  });
+	                   
+	                  Log.e("Upload file to server", "error: " + ex.getMessage(), ex);  
+	              } catch (Exception e) {
+	                   
+	                  dialog.dismiss();  
+	                  e.printStackTrace();
+	                   
+	                  runOnUiThread(new Runnable() {
+	                      public void run() {
+	                          messageText.setText("Got Exception : see logcat ");
+	                          Toast.makeText(Fromheight.this, "Got Exception : see logcat ", 
+	                                  Toast.LENGTH_SHORT).show();
+	                      }
+	                  });
+	                  Log.e("Upload file to server Exception", "Exception : "
+	                                                   + e.getMessage(), e);  
+	              }
+	              dialog.dismiss();       
+	              return serverResponseCode; 
+	               
+	           } // End else block 
+	         }
+	
+	
+	public List<NameValuePair> getPostData(){
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-	        pairs.add(new BasicNameValuePair("rquest","addCase"));
-	        pairs.add(new BasicNameValuePair("category","fromheight"));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -438,60 +1141,165 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        JSONObject victims = new JSONObject();
 	        
 	        
-	        info.accumulate("FOPersonelNumber", username);
-	        info.accumulate("sceneTime", time);
-	        info.accumulate("sceneDate", date);
-	        info.accumulate("sceneLocation", location);
-	        info.accumulate("sceneTemparature", temperature);
-	        info.accumulate("investigatingOfficerName", ioName.getText().toString());
-	        info.accumulate("investigatingOfficerRank", ioRank.getText().toString());
-	        info.accumulate("investigatingOfficerCellNo", ioCellNo.getText().toString());
-	        info.accumulate("firstOfficerOnSceneName", foosName.getText().toString());
-	        info.accumulate("firstOfficerOnSceneRank", foosRank.getText().toString());
-	        knownVictim();
-	        victims.accumulate("victimIdentityNumber", victimIDNo.getText().toString());
-	        victims.accumulate("victimGender", getVictimGender());
-	        victims.accumulate("victimRace", getVictimRace());
-	        victims.accumulate("victimName", victimName.getText().toString());
-	        victims.accumulate("victimSurame", victimSurname.getText().toString());
-	        victims.accumulate("scenePhoto", null);
-	        victims.accumulate("bodyDecomposed", (String)bodyDecomposed.getSelectedItem());
-	        victims.accumulate("medicalIntervention", (String)medicalIntervention.getSelectedItem());
-	        victims.accumulate("bodyBurned", null);
-	        victims.accumulate("bodyIntact", null);
-	        victims.accumulate("whoFoundVictimBody", whoFoundVictimBody.getText().toString());
-	        victims.accumulate("victimFoundCloseToWater", (String)closeToWater.getSelectedItem());
-	        victims.accumulate("suicideSuspected", (String)suicideSuspected.getSelectedItem());
-	        victims.accumulate("victimSuicideNoteFound", (String)suicideNoteFound.getSelectedItem());
-	        victims.accumulate("previousAttempts", (String)previousAttempts.getSelectedItem());
-	        victims.accumulate("numberOfPreviousAttempts", getAttempts());
-	        victims.accumulate("rapeHomicideSuspected", (String)rapeHomicide.getSelectedItem());
-	        String item = (String)sceneIOType.getSelectedItem();
-	        if(item.toLowerCase().equals("yes"))
+	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+	        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+	        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+	        if(WeatherInfo != null && WeatherInfo.length() != 0 )
 	        {
-		        victims.accumulate("victimInside", "yes");
-		        victims.accumulate("victimOutside", "no");
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+	        }else{
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
+	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
+	        knownVictim();
+	        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+	        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+	        
+	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	        if(bodyDecomposedYes.isChecked())
+	        {
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(medicalInterventionYes.isChecked())
+	        {
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        victims.accumulate("bodyBurned", "null");
+	        victims.accumulate("bodyIntact","null");
+	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+	        
+	        if(closeToWaterYes.isChecked())
+	        {
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(suicideSuspectedYes.isChecked())
+	        {
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(suicideNoteFoundYes.isChecked())
+	        {
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(previousAttemptsYes.isChecked())
+	        {
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        
+	        
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
+	        if(rapeHomicideYes.isChecked())
+	        {
+	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(sceneIOTypeInside.isChecked())
+	        {
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	        }else{
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }
+	        
+	       
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("fromheightIOType",getIOType() );
-	        info.accumulate("signsOfStruggle", (String)signsOfStruggle.getSelectedItem());
-	        info.accumulate("alcoholBottleAround", (String)alcoholBottleAround.getSelectedItem());
-	        info.accumulate("drugParaphernalia", (String)drugParaphernalia.getSelectedItem());
-	        info.accumulate("fromWhat", fromwhat.getText().toString());
-	        info.accumulate("howHigh", howhigh.getText().toString());
-	        info.accumulate("onWhatVictimLanded", onwhat.getText().toString());
-	        info.accumulate("doorLocked", (String)doorLocked.getSelectedItem());
-	        info.accumulate("windowsClosed", (String)windowsClosed.getSelectedItem());
-	        info.accumulate("windowsBroken", (String)windowsBroken.getSelectedItem());
-	        info.accumulate("victimAlone", (String)victimAlone.getSelectedItem());
-	        info.accumulate("peopleWithVictim", peopleWithVictim.getText().toString());
+	        info.accumulate("bluntIOType",getIOType() );
+	        if(signsOfStruggleYes.isChecked())
+	        {
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(alcoholBottleAroundYes.isChecked())
+	        {
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
 	        
+	        if(drugParaphernaliaYes.isChecked())
+	        {
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        
+	        
+	        if(doorLockedYes.isChecked())
+	        {
+	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(windowsClosedYes.isChecked())
+	        {
+	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(windowsBrokenYes.isChecked())
+	        {
+	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(victimAloneYes.isChecked())
+	        {
+	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(anyWitnessesYes.isChecked())
+	        {
+	        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+	        info.accumulate("fromWhat", Encryption.bytesToHex(enc.encrypt(fromWhat.getText().toString())));
+	        info.accumulate("howHigh", Encryption.bytesToHex(enc.encrypt(howHigh.getText().toString())));
+	        info.accumulate("onWhatSurface", Encryption.bytesToHex(enc.encrypt(onWhatSurface.getText().toString())));
 	        
 	        array.put(info);
 	        obj.accumulate("object", array);
+	        currentDataSaved = obj;
+	        
 	        pairs.add(new BasicNameValuePair("caseData",obj.toString()));
 	        
 	        return pairs;
@@ -501,334 +1309,23 @@ doneButton.setOnClickListener(new OnClickListener() {
 		}
 	}
 	
-	private void showHideButtons(){
-		if(pageCount > PAGES)
-		{
-			nextButton.setVisibility(GONE);
-			doneButton.setVisibility(VISIBLE);
-			logoutButton.setVisibility(GONE);
-		}
-	}
-	
-	private void showPage(){
-		
-		
-		try{
-			
-			//show page1
-			if(pageCount == 1){
-				fromheight_information_layout.setVisibility(VISIBLE);
-			}
-			//show page2
-			if(pageCount == 2){
-				fromheight_demographics_layout.setVisibility(VISIBLE);
-			}
-			//show page3
-			if(pageCount == 3){
-				fromheight_thebody_layout.setVisibility(VISIBLE);
-			}
-			//show page4
-			if(pageCount == 4){
-				fromheight_sceneOfInjury_layout.setVisibility(VISIBLE);
-				
-			}
-			//show page5
-			if(pageCount == 5){
-				fromheight_SceneLook_layout.setVisibility(VISIBLE);
-			}
-			
-			//show page6
-			if(pageCount == 6){
-				fromheight_theScene_layout.setVisibility(VISIBLE);
-			}
-			
-			//show page7
-			if(pageCount == 7){
-				fromheight_gallery_layout.setVisibility(VISIBLE);
-			}
-		
-		}catch(Exception e){e.printStackTrace();}
-	}
-	
-private void hidePage(){
-		
-		try{
-			
-			//hide page1
-			if(pageCount != 1){
-				fromheight_information_layout.setVisibility(GONE);
-			}
-			//hide page2
-			if(pageCount != 2){
-				fromheight_demographics_layout.setVisibility(GONE);
-			}
-			//hide page3
-			if(pageCount != 3){
-				fromheight_thebody_layout.setVisibility(GONE);
-			}
-			//hide page4
-			if(pageCount != 4){
-				fromheight_sceneOfInjury_layout.setVisibility(GONE);
-			}
-			//hide page5
-			if(pageCount != 5){
-				fromheight_SceneLook_layout.setVisibility(GONE);
-			}
-			
-			//hide page6
-			if(pageCount != 6){
-				fromheight_theScene_layout.setVisibility(GONE);
-			}
-			
-			//hide page7
-			if(pageCount != 7){
-				fromheight_gallery_layout.setVisibility(GONE);
-			}
-		
-		}catch(Exception e){e.printStackTrace();}
-	}
-	
-	private void initialiseParameters(){
-		
-		pageCount = 1;
-		username = "p11111111";
-		time = "00:00:10";
-		date = "2014-01-01";
-		location = "122223, -13332";
-		temperature = "23 C";
-		
-		tv_ioName = (TextView)findViewById(R.id.fromheight_tv_io_name);
-		ioName = (EditText)findViewById(R.id.fromheight_io_name);
-		tv_ioSurname = (TextView)findViewById(R.id.fromheight_tv_io_surname);
-		ioSurname = (EditText)findViewById(R.id.fromheight_io_surname);
-		tv_ioRank = (TextView)findViewById(R.id.fromheight_tv_io_rank);
-		ioRank = (EditText)findViewById(R.id.fromheight_io_rank);
-		tv_ioCellNo = (TextView)findViewById(R.id.fromheight_tv_io_cell);
-		ioCellNo = (EditText)findViewById(R.id.fromheight_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.fromheight_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.fromheight_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.fromheight_tv_foos_surname);
-		foosSurname = (EditText)findViewById(R.id.fromheight_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.fromheight_tv_foos_rank);
-		foosRank = (EditText)findViewById(R.id.fromheight_foos_rank);
-		
-		tv_io = (TextView)findViewById(R.id.fromheight_tv_io);
-		tv_foos = (TextView)findViewById(R.id.fromheight_tv_foos);
-		tv_victimInfo = (TextView)findViewById(R.id.fromheight_tv_victimInfo);
-		tv_victimRace = (TextView)findViewById(R.id.fromheight_tv_victimRace);
-		tv_victimGender = (TextView)findViewById(R.id.fromheight_tv_victimGender);
-		
-		tv_victimName = (TextView)findViewById(R.id.fromheight_tv_victim_name);
-		victimName = (EditText)findViewById(R.id.fromheight_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.fromheight_tv_victim_surname);
-		victimSurname = (EditText)findViewById(R.id.fromheight_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.fromheight_tv_victim_id);
-		victimIDNo = (EditText)findViewById(R.id.fromheight_victim_id);
-		
-		rgbMale = (RadioButton)findViewById(R.id.fromheight_rgbMale);
-		rgbFemale = (RadioButton)findViewById(R.id.fromheight_rgbFemale);
-		rgbUnknownGender = (RadioButton)findViewById(R.id.fromheight_rgbUnknownGender);
-		
-		rgbAsian = (RadioButton)findViewById(R.id.fromheight_rgbAsian);
-		rgbBlack = (RadioButton)findViewById(R.id.fromheight_rgbBlack);
-		rgbColoured = (RadioButton)findViewById(R.id.fromheight_rgbColoured);
-		rgbWhite = (RadioButton)findViewById(R.id.fromheight_rgbWhite);
-		rgbUnknownRace = (RadioButton)findViewById(R.id.fromheight_rgbUnknownRace);
-		
-		theBody = (TextView)findViewById(R.id.fromheight_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.fromheight_tv_bodyDecomposed);
-		bodyDecomposed = (Spinner)findViewById(R.id.fromheight_bodyDecomposed);
-		tv_medicalIntervention = (TextView)findViewById(R.id.fromheight_tv_medicalIntervention);
-		medicalIntervention = (Spinner)findViewById(R.id.fromheight_medicalIntervention);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.fromheight_tv_whoFoundVictimBody);
-		whoFoundVictimBody = (EditText)findViewById(R.id.fromheight_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.fromheight_tv_closeToWater);
-		closeToWater = (Spinner)findViewById(R.id.fromheight_closeToWater);
-		tv_rapeHomicide = (TextView)findViewById(R.id.fromheight_tv_rapeHomicide);
-		rapeHomicide = (Spinner)findViewById(R.id.fromheight_rapeHomicide);
-		tv_suicideSuspected = (TextView)findViewById(R.id.fromheight_tv_suicideSuspected);
-		suicideSuspected = (Spinner)findViewById(R.id.fromheight_suicideSuspected);
-		tv_previousAttempts = (TextView)findViewById(R.id.fromheight_tv_previousAttempts);
-		previousAttempts = (Spinner)findViewById(R.id.fromheight_previousAttempts);
-		tv_howManyAttempts = (TextView)findViewById(R.id.fromheight_tv_howManyAttempts);
-		howManyAttempts = (EditText)findViewById(R.id.fromheight_howManyAttempts);
-		
-		sceneOfInjury = (TextView)findViewById(R.id.fromheight_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.fromheight_tv_sceneIOType);
-		sceneIOType = (Spinner)findViewById(R.id.fromheight_sceneIOType);
-		tv_whereInside = (TextView)findViewById(R.id.fromheight_tv_whereInside);
-		sceneIType = (Spinner)findViewById(R.id.fromheight_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.fromheight_tv_sceneITypeOther);
-		sceneITypeOther = (EditText)findViewById(R.id.fromheight_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.fromheight_tv_doorLocked);
-		doorLocked = (Spinner)findViewById(R.id.fromheight_doorLocked);
-		tv_windowsClosed = (TextView)findViewById(R.id.fromheight_tv_windowsClosed);
-		windowsClosed = (Spinner)findViewById(R.id.fromheight_windowsClosed);
-		tv_windowsBroken = (TextView)findViewById(R.id.fromheight_tv_windowsBroken);
-		windowsBroken = (Spinner)findViewById(R.id.fromheight_windowsBroken);
-		tv_victimAlone = (TextView)findViewById(R.id.fromheight_tv_victimAlone);
-		victimAlone = (Spinner)findViewById(R.id.fromheight_victimAlone);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.fromheight_tv_peopleWithVictim);
-		peopleWithVictim = (EditText)findViewById(R.id.fromheight_peopleWithVictim);
-		tv_sceneOType = (TextView)findViewById(R.id.fromheight_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.fromheight_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.fromheight_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.fromheight_sceneOTypeOther);
-		
-		sceneLook = (TextView)findViewById(R.id.fromheight_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.fromheight_tv_signsOfStruggle);
-		signsOfStruggle = (Spinner)findViewById(R.id.fromheight_signsOfStruggle);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.fromheight_tv_alcoholBottleAround);
-		alcoholBottleAround = (Spinner)findViewById(R.id.fromheight_alcoholBottleAround);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.fromheight_tv_drugParaphernalia);
-		drugParaphernalia = (Spinner)findViewById(R.id.fromheight_drugParaphernalia);
-		
-		theScene = (TextView)findViewById(R.id.tv_fromheight_theScene);
-		
-		tv_fromwhat = (TextView)findViewById(R.id.fromheight_tv_fromwhat);
-		fromwhat = (EditText) findViewById(R.id.fromheight_fromwhat);
-		tv_howhigh = (TextView)findViewById(R.id.fromheight_tv_howhigh);
-		howhigh = (EditText) findViewById(R.id.fromheight_howhigh);
-		tv_onwhat = (TextView)findViewById(R.id.fromheight_tv_onwhat);
-		onwhat = (EditText) findViewById(R.id.fromheight_onwhat);
-		
-		fromheight_information_layout = (LinearLayout) findViewById(R.id.fromheight_information_layout);
-		fromheight_demographics_layout = (LinearLayout) findViewById(R.id.fromheight_demographics_layout);
-		fromheight_thebody_layout = (LinearLayout) findViewById(R.id.fromheight_thebody_layout);
-		fromheight_sceneOfInjury_layout = (LinearLayout) findViewById(R.id.fromheight_sceneOfInjury_layout);
-		fromheight_SceneLook_layout = (LinearLayout) findViewById(R.id.fromheight_SceneLook_layout);
-		fromheight_theScene_layout = (LinearLayout) findViewById(R.id.fromheight_theScene_layout);
-		fromheight_gallery_layout = (LinearLayout) findViewById(R.id.fromheight_gallery_layout);
-		
-		tv_suicideNoteFound = (TextView)findViewById(R.id.fromheight_tv_suicideNoteFound);
-		suicideNoteFound = (Spinner)findViewById(R.id.fromheight_suicideNoteFound);
-		tv_generalHistory = (TextView)findViewById(R.id.fromheight_tv_generalHistory);
-		generalHistory = (EditText)findViewById(R.id.fromheight_generalHistory);
-		
-		rl1 = (RelativeLayout)findViewById(R.id.fromheight_rl1);
-		nextButton = (Button)findViewById(R.id.fromheight_nextButton);
-		doneButton = (Button)findViewById(R.id.fromheight_doneButton);
-		logoutButton = (Button)findViewById(R.id.fromheight_logoutButton);
-		
-	}
-	
-	public boolean validateNextPage(){
-		try{
-			switch(pageCount)
-			{
-				case 1:
-					if(!ioName.getText().toString().equals("") && !ioSurname.getText().toString().equals("") && !ioRank.getText().toString().equals("")
-							&& !ioCellNo.getText().toString().equals("") && !foosName.getText().toString().equals("") && !foosSurname.getText().toString().equals("")
-							&& !foosRank.getText().toString().equals("")){
-						return true;
-					}
-					break;
-				case 2:
-					if(((!victimName.getText().toString().equals("") && !victimSurname.getText().toString().equals("") && !victimIDNo.getText().toString().equals(""))
-						|| (victimName.getText().toString().equals("") && victimSurname.getText().toString().equals("") && victimIDNo.getText().toString().equals("")))	
-							&& (rgbMale.isChecked() || rgbFemale.isChecked() ||rgbUnknownGender.isChecked())
-							&& (rgbAsian.isChecked() || rgbBlack.isChecked() || rgbColoured.isChecked()
-								|| rgbWhite.isChecked() || rgbUnknownRace.isChecked())){
-						
-						return true;
-					}
-					break;
-				case 3:
-					try{
-						String item = (String)previousAttempts.getSelectedItem();
-						if(item != null){
-							if(item.toLowerCase().equals("yes") && !howManyAttempts.getText().toString().equals(""))
-							{
-								return true;
-							}else if(item.toLowerCase().equals("no")){
-								return true;
-							}
-						}
-						String whofound = whoFoundVictimBody.getText().toString();
-						if(whofound != null){
-							if(!whofound.endsWith("")){
-								
-								return true;
-							}
-						}
-					}catch(Exception ex){}
-					break;
-				case 4:
-					try{
-						String siot = (String)sceneIOType.getSelectedItem();
-						String sit = (String)sceneIType.getSelectedItem();
-						String sot = (String)sceneOType.getSelectedItem();
-						String va = (String)victimAlone.getSelectedItem();
-						
-						if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes"))
-						{
-								return true;
-						}else if(siot.toLowerCase().equals("inside") && !sit.toLowerCase().equals("other") && va.toLowerCase().equals("no")){
-							if(!peopleWithVictim.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}else if(siot.toLowerCase().equals("inside") && sit.toLowerCase().equals("other") && va.toLowerCase().equals("yes")){
-							if(!sceneITypeOther.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}else if(siot.toLowerCase().equals("inside") && sit.toLowerCase().equals("other") && va.toLowerCase().equals("no")){
-							if(!sceneITypeOther.getText().toString().equals("") && !peopleWithVictim.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}
-						////
-						else if(siot.toLowerCase().equals("outside") && !sot.toLowerCase().equals("other"))
-						{
-							return true;
-						}else if(siot.toLowerCase().equals("outside") && sot.toLowerCase().equals("other")){
-							if(!sceneOTypeOther.getText().toString().equals(""))
-							{
-								return true;
-							}
-						}
-						
-					}catch(Exception ex){}
-					break;
-				case 5:
-					return true;
-				case 6:
-					try{
-						if(!fromwhat.getText().toString().equals("") && !howhigh.getText().toString().equals("")&& !onwhat.getText().toString().equals("")&& !generalHistory.getText().toString().equals("")){
-							return true;
-						}
-					}catch(Exception ex){}
-					break;
-				case 7:
-					return true;
-					
-			}
-		}catch(Exception e){e.printStackTrace();}
-		return false;
-	}
-	
-	
-	
-	private String getIOType(){
+	public String getIOType(){
 		try{
 			String type = "";
-			String item = (String)sceneIOType.getSelectedItem();
-			if(item.toLowerCase().equals("inside"))
+			
+			if(sceneIOTypeInside.isChecked())
 			{
 				type = (String)sceneIType.getSelectedItem();
 				if(type.toLowerCase().equals("other")){
 					type = sceneITypeOther.getText().toString();
 				}
-				return type;
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}else{
 				type = (String)sceneOType.getSelectedItem();
 				if(type.toLowerCase().equals("other")){
 					type = sceneOTypeOther.getText().toString();
 				}
-				return type;
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -836,10 +1333,8 @@ private void hidePage(){
 		return null;
 	}
 	
-	private String getVictimGender(){
+	public String getVictimGender(){
 		try{
-			
-			
 			if(rgbMale.isChecked())
 			{
 				return "Male";
@@ -856,7 +1351,7 @@ private void hidePage(){
 		return "Unknown";
 	}
 	
-	private String getVictimRace(){
+	public String getVictimRace(){
 		try{
 			
 			
@@ -882,23 +1377,24 @@ private void hidePage(){
 		return "Unknown";
 	}
 	
-	private void knownVictim(){
+	public void knownVictim(){
 		try{
 			if(victimName.getText().toString().equals(""))
 			{
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("0");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	private int getAttempts(){
+	public int getAttempts(){
 		try{
-			String item = (String)previousAttempts.getSelectedItem();
-			if(item.toLowerCase().equals("yes"))
+			
+			if(previousAttemptsYes.isChecked())
 			{
 				int attempts = Integer.parseInt(howManyAttempts.getText().toString());
 				return attempts;
@@ -908,6 +1404,202 @@ private void hidePage(){
 		}
 		return 0;
 	}
+	
+	public String getPeopleWithVictim(){
+		try{
+			
+			
+			if(victimAloneNo.isChecked())
+			{
+				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
+			}else{
+				
+				return null;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public void saveDataOnAction() throws Exception{
+        JSONObject obj = new JSONObject();
+        JSONArray array = new JSONArray();
+        JSONObject info = new JSONObject();
+        JSONArray vicArray = new JSONArray();
+        JSONObject victims = new JSONObject();
+        
+    
+        
+        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+        if(WeatherInfo != null && WeatherInfo.length() != 0 )
+        {
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+        }else{
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
+        }
+        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
+        knownVictim();
+        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+        
+        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+        if(bodyDecomposedYes.isChecked())
+        {
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(medicalInterventionYes.isChecked())
+        {
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        victims.accumulate("bodyBurned", "null");
+        victims.accumulate("bodyIntact","null");
+        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+        
+        if(closeToWaterYes.isChecked())
+        {
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(suicideSuspectedYes.isChecked())
+        {
+        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(suicideNoteFoundYes.isChecked())
+        {
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(previousAttemptsYes.isChecked())
+        {
+        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        
+        
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
+        if(rapeHomicideYes.isChecked())
+        {
+        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(sceneIOTypeInside.isChecked())
+        {
+        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+        }else{
+        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }
+        
+       
+       
+        vicArray.put(victims);
+        info.accumulate("victims", vicArray);
+        
+        info.accumulate("bluntIOType",getIOType() );
+        if(signsOfStruggleYes.isChecked())
+        {
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(alcoholBottleAroundYes.isChecked())
+        {
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(drugParaphernaliaYes.isChecked())
+        {
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        
+        
+        if(doorLockedYes.isChecked())
+        {
+        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(windowsClosedYes.isChecked())
+        {
+        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(windowsBrokenYes.isChecked())
+        {
+        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(victimAloneYes.isChecked())
+        {
+        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(anyWitnessesYes.isChecked())
+        {
+        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+        info.accumulate("fromWhat", Encryption.bytesToHex(enc.encrypt(fromWhat.getText().toString())));
+        info.accumulate("howHigh", Encryption.bytesToHex(enc.encrypt(howHigh.getText().toString())));
+        info.accumulate("onWhatSurface", Encryption.bytesToHex(enc.encrypt(onWhatSurface.getText().toString())));
+        
+        array.put(info);
+        obj.accumulate("object", array);
+        currentDataSaved = obj;
+        
+	}
+	public void saveData(JSONObject data) throws Exception{
+		
+		System.out.println("SAVED: "+data.toString());
+		
+	}
+	
+	public void resendData() throws Exception{
+		
+	}
+	
 	public JSONObject request(String url, List<NameValuePair> request)
             throws ClientProtocolException, IOException, IllegalStateException,
             JSONException {
@@ -926,71 +1618,417 @@ private void hidePage(){
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-            
+          
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
     }
-	
-	
-	  public class Read extends AsyncTask<List<NameValuePair>, Integer,JSONObject>{
+    
+    
+    
+    public class Read extends AsyncTask<List<NameValuePair>, Integer,JSONObject>{
 
+		@Override
+		protected JSONObject doInBackground(List<NameValuePair>... params) {
+			// TODO Auto-generated method stub
+			try {
+				json = request(GlobalValues.WS_URL, params[0]);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return json;
+		}
+		
+		@Override
+		protected void onPostExecute(JSONObject result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			try{
+				if(result != null)
+				{
+					String status = result.getString("status");
+					String message = result.getString("msg");
+					System.out.println("STATUS: "+status);
+					System.out.println("MESSAGE: "+message);
+					response.setVisibility(VISIBLE);
+					if(status.toLowerCase().equals("failed"))
+					{
+						response.setText(message);
+						saveData(currentDataSaved);
+					}else{
+						response.setText(message);
+					}
+				}
+			}catch(Exception e){
+				
+			}
+		}
+	
+    }
+    
+    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			boolean status = false; 
+			try{
+			// TODO Auto-generated method stub
+			
+				if(params[0] != null){
+					
+					return true;
+				}
+			
+			}catch(Exception e){e.printStackTrace();}
+			return status;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+		}
+	
+    }
+
+	@Override
+	public void hidePage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean validateNextPage() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void showHideButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+			
 			@Override
-			protected JSONObject doInBackground(List<NameValuePair>... params) {
-				// TODO Auto-generated method stub
+			protected Weather doInBackground(String... params) {
+				Weather weather = new Weather();
+				String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+	
 				try {
-					json = request(WS_URL, params[0]);
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
+					weather = JSONWeatherParser.getWeather(data);
+					
+					// Let's retrieve the icon
+					//weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+					
+				} catch (JSONException e) {				
 					e.printStackTrace();
 				}
-				
-				return json;
-			}
+				return weather;
+			
+		}
+			
 			
 			@Override
-			protected void onPostExecute(JSONObject result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
+			protected void onPostExecute(Weather weather) {			
+				super.onPostExecute(weather);
 				
+				/*if (weather.iconData != null && weather.iconData.length > 0) {
+					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
+					imgView.setImageBitmap(img);
+				}*/
+				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				//weatherInfo.setText(WeatherInfo);
+				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
+				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
+				press.setText("" + weather.currentCondition.getPressure() + " hPa");
+				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+				windDeg.setText("" + weather.wind.getDeg() + "�");*/
+					
 			}
-		
-	    }
-	    
-	    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
-
-			@Override
-			protected Boolean doInBackground(String... params) {
-				boolean status = false; 
-				try{
-				// TODO Auto-generated method stub
-				
-					if(params[0] != null){
-						
-						return true;
-					}
-				
-				}catch(Exception e){e.printStackTrace();}
-				return status;
-			}
-			
-			@Override
-			protected void onPostExecute(Boolean result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
-				
-			}
-		
-	    }
+		}
 	
 
+	
+	private boolean ValidateFields(){
+		System.out.println("**********    ****************    "+uploadFileName);
+		if(ioName.getText().toString().trim().length() == 0){
+			ioName.requestFocus();
+			ioName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( ioSurname.getText().toString().trim().length() == 0){
+			ioSurname.requestFocus();
+			ioSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		
+		if( ioRank.getText().toString().trim().length() == 0){
+			ioRank.requestFocus();
+			ioRank.setError("sorry empty field");
+			return false;
+		}
+
+		
+		if( ioCellNo.getText().toString().trim().length() == 0){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry empty field");
+			return false;
+		}
+		if(!CellNoValidation(ioCellNo.getText().toString().trim()) || ioCellNo.getText().toString().trim().length() != 10){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry invalid cell no");
+			return false;
+		}
+		
+		if( foosName.getText().toString().trim().length() == 0){
+			foosName.requestFocus();
+			foosName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosSurname.getText().toString().trim().length() == 0){
+			foosSurname.requestFocus();
+			foosSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosRank.getText().toString().trim().length() == 0){
+			foosRank.requestFocus();
+			foosRank.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimName.getText().toString().trim().length() == 0){
+			victimName.requestFocus();
+			victimName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimSurname.getText().toString().trim().length() == 0){
+			victimSurname.requestFocus();
+			victimSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimIDNo.getText().toString().trim().length() == 0){
+			victimIDNo.requestFocus();
+			victimIDNo.setError("sorry empty field");
+			return false;
+		}
+			
+		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
+			whoFoundVictimBody.requestFocus();
+			whoFoundVictimBody.setError("sorry empty field");
+			return false;
+		}
+		
+		if(sceneIOTypeInside.isChecked()){
+			
+			doorLockedNo.setChecked(true);
+			
+			windowsClosedNo.setChecked(true);
+		
+			windowsBrokenNo.setChecked(true);
+		
+			victimAloneNo.setChecked(true);
+			
+			if(previousAttemptsYes.isChecked()){
+				if( howManyAttempts.getText().toString().length() == 0){
+					howManyAttempts.requestFocus();
+					howManyAttempts.setError("sorry empty field");
+					return false;
+				}
+			}
+		}
+		
+		if( fromWhat.getText().toString().length() == 0){
+			fromWhat.requestFocus();
+			fromWhat.setError("sorry empty field");
+			return false;
+		}
+		if( howHigh.getText().toString().length() == 0){
+			howHigh.requestFocus();
+			howHigh.setError("sorry empty field");
+			return false;
+		}
+		if( onWhatSurface.getText().toString().length() == 0){
+			onWhatSurface.requestFocus();
+			onWhatSurface.setError("sorry empty field");
+			return false;
+		}
+		
+		if( generalHistory.getText().toString().length() == 0){
+			generalHistory.requestFocus();
+			generalHistory.setError("sorry empty field");
+			return false;
+		}
+		return true;
+	}
+	
+	public void clearFilelds(){
+		
+		victimName.setText("Unknown");
+		
+		victimSurname.setText("Unknown");
+		
+		victimIDNo.setText("Unknown");
+			
+		whoFoundVictimBody.setText("");
+		
+		if(sceneIOTypeInside.isChecked()){
+			sceneIOTypeInside.setChecked(false);
+			doorLockedNo.setChecked(false);
+			
+			windowsClosedNo.setChecked(false);
+		
+			windowsBrokenNo.setChecked(false);
+		
+			victimAloneNo.setChecked(false);
+			//outside selected by default
+			sceneIOTypeOutside.setChecked(true);
+			tv_whereInside.setVisibility(GONE);
+			sceneIType.setVisibility(GONE);
+			tv_sceneITypeOther.setVisibility(GONE);
+			sceneITypeOther.setVisibility(GONE);
+			tv_doorLocked.setVisibility(GONE);
+			doorLockedYes.setVisibility(GONE);
+			doorLockedNo.setVisibility(GONE);
+			tv_windowsClosed.setVisibility(GONE);
+			windowsClosedYes.setVisibility(GONE);
+			windowsClosedNo.setVisibility(GONE);
+			tv_windowsBroken.setVisibility(GONE);
+			windowsBrokenYes.setVisibility(GONE);
+			windowsBrokenNo.setVisibility(GONE);
+			tv_victimAlone.setVisibility(GONE);
+			victimAloneYes.setVisibility(GONE);
+			victimAloneNo.setVisibility(GONE);
+			tv_peopleWithVictim.setVisibility(GONE);
+			peopleWithVictim.setVisibility(GONE);
+		}
+		howManyAttempts.setText("");
+		
+		fromWhat.setText("");
+		howHigh.setText("");
+		onWhatSurface.setText("");
+		
+		generalHistory.setText("");
+		
+		uploadFileName = null;
+		
+		uploadFileName = new ArrayList<String>();
+		
+	    imageView0.setImageBitmap(null);
+	    imageView1.setImageBitmap(null);
+	    imageView2.setImageBitmap(null);
+	    imageView3.setImageBitmap(null);
+	    imageView4.setImageBitmap(null);
+	    imageView5.setImageBitmap(null);
+	    imageView6.setImageBitmap(null);
+	    imageView7.setImageBitmap(null);
+	    imageView8.setImageBitmap(null);
+	    
+	    imageView0.setVisibility(GONE);
+	    imageView1.setVisibility(GONE);
+	    imageView2.setVisibility(GONE);
+	    imageView3.setVisibility(GONE);
+	    imageView4.setVisibility(GONE);
+	    imageView5.setVisibility(GONE);
+	    imageView6.setVisibility(GONE);
+	    imageView7.setVisibility(GONE);
+	    imageView8.setVisibility(GONE);
+			
+	   index_gallery = 0;
+	   count = 0;
+	}
+	
+	private void CheckRadioButtons(){
+		
+		rgbUnknownGender.setChecked(true);
+		rgbUnknownRace.setChecked(true);
+		
+		//outside selected by default
+		sceneIOTypeOutside.setChecked(true);
+		tv_whereInside.setVisibility(GONE);
+		sceneIType.setVisibility(GONE);
+		tv_sceneITypeOther.setVisibility(GONE);
+		sceneITypeOther.setVisibility(GONE);
+		tv_doorLocked.setVisibility(GONE);
+		doorLockedYes.setVisibility(GONE);
+		doorLockedNo.setVisibility(GONE);
+		tv_windowsClosed.setVisibility(GONE);
+		windowsClosedYes.setVisibility(GONE);
+		windowsClosedNo.setVisibility(GONE);
+		tv_windowsBroken.setVisibility(GONE);
+		windowsBrokenYes.setVisibility(GONE);
+		windowsBrokenNo.setVisibility(GONE);
+		tv_victimAlone.setVisibility(GONE);
+		victimAloneYes.setVisibility(GONE);
+		victimAloneNo.setVisibility(GONE);
+		tv_peopleWithVictim.setVisibility(GONE);
+		peopleWithVictim.setVisibility(GONE);
+		
+		tv_sceneOType.setVisibility(VISIBLE);
+		sceneOType.setVisibility(VISIBLE);
+		
+		suicideNoteFoundNo.setChecked(true);
+		
+		bodyDecomposedNo.setChecked(true);
+	
+		medicalInterventionNo.setChecked(true);
+	
+		closeToWaterNo.setChecked(true);
+		
+		rapeHomicideNo.setChecked(true);
+	
+		suicideSuspectedNo.setChecked(true);
+		
+		//previous attempts is none by default
+		previousAttemptsNo.setChecked(true);
+		tv_howManyAttempts.setVisibility(GONE);
+		howManyAttempts.setVisibility(GONE);
+	
+		signsOfStruggleNo.setChecked(true);
+		
+		alcoholBottleAroundNo.setChecked(true);
+	
+		drugParaphernaliaNo.setChecked(true);
+	
+		anyWitnessesNo.setChecked(true);
+	
+		
+	
+		 
+	}
+	
+	private  boolean CellNoValidation(String cell) {
+		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
+		}
+	
+	
+	
+	
 }
