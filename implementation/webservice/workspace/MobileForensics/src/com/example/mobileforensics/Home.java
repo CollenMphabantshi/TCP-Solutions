@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class Home extends Activity{
-	Button createCase, previousCase, generalReport;
+	Button createCase, previousCase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +54,6 @@ public class Home extends Activity{
 					}
 				});
 		
-		/*generalReport.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
 	}
 	
 	

@@ -127,7 +127,7 @@ public class Loggin extends Activity{
 		login = (Button) findViewById(R.id.logginId);
 		username = (EditText) findViewById(R.id.usernameId);
 		password = (EditText) findViewById(R.id.passwordId);
-		rememberMe = (CheckBox) findViewById(R.id.rememberMeId);
+		
 		enc = new Encryption();
 	}
 	

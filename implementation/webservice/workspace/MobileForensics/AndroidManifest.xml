@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mobileforensics"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+    android:configChanges="orientation|screenSize"
+     >
 
     <permission
         android:name="com.example.mobileforensics.permission.MAPS_RECEIVE"
@@ -31,6 +33,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
+    
+  
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true" 
+        android:anyDensity="true"/>
 
     <application
         android:allowBackup="true"
@@ -43,7 +52,8 @@
 
         <activity
             android:name=".Loggin"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +62,8 @@
         </activity>
         <activity
             android:name=".Home"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.HOME" />
 
@@ -61,7 +72,8 @@
         </activity>
         <activity
             android:name=".SceneMenu"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SCENEMENU" />
 
@@ -70,7 +82,8 @@
         </activity>
         <activity
             android:name=".Aviation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.AVIATION" />
 
@@ -79,7 +92,8 @@
         </activity>
         <activity
             android:name=".BasicReport"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.BASICREPORT" />
 
@@ -88,7 +102,8 @@
         </activity>
         <activity
             android:name=".Bicycle"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.BICYCLE" />
 
@@ -97,7 +112,8 @@
         </activity>
         <activity
             android:name=".Blunt"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.BLUNT" />
 
@@ -113,7 +129,8 @@
         </activity>
         <activity
             android:name=".Burn"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.BURN" />
 
@@ -122,7 +139,8 @@
         </activity>
         <activity
             android:name=".Crushinjury"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.CRUSHINJURY" />
 
@@ -131,7 +149,8 @@
         </activity>
         <activity
             android:name=".Drowning"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.DROWNING" />
 
@@ -140,7 +159,8 @@
         </activity>
         <activity
             android:name=".Electrocutionlightining"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.ELECTROCUTIONLIGHTINING" />
 
@@ -149,7 +169,8 @@
         </activity>
         <activity
             android:name=".Firearm"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.FIREARM" />
 
@@ -158,7 +179,8 @@
         </activity>
         <activity
             android:name=".Foetusabandonedbaby"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.FOETUSABANDONEDBABY" />
 
@@ -167,7 +189,8 @@
         </activity>
         <activity
             android:name=".Fromheight"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.FROMHEIGHT" />
 
@@ -176,7 +199,8 @@
         </activity>
         <activity
             android:name=".Gassing"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.GASSING" />
 
@@ -185,7 +209,8 @@
         </activity>
         <activity
             android:name=".Hanging"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.HANGING" />
 
@@ -194,7 +219,8 @@
         </activity>
         <activity
             android:name=".Ingestionoverdosepoisoning"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.INGESTIONOVERDOSEPOISONING" />
 
@@ -203,7 +229,8 @@
         </activity>
         <activity
             android:name=".Mba"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.MBA" />
 
@@ -212,7 +239,8 @@
         </activity>
         <activity
             android:name=".Mva"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.MVA" />
 
@@ -221,7 +249,8 @@
         </activity>
         <activity
             android:name=".Pedestrian"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.PEDESTRIAN" />
 
@@ -230,7 +259,8 @@
         </activity>
         <activity
             android:name=".PreviousCaseBasicInfo"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.PREVIOUSCASEBASICINFO" />
 
@@ -239,7 +269,8 @@
         </activity>
         <activity
             android:name=".Railway"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.RAILWAY" />
 
@@ -248,7 +279,8 @@
         </activity>
         <activity
             android:name=".Sec48"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SEC48" />
 
@@ -257,7 +289,8 @@
         </activity>
         <activity
             android:name=".Sharp"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SHARP" />
 
@@ -266,7 +299,8 @@
         </activity>
         <activity
             android:name=".Suda"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SUDA" />
 
@@ -275,7 +309,8 @@
         </activity>
         <activity
             android:name=".Sudc"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SUDC" />
 
@@ -284,7 +319,8 @@
         </activity>
         <activity
             android:name=".Sudi"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="com.example.mobileforensics.SUDI" />
 
@@ -299,7 +335,8 @@
         <activity
             android:name=".BasicCaseData"
             android:label="@string/title_activity_basic_case_data"
-            android:parentActivityName=".PreviousCaseBasicInfo" >
+            android:parentActivityName=".PreviousCaseBasicInfo" 
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mobileforensics.PreviousCaseBasicInfo" />
