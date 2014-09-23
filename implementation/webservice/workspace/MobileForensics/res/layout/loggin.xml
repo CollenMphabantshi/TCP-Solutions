@@ -31,21 +31,7 @@
 	    
 	</EditText>
 	
-			<LinearLayout 
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    >
-			    	<CheckBox
-			    	    android:id="@+id/rememberMeId"
-			    	    android:layout_width="wrap_content"
-			    	    android:layout_height="wrap_content"
-			    	    android:layout_margin="10dp"
-					    android:paddingRight="35dp"
-					    android:gravity="center"
-			    	    android:text="remember me"
-			    	    ></CheckBox>
-					<Button
+			<Button
 					    android:id="@+id/logginId"
 					    android:layout_width="wrap_content"
 					    android:layout_height="wrap_content"
@@ -57,9 +43,6 @@
 					    android:text="login"
 					    />
 					
-					
-			
-			</LinearLayout>
 	
 	</LinearLayout>
 
