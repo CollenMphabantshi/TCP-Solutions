@@ -13,7 +13,7 @@ require_once("Scene.php");
  */
 class Aviation extends Scene{
     //put your code here
-    private $aviationOutsideType;
+    private $aviationOType;
     private $aircraftType;
     private $aircraftNumPeople;
     private $weatherCondition;
@@ -29,7 +29,7 @@ class Aviation extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Aviation",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->aviationOutsideType = $formData['object'][$i]['aviationOutsideType'];
+                $this->aviationOType = $formData['object'][$i]['aviationOType'];
                 $this->aircraftType = $formData['object'][$i]['autoeroticAsphyxia'];
                 $this->aircraftNumPeople = $formData['object'][$i]['aircraftNumPeople'];
                 $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
@@ -52,9 +52,9 @@ class Aviation extends Scene{
     }
     private function addAviation($sceneID) {
      
-            $h_res = mysql_query("insert into aviation values(0,".$sceneID.",'$this->aviationOutsideType','$this->aircraftType','$this->aircraftNumPeople','$this->weatherCondition','$this->weatherType')");
+            $h_res = mysql_query("insert into aviation values(0,".$sceneID.",'$this->aviationOType','$this->aircraftType','$this->aircraftNumPeople','$this->weatherCondition','$this->weatherType')");
         
-            $h_res = mysql_query("select aviationID from aviation where sceneID=".$sceneID);
+            $h_res = mysql_query("select * from aviation where sceneID=".$sceneID);
             $aviationID = mysql_result($h_res,0,'aviationID');
         
         
@@ -78,7 +78,7 @@ class Aviation extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['aviationOutsideType'] = $array['aviationOutsideType'];
+                $h_array['aviationOType'] = $array['aviationOType'];
                 $h_array['aircraftType'] = $array['aircraftType'];
                 $h_array['aircraftNumPeople'] = $array['aircraftNumPeople'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];
@@ -128,7 +128,7 @@ class Aviation extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['aviationOutsideType'] = $array['aviationOutsideType'];
+                $h_array['aviationOType'] = $array['aviationOType'];
                 $h_array['aircraftType'] = $array['aircraftType'];
                 $h_array['aircraftNumPeople'] = $array['aircraftNumPeople'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];

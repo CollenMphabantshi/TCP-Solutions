@@ -14,7 +14,6 @@
         <title>Control Panel</title>
         <link rel="stylesheet" type="text/css" href="styles.css"/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
-        <script type="text/javascript" src="aes.js"></script>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="script.js"></script>
         
@@ -23,22 +22,22 @@
 <body onload="loadUsers();">
         <?php include_once("home.php");?>
         <div class="response"></div>
-        <div class="center">    
+        <div class="content">    
             <div id="Page1" class="page">
                 <div id="afpHome-left">
                     <div class="searchForm">
 
-                        <input type="search" name="search" id="search"  /> <input type="image" name="searchButton" id="searchButton" src="images/icons/search-black.png" />
+                        <input type="search" name="search" id="userSearch"  /> <input type="image" name="userSearchButton" id="userSearchButton" src="images/icons/search-black.png" />
                         <br/> <br/> <br/>
                     </div>
                     <div class="userList">
                         <table id="users">
                             <tr class="table-headers">
-                                <th>User Name </th>
-                                <th>User Firstname </th>
-                                <th>User Surname </th>
-                                <th>User Active </th>
-                                <th>Options </th>
+                                <th>User Name</th>
+                                <th>User Firstname</th>
+                                <th>User Surname</th>
+                                <th>Active / Deactivated</th>
+                                <!-- <th>Options </th> -->
                             </tr>
                             
                         </table>
@@ -46,7 +45,8 @@
                 </div>
             </div>
             <div id="Page2" class="page">
-                 <table class="insert">
+                <div class="center">
+                 <table class="insert table">
                     <tr>
                         <td>User Name:<br/> 
                             <input type="text" class="formInput" id="name" name="name" placeholder="Username" /></td>
@@ -70,12 +70,12 @@
                     <tr>
                         <td>User Type:<br/>
                        
-                            <select class="formInput" id="userType" id="userType" name="userType" onchange="getUserForm()">
+                            <select class="formInput" id="userType"  name="userType" onchange="getUserForm()">
                                 <option>Administrator</option>
                                 <option>Forensic practitioner</option>
 				<option>Forensic officer</option>
 				<option>Student</option>
-                                <option>Guest</option>
+                                <!--<option>Guest</option>-->
                                 <option>Forensic practitioner/Administrator</option>
                             </select>
                         </td>
@@ -83,12 +83,13 @@
                     
                     <tr>
                         <td>
-                            <button id="addButton" >Add user</button>
+                            <button id="addUserButton" >Add user</button>
                            
                             <br/>
                         </td>
                     </tr>
                 </table>
+                </div>
             <br/><br/>
                 
             </div>

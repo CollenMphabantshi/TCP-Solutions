@@ -24,17 +24,17 @@
                 <div id="afpHome-left">
                     <div class="searchForm">
 
-                        <input type="search" name="search" id="search"  /> <input type="image" name="searchButton" id="searchButton" src="images/icons/search-black.png" />
+                        <input type="search" name="userSearch" id="userSearch"  /> <input type="image" name="userSearchButton" id="userSearchButton" src="images/icons/search-black.png" />
                         <br/> <br/> <br/>
                     </div>
                     <div class="userList">
                         <table id="users">
                             <tr class="table-headers">
-                                <th>User Name </th>
-                                <th>User Firstname </th>
-                                <th>User Surname </th>
-                                <th>User Active </th>
-                                <th>Options </th>
+                                <th>User Name</th>
+                                <th>User Firstname</th>
+                                <th>User Surname</th>
+                                <th><a href="#" id="activeUsers" title="active">Active</a> / <a href="#" id="deactiveUsers" title="deactive">Deactivated</a></th>
+                                <!--<th>Options </th> -->
                             </tr>
                             
                         </table>
@@ -46,6 +46,7 @@
         
             
             <div id="Page2" class="page">
+                <div class="center">
                 <table class="insert table">
                     <tr>
                         <td>User Name:<br/> 
@@ -70,12 +71,12 @@
                     <tr>
                         <td>User Type:<br/>
                        
-                            <select class="formInput" id="userType" id="userType" name="userType" onchange="getUserForm()">
+                            <select class="formInput" id="userType"  name="userType" onchange="getUserForm()">
                                 <option>Administrator</option>
                                 <option>Forensic practitioner</option>
 				<option>Forensic officer</option>
 				<option>Student</option>
-                                <option>Guest</option>
+                                <!--<option>Guest</option>-->
                                 <option>Forensic practitioner/Administrator</option>
                             </select>
                         </td>
@@ -83,12 +84,13 @@
                     
                     <tr>
                         <td>
-                            <button id="addButton" >Add user</button>
+                            <button id="addUserButton" >Add user</button>
                            
                             <br/>
                         </td>
                     </tr>
                 </table>
+                </div>
             <br/><br/>
             </div>
             
@@ -115,8 +117,8 @@
                     <h1>Case Information</h1>
                     <div class="right-content">
                         <div class="toolbar">
-                            <button>Assign To Death Register</button>
-                            <button>Create Print Out</button>
+                            <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" /><button id="assignDR" class="deathreg-btn">Assign Death register number</button>
+                            <button id="print">Create Print Out</button>
                             <br/>
                         </div>
                         <table>

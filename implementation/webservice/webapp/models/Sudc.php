@@ -20,8 +20,16 @@ class Sudc extends Scene{
     private $strangulationSuspected;
     private $smotheringSuspected;
     private $chockingSuspected;
-    private $sudcAppliances;
+    private $anyHeatingDevices;
     private $wierdSmellInAir;
+    private $physicalExercise;
+    private $familyMedicalHistory;
+    private $familyMembersSufferingFrom;
+    private $victimSustainInjury;
+    private $victimHadSymptomsBefore;
+    private $victimTakeMedication;
+    private $suspisionOfAssault;
+    private $suspisionOfOverdose;
     
      public function __construct($formData,$api){
          $this->api = $api;
@@ -40,8 +48,16 @@ class Sudc extends Scene{
                 $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
-                $this->sudcAppliances = $formData['object'][$i]['sudcAppliances'];
+                $this->anyHeatingDevices = $formData['object'][$i]['anyHeatingDevices'];
                 $this->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
+                $this->physicalExercise = $formData['object'][$i]['physicalExercise'];
+                $this->familyMedicalHistory = $formData['object'][$i]['familyMedicalHistory'];
+                $this->familyMembersSufferingFrom = $formData['object'][$i]['familyMembersSufferingFrom'];
+                $this->victimSustainInjury = $formData['object'][$i]['victimSustainInjury'];
+                $this->victimHadSymptomsBefore = $formData['object'][$i]['victimHadSymptomsBefore'];
+                $this->victimTakeMedication = $formData['object'][$i]['victimTakeMedication'];
+                $this->suspisionOfAssault = $formData['object'][$i]['suspisionOfAssault'];
+                $this->suspisionOfOverdose = $formData['object'][$i]['suspisionOfOverdose'];
                     //
                 $sceneID = $this->createScene();
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
@@ -60,12 +76,11 @@ class Sudc extends Scene{
     }
     
     private function addSudc($sceneID,$inside,$object) {
-            $h_res = mysql_query("insert into hanging values(0,".$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
-
+        $h_res = mysql_query("insert into sudc values(0,".$sceneID.",'$this->sudcIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->anyHeatingDevices','$this->wierdSmellInAir','$this->physicalExercise','$this->familyMedicalHistory','$this->familyMembersSufferingFrom','$this->victimSustainInjury','$this->victimHadSymptomsBefore','$this->suspisionOfAssault','$this->suspisionOfOverdose')");
         
         if($inside == TRUE){
-            $h_res = mysql_query("select hangingID from hanging where sceneID=".$sceneID);
-            $hangingID = mysql_result($h_res,0,'hangingID');
+            $h_res = mysql_query("select sudcID from sudc where sceneID=".$sceneID);
+            $sudcID = mysql_result($h_res,0,'sudcID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
@@ -73,9 +88,9 @@ class Sudc extends Scene{
             $pv = $object['peopleWithVictim'];
             if($va != "yes")
             {
-                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into sudcinside values(0,".$sudcID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
-                $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into sudcinside values(0,".$sudcID.",'$dl','$wc','$wb','$va',null)");
             }
         }
     }
@@ -102,11 +117,19 @@ class Sudc extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
-                $h_array['sudaAppliances'] = $array['sudaAppliances'];
+                $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
                 $h_array['wierdSmellInAir'] = $array['wierdSmellInAir'];
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['physicalExercise'] = $array['physicalExercise'];
+                $h_array['familyMedicalHistory'] = $array['familyMedicalHistory'];
+                $h_array['familyMembersSufferingFrom'] = $array['familyMembersSufferingFrom'];
+                $h_array['victimSustainInjury'] = $array['victimSustainInjury'];
+                $h_array['victimHadSymptomsBefore'] = $array['victimHadSymptomsBefore'];
+                $h_array['victimTakeMedication'] = $array['victimTakeMedication'];
+                $h_array['suspisionOfAssault'] = $array['suspisionOfAssault'];
+                $h_array['suspisionOfOverdose'] = $array['suspisionOfOverdose'];
                 
                 $hi_res = mysql_query("select * from sudcinside where sudcID=".$h_array['sudcID']);
                 if(mysql_num_rows($hi_res) > 0)
@@ -177,11 +200,19 @@ class Sudc extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
-                $h_array['sudaAppliances'] = $array['sudaAppliances'];
+                $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
                 $h_array['wierdSmellInAir'] = $array['wierdSmellInAir'];
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
+                $h_array['physicalExercise'] = $array['physicalExercise'];
+                $h_array['familyMedicalHistory'] = $array['familyMedicalHistory'];
+                $h_array['familyMembersSufferingFrom'] = $array['familyMembersSufferingFrom'];
+                $h_array['victimSustainInjury'] = $array['victimSustainInjury'];
+                $h_array['victimHadSymptomsBefore'] = $array['victimHadSymptomsBefore'];
+                $h_array['victimTakeMedication'] = $array['victimTakeMedication'];
+                $h_array['suspisionOfAssault'] = $array['suspisionOfAssault'];
+                $h_array['suspisionOfOverdose'] = $array['suspisionOfOverdose'];
                 
                 $hi_res = mysql_query("select * from sudcinside where sudcID=".$h_array['sudcID']);
                 if(mysql_num_rows($hi_res) > 0)

@@ -14,7 +14,6 @@
         <title>Forensics App</title>
         <link rel="stylesheet" type="text/css" href="styles.css"/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
-        <script type="text/javascript" src="aes.js"></script>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
@@ -45,8 +44,8 @@
                     <h1>Case Information</h1>
                     <div class="right-content">
                         <div class="toolbar">
-                            <button>Assign To Death Register</button>
-                            <button>Create Print Out</button>
+                            <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" /><button id="assignDR" class="deathreg-btn">Assign Death register number</button>
+                            <button id="print">Create Print Out</button>
                             <br/>
                         </div>
                         <table>

@@ -12,21 +12,21 @@ require_once("Scene.php");
  * @author BANCHI
  */
 class heightParameters{
-    private $heightID;
-    private $sceneID;
-    private $heightIOType;
-    private $signsOfStruggle;
-    private $alcoholBottleAround;
-    private $drugParaphernalia;
-    private $fromWhat;
-    private $howHigh;
-    private $onWhatVictimLanded;
-    
+    public $heightID;
+    public $sceneID;
+    public $heightIOType;
+    public $signsOfStruggle;
+    public $alcoholBottleAround;
+    public $drugParaphernalia;
+    public $fromWhat;
+    public $howHigh;
+    public $onWhatSurface;
+    public $anyWitnesses;
     
     public  $heightCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
     public function __construct(){
 	
@@ -42,10 +42,10 @@ class FromHeight extends Scene{
     
     public function __construct($formData,$api){
         $this->api = $api;
-        $paraObj = new heightParameters();
-        $paraObjAll =new heightParameters();
+        $this->paraObj = new heightParameters();
+        $this->paraObjAll =new heightParameters();
         
-        $heightCases = array();
+        $this->paraObjAll->heightCases = array();
         
         if($formData == NULL)
         {
@@ -55,14 +55,15 @@ class FromHeight extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->heightIOType = $formData['object'][$i]['heightIOType'];
-                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
-                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
-                $this->fromWhat = $formData['object'][$i]['fromWhat'];
-                $this->howHigh = $formData['object'][$i]['howHigh'];
-                $this->onWhatVictimLanded = $formData['object'][$i]['onWhatVictimLanded'];
-                 //
+                $this->paraObjAll->heightIOType = $formData['object'][$i]['heightIOType'];
+                $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->paraObjAll->fromWhat = $formData['object'][$i]['fromWhat'];
+                $this->paraObjAll->howHigh = $formData['object'][$i]['howHigh'];
+                $this->paraObjAll->onWhatSurface = $formData['object'][$i]['onWhatSurface'];
+                $this->paraObjAll->anyWitnesses = $formData['object'][$i]['anyWitnesses']; 
+                //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.  $sceneID".$sceneID);
@@ -84,7 +85,9 @@ class FromHeight extends Scene{
     
     public function addHeight($sceneID,$inside,$object) {
         
-        $h_res1 = mysql_query("insert into height values(0,".$sceneID.",'$this->heightIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->fromWhat','$this->howHigh','$this->onWhatVictimLanded')");
+        $h_res1 = mysql_query("insert into height values(0,"
+        .$sceneID.",'$this->paraObjAll->heightIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->fromWhat','$this->paraObjAll->howHigh','$this->paraObjAll->onWhatVictimLanded','$this->paraObjAll->anyWitnesses')");
+        
         if($h_res1 == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.1");
             $this->api->response($this->api->json($error), 400);
@@ -118,11 +121,11 @@ class FromHeight extends Scene{
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->heightCases[] = $this->getFromHeightCases($info['heightID']);
+            $this->paraObjAll->heightCases[] = $this->getFromHeightCases($info['heightID']);
                
             }
             
-            return $paraObjAll;
+            return $this->paraObjAll;
         
     }
     
@@ -153,37 +156,36 @@ class FromHeight extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->heightID = $info['heightID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->heightIOType = $info['heightIOType'];
-                        $paraObj->signsOfStruggle = $info['signsOfStruggle'];
-                        $paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
-                        $paraObj->drugParaphernalia = $info['drugParaphernalia'];
-                        $paraObj->fromWhat = $info['fromWhat'];
-                        $paraObj->howHigh = $info['howHigh'];
-                        $paraObj->onWhatVictimLanded = $info['onWhatVictimLanded'];
-                        
-                        
+                        $this->paraObj->heightID = $info['heightID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->heightIOType = $info['heightIOType'];
+                        $this->paraObj->signsOfStruggle = $info['signsOfStruggle'];
+                        $this->paraObj->alcoholBottleAround = $info['alcoholBottleAround'];
+                        $this->paraObj->drugParaphernalia = $info['drugParaphernalia'];
+                        $this->paraObj->fromWhat = $info['fromWhat'];
+                        $this->paraObj->howHigh = $info['howHigh'];
+                        $this->paraObj->onWhatSurface = $info['onWhatSurface'];
+                        $this->paraObj->anyWitnesses = $info['anyWitnesses'];
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj-> sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj-> caseObj = $case ; 
                         
 
 
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj-> victimsObj = $sceneVictimsObj;
 
                        }
 
         
-            return $paraObj;
+            return $this->paraObj;
         
     }
     

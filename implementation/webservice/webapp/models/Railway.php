@@ -13,16 +13,20 @@ require_once("Scene.php");
  */
 class railwayParameters{
     
-    private $railwayID;
-    private $sceneID;
-    private $sceneOfInjury;
-    private $victimType;
-    private $railwayType;
+    public $railwayID;
+    public $sceneID;
+    public $railwayIOType;
+    public $victimType;
+    public $railwayType;
+    public $anyWitnesses;
+    public $driverSeeWhatHappened;
+    public $weatherType;
+    public $weatherCondition;
     
     public  $railwayCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
     public function __construct() {
         
@@ -38,10 +42,10 @@ class Railway extends Scene{
     
      public function __construct($formData,$api){
         $this->api = $api;
-	$paraObj = new railwayParameters();
-        $paraObjAll =new railwayParameters();
+	$this->paraObj = new railwayParameters();
+        $this->paraObjAll =new railwayParameters();
         
-        $railwayCases = array();
+        $this->paraObjAll->railwayCases = array();
         
         if($formData == NULL)
         {
@@ -51,9 +55,13 @@ class Railway extends Scene{
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->sceneOfInjury = $formData['object'][$i]['sceneOfInjury'];
-                $this->victimType = $formData['object'][$i]['victimType'];
-                $this->railwayType = $formData['object'][$i]['railwayType'];
+                $this->paraObjAll->railwayIOType = $formData['object'][$i]['railwayIOType'];
+                $this->paraObjAll->victimType = $formData['object'][$i]['victimType'];
+                $this->paraObjAll->railwayType = $formData['object'][$i]['railwayType'];
+                $this->paraObjAll->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
+                $this->paraObjAll->driverSeeWhatHappened = $formData['object'][$i]['driverSeeWhatHappened'];
+                $this->paraObjAll->weatherType = $formData['object'][$i]['weatherType'];
+                $this->paraObjAll->weatherCondition = $formData['object'][$i]['weatherCondition'];
                 
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -70,7 +78,8 @@ class Railway extends Scene{
     }
      public function addRailway($sceneID) {
        
-        $h_res = mysql_query("insert into railway values(0,".$sceneID.",'$this->sceneOfInjury','$this->victimType','$this->railwayType')");
+        $h_res = mysql_query("insert into railway values(0,"
+        .$sceneID.",'$this->paraObjAll->railwayIOType','$this->paraObjAll->victimType','$this->paraObjAll->railwayType','$this->paraObjAll->anyWitnesses','$this->paraObjAll->driverSeeWhatHappened','$this->paraObjAll->weatherType','$this->paraObjAll->weatherCondition')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -84,11 +93,11 @@ class Railway extends Scene{
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->railwayCases[] = $this->getRailwayCases($info['railwayID']);
+                $this->paraObjAll->railwayCases[] = $this->getRailwayCases($info['railwayID']);
                
             }
             
-            return $paraObjAll;
+            return $this->paraObjAll;
         
     }
     
@@ -109,34 +118,34 @@ class Railway extends Scene{
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->railwayID = $info['railwayID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->sceneOfInjury = $info['railwayIOType'];
-                        $paraObj->victimType = $info['victimType'];
-                        $paraObj->railwayType = $info['railwayType'];
-                        $paraObj->weatherCondition = $info['weatherCondition'];
+                        $this->paraObj->railwayID = $info['railwayID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->sceneOfInjury = $info['railwayIOType'];
+                        $this->paraObj->victimType = $info['victimType'];
+                        $this->paraObj->railwayType = $info['railwayType'];
+                        $this->paraObj->weatherCondition = $info['weatherCondition'];
                         
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj->sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj->caseObj = $case ; 
                         
 
 
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj->victimsObj = $sceneVictimsObj;
 
                        }
 
         
-            return $paraObj;
+            return $this->paraObj;
     }
     
     

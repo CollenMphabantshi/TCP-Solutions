@@ -13,12 +13,20 @@ require_once("Scene.php");
  */
 class Drowning extends Scene{
     //put your code here
-    private $drowningIO;
+    private $drowningIOType;
     private $drowningType;
     private $signsOfStruggle;
     private $alcoholBottleAround;
     private $drugParaphernalia;
-   
+    private $wasBodyInsideWater;
+    private $whoRemovedBody;
+    private $fencedOff;
+    private $wasGateClosed;
+    private $waterType;
+    private $strangulationSuspected;
+    private $smotheringSuspected;
+    private $chockingSuspected;
+    
      public function __construct($formData,$api){
          $this->api = $api;
          
@@ -36,6 +44,14 @@ class Drowning extends Scene{
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
                 $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->wasBodyInsideWater = $formData['object'][$i]['wasBodyInsideWater'];
+                $this->whoRemovedBody = $formData['object'][$i]['whoRemovedBody'];
+                $this->fencedOff = $formData['object'][$i]['fencedOff'];
+                $this->wasGateClosed = $formData['object'][$i]['dwasGateClosed'];
+                $this->waterType = $formData['object'][$i]['waterType'];
+                $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
+                $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
+                $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
                     //
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -58,16 +74,17 @@ class Drowning extends Scene{
     }
     
     private function addDrowning($sceneID,$inside,$object) {
-       
+       $d_res = mysql_query("insert into drowning values(0,$sceneID,"
+        . "'$this->drowningIOType','$this->drowningType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasBodyInsideWater','$this->whoRemovedBody','$this->fencedOff','$this->wasGateClosed','$this->waterType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
         if($inside == TRUE){
-            $h_res = mysql_query("select drowningID from drowning where sceneID=".$sceneID);
+            $h_res = mysql_query("select * from drowning where sceneID=".$sceneID);
             $drowningID = mysql_result($h_res,0,'drowningID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            if($va != "Yes")
             {
                 $hi_res = mysql_query("insert into drowninginside values(0,".$drowningID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
@@ -94,10 +111,18 @@ class Drowning extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['drowningIO'] = $array['hangingIOType'];
+                $h_array['drowningIOType'] = $array['drowningIOType'];
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
+                $h_array['wasBodyInsideWater'] = $array['wasBodyInsideWater'];
+                $h_array['whoRemovedBody'] = $array['whoRemovedBody'];
+                $h_array['fencedOff'] = $array['fencedOff'];
+                $h_array['wasGateClosed'] = $array['wasGateClosed'];
+                $h_array['waterType'] = $array['waterType'];
+                $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
+                $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
+                $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
                 $hi_res = mysql_query("select * from drowninginside where drowningID=".$h_array['drowningID']);
                 if(mysql_num_rows($hi_res) > 0)
@@ -168,6 +193,14 @@ class Drowning extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
+                $h_array['wasBodyInsideWater'] = $array['wasBodyInsideWater'];
+                $h_array['whoRemovedBody'] = $array['whoRemovedBody'];
+                $h_array['fencedOff'] = $array['fencedOff'];
+                $h_array['wasGateClosed'] = $array['wasGateClosed'];
+                $h_array['waterType'] = $array['waterType'];
+                $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
+                $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
+                $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 
                 $hi_res = mysql_query("select * from drowninginside where drowningID=".$h_array['drowningID']);
                 if(mysql_num_rows($hi_res) > 0)

@@ -31,6 +31,15 @@ class Sid extends Scene{
     private $infantLastPlaced;
     private $infantLastSeenAlive;
     private $whereInfantFoundDead;
+    private $dieDuringSleep;
+    private $whatWasInfantDoing;
+    private $whatHappenedToInfant;
+    private $relationshiptoInfant;
+    private $whoAttempedResuscitation;
+    private $anyHeatingDevices;
+    private $anyWeirdSmell;
+    private $anySmokeSmell;
+    private $infantOneOfTwins;
     
      public function __construct($formData,$api){
          $this->api = $api;
@@ -59,6 +68,15 @@ class Sid extends Scene{
                 $this->infantLastPlaced = $formData['object'][$i]['infantLastPlaced'];
                 $this->infantLastSeenAlive = $formData['object'][$i]['infantLastSeenAlive'];
                 $this->whereInfantFoundDead = $formData['object'][$i]['whereInfantFoundDead'];
+                $this->dieDuringSleep = $formData['object'][$i]['dieDuringSleep'];
+                $this->whatWasInfantDoing = $formData['object'][$i]['whatWasInfantDoing'];
+                $this->whatHappenedToInfant = $formData['object'][$i]['whatHappenedToInfant'];
+                $this->relationshiptoInfant = $formData['object'][$i]['relationshiptoInfant'];
+                $this->whoAttempedResuscitation = $formData['object'][$i]['whoAttempedResuscitation'];
+                $this->anyHeatingDevices = $formData['object'][$i]['anyHeatingDevices'];
+                $this->anyWeirdSmell = $formData['object'][$i]['anyWeirdSmell'];
+                $this->anySmokeSmell = $formData['object'][$i]['anySmokeSmell'];
+                $this->infantOneOfTwins = $formData['object'][$i]['infantOneOfTwins'];
                 
                     //
                 $sceneID = $this->createScene();
@@ -78,9 +96,11 @@ class Sid extends Scene{
     private function addSid($sceneID) {
         if($this->infantSickLately != NULL)
         {
-            $h_res = mysql_query("insert into sid values(0,".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately','$this->infantSickLatelyDescription','$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead')");
+            $h_res = mysql_query("insert into sid values(0,"
+            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately','$this->infantSickLatelyDescription','$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing','$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices','$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
         }else{
-           $h_res = mysql_query("insert into sid values(0,".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately',null,'$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead')");
+           $h_res = mysql_query("insert into sid values(0,"
+            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately',null,'$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing','$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices','$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
         
         }
 
@@ -121,6 +141,15 @@ class Sid extends Scene{
                 $h_array['infantLastPlaced'] = $array['infantLastPlaced'];
                 $h_array['infantLastSeenAlive'] = $array['infantLastSeenAlive'];
                 $h_array['whereInfantFoundDead'] = $array['whereInfantFoundDead'];
+                $h_array['dieDuringSleep'] = $array['dieDuringSleep'];
+                $h_array['whatWasInfantDoing'] = $array['whatWasInfantDoing'];
+                $h_array['whatHappenedToInfant'] = $array['whatHappenedToInfant'];
+                $h_array['relationshiptoInfant'] = $array['relationshiptoInfant'];
+                $h_array['whoAttempedResuscitation'] = $array['whoAttempedResuscitation'];
+                $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
+                $h_array['anyWeirdSmell'] = $array['anyWeirdSmell'];
+                $h_array['anySmokeSmell'] = $array['anySmokeSmell'];
+                $h_array['infantOneOfTwins'] = $array['infantOneOfTwins'];
                 
                 $f_array[] = $h_array; 
                 
@@ -152,10 +181,10 @@ class Sid extends Scene{
         }
     }
     
-    public function getSid($mvaID) {
+    public function getSid($sidID) {
         try{
             
-            $h_res = mysql_query("select * from mva where mvaID=".$mvaID);
+            $h_res = mysql_query("select * from sid where sidID=".$sidID);
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
             $sv_i = 0;
@@ -188,7 +217,15 @@ class Sid extends Scene{
                 $h_array['infantLastPlaced'] = $array['infantLastPlaced'];
                 $h_array['infantLastSeenAlive'] = $array['infantLastSeenAlive'];
                 $h_array['whereInfantFoundDead'] = $array['whereInfantFoundDead'];
-                
+                $h_array['dieDuringSleep'] = $array['dieDuringSleep'];
+                $h_array['whatWasInfantDoing'] = $array['whatWasInfantDoing'];
+                $h_array['whatHappenedToInfant'] = $array['whatHappenedToInfant'];
+                $h_array['relationshiptoInfant'] = $array['relationshiptoInfant'];
+                $h_array['whoAttempedResuscitation'] = $array['whoAttempedResuscitation'];
+                $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
+                $h_array['anyWeirdSmell'] = $array['anyWeirdSmell'];
+                $h_array['anySmokeSmell'] = $array['anySmokeSmell'];
+                $h_array['infantOneOfTwins'] = $array['infantOneOfTwins'];
              
                 $f_array[] = $h_array; 
                 

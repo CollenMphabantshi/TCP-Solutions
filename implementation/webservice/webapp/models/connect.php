@@ -4,9 +4,9 @@
     try{
         $DB_SERVER = "localhost";
         $DB_USER = "root";
-        //$DB_USER = "forenlnm_super";
+        
         $DB_PASSWORD = "latitude@mysql";
-        //$DB_PASSWORD = "a~~KqT9ZMt}m";
+        
         $DB_NAME = "forenlnm_mobileforensics";
         $database = mysql_connect($DB_SERVER ,$DB_USER ,$DB_PASSWORD);
 	if ( !($database))

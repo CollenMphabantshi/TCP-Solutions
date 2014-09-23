@@ -58,15 +58,18 @@ public function __construct()
 public function processApi()
 {
     $enc = new Encryption();
+    //echo $enc->encrypt_request('rquest');
     
-    $func = strtolower(trim(str_replace("/","",$_REQUEST['rquest'])));
+    
+    
+    $func = strtolower(trim(str_replace("/","",$enc->decrypt_request($_REQUEST['rquest']))));
     if((int)method_exists($this,$func) > 0)
     {
        $this->$func();    
     }
     else
     {
-       $this->response('',404);   
+       $this->response(''.$s,404);   
     }
 // If the method not exist with in this class, response would be "Page not found".
 }

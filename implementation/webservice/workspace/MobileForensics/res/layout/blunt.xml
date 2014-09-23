@@ -31,13 +31,7 @@
 				android:orientation="vertical"
 				android:gravity="center_horizontal"
 			    >
-			<TextView
-			    android:id="@+id/blunt_tv_io"			            
-				style="@style/sub_headings"
-				android:text="Investigating Officer Information"
-				
-				android:visibility="visible"
-			/>
+			
 			<!-- Geolocation and weather -->
 			<fragment 
 	        android:id="@+id/fragId"
@@ -65,7 +59,13 @@
 		   
 				
 		    <!--  -->
-			
+			<TextView
+			    android:id="@+id/blunt_tv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
 			<GridLayout
 			    android:id="@+id/blunt_rl1"
 				android:layout_width="fill_parent"
@@ -392,6 +392,22 @@
 					android:layout_height="wrap_content"
 					
 					android:layout_row="2"
+            		android:layout_column="1"
+					/>
+				<TextView 
+					android:id="@+id/blunt_tv_victim_age"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Estimated age"
+					style="@style/tv_question"
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/blunt_victim_age"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
             		android:layout_column="1"
 					/>
 								       

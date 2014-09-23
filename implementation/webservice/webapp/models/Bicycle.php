@@ -14,16 +14,19 @@ require_once("Scene.php");
 class BicycleParameters {
     public $bicycleID;
     public $sceneID;
+    public $bicycleOType;
     public $bicycleNumPeople;
     public $bicycleHit;
     public $bicycleType;
     public $weatherCondition;
-    public $bicycleOutsideType;
+    public $weatherType;
+    public $eyewitnesses;
+    public $wasBodyMoved;
     
     public $BicycleCases;
-    private $caseObj;
-    private $victimsObj;
-    private $sceneObj;
+    public $caseObj;
+    public $victimsObj;
+    public $sceneObj;
     
   
 
@@ -38,9 +41,9 @@ class Bicycle extends Scene {
     //put your code here
      public function __construct($formData,$api){
         $this->api = $api;
-        $paraObj = new BicycleParameters();
-        $paraObjAll =new BicycleParameters();
-        $BicycleCases = array();
+        $this->paraObj = new BicycleParameters();
+        $this->paraObjAll =new BicycleParameters();
+        $this->paraObjAll->BicycleCases = array();
         
         if($formData == NULL)
         {
@@ -50,12 +53,14 @@ class Bicycle extends Scene {
             {
                 parent::__construct($formData['object'][$i]['sceneTime'],"Bicycle",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->bicycleNumPeople = $formData['object'][$i]['bicycleNumPeople'];
-                $this->bicycleHit = $formData['object'][$i]['bicycleHit'];
-                $this->bicycleType = $formData['object'][$i]['bicycleType'];
-                $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
-                $this->bicycleOutsideType = $formData['object'][$i]['bicycleOutsideType'];
-                
+                $this->paraObjAll->bicycleOType = $formData['object'][$i]['bicycleOType'];
+                $this->paraObjAll->bicycleNumPeople = $formData['object'][$i]['bicycleNumPeople'];
+                $this->paraObjAll->bicycleHit = $formData['object'][$i]['bicycleHit'];
+                $this->paraObjAll->bicycleType = $formData['object'][$i]['bicycleType'];
+                $this->paraObjAll->weatherCondition = $formData['object'][$i]['weatherCondition'];
+                $this->paraObjAll->weatherType = $formData['object'][$i]['weatherType'];
+                $this->paraObjAll->eyewitnesses = $formData['object'][$i]['eyewitnesses'];
+                $this->paraObjAll->wasBodyMoved = $formData['object'][$i]['wasBodyMoved'];
                     //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -75,7 +80,7 @@ class Bicycle extends Scene {
     
     public function addBicycle($sceneID) {
        
-        $h_res = mysql_query("insert into bicycle values(0,".$sceneID.",'$this->bicycleNumPeople','$this->bicycleHit','$this->bicycleType','$this->weatherCondition','$this->bicycleOutsideType')");
+        $h_res = mysql_query("insert into bicycle values(0,".$sceneID.",'$this->paraObjAll->bicycleOType',$this->paraObjAll->bicycleNumPeople','$this->paraObjAll->bicycleHit','$this->paraObjAll->bicycleType','$this->paraObjAll->weatherCondition','$this->paraObjAll->weatherType','$this->paraObjAll->eyewitnesses','$this->paraObjAll->wasBodyMoved')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -89,7 +94,7 @@ class Bicycle extends Scene {
        
        while($info = mysql_fetch_array($result))
             {
-                $paraObjAll->BicycleCases[] = $this->getBicycleCases($info['bicycleID']);
+                $this->paraObjAll->BicycleCases[] = $this->getBicycleCases($info['bicycleID']);
                
             }
             
@@ -115,36 +120,34 @@ class Bicycle extends Scene {
         while($info = mysql_fetch_array($result))
             {
                         
-                        $paraObj->bicycleID = $info['bicycleID'];
-                        $paraObj->sceneID = $info['sceneID'];
-                        $paraObj->bicycleNumPeople = $info['bicycleNumPeople'];
-                        $paraObj->bicycleHit = $info['bicycleHit'];
-                        $paraObj->bicycleType = $info['bicycleType'];
-                        $paraObj->weatherCondition = $info['weatherCondition'];
-                        
-                        
-                        
+                        $this->paraObj->bicycleID = $info['bicycleID'];
+                        $this->paraObj->sceneID = $info['sceneID'];
+                        $this->paraObj->bicycleNumPeople = $info['bicycleNumPeople'];
+                        $this->paraObj->bicycleHit = $info['bicycleHit'];
+                        $this->paraObj->bicycleType = $info['bicycleType'];
+                        $this->paraObj->weatherCondition = $info['weatherCondition'];
+                        $this->paraObj->weatherType = $info['weatherType'];
+                        $this->paraObj->eyewitnesses = $info['eyewitnesses'];
+                        $this->paraObj->wasBodyMoved = $info['wasBodyMoved'];
                         
                         //get scene related data
-                        $scene = $this->getSceneByID($paraObj->sceneID);
-                        $paraObj-> sceneObj =  $scene;
+                        $scene = $this->getSceneByID($this->paraObj->sceneID);
+                        $this->paraObj-> sceneObj =  $scene;
 
                         //get case related data
-                        $caseInstance = new Cases($paraObj->sceneID, null);
-                        $case = $caseInstance->getCaseByScene($paraObj->sceneID);
-                        $paraObj-> caseObj = $case ; 
+                        $caseInstance = new Cases($this->paraObj->sceneID, null);
+                        $case = $caseInstance->getCaseByScene($this->paraObj->sceneID);
+                        $this->paraObj-> caseObj = $case ; 
                         
-
-
                         //get victims of the scene
-                       $sceneVictims = new SceneVictims($paraObj->sceneID, null);
-                       $sceneVictimsObj = $sceneVictims->getSceneVictims($paraObj->sceneID);
-                       $paraObj-> victimsObj = $sceneVictimsObj;
+                       $sceneVictims = new SceneVictims($this->paraObj->sceneID, null);
+                       $sceneVictimsObj = $sceneVictims->getSceneVictims($this->paraObj->sceneID);
+                       $this->paraObj-> victimsObj = $sceneVictimsObj;
 
                        }
 
         
-            return $paraObj;
+            return $this->paraObj;
         
         
     }

@@ -22,7 +22,13 @@ class Burn extends Scene{
     private $igniterAtScene;
     private $igniterUsed;
     private $foulPlaySuspected;
-             
+    private $wasBodyHospitilized;
+    private $howBurnWoundsSustained;
+    private $bodyCharred;
+    private $wierdSmell;
+    private $anyPotentialWeapons;
+    private $wasItCommunityAssault;
+    
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -42,6 +48,12 @@ class Burn extends Scene{
                 $this->igniterAtScene = $formData['object'][$i]['igniterAtScene'];
                 $this->igniterUsed = $formData['object'][$i]['igniterUsed'];
                 $this->foulPlaySuspected = $formData['object'][$i]['foulPlaySuspected'];
+                $this->wasBodyHospitilized = $formData['object'][$i]['wasBodyHospitilized'];
+                $this->howBurnWoundsSustained = $formData['object'][$i]['howBurnWoundsSustained'];
+                $this->bodyCharred = $formData['object'][$i]['bodyCharred'];
+                $this->wierdSmell = $formData['object'][$i]['wierdSmell'];
+                $this->anyPotentialWeapons = $formData['object'][$i]['anyPotentialWeapons'];
+                $this->wasItCommunityAssault = $formData['object'][$i]['wasItCommunityAssault'];
                     //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
@@ -64,28 +76,29 @@ class Burn extends Scene{
     private function addBurn($sceneID,$inside,$object) {
         if($this->accelerantsUsed != NULL && $this->igniterAtScene != NULL)
         {
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected')");
+            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
         }else if($this->accelerantsUsed == NULL && $this->igniterAtScene != NULL){
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected')");
+            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
         }  else if($this->accelerantsUsed != NULL && $this->igniterAtScene == NULL) {
-              $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene',null,'$this->foulPlaySuspected')");
+              $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene',null,'$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
         }  else if($this->accelerantsUsed == NULL && $this->igniterAtScene == NULL) {
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene',null,'$this->foulPlaySuspected')");
+            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene',null,'$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
         }
         
         if($inside == TRUE){
-            $h_res = mysql_query("select burnID from burn where sceneID=".$sceneID);
+            $h_res = mysql_query("select * from burn where sceneID=".$sceneID);
             $burnID = mysql_result($h_res,0,'burnID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
+            $bd = $object['buildingDamaged'];
             if($va != "yes")
             {
-                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va','$pv','$bd')");
             }else{
-                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null,'$bd')");
             }
         }
     }
@@ -117,7 +130,12 @@ class Burn extends Scene{
                 $h_array['igniterAtScene'] = $array['igniterAtScene'];
                 $h_array['igniterUsed'] = $array['igniterUsed'];
                 $h_array['foulPlaySuspected'] = $array['foulPlaySuspected'];
-                
+                $h_array['wasBodyHospitilized'] = $array['wasBodyHospitilized'];
+                $h_array['howBurnWoundsSustained'] = $array['howBurnWoundsSustained'];
+                $h_array['bodyCharred'] = $array['bodyCharred'];
+                $h_array['wierdSmell'] = $array['wierdSmell'];
+                $h_array['anyPotentialWeapons'] = $array['anyPotentialWeapons'];
+                $h_array['wasItCommunityAssault'] = $array['wasItCommunityAssault'];
                 
                 $hi_res = mysql_query("select * from burninside where burnID=".$h_array['burnID']);
                 if(mysql_num_rows($hi_res) > 0)
@@ -194,6 +212,12 @@ class Burn extends Scene{
                 $h_array['igniterAtScene'] = $array['igniterAtScene'];
                 $h_array['igniterUsed'] = $array['igniterUsed'];
                 $h_array['foulPlaySuspected'] = $array['foulPlaySuspected'];
+                $h_array['wasBodyHospitilized'] = $array['wasBodyHospitilized'];
+                $h_array['howBurnWoundsSustained'] = $array['howBurnWoundsSustained'];
+                $h_array['bodyCharred'] = $array['bodyCharred'];
+                $h_array['wierdSmell'] = $array['wierdSmell'];
+                $h_array['anyPotentialWeapons'] = $array['anyPotentialWeapons'];
+                $h_array['wasItCommunityAssault'] = $array['wasItCommunityAssault'];
                 
                 $hi_res = mysql_query("select * from burninside where burnID=".$h_array['burnID']);
                 if(mysql_num_rows($hi_res) > 0)
