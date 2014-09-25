@@ -70,6 +70,11 @@ $(document).ready(function (){
         searchUser($("#userSearch").val());
         
     });
+    $("#auditSearchButton").click(function(){
+        searchAudit($("#auditSearch").val());
+        
+    });
+    
     $(".listUsers").click(function(){
         $(".response").remove();
         loadUsers();
@@ -81,6 +86,8 @@ $(document).ready(function (){
         loadCases();
         
     });
+    
+    
     $("#assignDR").click(function(){ 
         assignDeathRegister($("#deathreg").val());
     });
@@ -139,6 +146,7 @@ function sortBy(by){
 function loadafp(){
     loadUsers();
     loadCases();
+    loadAuditLog();
 }
 function hidePages(){
     $(".page").hide();
@@ -404,7 +412,44 @@ function searchCase(search){
         
     }
 }
-
+function searchAudit(search){
+    try{
+        $(".response").remove();
+        var query = new FormData();
+        query.append("rquest","findAudit");
+        query.append("search",search);
+        query.append("platform","webapp");
+        var request = new XMLHttpRequest();
+        var res = null;
+        request.onreadystatechange = function(){if(request.readyState == 4)
+        {
+            
+            var obj = JSON.parse(request.responseText);
+            var data = "";
+            alert(request.responseText);
+            for(var i = 0; i < obj.length;i++)
+            {
+                
+               data += "<tr class='appendAudit'>";
+                data += "<td>"+obj[i].username+"</td>";
+                data += "<td>"+obj[i].audit_date+" "+obj[i].audit_time+"</td>";
+                data += "<td>"+obj[i].audit_action+"</td>";
+               
+                var sid = obj[i].audit_id;
+                
+                data += "</tr>";
+            }
+            if(obj.length > 0){
+                $(".appendAudit").remove();
+            }
+            $("#audit .table-headers").after(data);
+        }};
+        request.open("POST",URL);
+        request.send(query);
+    }catch(e){
+        
+    }
+}
 
 function getSceneTypeData(type,sceneData){
     var data = "<tr><td colspan='2' class='table-header'>"+type+" Information</td></tr>";
@@ -1231,6 +1276,45 @@ function loadUsers(){
     }
 }
 
+function loadAuditLog(){
+    try{
+        $(".response").remove();
+        var query = new FormData();
+        query.append("rquest","getAudit");
+        query.append("platform","webapp");
+        
+        var request = new XMLHttpRequest();
+        var res = null;
+        request.onreadystatechange = function(){if(request.readyState == 4)
+        {
+            
+            var obj = JSON.parse(request.responseText);
+            
+            var data = "";
+            for(var i = 0; i < obj.length;i++)
+            {
+                data += "<tr class='appendAudit'>";
+                data += "<td>"+obj[i].username+"</td>";
+                data += "<td>"+obj[i].audit_date+" "+obj[i].audit_time+"</td>";
+                data += "<td>"+obj[i].audit_action+"</td>";
+               // data += "<td>"+obj[i].userTypeDescription+"</td>";
+                var sid = obj[i].audit_id;
+                
+                data += "</tr>";
+            }
+            $(".appendAudit").remove();
+            $("#audit .table-headers").after(data);
+        }};
+
+
+        request.open("POST",URL);
+
+        request.send(query);
+    }catch(e){
+        
+    }
+}
+
 function logout(){
     var query = new FormData();
     query.append("rquest","logout");
@@ -1519,24 +1603,12 @@ function activateUser(link){
         query.append("category","deathregister");
         query.append("dr",dr);
         query.append("cn",currentCaseNumber);
-        /*$.ajax({
-         url: URL,
-         type: "POST",
-         data: query,
-         processData: false,  // tell jQuery not to process the data
-         contentType: false,   // tell jQuery not to set contentType
-         success:function(result){
-                alert(result.responseText);
-         },
-         error:function(result){
-             alert(result.responseText);
-         }
-       });*/
+        
          var request = new XMLHttpRequest();
         var res = null;
         request.onreadystatechange = function(){if(request.readyState == 4)
         {
-                alert(request.responseText);
+                //alert(request.responseText);
 
         }};
 

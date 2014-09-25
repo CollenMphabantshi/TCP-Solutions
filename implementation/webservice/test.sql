@@ -24,9 +24,9 @@ create table if not exists accessMode(
 create table if not exists audit_log(
     audit_id int not null auto_increment,
     audit_uid int not null,
-    audit_date date,
-    audit_time text,
-    audit_action text,
+    audit_date date not null,
+    audit_time text not null,
+    audit_action text not null,
     primary key(audit_id)
 );
 

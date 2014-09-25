@@ -5,6 +5,7 @@
 */
 error_reporting(E_ERROR | E_PARSE);
 require_once("Rest.inc.php");
+require_once("Audit.php");
 require_once("Administrator.php");
 require_once("Aviation.php");
 require_once("Bicycle.php");
@@ -58,13 +59,28 @@ public function __construct()
 public function processApi()
 {
     $func = strtolower(trim(str_replace("/","",$_REQUEST['rquest'])));
-    if((int)method_exists($this,$func) > 0)
+    $enc = new Encryption();
+    if($func === "login")
     {
-       $this->$func();    
-    }
-    else
-    {
-       $this->response('',404);   
+        if((int)method_exists($this,$func) > 0)
+        {
+           $this->$func();    
+        }
+        else
+        {
+           $this->response('',404);   
+        }
+    }else if(!empty($_SESSION[$enc->md5_encrypt('s_nomor')])){
+        if((int)method_exists($this,$func) > 0)
+        {
+           $this->$func();    
+        }
+        else
+        {
+           $this->response('',404);   
+        }
+    }else{
+        $this->response('',404);
     }
 // If the method not exist with in this class, response would be "Page not found".
 }
@@ -1391,7 +1407,7 @@ private function getSceneData() {
     
 }
 
-public function getFOCaseList()
+private function getFOCaseList()
 {
     if($this->get_request_method() != "POST")
     {
@@ -1413,7 +1429,7 @@ public function getFOCaseList()
         $this->response($this->json($error), 400); 
      }
 }
-public function findFOCases()
+private function findFOCases()
 {
     if($this->get_request_method() != "POST")
     {
@@ -1430,6 +1446,63 @@ public function findFOCases()
         $cases = new Cases(null, null,$this);
         //$error = array('status' => "Success", "msg" => "Request was denied.");
         $this->response($this->json($cases->findCases($search)), 200);
+     } catch (Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request was denied.");
+        $this->response($this->json($error), 400); 
+     }
+}
+
+private function getAudit() {
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
+    if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
+            stripslashes_deep($_POST);
+            stripslashes_deep($_COOKIE);
+    }
+    
+     try {
+        $enc = new Encryption();
+        
+        $audit = new Audit();
+        $res = $audit->getAuditLog();
+        if($res !== FALSE && $res !== NULL)
+        {
+            $this->response($this->json($res), 200);
+        }else{
+            $error = array('status' => "Failed", "msg" => "Request to view audit log was denied.");
+            $this->response($this->json($error), 400);
+        }
+     } catch (Exception $ex){
+        $error = array('status' => "Failed", "msg" => "Request was denied.");
+        $this->response($this->json($error), 400); 
+     }
+}
+
+private function findAudit()
+{
+    if($this->get_request_method() != "POST")
+    {
+       $this->response('',406);
+    }
+    if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
+            stripslashes_deep($_POST);
+            stripslashes_deep($_COOKIE);
+    }
+    
+     try {
+        $enc = new Encryption();
+        $search = $enc->decrypt_request($this->_request['search']);
+        $audit = new Audit();
+        $res = $audit->findAuditLog($search);
+        if($res !== FALSE && $res !== NULL)
+        {
+            $this->response($this->json($res), 200);
+        }else{
+            $error = array('status' => "Failed", "msg" => "Request to view audit log was denied.");
+            $this->response($this->json($error), 400);
+        }
      } catch (Exception $ex){
         $error = array('status' => "Failed", "msg" => "Request was denied.");
         $this->response($this->json($error), 400); 
@@ -1457,9 +1530,8 @@ private function jsonToArray($data)
 
 }
 
-// Initiiate Library
-$api = new API;
 
-$api->processApi();
+    $api = new API;
+    $api->processApi();
 
 ?>

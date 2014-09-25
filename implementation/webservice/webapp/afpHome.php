@@ -23,7 +23,6 @@
             <div id="Page1" class="page">
                 <div id="afpHome-left">
                     <div class="searchForm">
-
                         <input type="search" name="userSearch" id="userSearch"  /> <input type="image" name="userSearchButton" id="userSearchButton" src="images/icons/search-black.png" />
                         <br/> <br/> <br/>
                     </div>
@@ -125,6 +124,24 @@
                             
                         </table><br/>
                        
+                    </div>
+                </div>
+            </div>
+            <div id="Page4" class="page">
+                <div id="auditLog-left">
+                    <div class="searchForm">
+                        <input type="search" name="auditSearch" id="auditSearch"  /> <input type="image" name="auditSearchButton" id="auditSearchButton" src="images/icons/search-black.png" />
+                        <br/> <br/> <br/>
+                    </div>
+                    <div class="AuditList">
+                        <table id="audit">
+                            <tr class="table-headers">
+                                <th>User Name</th>
+                                <th>Audit Date &amp; Time</th>
+                                <th>Audit Action</th>
+                            </tr>
+                            
+                        </table>
                     </div>
                 </div>
             </div>

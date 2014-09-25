@@ -209,7 +209,27 @@ table td{
     
 }
 
-#search, #userSearch{
+#audit{
+    width: 100%;
+}
+#audit tr th{
+    padding: 0.25rem;
+    background-color:#006666;
+    color:white;
+    
+}
+#audit table{
+    padding: 0.25rem;
+    text-align: left;
+    width:100%;
+}
+#audit tr td{
+   padding: 0.25rem;
+   text-align: left;
+    
+}
+
+#search, #userSearch, #auditSearch{
     width:60%;
     height:40px;
     margin-left:8%;
@@ -225,6 +245,12 @@ h1,h2{
     height:600px;
 }
 .userList{
+    width:100%;
+    overflow-x:hidden;
+    height:600px;
+}
+
+.auditList{
     width:100%;
     overflow-x:hidden;
     height:600px;
