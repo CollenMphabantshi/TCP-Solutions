@@ -109,6 +109,13 @@
         <item>Dusk</item>
         <item>Dawn</item>
     </string-array>
+    
+       <string-array name="victimTypes">
+        <item>Driver</item>
+        <item>Front seat passenger</item>
+        <item>Back seat passanger</item>
+        <item>Unknown(Specify)</item>
+    </string-array>
 
     <string name="chooseYN"> choose </string>
 
@@ -125,6 +132,18 @@
         <item>Back</item>
         <item>Right side</item>
         <item>Left side</item>
+    </string-array>
+     <string-array name="hitType">
+        <item>Single car/taxi/bus accident</item>
+        <item>Truck only accident</item>
+        <item>Car/taxi/bus-car/taxi/bus accident</item>
+        <item>Car/taxi/bus-motorcycle accident</item>
+        <item>Car/taxi/bus-truck accident</item>
+        <item>Truck- truck accident</item>
+        <item>Car/taxi/bus-still standing object accident</item>
+        <item>Truck- still standing object accident</item>
+        <item>Car/taxi/bus- train accident</item>
+        <item>Truck- train accident</item>
     </string-array>
     <string-array name="railwaysceneofinjury">
         <item>On the train tracks </item>

@@ -87,14 +87,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Blunt extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+public class Mva extends Activity implements GlobalMethods, OnMyLocationChangeListener{
 	
 	
 	
 	TextView value;
-
-	
-	
 
 	private EditText ioName;
 	
@@ -117,7 +114,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private EditText victimSurname;
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	
+	private EditText victimAge;
 	
 	
 	
@@ -197,11 +194,11 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private TextView tv_communityAssault;
 	private RadioButton communityAssaultYes;
 	private RadioButton communityAssaultNo;
-	private TextView tv_bluntObjectUsed;
-	private EditText bluntObjectUsed;
-	private TextView tv_bluntForceObjectOnScene;
-	private RadioButton bluntForceObjectOnSceneYes;
-	private RadioButton bluntForceObjectOnSceneNo;
+	private TextView tv_mvaObjectUsed;
+	private EditText mvaObjectUsed;
+	private TextView tv_mvaForceObjectOnScene;
+	private RadioButton mvaForceObjectOnSceneYes;
+	private RadioButton mvaForceObjectOnSceneNo;
 	private TextView tv_strangulationSuspected;
 	private RadioButton strangulationSuspectedYes;
 	private RadioButton strangulationSuspectedNo;
@@ -278,7 +275,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.blunt);
+		setContentView(R.layout.motorvehicleaccident);
 		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		if (!enabled) {
@@ -291,7 +288,6 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		
 		initialize();
-		System.out.println("Start init");
 		variablesInitialization();
 		CheckRadioButtons();
 		setOnClickEvents();
@@ -319,12 +315,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			}
 			return location;
 			
-		}
+	}
 	
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "Blunt_" + timeStamp + "_";
+	    String imageFileName = "mva_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
@@ -493,137 +489,139 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.blunt_io_name);
+		ioName = (EditText)findViewById(R.id.mva_io_name);
 		
-		ioSurname = (EditText)findViewById(R.id.blunt_io_surname);
+		ioSurname = (EditText)findViewById(R.id.mva_io_surname);
 		
-		ioRank = (EditText)findViewById(R.id.blunt_io_rank);
+		ioRank = (EditText)findViewById(R.id.mva_io_rank);
 		
-		ioCellNo = (EditText)findViewById(R.id.blunt_io_cell);
+		ioCellNo = (EditText)findViewById(R.id.mva_io_cell);
 		
-		tv_foosName = (TextView)findViewById(R.id.blunt_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.blunt_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.blunt_tv_foos_surname);
-		foosSurname = (EditText)findViewById(R.id.blunt_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.blunt_tv_foos_rank);
-		foosRank = (EditText)findViewById(R.id.blunt_foos_rank);
+		tv_foosName = (TextView)findViewById(R.id.mva_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.mva_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.mva_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.mva_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.mva_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.mva_foos_rank);
 		
 	
 		
-		tv_victimName = (TextView)findViewById(R.id.blunt_tv_victim_name);
-		victimName = (EditText)findViewById(R.id.blunt_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.blunt_tv_victim_surname);
-		victimSurname = (EditText)findViewById(R.id.blunt_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.blunt_tv_victim_id);
-		victimIDNo = (EditText)findViewById(R.id.blunt_victim_id);
+		tv_victimName = (TextView)findViewById(R.id.mva_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.mva_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.mva_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.mva_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.mva_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.mva_victim_id);
+		victimAge = (EditText)findViewById(R.id.mva_victim_age);
 		
-		rgbMale = (RadioButton)findViewById(R.id.blunt_rgbMale);
-		rgbFemale = (RadioButton)findViewById(R.id.blunt_rgbFemale);
-		rgbUnknownGender = (RadioButton)findViewById(R.id.blunt_rgbUnknownGender);
+		rgbMale = (RadioButton)findViewById(R.id.mva_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.mva_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.mva_rgbUnknownGender);
 		
-		rgbAsian = (RadioButton)findViewById(R.id.blunt_rgbAsian);
-		rgbBlack = (RadioButton)findViewById(R.id.blunt_rgbBlack);
-		rgbColoured = (RadioButton)findViewById(R.id.blunt_rgbColoured);
-		rgbWhite = (RadioButton)findViewById(R.id.blunt_rgbWhite);
-		rgbUnknownRace = (RadioButton)findViewById(R.id.blunt_rgbUnknownRace);
-		
-		
-		theBody = (TextView)findViewById(R.id.blunt_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.blunt_tv_bodyDecomposed);
-		bodyDecomposedYes = (RadioButton)findViewById(R.id.blunt_bodyDecomposedYes);
-		bodyDecomposedNo = (RadioButton)findViewById(R.id.blunt_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.blunt_tv_medicalIntervention);
-		medicalInterventionYes = (RadioButton)findViewById(R.id.blunt_medicalInterventionYes);
-		medicalInterventionNo = (RadioButton)findViewById(R.id.blunt_medicalInterventionNo);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.blunt_tv_whoFoundVictimBody);
-		whoFoundVictimBody = (EditText)findViewById(R.id.blunt_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.blunt_tv_closeToWater);
-		closeToWaterYes = (RadioButton)findViewById(R.id.blunt_closeToWaterYes);
-		closeToWaterNo = (RadioButton)findViewById(R.id.blunt_closeToWaterNo);
-		tv_rapeHomicide = (TextView)findViewById(R.id.blunt_tv_rapeHomicide);
-		rapeHomicideYes = (RadioButton)findViewById(R.id.blunt_rapeHomicideYes);
-		rapeHomicideNo = (RadioButton)findViewById(R.id.blunt_rapeHomicideNo);
-		tv_suicideSuspected = (TextView)findViewById(R.id.blunt_tv_suicideSuspected);
-		suicideSuspectedYes = (RadioButton)findViewById(R.id.blunt_suicideSuspectedYes);
-		suicideSuspectedNo = (RadioButton)findViewById(R.id.blunt_suicideSuspectedNo);
-		tv_previousAttempts = (TextView)findViewById(R.id.blunt_tv_previousAttempts);
-		previousAttemptsYes = (RadioButton)findViewById(R.id.blunt_previousAttemptsYes);
-		previousAttemptsNo = (RadioButton)findViewById(R.id.blunt_previousAttemptsNo);
-		tv_howManyAttempts = (TextView)findViewById(R.id.blunt_tv_howManyAttempts);
-		howManyAttempts = (EditText)findViewById(R.id.blunt_howManyAttempts);
+		rgbAsian = (RadioButton)findViewById(R.id.mva_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.mva_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.mva_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.mva_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.mva_rgbUnknownRace);
 		
 		
-		sceneOfInjury = (TextView)findViewById(R.id.blunt_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.blunt_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.blunt_tv_whereInside);
-		sceneIType = (Spinner)findViewById(R.id.blunt_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.blunt_tv_sceneITypeOther);
-		sceneITypeOther = (EditText)findViewById(R.id.blunt_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.blunt_tv_doorLocked);
-		doorLockedYes = (RadioButton)findViewById(R.id.blunt_DoorLockedYes);
-		doorLockedNo = (RadioButton)findViewById(R.id.blunt_DoorLockedNo);
-		tv_windowsClosed = (TextView)findViewById(R.id.blunt_tv_windowsClosed);
-		windowsClosedYes = (RadioButton)findViewById(R.id.blunt_WindowsClosedYes);
-		windowsClosedNo = (RadioButton)findViewById(R.id.blunt_WindowsClosedNo);
-		tv_windowsBroken = (TextView)findViewById(R.id.blunt_tv_windowsBroken);
-		windowsBrokenYes = (RadioButton)findViewById(R.id.blunt_WindowsBrokenYes);
-		windowsBrokenNo = (RadioButton)findViewById(R.id.blunt_WindowsBrokenNo);
-		tv_victimAlone = (TextView)findViewById(R.id.blunt_tv_victimAlone);
-		victimAloneYes = (RadioButton)findViewById(R.id.blunt_VictimAloneYes);
-		victimAloneNo = (RadioButton)findViewById(R.id.blunt_VictimAloneNo);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.blunt_tv_peopleWithVictim);
-		peopleWithVictim = (EditText)findViewById(R.id.blunt_peopleWithVictim);
-		tv_sceneOType = (TextView)findViewById(R.id.blunt_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.blunt_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.blunt_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.blunt_sceneOTypeOther);
+		theBody = (TextView)findViewById(R.id.mva_tv_the_body);
+		tv_eyewitnesses = (TextView)findViewById(R.id.mva_tv_eyewitnesses);
+		EyewitnessesYes = (RadioButton)findViewById(R.id.mva_EyewitnessesYes);
+		EyewitnessesNo = (RadioButton)findViewById(R.id.mva_EyewitnessesNo);
+		tv_bodyBurnt = (TextView)findViewById(R.id.mva_tv_bodyBurnt);
+		bodyBurntYes = (RadioButton)findViewById(R.id.mva_bodyBurntYes);
+		bodyBurntNo = (RadioButton)findViewById(R.id.mva_bodyBurntNo);
+		tv_medicalIntervention = (TextView)findViewById(R.id.mva_tv_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.mva_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.mva_medicalInterventionNo);
+		tv_closeToWater = (TextView)findViewById(R.id.mva_tv_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.mva_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.mva_closeToWaterNo);
+		tv_rapeHomicide = (TextView)findViewById(R.id.mva_tv_rapeHomicide);
+		rapeHomicideYes = (RadioButton)findViewById(R.id.mva_rapeHomicideYes);
+		rapeHomicideNo = (RadioButton)findViewById(R.id.mva_rapeHomicideNo);
+		tv_suicideSuspected = (TextView)findViewById(R.id.mva_tv_suicideSuspected);
+		suicideSuspectedYes = (RadioButton)findViewById(R.id.mva_suicideSuspectedYes);
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.mva_suicideSuspectedNo);
+		tv_previousAttempts = (TextView)findViewById(R.id.mva_tv_previousAttempts);
+		previousAttemptsYes = (RadioButton)findViewById(R.id.mva_previousAttemptsYes);
+		previousAttemptsNo = (RadioButton)findViewById(R.id.mva_previousAttemptsNo);
+		tv_howManyAttempts = (TextView)findViewById(R.id.mva_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.mva_howManyAttempts);
+		
+		
+		sceneOfInjury = (TextView)findViewById(R.id.mva_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.mva_tv_sceneIOType);
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.mva_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.mva_SceneIOTypeOutside);
+		tv_whereInside = (TextView)findViewById(R.id.mva_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.mva_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.mva_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.mva_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.mva_tv_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.mva_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.mva_DoorLockedNo);
+		tv_windowsClosed = (TextView)findViewById(R.id.mva_tv_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.mva_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.mva_WindowsClosedNo);
+		tv_windowsBroken = (TextView)findViewById(R.id.mva_tv_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.mva_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.mva_WindowsBrokenNo);
+		tv_victimAlone = (TextView)findViewById(R.id.mva_tv_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.mva_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.mva_VictimAloneNo);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.mva_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.mva_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.mva_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.mva_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.mva_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.mva_sceneOTypeOther);
 		
 		System.out.println("after page 3");
-		sceneLook = (TextView)findViewById(R.id.blunt_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.blunt_tv_signsOfStruggle);
-		signsOfStruggleYes = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleYes);
-		signsOfStruggleNo = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleNo);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.blunt_tv_alcoholBottleAround);
-		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundYes);
-		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundNo);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.blunt_tv_drugParaphernalia);
-		drugParaphernaliaYes = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaYes);
-		drugParaphernaliaNo = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaNo);
+		sceneLook = (TextView)findViewById(R.id.mva_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.mva_tv_signsOfStruggle);
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.mva_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.mva_SignsOfStruggleNo);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.mva_tv_alcoholBottleAround);
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.mva_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.mva_AlcoholBottleAroundNo);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.mva_tv_drugParaphernalia);
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.mva_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.mva_DrugParaphernaliaNo);
 		
 		
-		theScene = (TextView)findViewById(R.id.blunt_theScene);
-		tv_communityAssault = (TextView)findViewById(R.id.blunt_tv_communityAssault);
-		communityAssaultYes = (RadioButton)findViewById(R.id.blunt_CommunityAssaultYes);
-		communityAssaultNo = (RadioButton)findViewById(R.id.blunt_CommunityAssaultNo);
-		tv_bluntObjectUsed = (TextView)findViewById(R.id.blunt_tv_bluntObjectUsed);
-		bluntObjectUsed = (EditText)findViewById(R.id.blunt_bluntObjectUsed);
-		tv_bluntForceObjectOnScene = (TextView)findViewById(R.id.blunt_tv_bluntForceObjectOnScene);
-		bluntForceObjectOnSceneYes = (RadioButton)findViewById(R.id.blunt_BluntForceObjectOnSceneYes);
-		bluntForceObjectOnSceneNo = (RadioButton)findViewById(R.id.blunt_BluntForceObjectOnSceneNo);
-		tv_strangulationSuspected = (TextView)findViewById(R.id.blunt_tv_strangulationSuspected);
-		strangulationSuspectedYes = (RadioButton)findViewById(R.id.blunt_StrangulationSuspectedYes);
-		strangulationSuspectedNo = (RadioButton)findViewById(R.id.blunt_StrangulationSuspectedNo);
-		tv_smotheringSuspected = (TextView)findViewById(R.id.blunt_tv_smotheringSuspected);
-		smotheringSuspectedYes = (RadioButton)findViewById(R.id.blunt_SmotheringSuspectedYes);
-		smotheringSuspectedNo = (RadioButton)findViewById(R.id.blunt_SmotheringSuspectedNo);
-		tv_chockingSuspected = (TextView)findViewById(R.id.blunt_tv_chockingSuspected);
-		chockingSuspectedYes = (RadioButton)findViewById(R.id.blunt_ChockingSuspectedYes);
-		chockingSuspectedNo = (RadioButton)findViewById(R.id.blunt_ChockingSuspectedNo);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.blunt_tv_suicideNoteFound);
-		suicideNoteFoundYes = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundYes);
-		suicideNoteFoundNo = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundNo);
-		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
-		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
+		theScene = (TextView)findViewById(R.id.mva_theScene);
+		tv_communityAssault = (TextView)findViewById(R.id.mva_tv_communityAssault);
+		communityAssaultYes = (RadioButton)findViewById(R.id.mva_CommunityAssaultYes);
+		communityAssaultNo = (RadioButton)findViewById(R.id.mva_CommunityAssaultNo);
+		tv_mvaObjectUsed = (TextView)findViewById(R.id.mva_tv_mvaObjectUsed);
+		mvaObjectUsed = (EditText)findViewById(R.id.mva_mvaObjectUsed);
+		tv_mvaForceObjectOnScene = (TextView)findViewById(R.id.mva_tv_mvaForceObjectOnScene);
+		mvaForceObjectOnSceneYes = (RadioButton)findViewById(R.id.mva_mvaForceObjectOnSceneYes);
+		mvaForceObjectOnSceneNo = (RadioButton)findViewById(R.id.mva_mvaForceObjectOnSceneNo);
+		tv_strangulationSuspected = (TextView)findViewById(R.id.mva_tv_strangulationSuspected);
+		strangulationSuspectedYes = (RadioButton)findViewById(R.id.mva_StrangulationSuspectedYes);
+		strangulationSuspectedNo = (RadioButton)findViewById(R.id.mva_StrangulationSuspectedNo);
+		tv_smotheringSuspected = (TextView)findViewById(R.id.mva_tv_smotheringSuspected);
+		smotheringSuspectedYes = (RadioButton)findViewById(R.id.mva_SmotheringSuspectedYes);
+		smotheringSuspectedNo = (RadioButton)findViewById(R.id.mva_SmotheringSuspectedNo);
+		tv_chockingSuspected = (TextView)findViewById(R.id.mva_tv_chockingSuspected);
+		chockingSuspectedYes = (RadioButton)findViewById(R.id.mva_ChockingSuspectedYes);
+		chockingSuspectedNo = (RadioButton)findViewById(R.id.mva_ChockingSuspectedNo);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.mva_tv_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.mva_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.mva_SuicideNoteFoundNo);
+		tv_generalHistory = (TextView)findViewById(R.id.mva_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.mva_generalHistory);
 		
 		
-		response = (TextView)findViewById(R.id.blunt_tv_response);
+		response = (TextView)findViewById(R.id.mva_tv_response);
 		
-		doneButton = (Button)findViewById(R.id.blunt_doneButton);
-		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
+		doneButton = (Button)findViewById(R.id.mva_doneButton);
+		logoutButton = (Button)findViewById(R.id.mva_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.blunt_BackToMenu);
+		BackToMenu = (Button)findViewById(R.id.mva_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -641,9 +639,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.blunt_galleryLayout);
+	       Gallery = (GridLayout) findViewById(R.id.mva_galleryLayout);
 	       // weather section
-	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
+	       weatherInfo = (TextView) findViewById(R.id.mvaWeatherInfo);
 		
 		
 		
@@ -674,20 +672,20 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							//if(uploadFileName.size() > 0){
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Blunt.this, "", "Uploading file...", true);
+										dialog = ProgressDialog.show(Mva.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
 						                             runOnUiThread(new Runnable() {
 						                                    public void run() {
 						                                        
-						                                        Toast.makeText(Blunt.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                        Toast.makeText(Mva.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
 						                                });                      
 						                             for(int i=0; i < uploadFileName.size(); i++){
@@ -701,19 +699,19 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
-										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+										Toast.makeText(Mva.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
+							//}
+							//else{
 								
-								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
+								//Toast.makeText(mva.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
 								
-							}
+							//}
 						}else{
-							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
+							Toast.makeText(Mva.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
@@ -781,7 +779,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","blunt"));
+		        pairs.add(new BasicNameValuePair("category","mva"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
 		        new Read().execute(pairs);
 			}
@@ -1098,7 +1096,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	                                              +filename;
 	                                 
 	                                messageText.setText(msg);
-	                                Toast.makeText(Blunt.this, "File Upload Complete.", 
+	                                Toast.makeText(Mva.this, "File Upload Complete.", 
 	                                             Toast.LENGTH_SHORT).show();
 	                            }
 	                        });                
@@ -1117,7 +1115,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	                  runOnUiThread(new Runnable() {
 	                      public void run() {
 	                          messageText.setText("MalformedURLException Exception : check script url.");
-	                          Toast.makeText(Blunt.this, "MalformedURLException", 
+	                          Toast.makeText(Mva.this, "MalformedURLException", 
 	                                                              Toast.LENGTH_SHORT).show();
 	                      }
 	                  });
@@ -1131,7 +1129,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	                  runOnUiThread(new Runnable() {
 	                      public void run() {
 	                          messageText.setText("Got Exception : see logcat ");
-	                          Toast.makeText(Blunt.this, "Got Exception : see logcat ", 
+	                          Toast.makeText(Mva.this, "Got Exception : see logcat ", 
 	                                  Toast.LENGTH_SHORT).show();
 	                      }
 	                  });
@@ -1149,8 +1147,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("mva"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1166,7 +1164,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
 	        }else{
-	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1252,7 +1250,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("bluntIOType",getIOType() );
+	        info.accumulate("mvaIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
 	        {
 	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1322,12 +1320,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        
 	        
 	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
-	        info.accumulate("bluntForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(bluntObjectUsed.getText().toString())));
-	        if(bluntForceObjectOnSceneYes.isChecked())
+	        info.accumulate("mvaForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(mvaObjectUsed.getText().toString())));
+	        if(mvaForceObjectOnSceneYes.isChecked())
 	        {
-	        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("mvaForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("mvaForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(communityAssaultYes.isChecked())
@@ -1564,7 +1562,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("bluntIOType",getIOType() );
+        info.accumulate("mvaIOType",getIOType() );
         if(signsOfStruggleYes.isChecked())
         {
         	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1634,12 +1632,12 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
         
         
         info.accumulate("peopleWithVictim", getPeopleWithVictim());
-        info.accumulate("bluntForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(bluntObjectUsed.getText().toString())));
-        if(bluntForceObjectOnSceneYes.isChecked())
+        info.accumulate("mvaForceObjectSuspected", Encryption.bytesToHex(enc.encrypt(mvaObjectUsed.getText().toString())));
+        if(mvaForceObjectOnSceneYes.isChecked())
         {
-        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("mvaForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("bluntForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("mvaForceObjectStillOnScene", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         if(communityAssaultYes.isChecked())
@@ -1929,9 +1927,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			}
 		}
 		
-		if( bluntObjectUsed.getText().toString().length() == 0){
-			bluntObjectUsed.requestFocus();
-			bluntObjectUsed.setError("sorry empty field");
+		if( mvaObjectUsed.getText().toString().length() == 0){
+			mvaObjectUsed.requestFocus();
+			mvaObjectUsed.setError("sorry empty field");
 			return false;
 		}
 		
@@ -1985,7 +1983,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		}
 		howManyAttempts.setText("");
 		
-		bluntObjectUsed.setText("");
+		mvaObjectUsed.setText("");
 	
 		generalHistory.setText("");
 		
@@ -2071,7 +2069,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 		communityAssaultNo.setChecked(true);
 	
-		bluntForceObjectOnSceneNo.setChecked(true);
+		mvaForceObjectOnSceneNo.setChecked(true);
 		
 		strangulationSuspectedNo.setChecked(true);
 	
