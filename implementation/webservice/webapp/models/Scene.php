@@ -66,7 +66,7 @@ class Scene{
             $st_array = mysql_fetch_array($st_res);
             
             $stype = $st_array['sceneTypeID'];
-
+            
             $query = "insert into scene values(0,$stype,'$this->time','$this->date','$this->location','$this->temperature','$this->investigatingOfficerName','$this->investigatingOfficerRank','$this->investigatingOfficerCellNo','$this->firstOfficerOnSceneName','$this->firstOfficerOnSceneRank')"; 
             
             $scene_res = mysql_query($query);

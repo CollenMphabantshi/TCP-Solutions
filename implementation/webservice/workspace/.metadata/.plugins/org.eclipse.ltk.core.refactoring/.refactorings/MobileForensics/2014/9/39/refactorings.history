@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MobileForensics/res/layout/electocutionlightning.xml&apos; to &apos;electrocutionlightning.xml&apos;" description="Rename resource &apos;electocutionlightning.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/layout/electocutionlightning.xml" name="electrocutionlightning.xml" stamp="1411546052150" updateReferences="true"/>
+</session>

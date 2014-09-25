@@ -8,7 +8,7 @@
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Blunt force injury/ assault"
+		android:text="Fall/push/jump from height"
 		style="@style/heading"/>"
 	
     <ScrollView 
@@ -334,7 +334,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="9"
+				android:rowCount="10"
         		android:columnCount="2">
 							        
 				<TextView 
@@ -428,7 +428,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="9"
+				android:rowCount="15"
         		android:columnCount="2"
 			    >
 				
@@ -1162,7 +1162,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="10"
+				android:rowCount="15"
         		android:columnCount="2"
 			    >
 				

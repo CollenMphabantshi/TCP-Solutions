@@ -212,7 +212,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -268,24 +268,30 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fromheight);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		try{
+			setContentView(R.layout.fromheight);
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					} 
+				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		
-		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 	
@@ -624,7 +630,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.height_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.height_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -1132,8 +1138,8 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("fromheight"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1384,7 +1390,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
-				victimAge.setText("0");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();

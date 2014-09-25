@@ -32,11 +32,14 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -208,21 +211,34 @@ public class Hanging extends Activity implements OnMyLocationChangeListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.hanging);
 		
-		GlobalValues.setPages(7);
-		
-		
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-		
-		initializeVariables();
-		
-		initialize();
-		
-		setOnClickEvents();
-		hidePage();
-		showPage();
-		showHideButtons();
+		try{
+			setContentView(R.layout.hanging);
+			
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					} 
+				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			initializeVariables();
+			
+			initialize();
+			
+			setOnClickEvents();
+			hidePage();
+			showPage();
+			showHideButtons();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void initialize(){

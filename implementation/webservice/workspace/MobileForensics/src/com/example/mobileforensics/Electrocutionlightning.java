@@ -220,7 +220,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -276,23 +276,29 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.electocutionlightning);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-		
-		
-		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		
+		try{
+			setContentView(R.layout.electrocutionlightning);
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					} 
+				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	
 	}
@@ -639,7 +645,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.electrocutionLightning_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.electrocutionLightning_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -1126,8 +1132,8 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("electrocutionlightning"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1398,6 +1404,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();

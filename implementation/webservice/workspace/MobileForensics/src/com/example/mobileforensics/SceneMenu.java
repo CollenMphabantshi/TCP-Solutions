@@ -95,7 +95,7 @@ public class SceneMenu extends Activity{
 					}catch(Exception e){e.printStackTrace();}
 					startActivity(select);
 					
-				} catch (ClassNotFoundException e) {
+				}catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

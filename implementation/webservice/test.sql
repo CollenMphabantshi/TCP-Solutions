@@ -354,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `drowning` (
    wasBodyInsideWater text not null,
    whoRemovedBody text null,
    fencedOff text not null,
-   wasGateClosed null,
+   wasGateClosed text null,
    waterType text not null,
    `strangulationSuspected` text NOT NULL,
   `smotheringSuspected` text NOT NULL,

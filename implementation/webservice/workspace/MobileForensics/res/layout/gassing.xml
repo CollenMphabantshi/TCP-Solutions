@@ -8,7 +8,7 @@
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Blunt force injury/ assault"
+		android:text="Gassing"
 		style="@style/heading"/>"
 	
     <ScrollView 
@@ -23,7 +23,7 @@
 			android:gravity="center_horizontal">
 			
 		    <LinearLayout
-			    android:id="@+id/blunt_infoLayout"
+			    android:id="@+id/gassing_infoLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -58,14 +58,14 @@
 				
 		    <!--  -->
 			<TextView
-			    android:id="@+id/blunt_tv_io"			            
+			    android:id="@+id/gassing_tv_io"			            
 				style="@style/sub_headings"
 				android:text="Investigating Officer Information"
 				
 				android:visibility="visible"
 			/>
 			<GridLayout
-			    android:id="@+id/blunt_rl1"
+			    android:id="@+id/gassing_rl1"
 				android:layout_width="fill_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -76,13 +76,13 @@
         		android:columnCount="2">
 							        
 				<TextView 
-					android:id="@+id/blunt_tv_io_name"
+					android:id="@+id/gassing_tv_io_name"
 					style="@style/tv_question"
 					android:text="Name"
 					android:layout_row="0"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_io_name"
+					android:id="@+id/gassing_io_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="0"
@@ -90,13 +90,13 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_io_surname"
+					android:id="@+id/gassing_tv_io_surname"
 					style="@style/tv_question"
 					android:text="Surname"
 					android:layout_row="1"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_io_surname"
+					android:id="@+id/gassing_io_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="1"
@@ -104,26 +104,26 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_io_rank"
+					android:id="@+id/gassing_tv_io_rank"
 					style="@style/tv_question"
 					android:text="Rank"
 					android:layout_row="2"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_io_rank"
+					android:id="@+id/gassing_io_rank"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="2"
             		android:layout_column="1"/>
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_io_cell"
+					android:id="@+id/gassing_tv_io_cell"
 					style="@style/tv_question"
 					android:text="Cell"
 					android:layout_row="3"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_io_cell"
+					android:id="@+id/gassing_io_cell"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="3"
@@ -131,7 +131,7 @@
 			</GridLayout>
 			
 			<TextView
-			    android:id="@+id/blunt_tv_foos"			            
+			    android:id="@+id/gassing_tv_foos"			            
 				style="@style/sub_headings"
 				android:text="First Officer On Scene"
 				
@@ -147,13 +147,13 @@
         		android:columnCount="2">
 							        
 				<TextView 
-					android:id="@+id/blunt_tv_foos_name"
+					android:id="@+id/gassing_tv_foos_name"
 					style="@style/tv_question"
 					android:text="Name"
 					android:layout_row="0"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_foos_name"
+					android:id="@+id/gassing_foos_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="0"
@@ -161,13 +161,13 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_foos_surname"
+					android:id="@+id/gassing_tv_foos_surname"
 					style="@style/tv_question"
 					android:text="Surname"
 					android:layout_row="1"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_foos_surname"
+					android:id="@+id/gassing_foos_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="1"
@@ -175,13 +175,13 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_foos_rank"
+					android:id="@+id/gassing_tv_foos_rank"
 					style="@style/tv_question"
 					android:text="Rank"
 					android:layout_row="2"
             		android:layout_column="0"/>
 				<EditText 
-					android:id="@+id/blunt_foos_rank"
+					android:id="@+id/gassing_foos_rank"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="2"
@@ -191,14 +191,14 @@
 			</LinearLayout>
 			
 		    <LinearLayout
-			    android:id="@+id/blunt_demographicLayout"
+			    android:id="@+id/gassing_demographicLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
 				android:gravity="center_horizontal"
 			    >
 			<TextView
-			    android:id="@+id/blunt_tv_victimGender"	            
+			    android:id="@+id/gassing_tv_victimGender"	            
 				
 				android:text="Victim Gender"
 				style="@style/sub_headings"
@@ -215,7 +215,7 @@
 				android:rowCount="1"
         		android:columnCount="1">
 			<RadioGroup 
-			    android:id="@+id/blunt_rgGender"
+			    android:id="@+id/gassing_rgGender"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="left"
@@ -225,7 +225,7 @@
 			    
 			    >
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbMale"
+			        android:id="@+id/gassing_rgbMale"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -233,7 +233,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbFemale"
+			        android:id="@+id/gassing_rgbFemale"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -241,7 +241,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbUnknownGender"
+			        android:id="@+id/gassing_rgbUnknownGender"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -252,7 +252,7 @@
 			</GridLayout>
 			
 			<TextView
-			    android:id="@+id/blunt_tv_victimRace"			            
+			    android:id="@+id/gassing_tv_victimRace"			            
 				style="@style/sub_headings"
 				android:text="Victim Race"
 				
@@ -269,7 +269,7 @@
 				android:rowCount="1"
         		android:columnCount="1">
 			<RadioGroup 
-			    android:id="@+id/blunt_rgRace"
+			    android:id="@+id/gassing_rgRace"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="left"
@@ -278,7 +278,7 @@
             	android:layout_column="0"
 			    >
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbAsian"
+			        android:id="@+id/gassing_rgbAsian"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -286,7 +286,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbBlack"
+			        android:id="@+id/gassing_rgbBlack"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -294,7 +294,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbColoured"
+			        android:id="@+id/gassing_rgbColoured"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -302,7 +302,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbWhite"
+			        android:id="@+id/gassing_rgbWhite"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -310,7 +310,7 @@
 			    	
 			        />
 			    <RadioButton 
-			        android:id="@+id/blunt_rgbUnknownRace"
+			        android:id="@+id/gassing_rgbUnknownRace"
 			        android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:checked="false"
@@ -321,7 +321,7 @@
 			</GridLayout>
 			
 			<TextView
-			    android:id="@+id/blunt_tv_victimInfo"			            
+			    android:id="@+id/gassing_tv_victimInfo"			            
 				style="@style/sub_headings"
 				android:text="Victim Information (if known individual)"
 				android:layout_margin="5dp"
@@ -338,7 +338,7 @@
         		android:columnCount="2">
 							        
 				<TextView 
-					android:id="@+id/blunt_tv_victim_name"
+					android:id="@+id/gassing_tv_victim_name"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Victim Name"
@@ -347,7 +347,7 @@
             		style="@style/tv_question"
 					/>
 				<EditText 
-					android:id="@+id/blunt_victim_name"
+					android:id="@+id/gassing_victim_name"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="0"
@@ -356,7 +356,7 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_victim_surname"
+					android:id="@+id/gassing_tv_victim_surname"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					style="@style/tv_question"
@@ -365,7 +365,7 @@
             		android:layout_column="0"
 					/>
 				<EditText 
-					android:id="@+id/blunt_victim_surname"
+					android:id="@+id/gassing_victim_surname"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -375,7 +375,7 @@
 							       
 							       
 				<TextView 
-					android:id="@+id/blunt_tv_victim_id"
+					android:id="@+id/gassing_tv_victim_id"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					
@@ -385,7 +385,7 @@
             		android:layout_column="0"
 					/>
 				<EditText 
-					android:id="@+id/blunt_victim_id"
+					android:id="@+id/gassing_victim_id"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -393,7 +393,7 @@
             		android:layout_column="1"
 					/>
 				<TextView 
-					android:id="@+id/blunt_tv_victim_age"
+					android:id="@+id/gassing_tv_victim_age"
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					android:text="Victim Estimated age"
@@ -402,7 +402,7 @@
             		android:layout_column="0"
 					/>
 				<EditText 
-					android:id="@+id/blunt_victim_age"
+					android:id="@+id/gassing_victim_age"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="3"
@@ -414,7 +414,7 @@
 				
 		    <!-- The body Starts  -->
 		    	<TextView 
-				    android:id="@+id/blunt_tv_the_body"
+				    android:id="@+id/gassing_tv_the_body"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
 					
@@ -422,7 +422,7 @@
 					
 					/>
 		    	<GridLayout
-			    android:id="@+id/blunt_theBodyLayout"
+			    android:id="@+id/gassing_theBodyLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -433,7 +433,7 @@
 			    >
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_bodyDecomposed"
+				    android:id="@+id/gassing_tv_bodyDecomposed"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -447,7 +447,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgBodyDecomposed"
+			    android:id="@+id/gassing_rgBodyDecomposed"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -457,7 +457,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_bodyDecomposedYes"
+				    android:id="@+id/gassing_bodyDecomposedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -466,7 +466,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_bodyDecomposedNo"
+				    android:id="@+id/gassing_bodyDecomposedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -478,7 +478,7 @@
 				
 				    
 				<TextView 
-				    android:id="@+id/blunt_tv_medicalIntervention"
+				    android:id="@+id/gassing_tv_medicalIntervention"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -490,7 +490,7 @@
             		android:layout_column="0"
 					/>
 				<RadioGroup 
-			    android:id="@+id/blunt_rgMedicalIntervention"
+			    android:id="@+id/gassing_rgMedicalIntervention"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -500,7 +500,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_medicalInterventionYes"
+				    android:id="@+id/gassing_medicalInterventionYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -509,7 +509,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_medicalInterventionNo"
+				    android:id="@+id/gassing_medicalInterventionNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -520,7 +520,7 @@
 				</RadioGroup> 
 				
 				<TextView
-				    android:id="@+id/blunt_tv_whoFoundVictimBody" 
+				    android:id="@+id/gassing_tv_whoFoundVictimBody" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -532,7 +532,7 @@
             		android:layout_column="0"
 					/>
 				<EditText
-					android:id="@+id/blunt_whoFoundVictimBody"
+					android:id="@+id/gassing_whoFoundVictimBody"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -541,7 +541,7 @@
 					/>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_foundInCar"
+				    android:id="@+id/gassing_tv_foundInCar"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -551,7 +551,7 @@
             		android:layout_column="0"
 					/>
 				<RadioGroup 
-			    android:id="@+id/blunt_rgFoundInCar"
+			    android:id="@+id/gassing_rgFoundInCar"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -561,7 +561,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_foundInCarYes"
+				    android:id="@+id/gassing_foundInCarYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -570,7 +570,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_foundInCarNo"
+				    android:id="@+id/gassing_foundInCarNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -581,7 +581,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_wasCarRunning"
+				    android:id="@+id/gassing_tv_wasCarRunning"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -591,7 +591,7 @@
             		android:layout_column="0"
 					/>
 				<RadioGroup 
-			    android:id="@+id/blunt_rgWasCarRunning"
+			    android:id="@+id/gassing_rgWasCarRunning"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -601,7 +601,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_wasCarRunningYes"
+				    android:id="@+id/gassing_wasCarRunningYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -610,7 +610,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_wasCarRunningNo"
+				    android:id="@+id/gassing_wasCarRunningNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -621,7 +621,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_carWindowClosed"
+				    android:id="@+id/gassing_tv_carWindowClosed"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -631,7 +631,7 @@
             		android:layout_column="0"
 					/>
 				<RadioGroup 
-			    android:id="@+id/blunt_rgCarWindowClosed"
+			    android:id="@+id/gassing_rgCarWindowClosed"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -641,7 +641,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_carWindowClosedYes"
+				    android:id="@+id/gassing_carWindowClosedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -650,7 +650,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_carWindowClosedNo"
+				    android:id="@+id/gassing_carWindowClosedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -661,7 +661,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_pipeConnected"
+				    android:id="@+id/gassing_tv_pipeConnected"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -671,7 +671,7 @@
             		android:layout_column="0"
 					/>
 				<RadioGroup 
-			    android:id="@+id/blunt_rgPipeConnected"
+			    android:id="@+id/gassing_rgPipeConnected"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -681,7 +681,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_pipeConnectedYes"
+				    android:id="@+id/gassing_pipeConnectedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -690,7 +690,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_pipeConnectedNo"
+				    android:id="@+id/gassing_pipeConnectedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -701,7 +701,7 @@
 				</RadioGroup>
 				 
 				<TextView 
-				    android:id="@+id/blunt_tv_suicideSuspected"
+				    android:id="@+id/gassing_tv_suicideSuspected"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -714,7 +714,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgSuicideSuspected"
+			    android:id="@+id/gassing_rgSuicideSuspected"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -724,7 +724,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_suicideSuspectedYes"
+				    android:id="@+id/gassing_suicideSuspectedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -733,7 +733,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_suicideSuspectedNo"
+				    android:id="@+id/gassing_suicideSuspectedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -744,7 +744,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_previousAttempts"
+				    android:id="@+id/gassing_tv_previousAttempts"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -757,7 +757,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgPreviousAttempts"
+			    android:id="@+id/gassing_rgPreviousAttempts"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -767,7 +767,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_previousAttemptsYes"
+				    android:id="@+id/gassing_previousAttemptsYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -776,7 +776,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_previousAttemptsNo"
+				    android:id="@+id/gassing_previousAttemptsNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -786,7 +786,7 @@
 				    
 				</RadioGroup>
 				<TextView 
-				    android:id="@+id/blunt_tv_howManyAttempts"
+				    android:id="@+id/gassing_tv_howManyAttempts"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -798,7 +798,7 @@
             		android:layout_column="0"
 					/>
 				<EditText 
-					android:id="@+id/blunt_howManyAttempts"
+					android:id="@+id/gassing_howManyAttempts"
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -807,7 +807,7 @@
 					/>
 				
 				<TextView
-				    android:id="@+id/blunt_tv_suicideNoteFound"
+				    android:id="@+id/gassing_tv_suicideNoteFound"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -819,7 +819,7 @@
 					/>
 			
 				<RadioGroup 
-			    android:id="@+id/blunt_rgSuicideNoteFound"
+			    android:id="@+id/gassing_rgSuicideNoteFound"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -828,7 +828,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_SuicideNoteFoundYes"
+				    android:id="@+id/gassing_SuicideNoteFoundYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -837,7 +837,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_SuicideNoteFoundNo"
+				    android:id="@+id/gassing_SuicideNoteFoundNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -851,7 +851,7 @@
 				
 		    	<!-- The Scene of injury starts  -->
 		    	<TextView
-				    android:id="@+id/blunt_sceneOfInjury"
+				    android:id="@+id/gassing_sceneOfInjury"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
 					
@@ -859,7 +859,7 @@
 					
 					/>
 		    	<GridLayout
-			    android:id="@+id/blunt_sceneOfInjuryLayout"
+			    android:id="@+id/gassing_sceneOfInjuryLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -871,7 +871,7 @@
 				
 				
 				<TextView
-				    android:id="@+id/blunt_tv_sceneIOType" 
+				    android:id="@+id/gassing_tv_sceneIOType" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -884,7 +884,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgSceneIOType"
+			    android:id="@+id/gassing_rgSceneIOType"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -895,7 +895,7 @@
 			    
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_SceneIOTypeInside"
+				    android:id="@+id/gassing_SceneIOTypeInside"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -904,7 +904,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_SceneIOTypeOutside"
+				    android:id="@+id/gassing_SceneIOTypeOutside"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -914,7 +914,7 @@
 				    
 				</RadioGroup>
 				<TextView 
-				    android:id="@+id/blunt_tv_whereInside"
+				    android:id="@+id/gassing_tv_whereInside"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -925,7 +925,7 @@
             	android:layout_column="0"
 					/>
 				<Spinner
-				    android:id="@+id/blunt_sceneIType"
+				    android:id="@+id/gassing_sceneIType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/insideTypes"
@@ -934,7 +934,7 @@
             	android:layout_column="1"
 				    />
 				<TextView 
-				    android:id="@+id/blunt_tv_sceneITypeOther"
+				    android:id="@+id/gassing_tv_sceneITypeOther"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -946,14 +946,14 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/blunt_sceneITypeOther"
+				    android:id="@+id/gassing_sceneITypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="2"
             	android:layout_column="1"
 				    />
 				<TextView
-				    android:id="@+id/blunt_tv_doorLocked" 
+				    android:id="@+id/gassing_tv_doorLocked" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -966,7 +966,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgDoorLocked"
+			    android:id="@+id/gassing_rgDoorLocked"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -975,7 +975,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_DoorLockedYes"
+				    android:id="@+id/gassing_DoorLockedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -984,7 +984,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_DoorLockedNo"
+				    android:id="@+id/gassing_DoorLockedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -994,7 +994,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/blunt_tv_windowsClosed" 
+				    android:id="@+id/gassing_tv_windowsClosed" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1006,7 +1006,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgWindowsClosed"
+			    android:id="@+id/gassing_rgWindowsClosed"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1015,7 +1015,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_WindowsClosedYes"
+				    android:id="@+id/gassing_WindowsClosedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1024,7 +1024,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_WindowsClosedNo"
+				    android:id="@+id/gassing_WindowsClosedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1034,7 +1034,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/blunt_tv_windowsBroken" 
+				    android:id="@+id/gassing_tv_windowsBroken" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1046,7 +1046,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgWindowsBroken"
+			    android:id="@+id/gassing_rgWindowsBroken"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1055,7 +1055,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_WindowsBrokenYes"
+				    android:id="@+id/gassing_WindowsBrokenYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1064,7 +1064,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_WindowsBrokenNo"
+				    android:id="@+id/gassing_WindowsBrokenNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1074,7 +1074,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/blunt_tv_victimAlone" 
+				    android:id="@+id/gassing_tv_victimAlone" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1086,7 +1086,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgVictimAlone"
+			    android:id="@+id/gassing_rgVictimAlone"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1095,7 +1095,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_VictimAloneYes"
+				    android:id="@+id/gassing_VictimAloneYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1104,7 +1104,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_VictimAloneNo"
+				    android:id="@+id/gassing_VictimAloneNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1114,7 +1114,7 @@
 				    
 				</RadioGroup>
 				<TextView 
-				    android:id="@+id/blunt_tv_peopleWithVictim"
+				    android:id="@+id/gassing_tv_peopleWithVictim"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1125,7 +1125,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/blunt_peopleWithVictim"
+				    android:id="@+id/gassing_peopleWithVictim"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -1134,7 +1134,7 @@
 				    />
 				
 				<TextView
-				    android:id="@+id/blunt_tv_gassingAppliances" 
+				    android:id="@+id/gassing_tv_gassingAppliances" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1146,7 +1146,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgGassingAppliances"
+			    android:id="@+id/gassing_rgGassingAppliances"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1155,7 +1155,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_gassingAppliancesYes"
+				    android:id="@+id/gassing_gassingAppliancesYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1164,7 +1164,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_gassingAppliancesNo"
+				    android:id="@+id/gassing_gassingAppliancesNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1175,7 +1175,7 @@
 				</RadioGroup>
 				
 				<TextView
-				    android:id="@+id/blunt_tv_gassingSmell" 
+				    android:id="@+id/gassing_tv_gassingSmell" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1187,7 +1187,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgGassingSmell"
+			    android:id="@+id/gassing_rgGassingSmell"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1196,7 +1196,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_gassingSmellYes"
+				    android:id="@+id/gassing_gassingSmellYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1205,7 +1205,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_gassingSmellNo"
+				    android:id="@+id/gassing_gassingSmellNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1215,7 +1215,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/blunt_tv_sceneOType" 
+				    android:id="@+id/gassing_tv_sceneOType" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1227,7 +1227,7 @@
             	android:layout_column="0"
 					/>
 				<Spinner
-				    android:id="@+id/blunt_sceneOType"
+				    android:id="@+id/gassing_sceneOType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/outsideTypes"
@@ -1240,7 +1240,7 @@
 				
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_sceneOTypeOther"
+				    android:id="@+id/gassing_tv_sceneOTypeOther"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1252,7 +1252,7 @@
 					
 					/>
 				<EditText
-				    android:id="@+id/blunt_sceneOTypeOther"
+				    android:id="@+id/gassing_sceneOTypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="11"
@@ -1264,7 +1264,7 @@
 		    	<!-- The Scene look starts -->
 		    	
 		    	<TextView 
-				    android:id="@+id/blunt_sceneLook"
+				    android:id="@+id/gassing_sceneLook"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
 					
@@ -1272,7 +1272,7 @@
 					
 					/>
 		    	<GridLayout
-			    android:id="@+id/blunt_sceneLookLayout"
+			    android:id="@+id/gassing_sceneLookLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -1283,7 +1283,7 @@
 			    >
 				
 				<TextView
-				    android:id="@+id/blunt_tv_signsOfStruggle" 
+				    android:id="@+id/gassing_tv_signsOfStruggle" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1298,7 +1298,7 @@
 				
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgSignsOfStruggle"
+			    android:id="@+id/gassing_rgSignsOfStruggle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1309,7 +1309,7 @@
 			    
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_SignsOfStruggleYes"
+				    android:id="@+id/gassing_SignsOfStruggleYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1318,7 +1318,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_SignsOfStruggleNo"
+				    android:id="@+id/gassing_SignsOfStruggleNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1329,7 +1329,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_alcoholBottleAround"
+				    android:id="@+id/gassing_tv_alcoholBottleAround"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1343,7 +1343,7 @@
 				
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgAlcoholBottleAround"
+			    android:id="@+id/gassing_rgAlcoholBottleAround"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1353,7 +1353,7 @@
 			    
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_AlcoholBottleAroundYes"
+				    android:id="@+id/gassing_AlcoholBottleAroundYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1362,7 +1362,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_AlcoholBottleAroundNo"
+				    android:id="@+id/gassing_AlcoholBottleAroundNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1373,7 +1373,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/blunt_tv_medicationPoisonOnScene"
+				    android:id="@+id/gassing_tv_medicationPoisonOnScene"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1387,7 +1387,7 @@
 				
 				
 				<RadioGroup 
-			    android:id="@+id/blunt_rgMedicationPoisonOnScene"
+			    android:id="@+id/gassing_rgMedicationPoisonOnScene"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1397,7 +1397,7 @@
 			    
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_medicationPoisonOnSceneYes"
+				    android:id="@+id/gassing_medicationPoisonOnSceneYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1406,7 +1406,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_medicationPoisonOnSceneNo"
+				    android:id="@+id/gassing_medicationPoisonOnSceneNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1416,28 +1416,28 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/blunt_tv_drugParaphernalia"
+				    android:id="@+id/gassing_tv_drugParaphernalia"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
 					android:text="Drug paraphernalia?"
-					android:layout_row="2"
+					android:layout_row="3"
             	android:layout_column="0"
 					/>
 			
 				<RadioGroup 
-			    android:id="@+id/blunt_rgDrugParaphernalia"
+			    android:id="@+id/gassing_rgDrugParaphernalia"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
-			    android:layout_row="2"
+			    android:layout_row="3"
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/blunt_DrugParaphernaliaYes"
+				    android:id="@+id/gassing_DrugParaphernaliaYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1446,7 +1446,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/blunt_DrugParaphernaliaNo"
+				    android:id="@+id/gassing_DrugParaphernaliaNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1461,7 +1461,7 @@
 				<!-- The Scene starts  -->
 				
 				<TextView 
-				    android:id="@+id/blunt_theScene"
+				    android:id="@+id/gassing_theScene"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
 					
@@ -1470,7 +1470,7 @@
 					/>
 				
 		    	<GridLayout
-			    android:id="@+id/blunt_theSceneLayout"
+			    android:id="@+id/gassing_theSceneLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
@@ -1482,7 +1482,7 @@
 				
 				
 				<TextView
-				    android:id="@+id/blunt_tv_generalHistory"
+				    android:id="@+id/gassing_tv_generalHistory"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1493,7 +1493,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/blunt_generalHistory"
+				    android:id="@+id/gassing_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="0"
@@ -1502,14 +1502,14 @@
 				</GridLayout>
 				<!-- The Scene ends here... -->
 				<LinearLayout
-			    android:id="@+id/blunt_galleryLayout"
+			    android:id="@+id/gassing_galleryLayout"
 			    android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"
 				android:gravity="center_horizontal"
 			    >
 				<TextView 
-				    android:id="@+id/blunt_theGallery"
+				    android:id="@+id/gassing_theGallery"
 					style="@style/main_headings"
 					android:layout_marginTop="100dp"
 					android:text="@string/the_gallery"
@@ -1534,7 +1534,7 @@
 				         android:padding="5dp"
 				         android:columnCount="3"
 				         android:rowCount="4"
-				         android:id="@+id/blunt_Gallery"
+				         android:id="@+id/gassing_Gallery"
 				         android:visibility="visible">
 				         
 				       
@@ -1631,7 +1631,7 @@
 				</LinearLayout>
 				
 				<TextView
-				    android:id="@+id/blunt_tv_response"
+				    android:id="@+id/gassing_tv_response"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1652,7 +1652,7 @@
 				         android:rowCount="1"
 				         android:visibility="visible">
 				<Button
-				    android:id="@+id/blunt_BackToMenu"
+				    android:id="@+id/gassing_BackToMenu"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:layout_column="0"
@@ -1662,7 +1662,7 @@
 				    />
 				
 				<Button
-				    android:id="@+id/blunt_doneButton"
+				    android:id="@+id/gassing_doneButton"
 				    android:layout_width="200dp"
 				    android:layout_height="wrap_content"
 				    android:layout_column="1"
@@ -1671,7 +1671,7 @@
 				     android:visibility="visible"
 				    />
 				<Button
-				    android:id="@+id/blunt_logoutButton"
+				    android:id="@+id/gassing_logoutButton"
 				    android:layout_width="200dp"
 				    android:layout_height="wrap_content"
 				    android:layout_column="2"

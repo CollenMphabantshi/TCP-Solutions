@@ -59,6 +59,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -149,7 +150,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -204,21 +205,28 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.bicycle);
-		
-		setContentView(R.layout.bicycle);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
+		try{
+			setContentView(R.layout.bicycle);
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					} 
+				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 
@@ -515,7 +523,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.bicycle_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.bicycle_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -889,8 +897,8 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("bicycle"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1061,6 +1069,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();

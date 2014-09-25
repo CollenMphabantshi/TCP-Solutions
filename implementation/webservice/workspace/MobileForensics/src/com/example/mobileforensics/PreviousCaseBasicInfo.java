@@ -57,16 +57,14 @@ public class PreviousCaseBasicInfo  extends Activity{
 			
 			initialiseVariables();
 			setEventMethods();
+			Encryption enc = new Encryption();
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-	        pairs.add(new BasicNameValuePair("rquest","getFOCaseList"));
+	        pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("getFOCaseList"))));
 	        pairs.add(new BasicNameValuePair("fopnumber",Encryption.bytesToHex(enc.encrypt(username)) ));
 	        new Read().execute(pairs);
 	        
-	        
 		}catch(Exception e){e.printStackTrace();}
-		
-		
-		
+				
 	}
 	
 	public void initialiseVariables(){
@@ -101,6 +99,7 @@ public class PreviousCaseBasicInfo  extends Activity{
 						select.putExtra("USERNAME", getIntent().getExtras().getString("USERNAME"));
 						select.putExtra("VicName", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicName"))));
 						select.putExtra("VicID", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicID"))));
+						select.putExtra("VicAge", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicAge"))));
 						select.putExtra("SceneTime", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneTime"))));
 						select.putExtra("SceneDate", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneDate"))));
 						select.putExtra("SceneLocation", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneLocation"))));

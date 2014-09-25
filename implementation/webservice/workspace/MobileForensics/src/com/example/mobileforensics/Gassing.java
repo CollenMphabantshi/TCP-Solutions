@@ -223,7 +223,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -279,24 +279,30 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gassing);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		try{
+			setContentView(R.layout.gassing);
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					} 
+				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		
-		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 	
@@ -324,7 +330,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "Blunt_" + timeStamp + "_";
+	    String imageFileName = "gassing_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
@@ -493,142 +499,142 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.blunt_io_name);
+		ioName = (EditText)findViewById(R.id.gassing_io_name);
 		
-		ioSurname = (EditText)findViewById(R.id.blunt_io_surname);
+		ioSurname = (EditText)findViewById(R.id.gassing_io_surname);
 		
-		ioRank = (EditText)findViewById(R.id.blunt_io_rank);
+		ioRank = (EditText)findViewById(R.id.gassing_io_rank);
 		
-		ioCellNo = (EditText)findViewById(R.id.blunt_io_cell);
+		ioCellNo = (EditText)findViewById(R.id.gassing_io_cell);
 		
-		tv_foosName = (TextView)findViewById(R.id.blunt_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.blunt_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.blunt_tv_foos_surname);
-		foosSurname = (EditText)findViewById(R.id.blunt_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.blunt_tv_foos_rank);
-		foosRank = (EditText)findViewById(R.id.blunt_foos_rank);
+		tv_foosName = (TextView)findViewById(R.id.gassing_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.gassing_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.gassing_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.gassing_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.gassing_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.gassing_foos_rank);
 		
 	
 		
-		tv_victimName = (TextView)findViewById(R.id.blunt_tv_victim_name);
-		victimName = (EditText)findViewById(R.id.blunt_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.blunt_tv_victim_surname);
-		victimSurname = (EditText)findViewById(R.id.blunt_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.blunt_tv_victim_id);
-		victimIDNo = (EditText)findViewById(R.id.blunt_victim_id);
-		victimAge = (EditText)findViewById(R.id.blunt_victim_age);
+		tv_victimName = (TextView)findViewById(R.id.gassing_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.gassing_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.gassing_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.gassing_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.gassing_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.gassing_victim_id);
+		victimAge = (EditText)findViewById(R.id.gassing_victim_age);
 		
-		rgbMale = (RadioButton)findViewById(R.id.blunt_rgbMale);
-		rgbFemale = (RadioButton)findViewById(R.id.blunt_rgbFemale);
-		rgbUnknownGender = (RadioButton)findViewById(R.id.blunt_rgbUnknownGender);
+		rgbMale = (RadioButton)findViewById(R.id.gassing_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.gassing_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.gassing_rgbUnknownGender);
 		
-		rgbAsian = (RadioButton)findViewById(R.id.blunt_rgbAsian);
-		rgbBlack = (RadioButton)findViewById(R.id.blunt_rgbBlack);
-		rgbColoured = (RadioButton)findViewById(R.id.blunt_rgbColoured);
-		rgbWhite = (RadioButton)findViewById(R.id.blunt_rgbWhite);
-		rgbUnknownRace = (RadioButton)findViewById(R.id.blunt_rgbUnknownRace);
+		rgbAsian = (RadioButton)findViewById(R.id.gassing_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.gassing_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.gassing_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.gassing_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.gassing_rgbUnknownRace);
 		
 		
-		theBody = (TextView)findViewById(R.id.blunt_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.blunt_tv_bodyDecomposed);
-		bodyDecomposedYes = (RadioButton)findViewById(R.id.blunt_bodyDecomposedYes);
-		bodyDecomposedNo = (RadioButton)findViewById(R.id.blunt_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.blunt_tv_medicalIntervention);
-		medicalInterventionYes = (RadioButton)findViewById(R.id.blunt_medicalInterventionYes);
-		medicalInterventionNo = (RadioButton)findViewById(R.id.blunt_medicalInterventionNo);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.blunt_tv_whoFoundVictimBody);
-		whoFoundVictimBody = (EditText)findViewById(R.id.blunt_whoFoundVictimBody);
-		tv_foundInCar = (TextView)findViewById(R.id.blunt_tv_foundInCar);
-		foundInCarYes = (RadioButton)findViewById(R.id.blunt_foundInCarYes);
-		foundInCarNo = (RadioButton)findViewById(R.id.blunt_foundInCarNo);
-		tv_wasCarRunning = (TextView)findViewById(R.id.blunt_tv_wasCarRunning);
-		wasCarRunningYes = (RadioButton)findViewById(R.id.blunt_wasCarRunningYes);
-		wasCarRunningNo = (RadioButton)findViewById(R.id.blunt_wasCarRunningNo);
-		tv_carWindowClosed = (TextView)findViewById(R.id.blunt_tv_carWindowClosed);
-		carWindowClosedYes = (RadioButton)findViewById(R.id.blunt_carWindowClosedYes);
-		carWindowClosedNo = (RadioButton)findViewById(R.id.blunt_carWindowClosedNo);
-		tv_pipeConnected = (TextView)findViewById(R.id.blunt_tv_pipeConnected);
-		pipeConnectedYes = (RadioButton)findViewById(R.id.blunt_pipeConnectedYes);
-		pipeConnectedNo = (RadioButton)findViewById(R.id.blunt_pipeConnectedNo);
-		tv_closeToWater = (TextView)findViewById(R.id.blunt_tv_closeToWater);
-		closeToWaterYes = (RadioButton)findViewById(R.id.blunt_closeToWaterYes);
-		closeToWaterNo = (RadioButton)findViewById(R.id.blunt_closeToWaterNo);
-		tv_rapeHomicide = (TextView)findViewById(R.id.blunt_tv_rapeHomicide);
-		rapeHomicideYes = (RadioButton)findViewById(R.id.blunt_rapeHomicideYes);
-		rapeHomicideNo = (RadioButton)findViewById(R.id.blunt_rapeHomicideNo);
-		tv_suicideSuspected = (TextView)findViewById(R.id.blunt_tv_suicideSuspected);
-		suicideSuspectedYes = (RadioButton)findViewById(R.id.blunt_suicideSuspectedYes);
-		suicideSuspectedNo = (RadioButton)findViewById(R.id.blunt_suicideSuspectedNo);
-		tv_previousAttempts = (TextView)findViewById(R.id.blunt_tv_previousAttempts);
-		previousAttemptsYes = (RadioButton)findViewById(R.id.blunt_previousAttemptsYes);
-		previousAttemptsNo = (RadioButton)findViewById(R.id.blunt_previousAttemptsNo);
-		tv_howManyAttempts = (TextView)findViewById(R.id.blunt_tv_howManyAttempts);
-		howManyAttempts = (EditText)findViewById(R.id.blunt_howManyAttempts);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.blunt_tv_suicideNoteFound);
-		suicideNoteFoundYes = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundYes);
-		suicideNoteFoundNo = (RadioButton)findViewById(R.id.blunt_SuicideNoteFoundNo);
+		theBody = (TextView)findViewById(R.id.gassing_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.gassing_tv_bodyDecomposed);
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.gassing_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.gassing_bodyDecomposedNo);
+		tv_medicalIntervention = (TextView)findViewById(R.id.gassing_tv_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.gassing_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.gassing_medicalInterventionNo);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.gassing_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.gassing_whoFoundVictimBody);
+		tv_foundInCar = (TextView)findViewById(R.id.gassing_tv_foundInCar);
+		foundInCarYes = (RadioButton)findViewById(R.id.gassing_foundInCarYes);
+		foundInCarNo = (RadioButton)findViewById(R.id.gassing_foundInCarNo);
+		tv_wasCarRunning = (TextView)findViewById(R.id.gassing_tv_wasCarRunning);
+		wasCarRunningYes = (RadioButton)findViewById(R.id.gassing_wasCarRunningYes);
+		wasCarRunningNo = (RadioButton)findViewById(R.id.gassing_wasCarRunningNo);
+		tv_carWindowClosed = (TextView)findViewById(R.id.gassing_tv_carWindowClosed);
+		carWindowClosedYes = (RadioButton)findViewById(R.id.gassing_carWindowClosedYes);
+		carWindowClosedNo = (RadioButton)findViewById(R.id.gassing_carWindowClosedNo);
+		tv_pipeConnected = (TextView)findViewById(R.id.gassing_tv_pipeConnected);
+		pipeConnectedYes = (RadioButton)findViewById(R.id.gassing_pipeConnectedYes);
+		pipeConnectedNo = (RadioButton)findViewById(R.id.gassing_pipeConnectedNo);
+		/*tv_closeToWater = (TextView)findViewById(R.id.gassing_tv_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.gassing_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.gassing_closeToWaterNo);
+		tv_rapeHomicide = (TextView)findViewById(R.id.gassing_tv_rapeHomicide);
+		rapeHomicideYes = (RadioButton)findViewById(R.id.gassing_rapeHomicideYes);
+		rapeHomicideNo = (RadioButton)findViewById(R.id.gassing_rapeHomicideNo);*/
+		tv_suicideSuspected = (TextView)findViewById(R.id.gassing_tv_suicideSuspected);
+		suicideSuspectedYes = (RadioButton)findViewById(R.id.gassing_suicideSuspectedYes);
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.gassing_suicideSuspectedNo);
+		tv_previousAttempts = (TextView)findViewById(R.id.gassing_tv_previousAttempts);
+		previousAttemptsYes = (RadioButton)findViewById(R.id.gassing_previousAttemptsYes);
+		previousAttemptsNo = (RadioButton)findViewById(R.id.gassing_previousAttemptsNo);
+		tv_howManyAttempts = (TextView)findViewById(R.id.gassing_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.gassing_howManyAttempts);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.gassing_tv_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.gassing_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.gassing_SuicideNoteFoundNo);
 		
-		sceneOfInjury = (TextView)findViewById(R.id.blunt_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.blunt_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.blunt_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.blunt_tv_whereInside);
-		sceneIType = (Spinner)findViewById(R.id.blunt_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.blunt_tv_sceneITypeOther);
-		sceneITypeOther = (EditText)findViewById(R.id.blunt_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.blunt_tv_doorLocked);
-		doorLockedYes = (RadioButton)findViewById(R.id.blunt_DoorLockedYes);
-		doorLockedNo = (RadioButton)findViewById(R.id.blunt_DoorLockedNo);
-		tv_windowsClosed = (TextView)findViewById(R.id.blunt_tv_windowsClosed);
-		windowsClosedYes = (RadioButton)findViewById(R.id.blunt_WindowsClosedYes);
-		windowsClosedNo = (RadioButton)findViewById(R.id.blunt_WindowsClosedNo);
-		tv_windowsBroken = (TextView)findViewById(R.id.blunt_tv_windowsBroken);
-		windowsBrokenYes = (RadioButton)findViewById(R.id.blunt_WindowsBrokenYes);
-		windowsBrokenNo = (RadioButton)findViewById(R.id.blunt_WindowsBrokenNo);
-		tv_victimAlone = (TextView)findViewById(R.id.blunt_tv_victimAlone);
-		victimAloneYes = (RadioButton)findViewById(R.id.blunt_VictimAloneYes);
-		victimAloneNo = (RadioButton)findViewById(R.id.blunt_VictimAloneNo);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.blunt_tv_peopleWithVictim);
-		peopleWithVictim = (EditText)findViewById(R.id.blunt_peopleWithVictim);
-		tv_gassingAppliances = (TextView)findViewById(R.id.blunt_tv_gassingAppliances);
-		gassingAppliancesYes = (RadioButton)findViewById(R.id.blunt_gassingAppliancesYes);
-		gassingAppliancesNo = (RadioButton)findViewById(R.id.blunt_gassingAppliancesNo);
-		tv_gassingSmell = (TextView)findViewById(R.id.blunt_tv_gassingSmell);
-		gassingSmellYes = (RadioButton)findViewById(R.id.blunt_gassingSmellYes);
-		gassingSmellNo = (RadioButton)findViewById(R.id.blunt_gassingSmellNo);
-		tv_sceneOType = (TextView)findViewById(R.id.blunt_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.blunt_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.blunt_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.blunt_sceneOTypeOther);
+		sceneOfInjury = (TextView)findViewById(R.id.gassing_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.gassing_tv_sceneIOType);
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeOutside);
+		tv_whereInside = (TextView)findViewById(R.id.gassing_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.gassing_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.gassing_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.gassing_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.gassing_tv_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.gassing_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.gassing_DoorLockedNo);
+		tv_windowsClosed = (TextView)findViewById(R.id.gassing_tv_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.gassing_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.gassing_WindowsClosedNo);
+		tv_windowsBroken = (TextView)findViewById(R.id.gassing_tv_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.gassing_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.gassing_WindowsBrokenNo);
+		tv_victimAlone = (TextView)findViewById(R.id.gassing_tv_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.gassing_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.gassing_VictimAloneNo);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.gassing_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.gassing_peopleWithVictim);
+		tv_gassingAppliances = (TextView)findViewById(R.id.gassing_tv_gassingAppliances);
+		gassingAppliancesYes = (RadioButton)findViewById(R.id.gassing_gassingAppliancesYes);
+		gassingAppliancesNo = (RadioButton)findViewById(R.id.gassing_gassingAppliancesNo);
+		tv_gassingSmell = (TextView)findViewById(R.id.gassing_tv_gassingSmell);
+		gassingSmellYes = (RadioButton)findViewById(R.id.gassing_gassingSmellYes);
+		gassingSmellNo = (RadioButton)findViewById(R.id.gassing_gassingSmellNo);
+		tv_sceneOType = (TextView)findViewById(R.id.gassing_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.gassing_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.gassing_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.gassing_sceneOTypeOther);
 		
 		System.out.println("after page 3");
-		sceneLook = (TextView)findViewById(R.id.blunt_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.blunt_tv_signsOfStruggle);
-		signsOfStruggleYes = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleYes);
-		signsOfStruggleNo = (RadioButton)findViewById(R.id.blunt_SignsOfStruggleNo);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.blunt_tv_alcoholBottleAround);
-		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundYes);
-		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.blunt_AlcoholBottleAroundNo);
-		tv_medicationPoisonOnScene = (TextView)findViewById(R.id.blunt_tv_medicationPoisonOnScene);
-		medicationPoisonOnSceneYes = (RadioButton)findViewById(R.id.blunt_medicationPoisonOnSceneYes);
-		medicationPoisonOnSceneNo = (RadioButton)findViewById(R.id.blunt_medicationPoisonOnSceneNo);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.blunt_tv_drugParaphernalia);
-		drugParaphernaliaYes = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaYes);
-		drugParaphernaliaNo = (RadioButton)findViewById(R.id.blunt_DrugParaphernaliaNo);
+		sceneLook = (TextView)findViewById(R.id.gassing_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.gassing_tv_signsOfStruggle);
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.gassing_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.gassing_SignsOfStruggleNo);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.gassing_tv_alcoholBottleAround);
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.gassing_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.gassing_AlcoholBottleAroundNo);
+		tv_medicationPoisonOnScene = (TextView)findViewById(R.id.gassing_tv_medicationPoisonOnScene);
+		medicationPoisonOnSceneYes = (RadioButton)findViewById(R.id.gassing_medicationPoisonOnSceneYes);
+		medicationPoisonOnSceneNo = (RadioButton)findViewById(R.id.gassing_medicationPoisonOnSceneNo);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.gassing_tv_drugParaphernalia);
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.gassing_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.gassing_DrugParaphernaliaNo);
 		
 		
-		theScene = (TextView)findViewById(R.id.blunt_theScene);
+		theScene = (TextView)findViewById(R.id.gassing_theScene);
 		
-		tv_generalHistory = (TextView)findViewById(R.id.blunt_tv_generalHistory);
-		generalHistory = (EditText)findViewById(R.id.blunt_generalHistory);
+		tv_generalHistory = (TextView)findViewById(R.id.gassing_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.gassing_generalHistory);
 		
 		
-		response = (TextView)findViewById(R.id.blunt_tv_response);
+		response = (TextView)findViewById(R.id.gassing_tv_response);
 		
-		doneButton = (Button)findViewById(R.id.blunt_doneButton);
-		logoutButton = (Button)findViewById(R.id.blunt_logoutButton);
+		doneButton = (Button)findViewById(R.id.gassing_doneButton);
+		logoutButton = (Button)findViewById(R.id.gassing_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.blunt_BackToMenu);
+		BackToMenu = (Button)findViewById(R.id.gassing_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -646,7 +652,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.blunt_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.gassing_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -1154,8 +1160,8 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("gassing"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1205,12 +1211,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        victims.accumulate("bodyIntact","null");
 	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	        
-	        if(closeToWaterYes.isChecked())
-	        {
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
+	        
 	        
 	        if(suicideSuspectedYes.isChecked())
 	        {
@@ -1236,12 +1237,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        
 	        
 	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-	        if(rapeHomicideYes.isChecked())
-	        {
-	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
+	        
 	        
 	        if(sceneIOTypeInside.isChecked())
 	        {
@@ -1398,6 +1394,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1485,12 +1482,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
         victims.accumulate("bodyIntact", "null");
         victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
         
-        if(closeToWaterYes.isChecked())
-        {
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-        }
+        
         
         if(suicideSuspectedYes.isChecked())
         {
@@ -1516,12 +1508,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
         
         
         victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-        if(rapeHomicideYes.isChecked())
-        {
-        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-        }
+        
         
         if(sceneIOTypeInside.isChecked())
         {
@@ -1989,10 +1976,6 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	
 		medicalInterventionNo.setChecked(true);
 	
-		closeToWaterNo.setChecked(true);
-		
-		rapeHomicideNo.setChecked(true);
-	
 		suicideSuspectedNo.setChecked(true);
 		
 		//previous attempts is none by default
@@ -2000,6 +1983,17 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		tv_howManyAttempts.setVisibility(GONE);
 		howManyAttempts.setVisibility(GONE);
 	
+		foundInCarNo.setChecked(true);
+		wasCarRunningNo.setChecked(true);
+		carWindowClosedNo.setChecked(true);
+		pipeConnectedNo.setChecked(true);
+		
+		gassingAppliancesNo.setChecked(true);
+		gassingSmellNo.setChecked(true);
+		windowsBrokenNo.setChecked(true);
+		windowsClosedNo.setChecked(true);
+		doorLockedNo.setChecked(true);
+		victimAloneYes.setChecked(true);
 		signsOfStruggleNo.setChecked(true);
 		
 		alcoholBottleAroundNo.setChecked(true);

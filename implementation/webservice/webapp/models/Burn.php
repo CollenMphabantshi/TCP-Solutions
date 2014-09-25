@@ -62,11 +62,19 @@ class Burn extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
+                        $this->addBurn($sceneID,TRUE,$formData['object'][$i]);
+                }else{
+                        $this->addBurn($sceneID,FALSE,null);
+                }
+                
+                /*if($formData['object'][$i]['victims']['victimInside'] == "yes"){
                     $this->addBurn($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addBurn($sceneID,FALSE,null);
-                }
+                }*/
             }
             
             
