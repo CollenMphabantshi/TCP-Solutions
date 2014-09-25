@@ -7,7 +7,6 @@ INDEX VERSION 1.126+C:\Users\BANCHI\Documents\GitHub\TCP-Solutions\implementatio
 2681885609.index
 2041187436.index
 3530122983.index
-1402800935.index
 1671352569.index
 3254626391.index
 680487511.index
