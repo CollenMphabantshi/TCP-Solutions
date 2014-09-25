@@ -93,9 +93,6 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	TextView value;
 
-	
-	
-
 	private EditText ioName;
 	
 	private EditText ioSurname;
@@ -117,7 +114,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private EditText victimSurname;
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	
+	private EditText victimAge;
 	
 	
 	
@@ -291,7 +288,6 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		
 		initialize();
-		System.out.println("Start init");
 		variablesInitialization();
 		CheckRadioButtons();
 		setOnClickEvents();
@@ -319,7 +315,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			}
 			return location;
 			
-		}
+	}
 	
 	private File createImageFile() throws IOException{
 		// Create an image file name
@@ -516,6 +512,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		victimSurname = (EditText)findViewById(R.id.blunt_victim_surname);
 		tv_victimIDNo = (TextView)findViewById(R.id.blunt_tv_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.blunt_victim_id);
+		victimAge = (EditText)findViewById(R.id.blunt_victim_age);
 		
 		rgbMale = (RadioButton)findViewById(R.id.blunt_rgbMale);
 		rgbFemale = (RadioButton)findViewById(R.id.blunt_rgbFemale);
@@ -674,7 +671,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							//if(uploadFileName.size() > 0){
 								
 									try{
 										
@@ -701,17 +698,17 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
-										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
+							//}
+							//else{
 								
-								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
+								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
 								
-							}
+							//}
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -1149,7 +1146,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
@@ -1166,7 +1163,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
 	        }else{
-	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));

@@ -273,9 +273,11 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
+		try{
 		String city = "";
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
+		try{
 		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		if (!enabled) {
@@ -283,6 +285,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
 			  startActivity(intent);
 			} 
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		
@@ -291,6 +296,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		variablesInitialization();
 		CheckRadioButtons();
 		setOnClickEvents();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		
 		
 	

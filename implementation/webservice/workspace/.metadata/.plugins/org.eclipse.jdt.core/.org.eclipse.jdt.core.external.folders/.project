@@ -10,22 +10,22 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>.link0</name>
+			<name>.link4</name>
 			<type>2</type>
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-20</location>
 		</link>
 		<link>
-			<name>.link1</name>
+			<name>.link5</name>
 			<type>2</type>
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-19</location>
 		</link>
 		<link>
-			<name>.link2</name>
+			<name>.link6</name>
 			<type>2</type>
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-14</location>
 		</link>
 		<link>
-			<name>.link3</name>
+			<name>.link7</name>
 			<type>2</type>
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-17</location>
 		</link>

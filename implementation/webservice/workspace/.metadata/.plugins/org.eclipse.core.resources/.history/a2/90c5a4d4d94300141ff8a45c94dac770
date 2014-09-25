@@ -109,6 +109,13 @@
         <item>Dusk</item>
         <item>Dawn</item>
     </string-array>
+    
+    <string-array name="railwayVictimWas">
+        <item>Driver of the train</item>
+        <item>Passenger on the train</item>
+        <item>Train surfer</item>
+        <item>Pedestrian</item>
+    </string-array>
 
     <string name="chooseYN"> choose </string>
 
@@ -143,7 +150,51 @@
         <item>Back</item>
         <item>Front and back </item>
     </string-array>
-
+	
+	<string-array name="bicycleSceneOfInjury">
+        <item>National highway (N1, N3, N4, N12, N14)</item>
+        <item>Municipal high (M1, R21)</item>
+        <item>Suburban roads</item>
+        <item>Private driveway</item>
+        <item>Sidewalk</item>
+        <item>Grave road</item>
+        <item>Dirt road</item>
+        <item>Other (specify)</item>
+    </string-array>
+    
+	<string-array name="removedBy">
+        <item>Ambulance-member</item>
+        <item>Impact</item>
+        <item>Unknown</item>
+        
+    </string-array>
+    
+	<string-array name="bicycleHitArray">
+        <item>Front</item>
+        <item>Back</item>
+        <item>Right side</item>
+        <item>Left side</item>
+    </string-array>
+    
+	<string-array name="bicycleAccidentType">
+        <item>Bicycle only accident/ fell of bicycle and died</item>
+        <item>Bicycle - motorcycle accident</item>
+        <item>Bicycle - car accident</item>
+        <item>Bicycle - truck accident</item>
+        <item>Bicycle - still standing object accident</item>
+        <item>Bicycle - train accident</item>
+    </string-array>
+    <string-array name="buildingDamagedType">
+        <item>Completely burnt down in fire</item>
+        <item>Partially burnt down in fire</item>
+        <item>Minimal fire damage</item>
+        <item>No fire damage</item>
+    </string-array>
+    <string-array name="victimDieType">
+        <item>Immediately</item>
+        <item>After a few seconds</item>
+        <item>After minutes</item>
+    </string-array>
     <string name="title_activity_basic_case_data">BasicCaseData</string>
 
 </resources>

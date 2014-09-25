@@ -109,6 +109,21 @@
         <item>Dusk</item>
         <item>Dawn</item>
     </string-array>
+    
+    <string-array name="railwayVictimWas">
+        <item>Driver of the train</item>
+        <item>Passenger on the train</item>
+        <item>Train surfer</item>
+        <item>Pedestrian</item>
+    </string-array>
+    
+    <string-array name="railwayBodyFound">
+        <item>On the train tracks</item>
+        <item>Next/ near to the train tracks</item>
+        <item>At the station/ platform </item>
+        <item>Passenger in the train</item>
+        <item>Other</item>
+    </string-array>
 
     <string name="chooseYN"> choose </string>
 
@@ -143,6 +158,16 @@
         <item>Back</item>
         <item>Front and back </item>
     </string-array>
+    
+    <string-array name="railwayActidentType">
+        <item>train- train collision </item>
+        <item>train that derailed</item>
+        <item>person walking/jumping/push in front of train/ on tracks</item>
+        <item>person lying on the tracks</item>
+        <item>person pushed/jumped from train </item>
+        <item>other (specify)</item>
+        
+    </string-array>
 	
 	<string-array name="bicycleSceneOfInjury">
         <item>National highway (N1, N3, N4, N12, N14)</item>
@@ -153,6 +178,13 @@
         <item>Grave road</item>
         <item>Dirt road</item>
         <item>Other (specify)</item>
+    </string-array>
+    
+	<string-array name="removedBy">
+        <item>Ambulance-member</item>
+        <item>Impact</item>
+        <item>Unknown</item>
+        
     </string-array>
     
 	<string-array name="bicycleHitArray">

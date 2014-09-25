@@ -40,6 +40,10 @@ public class Loggin extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loggin);
 		this.intialiseVariable();
+		
+		//Intent open = new Intent("com.example.mobileforensics.HOME");
+		
+		//startActivity(open);
 		this.doLogin();
 	}
 	
