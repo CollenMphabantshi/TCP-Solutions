@@ -1465,23 +1465,8 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 	   count = 0;
 	}
 	
-	private void CheckRadioButtons(){
-		
-		rgbUnknownGender.setChecked(true);
-		rgbUnknownRace.setChecked(true);
-		
-		//outside selected by default
-		
-		infantDieNo.setChecked(true);
 	
-		
-		resuscitationAttemptedNo.setChecked(true);
-	
-		
-	
-		 
-	}
-	
+
 	private  boolean CellNoValidation(String cell) {
 		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
 		}
