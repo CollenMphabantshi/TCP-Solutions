@@ -153,6 +153,11 @@
         <item>Smother/ Possible facial airway obstruction</item>
         <item>Strangulate in object (bedding/curtain etc.)</item>
     </string-array>
+    <string-array name="FamilySuffering">
+        <item>Diabetes</item>
+        <item>Heart disease</item>
+        <item>Genetic defects/ syndromes</item>
+    </string-array>
     <string-array name="WeatherType">
         <item>Light</item>
         <item>Dark</item>

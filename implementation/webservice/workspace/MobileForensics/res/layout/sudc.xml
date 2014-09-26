@@ -486,7 +486,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is there any medical intervention?"
+					android:text="Is there any medical intervention/resuscitation?"
 					
 					android:layout_row="1"
             		android:layout_column="0"
@@ -541,6 +541,26 @@
 					android:layout_row="2"
             		android:layout_column="1"
 					/>
+				<TextView
+				    android:id="@+id/sudc_tv_relationshipToVictim" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Relationship to Victim"
+					
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText
+					android:id="@+id/sudc_relationshipToVictim"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>
 				
 				<TextView
 				    android:id="@+id/sudc_tv_closeToWater"
@@ -551,7 +571,7 @@
 					style="@style/tv_question"
 					android:text="Was the victim found close to water?"
 					
-					android:layout_row="3"
+					android:layout_row="4"
             		android:layout_column="0"
 					/>
 				
@@ -562,7 +582,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="3"
+			    android:layout_row="4"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -584,154 +604,6 @@
 				    />
 				    
 				</RadioGroup> 
-				<TextView
-				    android:id="@+id/sudc_tv_rapeHomicide"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Is a rape-homicide suspected?"
-					
-					android:layout_row="4"
-            		android:layout_column="0"
-					/>
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgRapeHomicide"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    
-			    android:layout_row="4"
-            		android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_rapeHomicideYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_rapeHomicideNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup> 
-				<TextView 
-				    android:id="@+id/sudc_tv_suicideSuspected"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Suspicion of suicide?"
-					
-					android:layout_row="5"
-            		android:layout_column="0"
-					/>
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgSuicideSuspected"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    
-			    android:layout_row="5"
-            		android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_suicideSuspectedYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_suicideSuspectedNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				
-				<TextView 
-				    android:id="@+id/sudc_tv_previousAttempts"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Any previous attempts?"
-					
-					android:layout_row="6"
-            		android:layout_column="0"
-					/>
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgPreviousAttempts"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    
-			    android:layout_row="6"
-            		android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_previousAttemptsYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_previousAttemptsNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				<TextView 
-				    android:id="@+id/sudc_tv_howManyAttempts"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="How many attempts?"
-				
-					android:layout_row="7"
-            		android:layout_column="0"
-					/>
-				<EditText 
-					android:id="@+id/sudc_howManyAttempts"
-					android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					
-					android:layout_row="7"
-            		android:layout_column="1"
-					/>
-				
 				</GridLayout>
 				<!-- The Body ends here... -->
 				
@@ -751,7 +623,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="10"
+				android:rowCount="30"
         		android:columnCount="2"
 			    >
 				
@@ -1018,6 +890,128 @@
 					android:layout_row="7"
             	android:layout_column="1"
 				    />
+				<TextView
+				    android:id="@+id/sudc_tv_appliance" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was there a heater or open fire/gas heater/ galley blik or other  heating device in room where deceased slept?"
+					android:layout_row="8"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgappliance"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="8"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_applianceYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_applianceNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+					<TextView 
+				    android:id="@+id/sudc_tv_applianceYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="9"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_applianceYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="9"
+            	    android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/sudc_tv_weirdSmell" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there a weird smell in the air (e.g. gas, chemical)?"
+					android:layout_row="10"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgweirdSmell"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="10"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_weirdSmellYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_weirdSmellNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+					<TextView 
+				    android:id="@+id/sid_tv_weirdSmellYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="11"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_weirdSmellYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="11"
+            	    android:layout_column="1"
+				    />
+				
 				
 				<TextView
 				    android:id="@+id/sudc_tv_sceneOType" 
@@ -1028,7 +1022,7 @@
 					style="@style/tv_question"
 					android:text="Where outside?"
 					
-					android:layout_row="8"
+					android:layout_row="12"
             	android:layout_column="0"
 					/>
 				<Spinner
@@ -1038,11 +1032,10 @@
 					android:entries="@array/outsideTypes"
 					android:prompt="@string/choose"
 					
-					android:layout_row="8"
+					android:layout_row="12"
             	android:layout_column="1"
 				    />
-				
-				
+
 				
 				<TextView 
 				    android:id="@+id/sudc_tv_sceneOTypeOther"
@@ -1052,7 +1045,7 @@
 					
 					style="@style/tv_question"
 					android:text="If Other, specify?"
-					android:layout_row="9"
+					android:layout_row="13"
             	android:layout_column="0"
 					
 					/>
@@ -1060,8 +1053,351 @@
 				    android:id="@+id/sudc_sceneOTypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="9"
+					android:layout_row="13"
             	android:layout_column="1"
+				    />
+				<TextView
+				    android:id="@+id/sudc_tv_VictimBusy" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the victim busy with any physical exercise/ activities at the time of death"
+					android:layout_row="14"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgVictimBusy"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="14"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_VictimBusyYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_VictimBusyNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+					<TextView 
+				    android:id="@+id/sid_tv_VictimBusyYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="15"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_VictimBusyYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="15"
+            	    android:layout_column="1"
+				    />
+				<TextView
+				    android:id="@+id/sudc_tv_FamilyHistory" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="History of other family members dying of sudden death in a young age"
+					android:layout_row="16"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgFamilyHistory"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="16"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_FamilyHistoryYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_FamilyHistoryNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_FamilyHistorySport" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="History of other family members dying of sudden death during sporting activities"
+					android:layout_row="17"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgFamilyHistorySport"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="17"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_FamilyHistorySportYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_FamilyHistorySportNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_FamilySuffering" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are there any family members suffering from?"
+					
+					android:layout_row="18"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/sudc_FamilySuffering"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/FamilySuffering"
+					android:prompt="@string/choose"
+					
+					android:layout_row="18"
+            	    android:layout_column="1"
+				    />
+				<TextView 
+				    android:id="@+id/sudc_tv_SpecifyWho"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="19"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_SpecifyWho"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="19"
+            	    android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/sudc_tv_VictimFell" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Did the victim fell/sustain an injury during the past week"
+					android:layout_row="20"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgVictimFell"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="20"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_VictimFellYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_VictimFellNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_VictimComplain" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Did the victim complain of any pain/symptoms like head ache, fever, etc"
+					android:layout_row="21"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgVictimComplain"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="21"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_VictimComplainYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_VictimComplainNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/sudc_tv_VictimComplainYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="22"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_VictimComplainYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="22"
+            	    android:layout_column="1"
+				    />
+				<TextView
+				    android:id="@+id/sudc_tv_VictimTakeMedication" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Did the victim take any medication"
+					android:layout_row="23"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/sudc_rgVictimTakeMedication"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="23"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_VictimTakeMedicationYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_VictimTakeMedicationNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/sudc_tv_VictimTakeMedicationYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="24"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/sudc_VictimTakeMedicationYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="24"
+            	    android:layout_column="1"
 				    />
 				</GridLayout>
 				<!-- Scene of injury ends here... -->
@@ -1217,6 +1553,126 @@
 				    />
 				    
 				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_choking"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there suspicion of chocking?"
+					android:layout_row="3"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/sudc_rgchoking"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="3"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_ChokingYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_ChokingaNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_assult"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Drug paraphernalia?"
+					android:layout_row="4"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/sudc_rgAssult"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="4"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_AssultYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_AssultNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/sudc_tv_overdose"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Drug paraphernalia?"
+					android:layout_row="5"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/sudc_rgOverdose"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="5"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/sudc_OverdoseYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/sudc_OverdoseNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
 				</GridLayout>
 				<!-- Scene look ends here -->
 				
@@ -1241,236 +1697,7 @@
 				android:rowCount="10"
         		android:columnCount="2"
 			    >
-				
-				<TextView 
-				     android:id="@+id/sudc_tv_communityAssault"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Drug paraphernalia?"
-					android:layout_row="0"
-            	android:layout_column="0"
-					
-					/>
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgCommunityAssault"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="0"
-            	android:layout_column="1"
-			   
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_CommunityAssaultYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_CommunityAssaultNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				
-				<TextView
-				    android:id="@+id/sudc_tv_sudcObjectUsed"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="What is  the suspected sudc force object used?"
-					android:layout_row="1"
-            	android:layout_column="0"
-					/>
-				<EditText
-				    android:id="@+id/sudc_sudcObjectUsed"
-				    android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					android:layout_row="1"
-            	android:layout_column="1"
-				    />
-				
-				<TextView 
-				    android:id="@+id/sudc_tv_sudcForceObjectOnScene"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Is the sudc force object still on scene?"
-					android:layout_row="2"
-            	android:layout_column="0"
-					/>
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgsudcForceObjectOnScene"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="2"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_sudcForceObjectOnSceneYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_sudcForceObjectOnSceneNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				
-				<TextView
-				    android:id="@+id/sudc_tv_strangulationSuspected"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Is there a suspicion of strangulation?"
-					android:layout_row="3"
-            	android:layout_column="0"
-					/>
-				
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgStrangulationSuspected"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="3"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_StrangulationSuspectedYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_StrangulationSuspectedNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				
-				<TextView
-				    android:id="@+id/sudc_tv_smotheringSuspected"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Is there a suspicion of smothering?"
-					android:layout_row="4"
-            	android:layout_column="0"
-					/>
-				
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgSmotheringSuspected"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="4"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_SmotheringSuspectedYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_SmotheringSuspectedNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				
-				<TextView
-				    android:id="@+id/sudc_tv_chockingSuspected"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-				
-					style="@style/tv_question"
-					android:text="Is there a suspicion of chocking?"
-					android:layout_row="5"
-            	android:layout_column="0"
-					/>
-				
-				
-				<RadioGroup 
-			    android:id="@+id/sudc_rgChockingSuspected"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			   android:layout_row="5"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sudc_ChockingSuspectedYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sudc_ChockingSuspectedNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
-				<TextView
+					<TextView
 				    android:id="@+id/sudc_tv_suicideNoteFound"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -1478,7 +1705,7 @@
 					
 					style="@style/tv_question"
 					android:text="Is there a Suicide note on scene?"
-					android:layout_row="6"
+					android:layout_row="0"
             	android:layout_column="0"
 					/>
 			
@@ -1488,7 +1715,7 @@
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
-			    android:layout_row="6"
+			    android:layout_row="0"
             	android:layout_column="1"
 			    >
 				    <RadioButton
@@ -1519,14 +1746,14 @@
 					
 					style="@style/tv_question"
 					android:text="Victim General history?"
-					android:layout_row="7"
+					android:layout_row="1"
             	android:layout_column="0"
 					/>
 				<EditText
 				    android:id="@+id/sudc_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="7"
+					android:layout_row="1"
             	android:layout_column="1"
 				    />
 				</GridLayout>
