@@ -103,6 +103,56 @@
         <item>Thunderstorm</item>
         <item>Hail</item>
     </string-array>
+    <string-array name="infantBedding">
+        <item>Receiving blankets</item>
+        <item>Infant/child blankets</item>
+        <item>Infant/child comforters (thick)</item>
+        <item>Adult comforters/duvets</item>
+        <item>Adult blankets</item>
+        <item>Sheets</item>
+        <item>Sheepskin</item>
+         <item>Pillows</item>
+        <item>Other(Specify)</item>
+    </string-array>
+      <string-array name="infantYes">
+        <item>Cold or sniffles</item>
+        <item>Fever</item>
+        <item>Other minor illness</item>
+        <item>Major illness/ disability/ congenital abnormality {specify}</item>
+    </string-array>
+    <string-array name="infantWhere">
+        <item>Own residence</item>
+        <item>Other residence (not primary residence)</item>
+        <item>Crèche</item>
+        <item>Day Mother</item>
+        <item>Medical service area</item>
+        <item>Other (specify)</item>
+    </string-array>
+    <string-array name="infantWherePlaced">
+        <item>Bassinet/ Cradle / Crib</item>
+        <item>Bed</item>
+        <item>Car seat</item>
+        <item>floor</item>
+        <item>In a person’s arms</item>
+        <item>Mattress</item>
+        <item>Playpen</item>
+        <item>Portable crib</item>
+        <item>Sofa/couch</item>
+        <item>Stroller/carriage</item>
+        <item>Swing/ feeding chair/ walking ring</item>
+        <item>Other (specify)</item>
+    </string-array>
+      <string-array name="infantDoing">
+        <item>Feeding</item>
+        <item>Playing</item>
+        <item>Other (specify)</item>
+    </string-array>
+      <string-array name="infant">
+        <item>Choke</item>
+        <item>Become wedged between objects</item>
+        <item>Smother/ Possible facial airway obstruction</item>
+        <item>Strangulate in object (bedding/curtain etc.)</item>
+    </string-array>
     <string-array name="WeatherType">
         <item>Light</item>
         <item>Dark</item>
@@ -110,6 +160,11 @@
         <item>Dawn</item>
     </string-array>
     
+    <string-array name="pedestrianType">
+        <item>Pedestrian- car accident</item>
+        <item>Pedestrian- truck accident</item>
+        <item>Pedestrian- train accident</item>
+    </string-array>
        <string-array name="victimTypes">
         <item>Driver</item>
         <item>Front seat passenger</item>
