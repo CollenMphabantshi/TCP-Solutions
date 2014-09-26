@@ -2239,6 +2239,7 @@ containing a value of this type.
         public static final int sid_foos_surname=0x7f07074d;
         public static final int sid_galleryLayout=0x7f0707c6;
         public static final int sid_generalHistory=0x7f0707c5;
+        public static final int sid_infant=0x7f070771;
         public static final int sid_infantDieNo=0x7f07076b;
         public static final int sid_infantDieOther=0x7f07076f;
         public static final int sid_infantDieSpecify=0x7f07076d;
@@ -2247,7 +2248,6 @@ containing a value of this type.
         public static final int sid_infantFallYes=0x7f070788;
         public static final int sid_infantSickNo=0x7f07078d;
         public static final int sid_infantSickYes=0x7f07078c;
-        public static final int sid_infanty=0x7f070771;
         public static final int sid_infoLayout=0x7f07073d;
         public static final int sid_io_cell=0x7f070748;
         public static final int sid_io_name=0x7f070742;

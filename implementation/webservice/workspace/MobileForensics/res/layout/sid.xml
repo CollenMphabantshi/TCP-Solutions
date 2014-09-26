@@ -528,7 +528,7 @@
             	android:layout_column="0"
 					/>
 				<Spinner
-				    android:id="@+id/sid_infanty"
+				    android:id="@+id/sid_infant"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/infant"

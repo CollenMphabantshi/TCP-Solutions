@@ -1919,6 +1919,7 @@ int id sid_foos_rank 0x7f07074f
 int id sid_foos_surname 0x7f07074d
 int id sid_galleryLayout 0x7f0707c6
 int id sid_generalHistory 0x7f0707c5
+int id sid_infant 0x7f070771
 int id sid_infantDieNo 0x7f07076b
 int id sid_infantDieOther 0x7f07076f
 int id sid_infantDieSpecify 0x7f07076d
@@ -1927,7 +1928,6 @@ int id sid_infantFallNo 0x7f070789
 int id sid_infantFallYes 0x7f070788
 int id sid_infantSickNo 0x7f07078d
 int id sid_infantSickYes 0x7f07078c
-int id sid_infanty 0x7f070771
 int id sid_infoLayout 0x7f07073d
 int id sid_io_cell 0x7f070748
 int id sid_io_name 0x7f070742
