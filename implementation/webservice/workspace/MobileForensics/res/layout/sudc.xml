@@ -733,7 +733,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_DoorLockedYes"
+				    android:id="@+id/sudc_doorLockedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -742,7 +742,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_DoorLockedNo"
+				    android:id="@+id/sudc_doorLockedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -773,7 +773,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_WindowsClosedYes"
+				    android:id="@+id/sudc_windowsClosedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -782,7 +782,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_WindowsClosedNo"
+				    android:id="@+id/sudc_windowsClosedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -813,7 +813,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_WindowsBrokenYes"
+				    android:id="@+id/sudc_windowsBrokenYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -822,7 +822,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_WindowsBrokenNo"
+				    android:id="@+id/sudc_windowsBrokenNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -853,7 +853,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_VictimAloneYes"
+				    android:id="@+id/sudc_victimAloneYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -862,7 +862,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_VictimAloneNo"
+				    android:id="@+id/sudc_victimAloneNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -993,7 +993,7 @@
 				    
 				</RadioGroup>
 					<TextView 
-				    android:id="@+id/sid_tv_weirdSmellYesSpecify"
+				    android:id="@+id/sudc_tv_weirdSmellYesSpecify"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1079,7 +1079,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_VictimBusyYes"
+				    android:id="@+id/sudc_victimBusyYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1088,7 +1088,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_VictimBusyNo"
+				    android:id="@+id/sudc_victimBusyNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1098,7 +1098,7 @@
 				    
 				</RadioGroup>
 					<TextView 
-				    android:id="@+id/sid_tv_VictimBusyYesSpecify"
+				    android:id="@+id/sudc_tv_victimBusyYesSpecify"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1109,7 +1109,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/sudc_VictimBusyYesSpecify"
+				    android:id="@+id/sudc_victimBusyYesSpecify"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -1117,7 +1117,7 @@
             	    android:layout_column="1"
 				    />
 				<TextView
-				    android:id="@+id/sudc_tv_FamilyHistory" 
+				    android:id="@+id/sudc_tv_familyHistory" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1130,7 +1130,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/sudc_rgFamilyHistory"
+			    android:id="@+id/sudc_rgfamilyHistory"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1139,7 +1139,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_FamilyHistoryYes"
+				    android:id="@+id/sudc_familyHistoryYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1148,7 +1148,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_FamilyHistoryNo"
+				    android:id="@+id/sudc_familyHistoryNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1158,7 +1158,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/sudc_tv_FamilyHistorySport" 
+				    android:id="@+id/sudc_tv_familyHistorySport" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1180,7 +1180,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_FamilyHistorySportYes"
+				    android:id="@+id/sudc_familyHistorySportYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1189,7 +1189,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_FamilyHistorySportNo"
+				    android:id="@+id/sudc_familyHistorySportNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1199,7 +1199,7 @@
 				    
 				</RadioGroup>
 				<TextView
-				    android:id="@+id/sudc_tv_FamilySuffering" 
+				    android:id="@+id/sudc_tv_familySuffering" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1211,7 +1211,7 @@
             	android:layout_column="0"
 					/>
 				<Spinner
-				    android:id="@+id/sudc_FamilySuffering"
+				    android:id="@+id/sudc_familySuffering"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/FamilySuffering"
@@ -1221,7 +1221,7 @@
             	    android:layout_column="1"
 				    />
 				<TextView 
-				    android:id="@+id/sudc_tv_SpecifyWho"
+				    android:id="@+id/sudc_tv_specifyWho"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1232,7 +1232,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/sudc_SpecifyWho"
+				    android:id="@+id/sudc_specifyWho"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -1241,7 +1241,7 @@
 				    />
 				
 				<TextView
-				    android:id="@+id/sudc_tv_VictimFell" 
+				    android:id="@+id/sudc_tv_victimFell" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1254,7 +1254,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/sudc_rgVictimFell"
+			    android:id="@+id/sudc_rgvictimFell"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1263,7 +1263,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_VictimFellYes"
+				    android:id="@+id/sudc_victimFellYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1272,7 +1272,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_VictimFellNo"
+				    android:id="@+id/sudc_victimFellNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1295,7 +1295,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/sudc_rgVictimComplain"
+			    android:id="@+id/sudc_rgvictimComplain"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1304,7 +1304,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_VictimComplainYes"
+				    android:id="@+id/sudc_victimComplainYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1313,7 +1313,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_VictimComplainNo"
+				    android:id="@+id/sudc_victimComplainNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1322,7 +1322,7 @@
 				    
 				</RadioGroup>
 				<TextView 
-				    android:id="@+id/sudc_tv_VictimComplainYesSpecify"
+				    android:id="@+id/sudc_tv_victimComplainYesSpecify"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1333,7 +1333,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/sudc_VictimComplainYesSpecify"
+				    android:id="@+id/sudc_victimComplainYesSpecify"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -1341,7 +1341,7 @@
             	    android:layout_column="1"
 				    />
 				<TextView
-				    android:id="@+id/sudc_tv_VictimTakeMedication" 
+				    android:id="@+id/sudc_tv_victimTakeMedication" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1354,7 +1354,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/sudc_rgVictimTakeMedication"
+			    android:id="@+id/sudc_rgvictimTakeMedication"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1363,7 +1363,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/sudc_VictimTakeMedicationYes"
+				    android:id="@+id/sudc_victimTakeMedicationYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1372,7 +1372,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_VictimTakeMedicationNo"
+				    android:id="@+id/sudc_victimTakeMedicationNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1381,7 +1381,7 @@
 				    
 				</RadioGroup>
 				<TextView 
-				    android:id="@+id/sudc_tv_VictimTakeMedicationYesSpecify"
+				    android:id="@+id/sudc_tv_victimTakeMedicationYesSpecify"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1392,7 +1392,7 @@
             	android:layout_column="0"
 					/>
 				<EditText
-				    android:id="@+id/sudc_VictimTakeMedicationYesSpecify"
+				    android:id="@+id/sudc_victimTakeMedicationYesSpecify"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
@@ -1584,7 +1584,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/sudc_ChokingaNo"
+				    android:id="@+id/sudc_ChokingNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1600,7 +1600,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Drug paraphernalia?"
+					android:text="Assault suspected?"
 					android:layout_row="4"
             	android:layout_column="0"
 					/>

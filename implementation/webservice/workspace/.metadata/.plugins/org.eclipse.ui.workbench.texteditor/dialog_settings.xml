@@ -2,36 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="115" key="DIALOG_Y_ORIGIN"/>
+		<item value="187" key="DIALOG_Y_ORIGIN"/>
+		<item value="482" key="DIALOG_X_ORIGIN"/>
 		<item value="381" key="DIALOG_HEIGHT"/>
-		<item value="880" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
-		<item value="false" key="wholeword"/>
-		<item value="The body" key="selection"/>
+		<item value="true" key="wholeword"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="the body"/>
+			<item value="sid"/>
+			<item value="smoke"/>
 			<item value="blunt"/>
-			<item value="sceneof"/>
-			<item value="scene"/>
-			<item value="victimalone"/>
-			<item value="waterType"/>
-			<item value="water"/>
-			<item value="theScene"/>
+			<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;"/>
+			<item value="pedestrian"/>
+			<item value="body"/>
+			<item value="the body"/>
+			<item value="scene of injury"/>
 		</list>
 		<list key="replacehistory">
+			<item value="sudc"/>
 			<item value="sid"/>
+			<item value="pedestrian"/>
 			<item value="mva"/>
 			<item value="firearm"/>
 			<item value="drowning"/>
 			<item value="d"/>
 			<item value="crush"/>
-			<item value="foetus"/>
 		</list>
 	</section>
 </section>
