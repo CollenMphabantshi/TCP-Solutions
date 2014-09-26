@@ -1,8 +1,11 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+  
+    $file_path = "uploads/";
+     
+    $file_path = $file_path . basename( $_FILES['uploaded_file']['name']);
+    if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $file_path)) {
+        echo "success";
+    } else{
+        echo "fail";
+    }
+ ?>

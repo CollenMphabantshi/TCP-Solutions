@@ -60,9 +60,11 @@ class Audit {
             $a_res = FALSE;
             if(mysql_num_rows($us_res) > 0)
             {
-                $a_res = mysql_query("select * from audit_log audit_uid=".  mysql_result($us_res, 0,'userID'));
+                
+                $a_res = mysql_query("select * from audit_log where audit_uid=".  mysql_result($us_res, 0,'userID'));
             }else{
-                $a_res = mysql_query("select * from audit_log audit_date LIKE '$param%'"
+                
+                $a_res = mysql_query("select * from audit_log where audit_date LIKE '$param%'"
                     . " or audit_time LIKE '$param%' or audit_action LIKE '$param%'");
             }
             $arr = array();

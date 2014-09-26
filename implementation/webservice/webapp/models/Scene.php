@@ -161,6 +161,20 @@ class Scene{
         return $this->sceneVictim->getSceneVictims($sceneID);
     }
     
+    public function getScenePhotos($victimID) {
+        $p_res = mysql_query("select * from victimScenePhotos where victimID=$victimID");
+        if(mysql_num_rows($p_res) > 0)
+        {
+            $arr = array();
+            while($p_arr = mysql_fetch_array($p_res))
+            {
+                $arr[] = $p_arr;
+            }
+            return $arr;
+        }
+        return NULL;
+    }
+    
     public function getSceneTypeData($sceneID) {
         
     }

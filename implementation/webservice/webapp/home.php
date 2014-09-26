@@ -21,7 +21,7 @@
                         {
                             echo '<li><a href="#" id="1"class="pages active listUsers">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
-                            <li><a href="#" id="3" class="pages">Audit Log</a></li>
+                            <li><a href="#" id="3" class="pages listAudit">Audit Log</a></li>
                             ';
                         }else if($sac === $enc->md5_encrypt("2")){ // FP
                             echo '<li><a href="#" class="pages" id="1"class="active listCases">Cases</a></li>
@@ -34,7 +34,7 @@
                             echo '<li><a href="#" id="1"class="pages active listUsers">List Users</a></li>
                             <li><a href="#" id="2" class="pages">Add User</a></li>
                             <li><a href="#" id="3"class="pages listCases">List Cases</a></li>
-                            <li><a href="#" id="4" class="pages">Audit Log</a></li>
+                            <li><a href="#" id="4" class="pages listAudit">Audit Log</a></li>
                             ';
                         }   
                     ?>

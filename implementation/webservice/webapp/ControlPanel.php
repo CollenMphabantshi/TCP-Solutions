@@ -94,7 +94,21 @@
                 
             </div>
             <div id="Page3" class="page">
-                
+                <div id="auditLog-left">
+                    <div class="searchForm">
+                        <input type="search" name="auditSearch" id="auditSearch"  /> <input type="image" name="auditSearchButton" id="auditSearchButton" src="images/icons/search-black.png" />
+                        <br/> <br/> <br/>
+                    </div>
+                    <div class="AuditList">
+                        <table id="audit">
+                            <tr class="table-headers">
+                                <th>User Name</th>
+                                <th>Audit Date &amp; Time</th>
+                                <th>Audit Action</th>
+                            </tr>    
+                        </table>
+                    </div>
+                </div>
             </div>
             
         </div>

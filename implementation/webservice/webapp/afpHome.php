@@ -14,6 +14,10 @@
         <link rel="stylesheet" type="text/css" href="styles.css"/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
         <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="pdfobject.js"></script>
+        <script type="text/javascript" src="libs/base64.js"></script>
+	<script type="text/javascript" src="libs/sprintf.js"></script>
+	<script type="text/javascript" src="jspdf.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body onload="loadafp();">
@@ -117,12 +121,13 @@
                     <div class="right-content">
                         <div class="toolbar">
                             <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" /><button id="assignDR" class="deathreg-btn">Assign Death register number</button>
-                            <button id="print">Create Print Out</button>
+                            <button id="printScene">Create Print Out</button>
                             <br/>
                         </div>
                         <table>
                             
                         </table><br/>
+                        <div id="pdfRenderer"></div>
                        
                     </div>
                 </div>
@@ -143,8 +148,10 @@
                             
                         </table>
                     </div>
+                    
                 </div>
             </div>
+            
         </div>
     </body>
 </html>

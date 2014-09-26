@@ -87,6 +87,11 @@ $(document).ready(function (){
         
     });
     
+    $(".listAudit").click(function(){
+        $(".response").remove();
+        loadAuditLog();
+        
+    });
     
     $("#assignDR").click(function(){ 
         assignDeathRegister($("#deathreg").val());
@@ -101,6 +106,10 @@ $(document).ready(function (){
     $("#logout").click(function(){
         logout();
     });
+    $("#printScene").click(function(){
+        pdfRender();
+    });
+    
 });
 
 function sortBy(by){
@@ -162,6 +171,8 @@ function resetResponse(){
 }
 
 function loadSceneInfo(view){
+    $(".right-content table").show();
+    $(".right-content #pdfRenderer").hide();
     try{
        currentCaseNumber = view.id;
         var query = new FormData();
@@ -265,7 +276,13 @@ function loadSceneInfo(view){
             data += "<td>Victim general history:</td><td>"+obj.victim[victim_count].victimGeneralHistory+"</td>";
             data += "</tr>";
             data += getSceneTypeData(view.title,obj.sceneTypeData);
-            
+            /// show images here
+            /*data += "<tr class='sceneImages'><td colspan='2'>";
+            for(var j = 0; j < obj.photos.length;j++)
+            {
+                data += "<ul>"+"<li><img class='scene-img' src='"+obj.photos[j].photoFilename+"'/></li>"+"</ul>";
+            }
+            data += "</td></tr>";*/
             $(".right-content table").html(data);
         }};
 
@@ -276,6 +293,25 @@ function loadSceneInfo(view){
     }
 }
 
+function pdfRender(){
+    $(".right-content table").hide();
+    
+    var doc = new jsPDF();
+    doc.setFontSize(22);
+    doc.text(20, 20, 'Scene Time: '+currentCase.sceneTime);
+    doc.setFontSize(16);
+    doc.text(20, 30, 'Scene Date: '+currentCase.sceneTime);	
+    // Output as Data URI
+    doc.output('datauri');
+
+    /*var pdf = new PDFObject({
+        url: "Design Doc.pdf",
+        id: "pdfRendered",
+        pdfOpenParams: {
+          view: "FitH"
+        }
+    }).embed("pdfRenderer");*/
+}
 function loadCases(){
     try{
         $(".response").remove();
@@ -423,10 +459,9 @@ function searchAudit(search){
         var res = null;
         request.onreadystatechange = function(){if(request.readyState == 4)
         {
-            
             var obj = JSON.parse(request.responseText);
             var data = "";
-            alert(request.responseText);
+            
             for(var i = 0; i < obj.length;i++)
             {
                 

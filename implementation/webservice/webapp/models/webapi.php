@@ -1290,14 +1290,16 @@ private function getSceneData() {
         $cn = intval($cn);
         if(is_int($cn))
         {
-            
             if($cn > 0){
-                
-                
                 $scene = new Scene();
-                
                 $arr = $scene->getSceneByID($cn);
                 $arr['victim'] = $scene->getSceneVictim($cn);
+                try{
+                    $vic = $this->json($arr['victim']);
+                    $arr['scenePhotos'] = $scene->getScenePhotos($vic[0].victimID);
+                }catch(Exception $ex){
+                    echo 'someone like u!!!';
+                }
                 
                 $type= $this->_request['sceneType'];
                 switch ($type) {
@@ -1493,7 +1495,8 @@ private function findAudit()
     
      try {
         $enc = new Encryption();
-        $search = $enc->decrypt_request($this->_request['search']);
+        $search = $this->_request['search'];
+        
         $audit = new Audit();
         $res = $audit->findAuditLog($search);
         if($res !== FALSE && $res !== NULL)
