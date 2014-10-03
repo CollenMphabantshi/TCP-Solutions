@@ -69,7 +69,7 @@ class Blunt extends Scene{
                         $this->addBlunt($sceneID,FALSE,null);
                     }
                 }else {
-                    $error = array('status' => "Failed", "msg" => "Request to add blunt case was deied.");
+                    $error = array('status' => "Failed", "msg" => "Request to add blunt case was denied.");
                     $this->api->response($this->api->json($error), 400);
                 }
             }
@@ -94,14 +94,20 @@ class Blunt extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($enc->decrypt_request($va) != "yes")
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into bluntInside values(0,".$bluntID.",'$dl','$wc','$wb','$va','$pv')") or $this->api->response($this->api->json($error), 400);
             }else{
                 $hi_res = mysql_query("insert into bluntinside values(0,".$bluntID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
-        $error = array('status' => "Success", "msg" => "Request to add case was successful.");
+        $sv_res = mysql_query("select * from sceneVictims where sceneID=".$sceneID);
+        $tmp = "";
+        if(mysql_num_rows($sv_res) > 0)
+        {
+            $vid = mysql_result($sv_res, 0,'victimID');
+        }
+        $error = array('status' => "Success", "msg" => "Request to add case was successful.".$vid);
         $this->api->response($this->api->json($error), 400);
     }
     public function getAllBlunts() {

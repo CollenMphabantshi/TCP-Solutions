@@ -5,6 +5,7 @@ var caseList = new Object();
 var victim_count = 0;
 var currentCaseNumber = -1;
 var currentCase = null;
+var currentSceneType = null;
 
 $(document).ready(function (){
     
@@ -234,13 +235,16 @@ function loadSceneInfo(view){
             data += "<td>Victim ID Number:</td><td>"+obj.victim[victim_count].victimIdentityNumber+"</td>";
             data += "</tr>";
             data += "<tr>";
+            data += "<td>Victim Estimated Age:</td><td>"+obj.victim[victim_count].victimAge+"</td>";
+            data += "</tr>";
+            data += "<tr>";
             data += "<td>Who found the victim&apos;s Body?</td><td>"+obj.victim[victim_count].whoFoundVictimBody+"</td>";
             data += "</tr>";
             data += "<tr>";
             data += "<td>Was the body decomposed?</td><td>"+obj.victim[victim_count].bodyDecompose+"</td>";
             data += "</tr>";
             data += "<tr>";
-            data += "<td>Medical Intervention?</td><td>"+obj.victim[victim_count].medicalIntervention+"</td>";
+            data += "<td>Was there any Medical Intervention?</td><td>"+obj.victim[victim_count].medicalIntervention+"</td>";
             data += "</tr>";
             data += "<tr>";
             data += "<td>Was the body burned?</td><td>"+obj.victim[victim_count].bodyBurned+"</td>";
@@ -275,6 +279,7 @@ function loadSceneInfo(view){
             data += "<tr>";
             data += "<td>Victim general history:</td><td>"+obj.victim[victim_count].victimGeneralHistory+"</td>";
             data += "</tr>";
+            currentSceneType = view.title;
             data += getSceneTypeData(view.title,obj.sceneTypeData);
             /// show images here
             /*data += "<tr class='sceneImages'><td colspan='2'>";
@@ -297,10 +302,821 @@ function pdfRender(){
     $(".right-content table").hide();
     
     var doc = new jsPDF();
-    doc.setFontSize(22);
-    doc.text(20, 20, 'Scene Time: '+currentCase.sceneTime);
+    doc.setFontSize(24);
+    doc.text(50, 20, 'Case Information');
+    doc.setFontSize(20);
+    doc.text(40, 40, currentSceneType);
+    
+    // scene information
     doc.setFontSize(16);
-    doc.text(20, 30, 'Scene Date: '+currentCase.sceneTime);	
+    doc.text(20, 60, 'Time of scene:\t\t'+currentCase.sceneTime);
+    doc.text(20, 70, 'Date of scene:\t\t'+currentCase.sceneDate);
+    doc.text(20, 80, 'Location of Scene:\t\t'+currentCase.sceneLocation);
+    doc.text(20, 90, 'Temperature of scene:\t\t'+currentCase.sceneTemparature);
+    doc.text(20, 100, 'Scene Investigating Officer Name:\t\t'+currentCase.sceneInvestigatingOfficerName);
+    doc.text(20, 110, 'Scene Investigating Officer Rank:\t\t'+currentCase.sceneInvestigatingOfficerRank);
+    doc.text(20, 120, 'Scene Investigating Officer Cell Number:\t\t'+currentCase.sceneInvestigatingOfficerCellNumber);
+    doc.text(20, 130, 'First Officer On Scene Name:\t\t'+currentCase.firstOfficerOnSceneName);
+    doc.text(20, 140, 'First Officer On Scene Rank:\t\t'+currentCase.firstOfficerOnSceneRank);
+    
+    // victim information
+    doc.setFontSize(20);
+    var pos = 20;
+    doc.text(30, 160, 'Victim information');
+    doc.setFontSize(16);
+    doc.text(20, 180, 'Victim Name:\t\t'+currentCase.victim[0].victimName);
+    doc.text(20, 190, 'Victim Surname:\t\t'+currentCase.victim[0].victimSurname);
+    doc.text(20, 200, 'Victim Gender:\t\t'+currentCase.victim[0].victimGender);
+    doc.text(20, 210, 'Victim Race:\t\t'+currentCase.victim[0].victimRace);
+    doc.text(20, 220, 'Victim ID Number:\t\t'+currentCase.victim[0].victimIdentityNumber);
+    doc.text(20, 240, 'Victim Estimated Age:\t\t'+currentCase.victim[0].victimAge);
+    doc.text(20, 250, 'Who found the body:\t\t'+currentCase.whoFoundVictimBody);
+    doc.text(20, 260, 'Was the body decomposed:\t\t'+currentCase.victim[0].bodyDecompose);
+    doc.text(20, 270, 'Was there any Medical Intervention:\t\t'+currentCase.victim[0].medicalIntervention);
+    doc.addPage();
+    
+    doc.text(20, pos+=10, 'Was the body burned:\t\t'+currentCase.victim[0].bodyBurned);
+    doc.text(20, pos+=10, 'Was the body intact:\t\t'+currentCase.victim[0].bodyIntact);
+    doc.text(20, pos+=10, 'Was the victim inside:\t\t'+currentCase.victim[0].victimInside);
+    doc.text(20, pos+=10, 'Was the victim outside:\t\t'+currentCase.victim[0].victimOutside);
+    doc.text(20, pos+=10, 'Was the victim found close to water:\t\t'+currentCase.victim[0].victimFoundCloseToWater);
+    doc.text(20, pos+=10, 'Was the victim suicide note found:\t\t'+currentCase.victim[0].victimSuicideNoteFound);
+    doc.text(20, pos+=10, 'Was rape homicide suspected:\t\t'+currentCase.victim[0].rapeHomicideSuspected);
+    doc.text(20, pos+=10, 'Was suicide Suspected:\t\t'+currentCase.victim[0].suicideSuspected);
+    doc.text(20, pos+=10, 'Any previous attempts:\t\t'+currentCase.victim[0].previousAttempts);
+    doc.text(20, pos+=10, 'Number of previous attempts:\t\t'+currentCase.victim[0].numberOfPreviousAttempts);
+    doc.text(20, pos+=10, 'Victim general history:\t\t'+currentCase.victim[0].victimGeneralHistory);
+    
+    var sceneData = currentCase.sceneTypeData;
+    pos = 20;
+    doc.addPage();
+    doc.setFontSize(20);
+    doc.text(30, pos+=10, 'Scene Type Information');
+    doc.setFontSize(16);
+    switch(currentSceneType)
+    {
+        case "Foetus / Abandoned baby":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.babyIOType);
+                        
+                        break;
+                    case "Aviation accident":    
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.aviationOutsideType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Aircraft type:\t\t'+sceneData.aircraftType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Number of people on aircraft:\t\t'+sceneData.aircraftNumPeople);
+                        
+                        
+                       doc.text(20, pos+=10, 'Weather condition:\t\t'+sceneData.weatherCondition);
+                        
+                       doc.text(20, pos+=10, 'Weather type:\t\t'+sceneData.weatherType);
+                        
+                        break;
+                     case "Hanging":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.hangingIOType);
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                       doc.text(20, pos+=10, 'Autoerotic Asphyxia?\t\t'+sceneData.autoeroticAsphyxia);
+                        
+                       doc.text(20, pos+=10, 'Partial hanging type:\t\t'+sceneData.partialHangingType);
+                        
+                       doc.text(20, pos+=10, 'Complete hanging?\t\t'+sceneData.completeHanging);
+                        
+                       doc.text(20, pos+=10, 'Was ligature around neck?\t\t'+sceneData.ligatureAroundNeck);
+                        
+                       doc.text(20, pos+=10, 'Who removed ligature:\t\t'+sceneData.whoRemovedLigature);
+                        
+                       doc.text(20, pos+=10, 'Ligature type:\t\t'+sceneData.ligatureType);
+                        
+                       doc.text(20, pos+=10, 'Was strangulation suspected?\t\t'+sceneData.strangulationSuspected);
+                        
+                       doc.text(20, pos+=10, 'Was smothering suspected?\t\t'+sceneData.smotheringSuspected);
+                        
+                       doc.text(20, pos+=10, 'Was chocking suspected?\t\t'+sceneData.chockingSuspected);
+                        pos = 20;
+                        doc.addPage();
+                        var inside = sceneData.hangingInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }
+                        break;
+                    case "Bicycle accident":
+                         
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.bicycleOutputType);
+                        
+                       doc.text(20, pos+=10, 'Bicycle type:\t\t'+sceneData.bicycleType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Number of people on bicycle:\t\t'+sceneData.bicycleNumPeople);
+                        
+                        
+                       doc.text(20, pos+=10, 'Weather condition:\t\t'+sceneData.weatherCondition);
+                        
+                        
+                       doc.text(20, pos+=10, 'Bicycle hit:\t\t'+sceneData.bicycleHit);
+                        
+                        break;
+                    case "Blunt force injury/ assault":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.bluntIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Blunt force object suspected:\t\t'+sceneData.bluntForceObjectSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the blunt force object still on scene?\t\t'+sceneData.bluntForceObjectStillOnScene);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was it a community assult?\t\t'+sceneData.wasCommunityAssult);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was strangulation suspected?\t\t'+sceneData.strangulationSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was smothering suspected?\t\t'+sceneData.smotheringSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was chocking suspected?\t\t'+sceneData.chockingSuspected);
+                       doc.addPage();
+                        try{
+                            var inside = sceneData.bluntInside;
+                            if(inside !== null);
+                            {
+
+                               doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+
+
+                               doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+
+
+                               doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+
+
+                               doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+
+
+                               doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+
+                            }
+                        }catch(e){
+                            
+                        }
+                        break;
+                    case "Burns":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.burnIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Accelerants at scene?\t\t'+sceneData.accelerantsAtScene);
+                        
+                        
+                       doc.text(20, pos+=10, 'Accelerants used:\t\t'+sceneData.accelerantsUsed);
+                        
+                        
+                       doc.text(20, pos+=10, 'Igniter at scene?\t\t'+sceneData.igniterAtScene);
+                        
+                        
+                       doc.text(20, pos+=10, 'Igniter used:\t\t'+sceneData.igniterUsed);
+                        
+                        
+                       doc.text(20, pos+=10, 'Foul play suspected?\t\t'+sceneData.foulPlaySuspected);
+                        
+                        try{
+                            var inside = sceneData.burnInside;
+                            if(inside !== null);
+                            {
+
+                               doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+
+
+                               doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+
+
+                               doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+
+
+                               doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+
+
+                               doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+
+                            }
+                        }catch(e){}
+                        break;
+                    case "Crush injury":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.crushIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        try{
+                        var inside = sceneData.crushinjuryInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "deathregister":     
+                        break;
+                    case "Drowning":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.drowningIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drowning type:\t\t'+sceneData.drowningType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        try{
+                        var inside = sceneData.drowningInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Lightning/ electrocution":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.electrocutionLightningIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any open wire?\t\t'+sceneData.anyOpenWire);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the scene wet?\t\t'+sceneData.sceneWet);
+                        
+                        
+                       doc.text(20, pos+=10, 'Debarking of trees?\t\t'+sceneData.deBarkingOfTrees);
+                        
+                        try{
+                        var inside = sceneData.electrocutionlightningInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Firearm discharge/  gunshot wound":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.firearmIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any gunshot wounds?\t\t'+sceneData.gunshotWounds);
+                        
+                        
+                       doc.text(20, pos+=10, 'Where are the gunshot wounds located:\t\t'+sceneData.gunshotWoundsLocation);
+                        
+                        
+                       doc.text(20, pos+=10, 'Where are the gunshot wounds area?\t\t'+sceneData.gunshotWoundsArea);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the firearm on scene?\t\t'+sceneData.firearmOnScene);
+                        
+                        
+                       doc.text(20, pos+=10, 'Accelerants used:\t\t'+sceneData.accelerantsUsed);
+                        
+                        
+                       doc.text(20, pos+=10, 'Firearm calibre:\t\t'+sceneData.firearmCalibre);
+                        try{
+                        var inside = sceneData.firearmInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Fall/push/jump from height":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.heightIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Where did the victim fall from?\t\t'+sceneData.fromWhat);
+                        
+                        
+                       doc.text(20, pos+=10, 'How high was the fall?\t\t'+sceneData.howHigh);
+                        
+                        
+                       doc.text(20, pos+=10, 'On what did the victim land?\t\t'+sceneData.onWhatVictimLanded);
+                        
+                        try{
+                        var inside = sceneData.heightInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Gassing":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.gassingIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        try{
+                        var inside = sceneData.gassingInside;
+                        
+                        if(inside !== null)
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                            
+                           doc.text(20, pos+=10, 'Any gassing appliances?\t\t'+inside.gassingAppliances);
+                            
+                            
+                           doc.text(20, pos+=10, 'Gassing aplliances used:\t\t'+inside.gassingAppliancesUsed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was there a gassing smell?\t\t'+inside.gassingSmell);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Ingestion/overdose /poisoning":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.ingestionOverdosePoisoningIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        try{
+                        var inside = sceneData.ingestionOverdosePoisoningInside;
+                        if(inside !== null)
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Motor vehicle accident":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.mvaOutsideType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the victim found in car?\t\t'+sceneData.victimFoundInCar);
+                        
+                        
+                       doc.text(20, pos+=10, 'Occupants:\t\t'+sceneData.occupants);
+                        
+                        
+                       doc.text(20, pos+=10, 'Number of occupants:\t\t'+sceneData.numberOfOccupants);
+                        
+                        
+                       doc.text(20, pos+=10, 'Victim was:\t\t'+sceneData.victimWas);
+                        
+                        
+                       doc.text(20, pos+=10, 'Car was hit from:\t\t'+sceneData.carWasHitFrom);
+                        
+                        
+                       doc.text(20, pos+=10, 'Victim Type:\t\t'+sceneData.victimType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the car burnt?\t\t'+sceneData.carBurnt);
+                       
+                        break;
+                    case "Motorbike accident":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.mbaOutsideType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the victim wearing protective clothing?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Victims on motorcycle?\t\t'+sceneData.victimsOnMotorcycle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Where was the motorbike hit from?\t\t'+sceneData.motorbikeHitFrom);
+                        
+                        
+                       doc.text(20, pos+=10, 'Type of accident:\t\t'+sceneData.typeOfAccident);
+                        
+                        break;
+                    case "Pedestrian vehicle accident":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.perdestrianOutsideType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was it a hit and run?\t\t'+sceneData.hitAndRun);
+                        
+                        
+                       doc.text(20, pos+=10, 'Pedestrian type:\t\t'+sceneData.pedestrianType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Number of cars drove over the body:\t\t'+sceneData.numberOfCarsDroveOverBody);
+                        
+                        
+                       doc.text(20, pos+=10, 'Victim was:\t\t'+sceneData.victimWas);
+                        
+                        
+                       doc.text(20, pos+=10, 'Weather condition type:\t\t'+sceneData.weatherConditionType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Weather condition:\t\t'+sceneData.weatherCondition);
+                        
+                        break;
+                    case "Railway accident":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.railwayIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Victim type:\t\t'+sceneData.victimType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Railway type:\t\t'+sceneData.railwayType);
+                        
+                        break;
+                    case "Sharp force injury/ stab injury":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.sharpIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the sharp object at scene?\t\t'+sceneData.sharpObjectAtScene);
+                        
+                        
+                       doc.text(20, pos+=10, 'What are the sharp force injuries of victim?\t\t'+sceneData.sharpForceInjuries);
+                        
+                        
+                       doc.text(20, pos+=10, 'The injury:\t\t'+sceneData.theInjury);
+                        
+                        try{
+                        var inside = sceneData.sharpInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Sudden unexpected death of an infant (SUDI)":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.sidIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Resuscitation attemped?\t\t'+sceneData.resuscitationAttemped);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the infant sick lately?\t\t'+sceneData.infantSickLately);
+                        
+                        
+                       doc.text(20, pos+=10, 'Description of infant sickness:\t\t'+sceneData.infantSickLatelyDescription);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the infant on medication?\t\t'+sceneData.infantOnMedication);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any falls or inury experience?\t\t'+sceneData.fallsOrInjuryExperience);
+                        
+                        
+                       doc.text(20, pos+=10, 'What was the infant wearing?\t\t'+sceneData.infantWearing);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was the infant tightly wrapped?\t\t'+sceneData.infantTightlyWrapped);
+                        
+                        
+                       doc.text(20, pos+=10, 'Bedding over infant?\t\t'+sceneData.beddingOverInfant);
+                        
+                        
+                       doc.text(20, pos+=10, 'Date and time last placed:\t\t'+sceneData.dateAndTimeLastPlaced);
+                        
+                        
+                       doc.text(20, pos+=10, 'Date and time death discovered:\t\t'+sceneData.dateAndTimeDeathDiscovered);
+                        
+                        
+                       doc.text(20, pos+=10, 'Date and time last seen alive:\t\t'+sceneData.dateAndTimeLastSeenAlive);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any SID deaths?\t\t'+sceneData.anySIDSdeaths);
+                        
+                        
+                       doc.text(20, pos+=10, 'Photo after body removed:\t\t'+sceneData.photoAfterBodyRemoved);
+                        
+                        
+                       doc.text(20, pos+=10, 'Infant last placed:\t\t'+sceneData.infantLastPlaced);
+                        
+                        
+                       doc.text(20, pos+=10, 'Infant last seen alive:\t\t'+sceneData.infantLastSeenAlive);
+                        
+                        
+                       doc.text(20, pos+=10, 'Where was the infant found dead?\t\t'+sceneData.whereInfantFoundDead);
+                        
+                        break;
+                    case "Sudden unexpected death of an adult/ found dead":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.sudaIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was strangulation suspected?\t\t'+sceneData.strangulationSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was smothering suspected?\t\t'+sceneData.smotheringSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was chocking suspected?\t\t'+sceneData.chockingSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Appliances?\t\t'+sceneData.sudaAppliances);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was there a weird smell in the air?\t\t'+sceneData.wierdSmellInAir);
+                        
+                        try{
+                        var inside = sceneData.sudaInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Sudden unexpected death of a child  (1 – 18 years)":
+                        
+                       doc.text(20, pos+=10, 'Where did the scene take place?\t\t'+sceneData.sudcIOType);
+                        
+                        
+                       doc.text(20, pos+=10, 'Any signs of struggle?\t\t'+sceneData.signsOfStruggle);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was an alcohol bottle around?\t\t'+sceneData.alcoholBottleAround);
+                        
+                        
+                       doc.text(20, pos+=10, 'Drug Paraphernalia?\t\t'+sceneData.drugParaphernalia);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was strangulation suspected?\t\t'+sceneData.strangulationSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was smothering suspected?\t\t'+sceneData.smotheringSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was chocking suspected?\t\t'+sceneData.chockingSuspected);
+                        
+                        
+                       doc.text(20, pos+=10, 'Appliances?\t\t'+sceneData.sudaAppliances);
+                        
+                        
+                       doc.text(20, pos+=10, 'Was there a weird smell in the air?\t\t'+sceneData.wierdSmellInAir);
+                        
+                        try{
+                        var inside = sceneData.sudcInside;
+                        if(inside !== null);
+                        {
+                            
+                           doc.text(20, pos+=10, 'Was the door locked?\t\t'+inside.doorLocked);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows closed?\t\t'+inside.windowsClosed);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the windows broken?\t\t'+inside.windowsBroken);
+                            
+                            
+                           doc.text(20, pos+=10, 'Was the victim alone?\t\t'+inside.victimAlone);
+                            
+                            
+                           doc.text(20, pos+=10, 'Who was with the victim?\t\t'+inside.peopleWithVictim);
+                            
+                        }}catch(e){}
+                        break;
+                    case "Section 48  death –surgical case":
+                        
+                       doc.text(20, pos+=10, 'Was the victim hospitalized?\t\t'+sceneData.victimHospitalized);
+                        
+                        
+                       doc.text(20, pos+=10, 'Medical equipment in situ?\t\t'+sceneData.medicalEquipmentInSitu);
+                        
+                        
+                       doc.text(20, pos+=10, 'gw714file:\t\t'+sceneData.gw714file);
+                        
+                        
+                       doc.text(20, pos+=10, 'Names of doctors:\t\t'+sceneData.DrNames);
+                        
+                        
+                       doc.text(20, pos+=10, 'Doctor Cell Number:\t\t'+sceneData.DrCellNumber);
+                        
+                        
+                       doc.text(20, pos+=10, 'Nurses Names:\t\t'+sceneData.NurseNames);
+                        
+                        
+                       doc.text(20, pos+=10, 'Nurse Cell Number:\t\t'+sceneData.NurseCellNumber);
+                        
+                        break;
+                    default:
+                        break;
+    }
     // Output as Data URI
     doc.output('datauri');
 
@@ -1479,7 +2295,7 @@ function addUser(name,pass,firstname,surname,combobox,cell){
         query.append("utype","guest");
     }else if(combobox==="Forensic practitioner/Administrator")
     {
-        alert(cell);
+        
         query.append("utype","afp");
         query.append("cellphoneNumber",cell);
     } 
