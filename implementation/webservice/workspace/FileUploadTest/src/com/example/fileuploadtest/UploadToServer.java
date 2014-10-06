@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -82,11 +83,14 @@ public class UploadToServer extends Activity{
                                     public void run() {
                                         messageText.setText("uploading started.....");
                                     }
-                                });                      
-                             for(int i=0; i < uploadFileName.size(); i++){
+                                });  
+                             readAllFiles();
+                             int i = 0;
+                             while( i < uploadFileName.size()){
                             	 filename = uploadFileName.get(i);
+                            	 System.out.println(filename);
                             	 uploadFile( filename );
-                            	 
+                            	 i++;
                              }                   
                         }
                       }).start();        
@@ -99,12 +103,13 @@ public class UploadToServer extends Activity{
             
             @Override
             public void onClick(View arg0) {
-                 
-                Intent i = new Intent(
+            	readAllFiles();
+                /*Intent i = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                  
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);*/
+                
             }
         });
     	
@@ -126,7 +131,7 @@ public class UploadToServer extends Activity{
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
            
-            uploadFileName.add(picturePath);
+            //uploadFileName.add(picturePath);
             messageText.setText("Path : "+uploadFileName);
             
             if(count == 0){
@@ -153,7 +158,29 @@ public class UploadToServer extends Activity{
      
      
     }
-   
+    
+    public void readAllFiles(){
+    	
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
    
  
     public int uploadFile(String sourceFileUri) {

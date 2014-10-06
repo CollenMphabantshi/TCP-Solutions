@@ -430,10 +430,54 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="9"
+				android:rowCount="11"
         		android:columnCount="2"
 			    >
 				
+		    	<TextView 
+				    android:id="@+id/suda_tv_skeletonized"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are the remains skeletonized?"
+					android:layout_row="0"
+            		android:layout_column="0"
+					
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/suda_rgskeletonized"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/suda_skeletonizedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/suda_skeletonizedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>     
+		    	
 				<TextView 
 				    android:id="@+id/suda_tv_bodyDecomposed"
 					android:layout_width="wrap_content"
@@ -442,7 +486,7 @@
 					
 					style="@style/tv_question"
 					android:text="Is the body decomposed?"
-					android:layout_row="0"
+					android:layout_row="1"
             		android:layout_column="0"
 					
 					
@@ -455,7 +499,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="0"
+			    android:layout_row="1"
             	android:layout_column="1"
 			    >
 				    <RadioButton
@@ -488,7 +532,7 @@
 					style="@style/tv_question"
 					android:text="Is there any medical intervention?"
 					
-					android:layout_row="1"
+					android:layout_row="2"
             		android:layout_column="0"
 					/>
 				<RadioGroup 
@@ -498,7 +542,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="1"
+			    android:layout_row="2"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -530,7 +574,7 @@
 					style="@style/tv_question"
 					android:text="Who found victim body?"
 					
-					android:layout_row="2"
+					android:layout_row="3"
             		android:layout_column="0"
 					/>
 				<EditText
@@ -538,7 +582,7 @@
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
-					android:layout_row="2"
+					android:layout_row="3"
             		android:layout_column="1"
 					/>
 				
@@ -551,7 +595,7 @@
 					style="@style/tv_question"
 					android:text="Was the victim found close to water?"
 					
-					android:layout_row="3"
+					android:layout_row="4"
             		android:layout_column="0"
 					/>
 				
@@ -562,7 +606,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="3"
+			    android:layout_row="4"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -593,7 +637,7 @@
 					style="@style/tv_question"
 					android:text="Is a rape-homicide suspected?"
 					
-					android:layout_row="4"
+					android:layout_row="5"
             		android:layout_column="0"
 					/>
 				
@@ -604,7 +648,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="4"
+			    android:layout_row="5"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -635,7 +679,7 @@
 					style="@style/tv_question"
 					android:text="Suspicion of suicide?"
 					
-					android:layout_row="5"
+					android:layout_row="6"
             		android:layout_column="0"
 					/>
 				
@@ -646,7 +690,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="5"
+			    android:layout_row="6"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -678,7 +722,7 @@
 					style="@style/tv_question"
 					android:text="Any previous attempts?"
 					
-					android:layout_row="6"
+					android:layout_row="7"
             		android:layout_column="0"
 					/>
 				
@@ -689,7 +733,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="6"
+			    android:layout_row="7"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -720,7 +764,7 @@
 					style="@style/tv_question"
 					android:text="How many attempts?"
 				
-					android:layout_row="7"
+					android:layout_row="8"
             		android:layout_column="0"
 					/>
 				<EditText 
@@ -728,9 +772,30 @@
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
-					android:layout_row="7"
+					android:layout_row="8"
             		android:layout_column="1"
 					/>
+				
+				<TextView 
+				    android:id="@+id/suda_tv_medicalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Did the victim have any medical history of"
+					android:layout_row="9"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/suda_medicalHistory"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/sudaMedicalHistory"
+					android:prompt="@string/choose"
+					android:layout_row="9"
+            	android:layout_column="1"
+				    />
 				
 				</GridLayout>
 				<!-- The Body ends here... -->
@@ -1026,9 +1091,9 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Was there a heater or open fire/gas heater/ galley blik 
-					\nor other  heating device in room where the deceased was
-					 found?"
+					android:text="Was there a heater or open fire/gas \nheater/ galley blik
+					or other  heating \ndevice in room where the deceased\n was
+					found?"
 					android:layout_row="8"
             		android:layout_column="0"
 					/>
@@ -1088,7 +1153,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is there a weird smell in the air (e.g. gas, chemical)"
+					android:text="Is there a weird smell in the air (e.g. gas,\n chemical)"
 					android:layout_row="10"
             		android:layout_column="0"
 					/>
@@ -1281,46 +1346,7 @@
 				    
 				</RadioGroup>
 				
-				<TextView
-				    android:id="@+id/suda_tv_drugParaphernalia"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Drug paraphernalia?"
-					android:layout_row="2"
-            	android:layout_column="0"
-					/>
-			
-				<RadioGroup 
-			    android:id="@+id/suda_rgDrugParaphernalia"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="2"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/suda_DrugParaphernaliaYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/suda_DrugParaphernaliaNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
+				
 				</GridLayout>
 				<!-- Scene look ends here -->
 				
@@ -1396,7 +1422,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="What is  the suspected blunt force object used?"
+					android:text="What is  the suspected blunt force\n object used?"
 					android:layout_row="1"
             	android:layout_column="0"
 					/>

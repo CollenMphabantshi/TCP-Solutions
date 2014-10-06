@@ -87,7 +87,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Gassing extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+public class Gassing extends Activity/* implements GlobalMethods, OnMyLocationChangeListener*/{
 	
 	
 	
@@ -291,15 +291,15 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		
 		
-		initialize();
+		/*initialize();
 		variablesInitialization();
 		CheckRadioButtons();
-		setOnClickEvents();
+		setOnClickEvents();*/
 		
 		
 	
 	}
-	
+	/*
 	public String initialize(){
 			
 			if( status != ConnectionResult.SUCCESS){
@@ -798,7 +798,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		 * 	Spinner onclick event
 		 */
 		
-		previousAttemptsYes.setOnClickListener(new OnClickListener() {
+		/*previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -1761,7 +1761,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
 					imgView.setImageBitmap(img);
 				}*/
-				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				//WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
 				//weatherInfo.setText(WeatherInfo);
 				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
 				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
@@ -1770,7 +1770,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 				press.setText("" + weather.currentCondition.getPressure() + " hPa");
 				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 				windDeg.setText("" + weather.wind.getDeg() + "�");*/
-					
+	/*		
 			}
 		}
 	
@@ -2014,6 +2014,6 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		}
 	
 	
-	
+	*/
 	
 }

@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -275,6 +277,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		try{
 		String city = "";
+		//uploadFileName = new ArrayList<String>();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.blunt);
 		try{
@@ -328,20 +331,52 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "Blunt_" + timeStamp + "_";
+	    String imageFileName = "Blunt_" + timeStamp;
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
-	    File dir = new File(storageDir);
-	    if (!dir.exists())
-	    	dir.mkdir();
-	    
-	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
+	    File path = Environment.getExternalStoragePublicDirectory("/picupload");
+	    //File dir = new File(storageDir);
+	   // if (!dir.exists())
+	   // //	dir.mkdir();
+	    File file = new File(path, imageFileName + ".png");
+	   
+	    //File image = new File(storageDir + "/" + imageFileName + ".jpg");
 
 	    // Save a file: path for use with ACTION_VIEW intents
-	    mCurrentPhotoPath = image.getAbsolutePath();
+	    mCurrentPhotoPath = file.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
-	    return image;
+	   return file;
 		
 	}
+	
+	public void readAllFiles(){
+	    	
+	    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+	    	Log.d("Files", "Path: " + path);
+	    	File f = new File(path);        
+	    	File files[] = f.listFiles();
+	    	Log.d("Files", "Size: "+ files.length);
+	    	for (int i=0; i < files.length; i++)
+	    	{
+	    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+	        	//{
+	        		uploadFileName.add(path+files[i].getName());
+	    			Log.d("Files", "FileName:" + files[i].getName());
+	        	//}
+	    	    
+	    	}
+	    	
+	    }
+	   public String getExtesion(String filename){
+		   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+		   return extension;
+	   }
+	   
+	   public void clearImageData(){
+		   String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+		   File f = new File(path); 
+		 for(File file: f.listFiles()) file.delete();
+	   }
+   
 	
 	private void dispatchTakePictureIntent(){
 		
@@ -674,12 +709,14 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				try{
+					readAllFiles();
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
-						if(ValidateFields()){
-							//if(uploadFileName.size() > 0){
+						if(ValidateFields())
+							{
+						if(uploadFileName.size() > 0){
 								
 									try{
 										
@@ -694,29 +731,32 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                                        
 						                                        Toast.makeText(Blunt.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
-						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
+						                                });    
+						                             
+						                             int i = 0;
+						                             while( i < uploadFileName.size()){
+						                            	 //filename = uploadFileName.get(i);
+						                            	 System.out.println("file name: "+uploadFileName.get(i));
+						                            	 uploadFile( uploadFileName.get(i) );
+						                            	 i++;
+						                             }                    
 						                        }
 						                      }).start(); 
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
+										//clearImageData();
 										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							//}
-							//else{
+							}
+							else{
 								
-								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
+								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
 								
-							//}
+							}
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -969,7 +1009,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
 	            System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){

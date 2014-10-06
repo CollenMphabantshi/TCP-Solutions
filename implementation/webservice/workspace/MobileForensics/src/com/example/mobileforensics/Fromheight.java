@@ -87,7 +87,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Fromheight extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+public class Fromheight extends Activity /*implements GlobalMethods, OnMyLocationChangeListener*/{
 	
 	
 	
@@ -280,16 +280,16 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		
 		
 		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
+		//initialize();
+		//variablesInitialization();
+		//CheckRadioButtons();
+		//setOnClickEvents();
 		
 		
 	
 	}
 	
-	public String initialize(){
+	/*public String initialize(){
 			
 			if( status != ConnectionResult.SUCCESS){
 				int requestCode = 10;
@@ -776,7 +776,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		 * 	Spinner onclick event
 		 */
 		
-		previousAttemptsYes.setOnClickListener(new OnClickListener() {
+	/*	previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -1756,7 +1756,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
 					imgView.setImageBitmap(img);
 				}*/
-				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+			//	WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
 				//weatherInfo.setText(WeatherInfo);
 				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
 				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
@@ -1765,7 +1765,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 				press.setText("" + weather.currentCondition.getPressure() + " hPa");
 				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 				windDeg.setText("" + weather.wind.getDeg() + "�");*/
-					
+	/*				
 			}
 		}
 	
@@ -2029,6 +2029,6 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		}
 	
 	
-	
+	*/
 	
 }

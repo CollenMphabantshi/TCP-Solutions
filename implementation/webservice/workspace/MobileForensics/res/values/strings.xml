@@ -19,6 +19,21 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+    
+    <string-array name="electrocutionVictimDie">
+        <item>Immediately</item>
+        <item>After a few seconds</item>
+        <item>After minutes</item>
+    </string-array>
+    
+    <string-array name="sudaMedicalHistory">
+        <item>TB</item>
+        <item>Chronic/ continuous coughing</item>
+        <item>Heart disease</item>
+        <item>Diabetes</item>
+        <item>Cancer</item>
+        <item>Weight loss</item>
+    </string-array>
     <string-array name="sceneIO">
         <item>Outside</item>
         <item>Inside</item>

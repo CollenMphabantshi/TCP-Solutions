@@ -3,794 +3,1536 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:gravity="center_horizontal">
-    <TextView 
-		
+    android:gravity="center_horizontal" >
+   
+    <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="Ingestion/overdose /poisoning"
-		android:layout_margin="15dp"
-		android:textStyle="bold"
-		android:textSize="20sp"
-		android:layout_alignBaseline="@+id/tvInformation"/>
-    
-    
+		style="@style/heading"/>
+
     <ScrollView 
         android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
+	    
 	    android:scrollbars="vertical">
-			    <LinearLayout 
-			        android:layout_width="match_parent"
-				    android:layout_height="match_parent"
-				    android:orientation="vertical"  
-				    android:gravity="center_horizontal">
-							    <TextView 
-							            android:id="@+id/tvInformation"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="INFORMATION"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	android:layout_alignBaseline="@+id/tvInformation"/>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Investigating Officer"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	/>
-							    
-							    <RelativeLayout 
+	   
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"  
+			android:gravity="center_horizontal">
+			
+		    <LinearLayout
+			    android:id="@+id/ingestionovdosepois_infoLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+			
+			<!-- Geolocation and weather -->
+			<fragment 
+	        android:id="@+id/fragId"
+	        android:name="com.google.android.gms.maps.MapFragment"
+	        android:layout_width="500dp"
+	        android:layout_height="300dp"
+	        />
+			
+		    <TextView 
+		        android:id="@+id/value"
+		        android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text=""
+				android:visibility="gone"
+		        />
+		   
+		    
+		    <TextView
+				  android:id="@+id/bluntWeatherInfo"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				  android:text="weather Info"
+				  android:visibility="gone"
+				         />
+		   
+				
+		    <!--  -->
+			<TextView
+			    android:id="@+id/ingestionovdosepois_tv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
+			<GridLayout
+			    android:id="@+id/ingestionovdosepois_rl1"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="4"
+        		android:columnCount="2">
 							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        
-							        >
-							        
-							        <TextView 
-							            android:id="@+id/tv_io_name"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Name"
-							        	android:layout_alignBaseline="@+id/io_name"/>
-							       <EditText 
-							            android:id="@+id/io_name"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_io_name"/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_io_name"
+					style="@style/tv_question"
+					android:text="Name"
+					android:layout_row="0"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_io_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"/>
 							       
 							       
-							       <TextView 
-							            android:id="@+id/tv_io_surname"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_io_name"
-							        	android:text="Surname"
-							        	android:layout_alignBaseline="@+id/io_surname"/>
-							       <EditText 
-							            android:id="@+id/io_surname"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_io_surname"
-							        	android:layout_below="@+id/io_name"/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_io_surname"
+					style="@style/tv_question"
+					android:text="Surname"
+					android:layout_row="1"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_io_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="1"
+            		android:layout_column="1"/>
 							       
 							       
-							       <TextView 
-							            android:id="@+id/tv_io_rank"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_io_surname"
-							        	android:text="Rank"
-							        	android:layout_alignBaseline="@+id/io_rank"/>
-							       <EditText 
-							            android:id="@+id/io_rank"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_io_rank"
-							        	android:layout_below="@+id/io_surname"/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_io_rank"
+					style="@style/tv_question"
+					android:text="Rank"
+					android:layout_row="2"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_io_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            		android:layout_column="1"/>
 							       
-							       <TextView 
-							            android:id="@+id/tv_io_cell"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_io_rank"
-							        	android:text="Cell"
-							        	android:layout_alignBaseline="@+id/io_cell"/>
-							       <EditText 
-							            android:id="@+id/io_cell"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_io_cell"
-							        	android:layout_below="@+id/io_rank"/>
-							       
-							       
-							    </RelativeLayout>
-							    
-							<TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="First Officer on scene"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	/>
-							    
-							    <RelativeLayout 
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_io_cell"
+					style="@style/tv_question"
+					android:text="Cell"
+					android:layout_row="3"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_io_cell"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
+            		android:layout_column="1"/>				       
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/ingestionovdosepois_tv_foos"			            
+				style="@style/sub_headings"
+				android:text="First Officer On Scene"
+				
+			/>
+			<GridLayout 
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="3"
+        		android:columnCount="2">
 							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        
-							        >
-							        
-							        <TextView 
-							            android:id="@+id/tv_fo_name"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Name"
-							        	android:layout_alignBaseline="@+id/fo_name"/>
-							       <EditText 
-							            android:id="@+id/fo_name"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_fo_name"/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_foos_name"
+					style="@style/tv_question"
+					android:text="Name"
+					android:layout_row="0"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_foos_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"/>
 							       
 							       
-							       <TextView 
-							            android:id="@+id/tv_fo_surname"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_fo_name"
-							        	android:text="Surname"
-							        	android:layout_alignBaseline="@+id/fo_surname"/>
-							       <EditText 
-							            android:id="@+id/fo_surname"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_fo_surname"
-							        	android:layout_below="@+id/fo_name"/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_foos_surname"
+					style="@style/tv_question"
+					android:text="Surname"
+					android:layout_row="1"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_foos_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="1"
+            		android:layout_column="1"/>
 							       
 							       
-							       <TextView 
-							            android:id="@+id/tv_fo_rank"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_fo_surname"
-							        	android:text="Rank"
-							        	android:layout_alignBaseline="@+id/fo_rank"/>
-							       <EditText 
-							            android:id="@+id/fo_rank"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_fo_rank"
-							        	android:layout_below="@+id/fo_surname"/>
-							       
-							       
-							       
-							       
-							    </RelativeLayout>
-							
-							    
-							    <TextView 
-							            android:id="@+id/tvDemographics"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="DEMOGRAPHICS"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	android:layout_alignBaseline="@+id/tvDemographics"/>
-							    <RelativeLayout 
-							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        >
-							     <TextView 
-							            android:id="@+id/tv_gender"
-							       		android:layout_width="150dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Gender"
-							        	android:layout_alignBaseline="@+id/male"
-							            />
-							        <RadioButton 
-							            android:id="@+id/male"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="male"
-							        	android:layout_toRightOf="@+id/tv_gender"
-							        	android:layout_alignBaseline="@+id/female"
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/female"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="female"
-							        	android:layout_toRightOf="@+id/male"
-							        	android:layout_alignBaseline="@+id/unknown"
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/unknown_gender"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="unknown"
-							        	android:layout_toRightOf="@+id/female"
-							            />
-							        
-							        
-							        <TextView 
-							            android:id="@+id/tv_race"
-							       		android:layout_width="150dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Race"
-							        	android:layout_alignBaseline="@+id/asian"
-							        	android:layout_below="@+id/tv_gender"
-							            />
-							        <RadioButton 
-							            android:id="@+id/asian"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Asian"
-							        	android:layout_toRightOf="@+id/tv_race"
-							        	android:layout_alignBaseline="@+id/black"
-							        	android:layout_below="@+id/male"
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/black"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Black"
-							        	android:layout_toRightOf="@+id/asian"
-							        	android:layout_alignBaseline="@+id/coloured"
-							        	android:layout_below="@+id/female"
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/coloured"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Cloured"
-							        	android:layout_toRightOf="@+id/black"
-							        	android:layout_below="@+id/unknown_gender"
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/white"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="White"
-							        	android:layout_alignBaseline="@+id/unknown_race"
-							        	android:layout_below="@+id/tv_race"
-							        	android:layout_marginLeft="150dp"
-							        	
-							            />
-							        
-							        <RadioButton 
-							            android:id="@+id/unknown_race"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="unknown"
-							        	android:layout_toRightOf="@+id/white"
-							        	android:layout_below="@+id/asian"
-							            />
-							        </RelativeLayout>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="UnKnown/Known individual"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	/>
-							    
-							    <RelativeLayout 
-							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        
-							        >
-							        
-							         <TextView 
-							            android:id="@+id/tv_vict_name"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:text="Name"
-							        	android:layout_alignBaseline="@+id/vict_name"/>
-							       <EditText 
-							            android:id="@+id/vict_name"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_vict_name"/>
-							       
-							       
-							       <TextView 
-							            android:id="@+id/tv_vict_surname"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_vict_name"
-							        	android:text="Surname"
-							        	android:layout_alignBaseline="@+id/vict_surname"/>
-							       <EditText 
-							            android:id="@+id/vict_surname"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_vict_surname"
-							        	android:layout_below="@+id/vict_name"/>
-							       
-							       
-							       <TextView 
-							            android:id="@+id/tv_vict_idnumber"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_below="@+id/tv_vict_surname"
-							        	android:text="ID number"
-							        	android:layout_alignBaseline="@+id/vict_idnumber"/>
-							       <EditText 
-							            android:id="@+id/vict_idnumber"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:layout_toRightOf="@+id/tv_vict_idnumber"
-							        	android:layout_below="@+id/vict_surname"/>
-							        
-							       
-							       
-							    </RelativeLayout>
-							    
-							    
-							    <TextView 
-							            android:id="@+id/tvThebody"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="THE BODY"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	android:layout_alignBaseline="@+id/tvThebody"/>
-							    
-							    
-							    <RelativeLayout 
-							        
-							        android:layout_width="match_parent"
-							        android:layout_height="wrap_content"
-							        android:gravity="center_horizontal"
-							        
-							        >
-							       
-							        <TextView 
-							            android:id="@+id/scenephoto"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="SCENE PHOTO"
-							        	android:layout_alignBaseline="@+id/camera"
-							        	android:layout_marginRight="50dp"
-							            />
-							        <TextView 
-							            android:id="@+id/camera"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Camera"
-							        	android:layout_toRightOf="@+id/scenephoto"
-							        	android:layout_marginRight="50dp"
-							        	
-							            />
-							         <TextView 
-							            android:id="@+id/browse"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="browse"
-							        	android:layout_toRightOf="@+id/camera"
-							        	
-							            />
-							        
-							    </RelativeLayout>
-							    
-							    <TextView 
-							            android:id="@+id/tv_decomposed"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Is the body decomposed?"
-							        	android:layout_marginRight="50dp"
-							            />
-							        <Spinner 
-							            android:id="@+id/decomposed"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							            android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"/>
-							        
-							         <TextView 
-							            android:id="@+id/tv_intervention"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Is there any medical intervention?"
-							        	android:layout_marginRight="50dp"
-							            />
-							        
-							       <Spinner 
-							            android:id="@+id/intervention"
-							       		android:layout_width="100dp"
-							        	android:layout_height="wrap_content"
-							            android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"/>
-							       
-							       <TextView 
-							            android:id="@+id/tv_foundbody"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Who found the body?"
-							        	android:layout_marginRight="50dp"
-							            />
-							        
-							       <EditText 
-							            android:id="@+id/foundbody"
-							       		android:layout_width="300dp"
-							        	android:layout_height="wrap_content"/>
-							       
-							       <TextView 
-							            android:id="@+id/tv_closetowater"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Was the victim found close to water?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/closetowater"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        
-							        
-							        <TextView 
-							            android:id="@+id/tv_suicidesuspicion"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Suspicion of suicide"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/suicidesuspicion"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							        	android:layout_height="wrap_content"></Spinner>
-							        	
-							        	<TextView 
-							            android:id="@+id/tv_prevattempts"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Previous attempts"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/prevattempts"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							        	android:layout_height="wrap_content"></Spinner>
-							        <EditText 
-							            android:id="@+id/attemptsnum"
-							       		android:layout_width="300dp"
-							        	android:layout_height="wrap_content"
-							        	android:hint="if yes specify how many"
-							        	></EditText>
-							       
-							     <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="SCENE OF INJURY"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	/>
-							    <TextView 
-							            android:id="@+id/tv_isceneIO"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Is the body burnt?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/sceneIO"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/sceneIO"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="If the body was found inside"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	
-							            />
-							        
-							        <TextView 
-							            android:id="@+id/tv_insidelocation"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Where inside"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/insidelocation"
-							       		android:layout_width="100dp"
-							       		
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            android:id="@+id/tv_doorlocked"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Was the door locked from the inside?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/doorlocked"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            android:id="@+id/tv_windowsclosed"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Were the windows closed?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/windowsclosed"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							       
-							        <TextView 
-							            android:id="@+id/tv_windowsbroken"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Are any of the windows broken?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/windowsbroken"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							    <TextView 
-							            android:id="@+id/tv_victimalone"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Was the victim alone at time of death?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/victimalone"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <EditText 
-							            android:id="@+id/victimwaswith"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	android:hint="if NO (specify who)"
-							        	
-							        	/>
-							        
-							        <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="If the body was found outside"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							        	
-							            />
-							        
-							        <TextView 
-							            android:id="@+id/tv_outsidelocation"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Where outside"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/outsidelocation"
-							       		android:layout_width="100dp"
-							       		
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            android:id="@+id/tv_signsofstruggle"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Are there signs of a struggle?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/signsofstruggle"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            android:id="@+id/tv_alcoholbottle"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Alcohol bottle standing around?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/alcoholbottle"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        
-							        <TextView 
-							            android:id="@+id/tv_drug"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Drug paraphernalia?"
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/drug"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							        	android:layout_height="wrap_content"
-							        	/>
-							            
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="THE SCENE"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	/>
-							    
-							       
-							        <TextView 
-							            android:id="@+id/tv_fromwhat"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="COLLECT THE SUSPECTED SUBSTANCES (MEDICATION) OF OVERDOSE/INGESTION/POISON"							        	
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:textSize="15sp"
-							            />
-							        
-							        <TextView 
-							            android:id="@+id/tv_note"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Suicide note"
-							        	
-							        	
-							            />
-							        <Spinner 
-							            android:id="@+id/note"
-							       		android:layout_width="100dp"
-							       		android:entries="@array/yesorno"
-							            android:prompt="@string/chooseYN"
-							        	android:layout_height="wrap_content"
-							        	/>
-							        <EditText 
-							            android:id="@+id/note_yes"
-							       		android:layout_width="300dp"
-							        	android:layout_height="wrap_content"
-							        	android:hint="if yes is it with police or body"
-							        	></EditText>
-							       
-							        <TextView 
-							            android:id="@+id/tv_general"
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							      		android:text="General history"
-							        	
-							        	
-							            />
-							        
-							        <EditText 
-							            android:id="@+id/general"
-							       		android:layout_width="200dp"
-							        	android:layout_height="wrap_content"
-							        	
-							        	/>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="CREATE GALLERY"
-							        	android:layout_margin="8dp"
-										android:textStyle="bold"
-										android:textSize="18sp"
-							        	/>
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Select from memory"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:layout_marginTop="15dp"
-										
-							        	/>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="browse"
-							        	android:layout_margin="5dp"
-							        	
-										
-										
-							        	/>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="Take a picture"
-							        	android:layout_margin="5dp"
-										android:textStyle="bold"
-										android:layout_marginTop="15dp"
-										
-										
-							        	/>
-							    
-							    <TextView 
-							            
-							       		android:layout_width="wrap_content"
-							        	android:layout_height="wrap_content"
-							        	android:text="camera"
-							        	android:layout_margin="5dp"
-					
-							        	/>
-							    
-								<Button
-								    android:layout_width="wrap_content"
-							        android:layout_height="wrap_content"
-							        android:text="Submit"
-							       	android:layout_margin="5dp"
-							       	android:layout_marginTop="15dp"
-								    ></Button>	    
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_foos_rank"
+					style="@style/tv_question"
+					android:text="Rank"
+					android:layout_row="2"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_foos_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            		android:layout_column="1"/>
+								       
+			</GridLayout>
+			</LinearLayout>
+			
+		    <LinearLayout
+			    android:id="@+id/ingestionovdosepois_demographicLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+			<TextView
+			    android:id="@+id/ingestionovdosepois_tv_victimGender"	            
+				
+				android:text="Victim Gender"
+				style="@style/sub_headings"
+				android:layout_marginTop="10dp"
+			
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="1"
+        		android:columnCount="1">
+			<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgGender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="left"
+			    android:orientation="horizontal"
+			    android:layout_row="0"
+            	android:layout_column="0"
 			    
-			    </LinearLayout>
-    
-    </ScrollView>
-    
-    
+			    >
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbMale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Male"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbFemale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Female"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbUnknownGender"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			    	
+			        />
+			</RadioGroup>
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/ingestionovdosepois_tv_victimRace"			            
+				style="@style/sub_headings"
+				android:text="Victim Race"
+				
+				android:layout_marginTop="10dp"
+				
+				
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="1"
+        		android:columnCount="1">
+			<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgRace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="left"
+			    android:orientation="horizontal"
+			    android:layout_row="0"
+            	android:layout_column="0"
+			    >
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbAsian"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Asian"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbBlack"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Black"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbColoured"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Coloured"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbWhite"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="White"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/ingestionovdosepois_rgbUnknownRace"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			    	
+			        />
+			</RadioGroup>
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/ingestionovdosepois_tv_victimInfo"			            
+				style="@style/sub_headings"
+				android:text="Victim Information (if known individual)"
+				android:layout_margin="5dp"
+				
+				
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="9"
+        		android:columnCount="2">
+							        
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_victim_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Name"
+					android:layout_row="0"
+            		android:layout_column="0"
+            		style="@style/tv_question"
+					/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_victim_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"
+					/>
+							       
+							       
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_victim_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					style="@style/tv_question"
+					android:text="Victim Surname"
+					android:layout_row="1"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_victim_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="1"
+            		android:layout_column="1"
+					/>
+							       
+							       
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_victim_id"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					
+					android:text="ID Number"
+					style="@style/tv_question"
+					android:layout_row="2"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_victim_id"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="2"
+            		android:layout_column="1"
+					/>
+				<TextView 
+					android:id="@+id/ingestionovdosepois_tv_victim_age"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Estimated age"
+					style="@style/tv_question"
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_victim_age"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>
+								       
+				</GridLayout>
+				</LinearLayout>
+				
+		    <!-- The body Starts  -->
+		    	<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_the_body"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/the_body"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/ingestionovdosepois_theBodyLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="9"
+        		android:columnCount="2"
+			    >
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_bodyDecomposed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the body decomposed?"
+					android:layout_row="0"
+            		android:layout_column="0"
+					
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgBodyDecomposed"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_bodyDecomposedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_bodyDecomposedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				
+				    
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_medicalIntervention"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there any medical intervention?"
+					
+					android:layout_row="1"
+            		android:layout_column="0"
+					/>
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgMedicalIntervention"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="1"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_medicalInterventionYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_medicalInterventionNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_whoFoundVictimBody" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Who found victim body?"
+					
+					android:layout_row="2"
+            		android:layout_column="0"
+					/>
+				<EditText
+					android:id="@+id/ingestionovdosepois_whoFoundVictimBody"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="2"
+            		android:layout_column="1"
+					/>
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_closeToWater"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the victim found close to water?"
+					
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgCloseToWater"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="3"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_closeToWaterYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_closeToWaterNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_suicideSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Suspicion of suicide?"
+					
+					android:layout_row="4"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgSuicideSuspected"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="4"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_suicideSuspectedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_suicideSuspectedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_previousAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Any previous attempts?"
+					
+					android:layout_row="5"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgPreviousAttempts"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="5"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_previousAttemptsYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_previousAttemptsNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_howManyAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="How many attempts?"
+				
+					android:layout_row="6"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/ingestionovdosepois_howManyAttempts"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="6"
+            		android:layout_column="1"
+					/>
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_suicideNote"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Suicide note"
+					
+					android:layout_row="7"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgsuicideNote"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="7"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_suicideNoteYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_suicideNoteNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				</GridLayout>
+				<!-- The Body ends here... -->
+				
+		    	<!-- The Scene of injury starts  -->
+		    	<TextView
+				    android:id="@+id/ingestionovdosepois_sceneOfInjury"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/scene_of_injury"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/ingestionovdosepois_sceneOfInjuryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_sceneIOType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the scene Outside or Inside?"
+					android:layout_row="0"
+            		android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgSceneIOType"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			   
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_SceneIOTypeInside"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="Inside"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_SceneIOTypeOutside"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="Outside"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_whereInside"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Where inside?"
+					android:layout_row="1"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/ingestionovdosepois_sceneIType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/insideTypes"
+					android:prompt="@string/choose"
+					android:layout_row="1"
+            	android:layout_column="1"
+				    />
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_sceneITypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If Other, specify?"
+					
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/ingestionovdosepois_sceneITypeOther"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            	android:layout_column="1"
+				    />
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_doorLocked" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the door locked from the inside?"
+					android:layout_row="3"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgDoorLocked"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="3"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_DoorLockedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_DoorLockedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_windowsClosed" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Were the windows closed?"
+					android:layout_row="4"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgWindowsClosed"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="4"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_WindowsClosedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_WindowsClosedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_windowsBroken" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are any of the windows broken?"
+					android:layout_row="5"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgWindowsBroken"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="5"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_WindowsBrokenYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_WindowsBrokenNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_victimAlone" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the victim alone at the time of death?"
+					android:layout_row="6"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgVictimAlone"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="6"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_VictimAloneYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_VictimAloneNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_peopleWithVictim"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Who was with victim? (specify)"
+					android:layout_row="7"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/ingestionovdosepois_peopleWithVictim"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="7"
+            	android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_sceneOType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Where outside?"
+					
+					android:layout_row="8"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/ingestionovdosepois_sceneOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/outsideTypes"
+					android:prompt="@string/choose"
+					
+					android:layout_row="8"
+            	android:layout_column="1"
+				    />
+				
+				
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_sceneOTypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If Other, specify?"
+					android:layout_row="9"
+            	android:layout_column="0"
+					
+					/>
+				<EditText
+				    android:id="@+id/ingestionovdosepois_sceneOTypeOther"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="9"
+            	android:layout_column="1"
+				    />
+				</GridLayout>
+				<!-- Scene of injury ends here... -->
+				
+		    	<!-- The Scene look starts -->
+		    	
+		    	<TextView 
+				    android:id="@+id/ingestionovdosepois_sceneLook"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/scene_look"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/ingestionovdosepois_sceneLookLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_signsOfStruggle" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are there any signs of struggle?"
+					
+					android:layout_row="0"
+            	android:layout_column="0"
+					
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgSignsOfStruggle"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_SignsOfStruggleYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_SignsOfStruggleNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_alcoholBottleAround"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Alcohol bottle standing around?"
+					android:layout_row="1"
+            	android:layout_column="0"
+					
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgAlcoholBottleAround"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="1"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_AlcoholBottleAroundYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_AlcoholBottleAroundNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_drugParaphernalia"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Drug paraphernalia?"
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgDrugParaphernalia"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="2"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_DrugParaphernaliaYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_DrugParaphernaliaNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				</GridLayout>
+				<!-- Scene look ends here -->
+				
+				<!-- The Scene starts  -->
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_theScene"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/the_scene"
+					
+					/>
+				
+		    	<GridLayout
+			    android:id="@+id/ingestionovdosepois_theSceneLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				<TextView 
+				     android:id="@+id/ingestionovdosepois_tv_drugSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="What poison/medication/drug is suspected"
+					android:layout_row="0"
+            	android:layout_column="0"
+					
+					/>
+				
+				
+				<EditText
+				    android:id="@+id/ingestionovdosepois_drugSuspected"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            	android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_poisonOrContainer"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the poison/ medication/ drug and/or \ncontainer still on scene(COLLECT \nTHE SUSPECTED SUBSTANCES \n(MEDICATION) OF OVERDOSE/INGESTION/\nPOISON and container)"
+					android:layout_row="1"
+            	android:layout_column="0"
+					/>
+				<RadioGroup 
+			    android:id="@+id/ingestionovdosepois_rgpoisonOrContainer"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="1"
+            	android:layout_column="1"
+			   
+			    >
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_poisonOrContainerYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/ingestionovdosepois_poisonOrContainerNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_tv_OverdoseSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If no: Explain why overdose/ ingestion suspected"
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+				
+				<EditText
+				    android:id="@+id/ingestionovdosepois_OverdoseSuspected"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            	android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Victim General history?"
+					android:layout_row="3"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/ingestionovdosepois_generalHistory"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
+            	android:layout_column="1"
+				    />
+				</GridLayout>
+				<!-- The Scene ends here... -->
+				<LinearLayout
+			    android:id="@+id/ingestionovdosepois_galleryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+				<TextView 
+				    android:id="@+id/ingestionovdosepois_theGallery"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					android:text="@string/the_gallery"
+					
+					/>
+				
+				       
+				     <TextView
+				         android:layout_width="fill_parent"
+				         android:layout_height="wrap_content"
+				         android:text=""
+				         android:id="@+id/messageText"
+				         android:textColor="#000000"
+				         android:textStyle="bold"
+				     />
+				     
+				     
+				     <GridLayout 
+				         android:layout_width="match_parent"
+				         android:layout_height="match_parent"
+				         android:layout_margin="5dp"
+				         android:padding="5dp"
+				         android:columnCount="3"
+				         android:rowCount="4"
+				         android:id="@+id/ingestionovdosepois_Gallery"
+				         android:visibility="visible">
+				         
+				       
+				         <ImageView
+				        android:id="@+id/imgView0"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView1"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView2"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView3"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView4"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView5"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView6"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView7"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView8"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				      
+				     </GridLayout>
+				    <Button
+				        android:id="@+id/buttonLoadPicture"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="0"
+				        android:text="Select image from gallery"
+				        android:layout_gravity="center"></Button>
+				
+				</LinearLayout>
+				
+				<TextView
+				    android:id="@+id/ingestionovdosepois_tv_response"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="@string/send_response"
+					android:visibility="gone"
+					/>
+				
+				<GridLayout 
+				         android:layout_width="match_parent"
+				         android:layout_height="match_parent"
+				         android:layout_margin="5dp"
+				         android:padding="5dp"
+				         android:columnCount="3"
+				         android:layout_gravity="center_horizontal"
+				         android:rowCount="1"
+				         android:visibility="visible">
+				<Button
+				    android:id="@+id/ingestionovdosepois_BackToMenu"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_column="0"
+				    android:layout_row="0"
+				    android:text="MENU"
+				    android:visibility="gone" 
+				    />
+				
+				<Button
+				    android:id="@+id/ingestionovdosepois_doneButton"
+				    android:layout_width="200dp"
+				    android:layout_height="wrap_content"
+				    android:layout_column="1"
+				    android:layout_row="0"
+				    android:text="SUBMIT"
+				     android:visibility="visible"
+				    />
+				<Button
+				    android:id="@+id/ingestionovdosepois_logoutButton"
+				    android:layout_width="200dp"
+				    android:layout_height="wrap_content"
+				    android:layout_column="2"
+				    android:layout_row="0"
+				    android:text="LOGOUT"
+				     android:visibility="visible"
+				    />
+				</GridLayout>
+		</LinearLayout>
+		
+	</ScrollView> 
+	
 </LinearLayout>
