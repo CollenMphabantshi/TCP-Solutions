@@ -460,49 +460,25 @@
 				    />
 				    
 				</RadioGroup> 
-				
-				    
-				<TextView 
-				    android:id="@+id/foetus_tv_medicalIntervention"
+					<TextView
+				    android:id="@+id/foetus_tv_bodyDiscovered" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
-					
 					style="@style/tv_question"
-					android:text="Is there any medical intervention?"
+					android:text="How was the body discovered?"
 					
 					android:layout_row="1"
             		android:layout_column="0"
 					/>
-				<RadioGroup 
-			    android:id="@+id/foetus_rgMedicalIntervention"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    
-			    android:layout_row="1"
+				<EditText
+					android:id="@+id/foetus_bodyDiscovered"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="1"
             		android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/foetus_medicalInterventionYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/foetus_medicalInterventionNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup> 
+					/>
 				
 				<TextView
 				    android:id="@+id/foetus_tv_whoFoundVictimBody" 
@@ -559,6 +535,48 @@
 				    
 				    <RadioButton
 				    android:id="@+id/foetus_closeToWaterNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+						<TextView
+				    android:id="@+id/foetus_tv_babyCovered"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the foetus/baby covered?"
+					
+					android:layout_row="4"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/foetus_rgbabyCovered"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="4"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/foetus_babyCoveredYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/foetus_babyCoveredNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"

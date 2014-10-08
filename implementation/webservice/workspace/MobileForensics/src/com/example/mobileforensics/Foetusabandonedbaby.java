@@ -135,14 +135,16 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	private TextView tv_bodyDecomposed;
 	private RadioButton bodyDecomposedYes;
 	private RadioButton bodyDecomposedNo;
-	private TextView tv_medicalIntervention;
-	private RadioButton medicalInterventionYes;
-	private RadioButton medicalInterventionNo;
+	private TextView tv_bodyDiscovered;
+	private EditText bodyDiscovered;
 	private TextView tv_whoFoundVictimBody;
 	private EditText whoFoundVictimBody;
 	private TextView tv_closeToWater;
 	private RadioButton closeToWaterYes;
 	private RadioButton closeToWaterNo;
+	private TextView tv_babyCovered;
+	private RadioButton babyCoveredYes;
+	private RadioButton babyCoveredNo;
 	
 	private TextView sceneOfInjury;
 	private TextView tv_sceneIOType;
@@ -478,14 +480,16 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		tv_bodyDecomposed = (TextView)findViewById(R.id.foetus_tv_bodyDecomposed);
 		bodyDecomposedYes = (RadioButton)findViewById(R.id.foetus_bodyDecomposedYes);
 		bodyDecomposedNo = (RadioButton)findViewById(R.id.foetus_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.foetus_tv_medicalIntervention);
-		medicalInterventionYes = (RadioButton)findViewById(R.id.foetus_medicalInterventionYes);
-		medicalInterventionNo = (RadioButton)findViewById(R.id.foetus_medicalInterventionNo);
+		tv_bodyDiscovered = (TextView)findViewById(R.id.foetus_tv_bodyDiscovered);
+		bodyDiscovered = (EditText)findViewById(R.id.foetus_bodyDiscovered);
 		tv_whoFoundVictimBody = (TextView)findViewById(R.id.foetus_tv_whoFoundVictimBody);
 		whoFoundVictimBody = (EditText)findViewById(R.id.foetus_whoFoundVictimBody);
 		tv_closeToWater = (TextView)findViewById(R.id.foetus_tv_closeToWater);
 		closeToWaterYes = (RadioButton)findViewById(R.id.foetus_closeToWaterYes);
 		closeToWaterNo = (RadioButton)findViewById(R.id.foetus_closeToWaterNo);
+		tv_babyCovered = (TextView)findViewById(R.id.foetus_tv_babyCovered);
+		babyCoveredYes = (RadioButton)findViewById(R.id.foetus_babyCoveredYes);
+		babyCoveredNo = (RadioButton)findViewById(R.id.foetus_babyCoveredNo);
 		
 		
 		sceneOfInjury = (TextView)findViewById(R.id.foetus_sceneOfInjury);
@@ -1006,11 +1010,11 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(medicalInterventionYes.isChecked())
+	        if(babyCoveredYes.isChecked())
 	        {
-	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
+	        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        victims.accumulate("bodyBurned", "null");
@@ -1173,15 +1177,13 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(medicalInterventionYes.isChecked())
+        if(babyCoveredYes.isChecked())
         {
-        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
+        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("bodyBurned", "null");
-        victims.accumulate("bodyIntact", "null");
         victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
         
         if(closeToWaterYes.isChecked())
@@ -1203,7 +1205,6 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("foetusabandonedbabyIOType",getIOType() );
        
         array.put(info);
         obj.accumulate("object", array);
@@ -1547,7 +1548,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		
 		bodyDecomposedNo.setChecked(true);
 	
-		medicalInterventionNo.setChecked(true);
+		babyCoveredNo.setChecked(true);
 	
 		closeToWaterNo.setChecked(true);
 		
