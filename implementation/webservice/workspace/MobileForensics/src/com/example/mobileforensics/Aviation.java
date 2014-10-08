@@ -1007,8 +1007,15 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	        }else{
 	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-
-	       
+	        
+	        //for spinners
+	        info.accumulate("aviationOType", (String)isVictim.getSelectedItem());
+	        info.accumulate("aircraftType", (String)isIt.getSelectedItem());
+	        info.accumulate("aircraftNumPeople", Encryption.bytesToHex(enc.encrypt(peopleInAircraft.getText().toString())));
+	        info.accumulate("aviationVictimTypes", (String)isThis.getSelectedItem());
+	        info.accumulate("weatherCondition", (String)weatherCondition.getSelectedItem());
+	        info.accumulate("weatherType", (String)WeatherType.getSelectedItem());
+	        
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        array.put(info);
@@ -1160,7 +1167,13 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
         }else{
         	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
         }
-
+        
+        info.accumulate("aviationOType", (String)isVictim.getSelectedItem());
+        info.accumulate("aircraftType", (String)isIt.getSelectedItem());
+        info.accumulate("aircraftNumPeople", Encryption.bytesToHex(enc.encrypt(peopleInAircraft.getText().toString())));
+        info.accumulate("aviationVictimTypes", (String)isThis.getSelectedItem());
+        info.accumulate("weatherCondition", (String)weatherCondition.getSelectedItem());
+        info.accumulate("weatherType", (String)WeatherType.getSelectedItem());
 
         vicArray.put(victims);
         info.accumulate("victims", vicArray);

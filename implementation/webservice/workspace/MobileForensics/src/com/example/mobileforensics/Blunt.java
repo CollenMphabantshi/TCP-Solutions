@@ -1248,6 +1248,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	      
 	        
 	        info.accumulate("bluntIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())

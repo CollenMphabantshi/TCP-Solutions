@@ -32,6 +32,7 @@ class Aviation extends Scene{
                 $this->aviationOType = $formData['object'][$i]['aviationOType'];
                 $this->aircraftType = $formData['object'][$i]['autoeroticAsphyxia'];
                 $this->aircraftNumPeople = $formData['object'][$i]['aircraftNumPeople'];
+				$this->aviationVictimTypes = $formData['object'][$i]['aviationVictimTypes'];
                 $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
                 $this->weatherType = $formData['object'][$i]['weatherType'];
                     //
