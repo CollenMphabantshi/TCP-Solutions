@@ -42,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
+
 import com.example.mobileforensics.JSONWeatherParser;
 import com.example.mobileforensics.WeatherHttpClient;
 import com.example.mobileforensics.models.Weather;
@@ -53,13 +54,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.NavUtils;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -69,7 +76,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -80,96 +89,95 @@ import android.widget.Toast;
 
 public class Aviation extends Activity implements GlobalMethods, OnMyLocationChangeListener{
 	
-	Button next;
+	
 	
 	TextView value;
 
-	private LinearLayout infoLayout;
-	private LinearLayout demographicsLayout;
-	private GridLayout theBodyLayout;
-	private GridLayout sceneOfInjuryLayout;
-	private GridLayout sceneLookLayout;
-	private GridLayout theSceneLayout;
-	private LinearLayout galleryLayout;
+	private EditText ioName;
 	
-	private TextView aviation_tv_ioName;
-	private EditText aviation_ioName;
-	private TextView aviation_tv_ioSurname;
-	private EditText aviation_ioSurname;
-	private TextView aviation_tv_ioRank;
-	private EditText aviation_ioRank;
-	private TextView aviation_tv_ioCellNo;
-	private EditText aviation_ioCellNo;
+	private EditText ioSurname;
 	
-	private TextView aviation_tv_foosName;
-	private EditText aviation_foosName;
-	private TextView aviation_tv_foosSurname;
-	private EditText aviation_foosSurname;
-	private TextView aviation_tv_foosRank;
-	private EditText aviation_foosRank;
+	private EditText ioRank;
 	
-	private TextView aviation_tv_victimName;
-	private EditText aviation_victimName;
-	private TextView aviation_tv_victimSurname;
-	private EditText aviation_victimSurname;
-	private TextView aviation_tv_victimIDNo;
-	private EditText aviation_victimIDNo;
+	private EditText ioCellNo;
 	
-	private TextView aviation_tv_victimInfo;
-	private TextView aviation_tv_victimRace;
-	private TextView aviation_tv_victimGender;
-	private TextView aviation_tv_foos;
-	private TextView aviation_tv_io;
+	private TextView tv_foosName;
+	private EditText foosName;
+	private TextView tv_foosSurname;
+	private EditText foosSurname;
+	private TextView tv_foosRank;
+	private EditText foosRank;
+	
+	private TextView tv_victimName;
+	private EditText victimName;
+	private TextView tv_victimSurname;
+	private EditText victimSurname;
+	private TextView tv_victimIDNo;
+	private EditText victimIDNo;
+	private EditText victimAge;
 	
 	
-	private RadioButton aviation_rgbMale;
-	private RadioButton aviation_rgbFemale;
-	private RadioButton aviation_rgbUnknownGender;
 	
-	private RadioButton aviation_rgbAsian;
-	private RadioButton aviation_rgbBlack;
-	private RadioButton aviation_rgbColoured;
-	private RadioButton aviation_rgbWhite;
-	private RadioButton aviation_rgbUnknownRace;
+	private RadioButton rgbMale;
+	private RadioButton rgbFemale;
+	private RadioButton rgbUnknownGender;
+	
+	private RadioButton rgbAsian;
+	private RadioButton rgbBlack;
+	private RadioButton rgbColoured;
+	private RadioButton rgbWhite;
+	private RadioButton rgbUnknownRace;
 
-	private TextView aviation_theBody;
-	private TextView aviation_tv_bodyDecomposed;
-	private RadioButton aviation_bodyDecomposedYes;
-	private RadioButton aviation_bodyDecomposedNo;
-	private TextView aviation_tv_medicalIntervention;
-	private RadioButton aviation_medicalInterventionYes;
-	private RadioButton aviation_medicalInterventionNo;
-	private TextView aviation_tv_whoFoundVictimBody;
-	private EditText aviation_whoFoundVictimBody;
-	private TextView aviation_tv_closeToWater;
-	private RadioButton aviation_closeToWaterYes;
-	private RadioButton aviation_closeToWaterNo;
-	private TextView aviation_tv_bodySeverelyBurned;
-	private RadioButton aviation_bodySeverelyBurnedYes;
-	private RadioButton aviation_bodySeverelyBurnedNo;
-	private TextView aviation_tv_bodyIntact;
-	private RadioButton aviation_bodyIntactYes;
-	private RadioButton aviation_bodyIntactNo;
+	private TextView theBody;
+	private TextView tv_bodyDecomposed;
+	private RadioButton bodyDecomposedYes;
+	private RadioButton bodyDecomposedNo;
+	private TextView tv_medicalIntervention;
+	private RadioButton medicalInterventionYes;
+	private RadioButton medicalInterventionNo;
+	private TextView tv_whoFoundVictimBody;
+	private EditText whoFoundVictimBody;
+	private TextView tv_closeToWater;
+	private RadioButton closeToWaterYes;
+	private RadioButton closeToWaterNo;
+	private TextView tv_bodyBurned;
+	private RadioButton bodyBurnedYes;
+	private RadioButton bodyBurnedNo;
+	private TextView tv_bodyIntact;
+	private RadioButton bodyIntactYes;
+	private RadioButton bodyIntactNo;
 	
-	private TextView aviation_sceneOfInjury;
-	private TextView aviation_tv_whereOutside;
-	private Spinner aviation_sceneOType;
-	private TextView aviation_tv_sceneOTypeOther;
-	private EditText aviation_sceneOTypeOther;
-	
+	private TextView sceneOfInjury;
+	private TextView tv_sceneOType;
+	private Spinner sceneOType;
+	private TextView tv_sceneOTypeOther;
+	private EditText sceneOTypeOther;
 	
 	private TextView theScene;
-	private TextView aviation_tv_suicideNoteFound;
-	private RadioButton aviation_suicideNoteFoundYes;
-	private RadioButton aviation_suicideNoteFoundNo;
-	private TextView aviation_tv_generalHistory;
-	private EditText aviation_generalHistory;
+	private TextView tv_isIt;
+	private Spinner isIt;
+	private TextView tv_peopleInAircraft;
+	private EditText peopleInAircraft;
+	private TextView tv_isThis;
+	private Spinner isThis;
+	private TextView tv_isVictim;
+	private Spinner isVictim;
+	private TextView tv_weatherCondition;
+	private Spinner weatherCondition;
+	private TextView tv_WeatherType;
+	private Spinner WeatherType;
+	private TextView tv_suicideNoteFound;
+	private RadioButton suicideNoteFoundYes;
+	private RadioButton suicideNoteFoundNo;
+	private TextView tv_generalHistory;
+	private EditText generalHistory;
 	
 	private TextView response;
-	private Button nextButton;
+
 	private Button doneButton;
 	private Button logoutButton;
-	
+	private Button BackToMenu;
+	private GridLayout Gallery;
 	private JSONObject json;
 
 	
@@ -178,13 +186,13 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
-	private int pageCount;
+	
 	
 	private String username;
 	private String time;
 	private String date;
 	private String location;
-	private String temperature;
+	
 	private JSONObject currentDataSaved;
 	
 	GoogleMap map;
@@ -193,9 +201,7 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	private double latitude;
 	private int status;
 	private String myAddress;
-	private String Text;
 	
-	Button geolocation;
 	
 	//upload image parameters still to be arranged
 	TextView messageText;
@@ -211,35 +217,40 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
     String filename ;
     
     //weather section
-    private TextView cityText;
-	private TextView condDescr;
-	private TextView temp;
-	private TextView press;
-	private TextView windSpeed;
-	private TextView windDeg;
+    private String WeatherInfo="";
+    private TextView weatherInfo;
+	private Encryption enc;
+	private int index_gallery= 0;
 	
-	private TextView hum;
-	private ImageView imgView;
-	
+	private String mCurrentPhotoPath;
+	static final int REQUEST_TAKE_PHOTO = 1;
+	//ImageView mImageView;
+	private static final String TAG = "upload";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		//String city = "lat=-25.7547642&lon=28.2146178";
+		String city = "";
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.aviation);
-		
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
 		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		
 		
-		//initialize();
-		System.out.println("Start init");
+		initialize();
 		variablesInitialization();
+		CheckRadioButtons();
 		setOnClickEvents();
 		
-		//hidePage();
-		//showPage();
-		//showHideButtons();
+		
 	
 	}
 	
@@ -255,29 +266,120 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 				map.setMyLocationEnabled(true);
 				map.setOnMyLocationChangeListener(this);
 				
+				String city = "lat="+latitude+"&lon="+longitude;
+				JSONWeatherTask task = new JSONWeatherTask();
+				task.execute(new String[]{city});
+				location +="\n"+WeatherInfo;
 			}
 			return location;
 			
+	}
+	
+	private File createImageFile() throws IOException{
+		// Create an image file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String imageFileName = "aviation_" + timeStamp + "_";
+	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
+	    File dir = new File(storageDir);
+	    if (!dir.exists())
+	    	dir.mkdir();
+	    
+	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
+
+	    // Save a file: path for use with ACTION_VIEW intents
+	    mCurrentPhotoPath = image.getAbsolutePath();
+	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	    return image;
+		
+	}
+	
+	private void dispatchTakePictureIntent(){
+		
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+			
+			File photoFile = null;
+			try{
+				photoFile = createImageFile();
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			if(photoFile != null){
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+			}
 		}
+	}
+	
+	private void setPic(ImageView mImageView){
+		// Get the dimensions of the View
+	    int targetW = 300;
+	    int targetH = 300;
+
+	    // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+
+	    // Determine how much to scale down the image
+	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+	    // Decode the image file into a Bitmap sized to fill the View
+	    bmOptions.inJustDecodeBounds = false;
+	    bmOptions.inSampleSize = scaleFactor << 1;
+	    bmOptions.inPurgeable = true;
+
+	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    
+	    Matrix mtx = new Matrix();
+	    mtx.postRotate(90);
+	    // Rotating Bitmap
+	    Bitmap rotatedBMP = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mtx, true);
+
+	    if (rotatedBMP != bitmap)
+	    	bitmap.recycle();
+	    
+	    mImageView.setImageBitmap(rotatedBMP);
+	    galleryAddPic(mCurrentPhotoPath);
+		
+	}
+	
+	private void galleryAddPic(String locat){
+		
+		Intent mediaScanerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		
+		File f = new File(locat);
+		
+		Uri counterUri = Uri.fromFile(f);
+		
+		mediaScanerIntent.setData(counterUri);
+		
+		this.sendBroadcast(mediaScanerIntent);
+	}
 	
 	@Override
 	public void onMyLocationChange(Location loc) {
 		// TODO Auto-generated method stub
 		
-		locate = new JSONObject();
-		JSONObject object = new JSONObject();
-		//get geolactions, time and date
-		longitude = loc.getLongitude();
-		latitude = loc.getLatitude();
-		Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
-        /*time = formattedDate.substring(11);
-        date = formattedDate.substring(0,11);
-		temperature = "23 C";*/
-        getAddress(longitude,latitude);
-        
+		
         try {
+        	locate = new JSONObject();
+    		JSONObject object = new JSONObject();
+    		//get geolactions, time and date
+    		longitude = loc.getLongitude();
+    		latitude = loc.getLatitude();
+    		Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            time = formattedDate.substring(11);
+            date = formattedDate.substring(0, formattedDate.length()-9);
+         
+            getAddress(longitude,latitude);
+            
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
 			locate.accumulate("Bearing", loc.getBearing());
@@ -288,13 +390,12 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 			object.accumulate("Time", time);
 			object.accumulate("Date", date);
 			object.accumulate("Location", locate.toString());
-			object.accumulate("Temperature", temperature);
 			
 			location = object.toString();
 
-			value.setText(location);
+			//value.setText(location);
 			
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -327,100 +428,115 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	}
 
 	private void variablesInitialization(){
-		pageCount = 1;
-		username = "p33333333";
 		try{
+		enc = new Encryption();
+		try{
+			username = getIntent().getExtras().getString("USERNAME");
+		}catch(Exception e){e.printStackTrace();}
 		
-		time = (new Random().nextLong())+"";
-	    date = "2014-10-10";
-		temperature = "23 C";
-		location = (new Random().nextLong())+","+(new Random().nextLong());
-		geolocation = (Button) findViewById(R.id.geolocation);
-		infoLayout = (LinearLayout)findViewById(R.id.aviation_infoLayout);
-		demographicsLayout = (LinearLayout)findViewById(R.id.aviation_demographicLayout);
-		theBodyLayout = (GridLayout)findViewById(R.id.aviation_theBodyLayout);
-		sceneOfInjuryLayout = (GridLayout)findViewById(R.id.aviation_sceneOfInjuryLayout);
-		theSceneLayout = (GridLayout)findViewById(R.id.aviation_theSceneLayout);
-		galleryLayout = (LinearLayout)findViewById(R.id.aviation_galleryLayout);
-		
-		aviation_tv_ioName = (TextView)findViewById(R.id.aviation_tv_io_name);
-		aviation_ioName = (EditText)findViewById(R.id.aviation_io_name);
-		aviation_tv_ioSurname = (TextView)findViewById(R.id.aviation_tv_io_surname);
-		aviation_ioSurname = (EditText)findViewById(R.id.aviation_io_surname);
-		aviation_tv_ioRank = (TextView)findViewById(R.id.aviation_tv_io_rank);
-		aviation_ioRank = (EditText)findViewById(R.id.aviation_io_rank);
-		aviation_tv_ioCellNo = (TextView)findViewById(R.id.aviation_tv_io_cell);
-		aviation_ioCellNo = (EditText)findViewById(R.id.aviation_io_cell);
-		
-		aviation_tv_foosName = (TextView)findViewById(R.id.aviation_tv_foos_name);
-		aviation_foosName = (EditText)findViewById(R.id.aviation_foos_name);
-		aviation_tv_foosSurname = (TextView)findViewById(R.id.aviation_tv_foos_surname);
-		aviation_foosSurname = (EditText)findViewById(R.id.aviation_foos_surname);
-		aviation_tv_foosRank = (TextView)findViewById(R.id.aviation_tv_foos_rank);
-		aviation_foosRank = (EditText)findViewById(R.id.aviation_foos_rank);
-		
-		aviation_tv_io = (TextView)findViewById(R.id.aviation_tv_io);
-		aviation_tv_foos = (TextView)findViewById(R.id.aviation_tv_foos);
-		aviation_tv_victimInfo = (TextView)findViewById(R.id.aviation_tv_victimInfo);
-		aviation_tv_victimRace = (TextView)findViewById(R.id.aviation_tv_victimRace);
-		aviation_tv_victimGender = (TextView)findViewById(R.id.aviation_tv_victimGender);
-		
-		aviation_tv_victimName = (TextView)findViewById(R.id.aviation_tv_victim_name);
-		aviation_victimName = (EditText)findViewById(R.id.aviation_victim_name);
-		aviation_tv_victimSurname = (TextView)findViewById(R.id.aviation_tv_victim_surname);
-		aviation_victimSurname = (EditText)findViewById(R.id.aviation_victim_surname);
-		aviation_tv_victimIDNo = (TextView)findViewById(R.id.aviation_tv_victim_id);
-		aviation_victimIDNo = (EditText)findViewById(R.id.aviation_victim_id);
-		
-		aviation_rgbMale = (RadioButton)findViewById(R.id.aviation_rgbMale);
-		aviation_rgbFemale = (RadioButton)findViewById(R.id.aviation_rgbFemale);
-		aviation_rgbUnknownGender = (RadioButton)findViewById(R.id.aviation_rgbUnknownGender);
-		
-		aviation_rgbAsian = (RadioButton)findViewById(R.id.aviation_rgbAsian);
-		aviation_rgbBlack = (RadioButton)findViewById(R.id.aviation_rgbBlack);
-		aviation_rgbColoured = (RadioButton)findViewById(R.id.aviation_rgbColoured);
-		aviation_rgbWhite = (RadioButton)findViewById(R.id.aviation_rgbWhite);
-		aviation_rgbUnknownRace = (RadioButton)findViewById(R.id.aviation_rgbUnknownRace);
+		try{
+			//time = new Time().format("%H:%M:%S");
+			System.out.println("TIME: "+time);
+		    //date = new Time().format("%Y-%m-%d");
+		    System.out.println("TIME: "+date);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
 		
 		
-		aviation_theBody = (TextView)findViewById(R.id.aviation_tv_the_body);
-		aviation_tv_bodyDecomposed = (TextView)findViewById(R.id.aviation_tv_bodyDecomposed);
-		aviation_bodyDecomposedYes = (RadioButton)findViewById(R.id.aviation_bodyDecomposedYes);
-		aviation_bodyDecomposedNo = (RadioButton)findViewById(R.id.aviation_bodyDecomposedNo);
-		aviation_tv_medicalIntervention = (TextView)findViewById(R.id.aviation_tv_medicalIntervention);
-		aviation_medicalInterventionYes = (RadioButton)findViewById(R.id.aviation_medicalInterventionYes);
-		aviation_medicalInterventionNo = (RadioButton)findViewById(R.id.aviation_medicalInterventionNo);
-		aviation_tv_closeToWater = (TextView)findViewById(R.id.aviation_tv_closeToWater);
-		aviation_closeToWaterYes = (RadioButton)findViewById(R.id.aviation_closeToWaterYes);
-		aviation_closeToWaterNo = (RadioButton)findViewById(R.id.aviation_closeToWaterNo);
-		aviation_tv_bodySeverelyBurned = (TextView)findViewById(R.id.aviation_tv_bodySeverelyBurned);
-		aviation_bodySeverelyBurnedYes = (RadioButton)findViewById(R.id.aviation_bodySeverelyBurnedYes);
-		aviation_bodySeverelyBurnedNo = (RadioButton)findViewById(R.id.aviation_bodySeverelyBurnedNo);
-		aviation_tv_bodyIntact = (TextView)findViewById(R.id.aviation_tv_bodyIntact);
-		aviation_bodyIntactYes = (RadioButton)findViewById(R.id.aviation_bodyIntactYes);
-		aviation_bodyIntactNo = (RadioButton)findViewById(R.id.aviation_bodyIntactNo);
+		
+	
+		ioName = (EditText)findViewById(R.id.aviation_io_name);
+		
+		ioSurname = (EditText)findViewById(R.id.aviation_io_surname);
+		
+		ioRank = (EditText)findViewById(R.id.aviation_io_rank);
+		
+		ioCellNo = (EditText)findViewById(R.id.aviation_io_cell);
+		
+		tv_foosName = (TextView)findViewById(R.id.aviation_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.aviation_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.aviation_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.aviation_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.aviation_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.aviation_foos_rank);
+		
+	
+		
+		tv_victimName = (TextView)findViewById(R.id.aviation_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.aviation_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.aviation_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.aviation_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.aviation_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.aviation_victim_id);
+		victimAge = (EditText)findViewById(R.id.aviation_victim_age);
+		
+		rgbMale = (RadioButton)findViewById(R.id.aviation_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.aviation_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.aviation_rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.aviation_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.aviation_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.aviation_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.aviation_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.aviation_rgbUnknownRace);
 		
 		
-		aviation_sceneOfInjury = (TextView)findViewById(R.id.aviation_sceneOfInjury);
-		aviation_sceneOType = (Spinner)findViewById(R.id.aviation_sceneOType);
-		aviation_tv_sceneOTypeOther = (TextView)findViewById(R.id.aviation_tv_sceneOTypeOther);
-		aviation_sceneOTypeOther = (EditText)findViewById(R.id.aviation_sceneOTypeOther);
+		theBody = (TextView)findViewById(R.id.aviation_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.aviation_tv_bodyDecomposed);
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.aviation_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.aviation_bodyDecomposedNo);
+		tv_medicalIntervention = (TextView)findViewById(R.id.aviation_tv_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.aviation_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.aviation_medicalInterventionNo);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.aviation_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.aviation_whoFoundVictimBody);
+		tv_closeToWater = (TextView)findViewById(R.id.aviation_tv_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.aviation_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.aviation_closeToWaterNo);
+		tv_bodyBurned = (TextView)findViewById(R.id.aviation_tv_bodyBurned);
+		bodyBurnedYes = (RadioButton)findViewById(R.id.aviation_bodyBurnedYes);
+		bodyBurnedNo = (RadioButton)findViewById(R.id.aviation_bodyBurnedNo);
+		tv_bodyIntact = (TextView)findViewById(R.id.aviation_tv_bodyIntact);
+		bodyIntactYes = (RadioButton)findViewById(R.id.aviation_bodyIntactYes);
+		bodyIntactNo = (RadioButton)findViewById(R.id.aviation_bodyIntactNo);
 		
+		sceneOfInjury = (TextView)findViewById(R.id.aviation_sceneOfInjury);
+		tv_sceneOType = (TextView)findViewById(R.id.aviation_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.aviation_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.aviation_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.aviation_sceneOTypeOther);
 		
+		System.out.println("after page 3");
 		
 		theScene = (TextView)findViewById(R.id.aviation_theScene);
-		aviation_tv_suicideNoteFound = (TextView)findViewById(R.id.aviation_tv_suicideNoteFound);
-		aviation_suicideNoteFoundYes = (RadioButton)findViewById(R.id.aviation_SuicideNoteFoundYes);
-		aviation_tv_generalHistory = (TextView)findViewById(R.id.aviation_tv_generalHistory);
-		aviation_generalHistory = (EditText)findViewById(R.id.aviation_generalHistory);
+		tv_isIt = (TextView)findViewById(R.id.aviation_tv_isIt);
+		isIt = (Spinner)findViewById(R.id.aviation_isIt);
+		tv_peopleInAircraft = (TextView)findViewById(R.id.aviation_tv_peopleInAircraft);
+		peopleInAircraft = (EditText)findViewById(R.id.aviation_peopleInAircraft);
+		tv_isThis = (TextView)findViewById(R.id.aviation_tv_isThis);
+		isThis = (Spinner)findViewById(R.id.aviation_isThis);
+		tv_isVictim = (TextView)findViewById(R.id.aviation_tv_isVictim);
+		isVictim = (Spinner)findViewById(R.id.aviation_isVictim);
+		tv_weatherCondition = (TextView)findViewById(R.id.aviation_tv_weatherCondition);
+		weatherCondition = (Spinner)findViewById(R.id.aviation_weatherCondition);
+		tv_WeatherType = (TextView)findViewById(R.id.aviation_tv_WeatherType);
+		WeatherType = (Spinner)findViewById(R.id.aviation_WeatherType);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.aviation_tv_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.aviation_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.aviation_SuicideNoteFoundNo);
+		tv_generalHistory = (TextView)findViewById(R.id.aviation_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.aviation_generalHistory);
 		
 		
 		response = (TextView)findViewById(R.id.aviation_tv_response);
-		nextButton = (Button)findViewById(R.id.aviation_nextButton);
+		
 		doneButton = (Button)findViewById(R.id.aviation_doneButton);
 		logoutButton = (Button)findViewById(R.id.aviation_logoutButton);
 		
-		//next = (Button) findViewById(R.id.nextButton);
+		BackToMenu = (Button)findViewById(R.id.aviation_BackToMenu);
+		
 		value = (TextView) findViewById(R.id.value);
 		
 		//upload pictures part
@@ -437,16 +553,10 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       
+	       Gallery = (GridLayout) findViewById(R.id.aviation_galleryLayout);
 	       // weather section
-	       	cityText = (TextView) findViewById(R.id.cityText);
-			condDescr = (TextView) findViewById(R.id.condDescr);
-			temp = (TextView) findViewById(R.id.temp);
-			hum = (TextView) findViewById(R.id.hum);
-			press = (TextView) findViewById(R.id.press);
-			windSpeed = (TextView) findViewById(R.id.windSpeed);
-			windDeg = (TextView) findViewById(R.id.windDeg);
-			imgView = (ImageView) findViewById(R.id.condIcon);
+	       weatherInfo = (TextView) findViewById(R.id.aviationWeatherInfo);
+		
 		
 		
 		}catch(Exception e){
@@ -464,14 +574,6 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	
 	public void setOnClickEvents(){
 		
-		geolocation.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				initialize();
-			}
-		});
 		
 		doneButton.setOnClickListener(new OnClickListener() {
 			
@@ -483,34 +585,53 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 					List<NameValuePair> postdata = getPostData();
 					if(postdata != null)
 					{
-						try{
-							new Read().execute(postdata);
-							
-							dialog = ProgressDialog.show(Aviation.this, "", "Uploading file...", true);
-			                 
-			                new Thread(new Runnable() {
-			                        public void run() {
-			                             runOnUiThread(new Runnable() {
-			                                    public void run() {
-			                                        messageText.setText("uploading started.....");
-			                                    }
-			                                });                      
-			                             for(int i=0; i < uploadFileName.size(); i++){
-			                            	 filename = uploadFileName.get(i);
-			                            	 uploadFile( filename );
-			                            	 
-			                             }                   
-			                        }
-			                      }).start(); 
-						}catch(Exception e){
-							e.printStackTrace();
+						if(ValidateFields()){
+							//if(uploadFileName.size() > 0){
+								
+									try{
+										
+										new Read().execute(postdata);
+										
+										dialog = ProgressDialog.show(Aviation.this, "", "Uploading file...", true);
+						                 
+						                new Thread(new Runnable() {
+						                        public void run() {
+						                             runOnUiThread(new Runnable() {
+						                                    public void run() {
+						                                        
+						                                        Toast.makeText(Aviation.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                    }
+						                                });                      
+						                             for(int i=0; i < uploadFileName.size(); i++){
+						                            	 filename = uploadFileName.get(i);
+						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
+						                            	 uploadFile( filename );
+						                            	 
+						                             }                   
+						                        }
+						                      }).start(); 
+						                doneButton.setVisibility(VISIBLE);
+										logoutButton.setVisibility(VISIBLE);
+										clearFilelds();
+										Toast.makeText(Aviation.this, "form successfully filled", Toast.LENGTH_LONG).show();
+									}catch(Exception e){
+										e.printStackTrace();
+									}
+										
+							//}
+							//else{
+								
+								//Toast.makeText(aviation.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
+								
+							//}
+						}else{
+							Toast.makeText(Aviation.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
 					
 					//nextButton.setVisibility(GONE);
-					doneButton.setVisibility(GONE);
-					logoutButton.setVisibility(VISIBLE);
+					
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
@@ -519,14 +640,50 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
             
             @Override
             public void onClick(View arg0) {
-                 
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            	if(index_gallery < 9){
+            	
+	            	if(index_gallery == 0){
+	            		imageView0.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 1){
+	            		imageView1.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 2){
+	            		imageView2.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 3){
+	            		imageView3.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 4){
+	            		imageView4.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 5){
+	            		imageView5.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 6){
+	            		imageView6.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 7){
+	            		imageView7.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 8){
+	            		imageView8.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}
+            	}
+            	
             }
         });
+	
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			
@@ -542,26 +699,13 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 			}
 		});
 		
+		
+		
 		/**
 		 * 	Spinner onclick event
 		 */
 		
-
-		aviation_sceneOType.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				aviation_sceneOType.setVisibility(VISIBLE);
-				aviation_tv_sceneOTypeOther.setVisibility(VISIBLE);
-				aviation_sceneOTypeOther.setVisibility(VISIBLE);
-			}
-		});
-	
-		
-		
-		aviation_sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View view,
@@ -574,11 +718,11 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 						String item = (String)s.getText();
 						if(item.toLowerCase().equals("other"))
 						{
-							aviation_tv_sceneOTypeOther.setVisibility(VISIBLE);
-							aviation_sceneOTypeOther.setVisibility(VISIBLE);
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
 						}else{
-							aviation_tv_sceneOTypeOther.setVisibility(GONE);
-							aviation_sceneOTypeOther.setVisibility(GONE);
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
 						}
 					}
 				}catch(Exception e){e.printStackTrace();}
@@ -592,48 +736,44 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 		});
 		
 	}
-	
-
-	
-	
 	    
 	    @Override
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	        super.onActivityResult(requestCode, resultCode, data);
 	         
-	        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-	            Uri selectedImage = data.getData();
-	            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-	 
-	            Cursor cursor = getContentResolver().query(selectedImage,
-	            filePathColumn, null, null, null);
-	            cursor.moveToFirst();
-	 
-	            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-	            String picturePath = cursor.getString(columnIndex);
-	            cursor.close();
+	        Log.i(TAG, "onActivityResult: " + this);
+			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+	        	
+	            uploadFileName.add(mCurrentPhotoPath);
+	            System.out.println("******************   "+mCurrentPhotoPath);
 	           
-	            uploadFileName.add(picturePath);
-	           // messageText.setText("Path : "+uploadFileName);
-	            
 	            if(count == 0){
-	            	imageView0.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView0);
+	            	
 	            }else if(count == 1){
-	            	imageView1.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView1);
+	            	
 	            }else if(count == 2){
-	            	imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView2);
+	            	
 	            }else if(count == 3){
-	            	imageView3.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView3);
+	            	
 	            }else if(count == 4){
-	            	imageView4.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView4);
+	            	
 	            }else if(count == 5){
-	            	imageView5.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView5);
+	            	
 	            }else if(count == 6){
-	            	imageView6.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView6);
+	            	
 	            }else if(count == 7){
-	            	imageView7.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView7);
+	            	
 	            }else if(count == 8){
-	            	imageView8.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            	setPic(imageView8);
+	            	
 	            }
 	            count++;
 	        }
@@ -789,8 +929,8 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-	        pairs.add(new BasicNameValuePair("rquest","addCase"));
-	        pairs.add(new BasicNameValuePair("category","aviation"));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("aviation"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -798,71 +938,79 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	        JSONObject victims = new JSONObject();
 	        
 	        
-	        info.accumulate("FOPersonelNumber",username);
-	        info.accumulate("sceneTime", time);
-	        info.accumulate("sceneDate", date);
-	        info.accumulate("sceneLocation", location);
-	        info.accumulate("sceneTemparature", temperature);
-	        info.accumulate("investigatingOfficerName", aviation_ioName.getText().toString());
-	        info.accumulate("investigatingOfficerRank", aviation_ioRank.getText().toString());
-	        info.accumulate("investigatingOfficerCellNo", aviation_ioCellNo.getText().toString());
-	        info.accumulate("firstOfficerOnSceneName", aviation_foosName.getText().toString());
-	        info.accumulate("firstOfficerOnSceneRank", aviation_foosRank.getText().toString());
+	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+	        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+	        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+	        if(WeatherInfo != null && WeatherInfo.length() != 0 )
+	        {
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+	        }else{
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
+	        }
+	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
 	        knownVictim();
-	        victims.accumulate("victimIdentityNumber", aviation_victimIDNo.getText().toString());
-	        victims.accumulate("victimGender", getVictimGender());
-	        victims.accumulate("victimRace", getVictimRace());
-	        victims.accumulate("victimName", aviation_victimName.getText().toString());
-	        victims.accumulate("victimSurname", aviation_victimSurname.getText().toString());
-	        victims.accumulate("victimGeneralHistory", aviation_generalHistory.getText().toString());
-	        victims.accumulate("scenePhoto", null);
+	        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+	        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
-	        if(aviation_bodyDecomposedYes.isChecked())
+	        if(bodyDecomposedYes.isChecked())
 	        {
-	        	victims.accumulate("bodyDecomposed", "Yes");
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("bodyDecomposed", "No");
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(aviation_medicalInterventionYes.isChecked())
+	        if(medicalInterventionYes.isChecked())
 	        {
-	        	victims.accumulate("medicalIntervention", "yes");
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("medicalIntervention", "no");
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(aviation_closeToWaterYes.isChecked())
+	        victims.accumulate("bodyBurned", "null");
+	        victims.accumulate("bodyIntact","null");
+	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+	        
+	        if(closeToWaterYes.isChecked())
 	        {
-	        	victims.accumulate("victimFoundCloseToWater", "yes");
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimFoundCloseToWater", "no");
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(aviation_bodySeverelyBurnedYes.isChecked())
+	        if(bodyBurnedYes.isChecked())
 	        {
-	        	victims.accumulate("bodySeverelyBurned", "Yes");
+	        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("bodySeverelyBurned", "No");
+	        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(aviation_bodyIntactYes.isChecked())
+	        if(bodyIntactYes.isChecked())
 	        {
-	        	victims.accumulate("bodyIntact", "Yes");
+	        	victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("bodyIntact", "No");
+	        	victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        
-	        if(aviation_suicideNoteFoundYes.isChecked())
+	        if(suicideNoteFoundYes.isChecked())
 	        {
-	        	victims.accumulate("victimSuicideNoteFound", "yes");
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimSuicideNoteFound", "no");
-	        }  
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
-     
 	        array.put(info);
 	        obj.accumulate("object", array);
 	        currentDataSaved = obj;
@@ -879,15 +1027,13 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	
 	public String getVictimGender(){
 		try{
-			
-			
-			if(aviation_rgbMale.isChecked())
+			if(rgbMale.isChecked())
 			{
 				return "Male";
-			}else if(aviation_rgbFemale.isChecked())
+			}else if(rgbFemale.isChecked())
 			{
 				return "Female";
-			}else if(aviation_rgbUnknownGender.isChecked())
+			}else if(rgbUnknownGender.isChecked())
 			{
 				return "Unknown";
 			}
@@ -901,19 +1047,19 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 		try{
 			
 			
-			if(aviation_rgbAsian.isChecked())
+			if(rgbAsian.isChecked())
 			{
 				return "Asian";
-			}else if(aviation_rgbBlack.isChecked())
+			}else if(rgbBlack.isChecked())
 			{
 				return "Black";
-			}else if(aviation_rgbColoured.isChecked())
+			}else if(rgbColoured.isChecked())
 			{
 				return "Coloured";
-			}else if(aviation_rgbWhite.isChecked())
+			}else if(rgbWhite.isChecked())
 			{
 				return "White";
-			}else if(aviation_rgbUnknownRace.isChecked())
+			}else if(rgbUnknownRace.isChecked())
 			{
 				return "Unknown";
 			}
@@ -925,18 +1071,16 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 	
 	public void knownVictim(){
 		try{
-			if(aviation_victimName.getText().toString().equals(""))
+			if(victimName.getText().toString().equals(""))
 			{
-				aviation_victimName.setText("Unknown");
-				aviation_victimSurname.setText("Unknown");
-				aviation_victimIDNo.setText("Unknown");
+				victimName.setText("Unknown");
+				victimSurname.setText("Unknown");
+				victimIDNo.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public void saveDataOnAction() throws Exception{
         JSONObject obj = new JSONObject();
@@ -947,76 +1091,80 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
         
     
         
-        info.accumulate("FOPersonelNumber", username);
-        info.accumulate("sceneTime", time);
-        info.accumulate("sceneDate", date);
-        info.accumulate("sceneLocation", location);
-        info.accumulate("sceneTemparature", temperature);
-        info.accumulate("investigatingOfficerName", aviation_ioName.getText().toString());
-        info.accumulate("investigatingOfficerRank", aviation_ioRank.getText().toString());
-        info.accumulate("investigatingOfficerCellNo", aviation_ioCellNo.getText().toString());
-        info.accumulate("firstOfficerOnSceneName", aviation_foosName.getText().toString());
-        info.accumulate("firstOfficerOnSceneRank", aviation_foosRank.getText().toString());
+        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
+        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
+        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
+        info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+        if(WeatherInfo != null && WeatherInfo.length() != 0 )
+        {
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
+        }else{
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        }
+        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
         knownVictim();
-        victims.accumulate("victimIdentityNumber", aviation_victimIDNo.getText().toString());
-        victims.accumulate("victimGender", getVictimGender());
-        victims.accumulate("victimRace", getVictimRace());
-        victims.accumulate("victimName", aviation_victimName.getText().toString());
-        victims.accumulate("victimSurname", aviation_victimSurname.getText().toString());
-        victims.accumulate("victimGeneralHistory", aviation_generalHistory.getText().toString());
-        victims.accumulate("scenePhoto", null);
- 
-       
+        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
         
-        if(aviation_bodyDecomposedYes.isChecked())
+        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+        if(bodyDecomposedYes.isChecked())
         {
-        	victims.accumulate("bodyDecomposed", "Yes");
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("bodyDecomposed", "No");
+        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(aviation_medicalInterventionYes.isChecked())
+        if(medicalInterventionYes.isChecked())
         {
-        	victims.accumulate("medicalIntervention", "yes");
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("medicalIntervention", "no");
+        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("whoFoundVictimBody", aviation_whoFoundVictimBody.getText().toString());
+        victims.accumulate("bodyBurned", "null");
+        victims.accumulate("bodyIntact","null");
+        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
         
-        if(aviation_closeToWaterYes.isChecked())
+        if(closeToWaterYes.isChecked())
         {
-        	victims.accumulate("victimFoundCloseToWater", "yes");
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimFoundCloseToWater", "no");
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(aviation_bodySeverelyBurnedYes.isChecked())
+        if(bodyBurnedYes.isChecked())
         {
-        	victims.accumulate("bodySeverelyBurned", "Yes");
+        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("bodySeverelyBurned", "No");
+        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(aviation_bodyIntactYes.isChecked())
+        if(bodyIntactYes.isChecked())
         {
-        	victims.accumulate("bodyIntact", "Yes");
+        	victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("bodyIntact", "No");
+        	victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(aviation_suicideNoteFoundYes.isChecked())
+        if(suicideNoteFoundYes.isChecked())
         {
-        	victims.accumulate("victimSuicideNoteFound", "yes");
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimSuicideNoteFound", "no");
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
         }
 
-        
-       
+
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
-        
+  
         
         array.put(info);
         obj.accumulate("object", array);
@@ -1051,9 +1199,7 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-            
-            
-            
+          
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1173,7 +1319,7 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 					weather = JSONWeatherParser.getWeather(data);
 					
 					// Let's retrieve the icon
-					weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+					//weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
 					
 				} catch (JSONException e) {				
 					e.printStackTrace();
@@ -1181,7 +1327,182 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
 				return weather;
 			
 		}
+			
+			
+			@Override
+			protected void onPostExecute(Weather weather) {			
+				super.onPostExecute(weather);
+				
+				/*if (weather.iconData != null && weather.iconData.length > 0) {
+					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
+					imgView.setImageBitmap(img);
+				}*/
+				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				//weatherInfo.setText(WeatherInfo);
+				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
+				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
+				press.setText("" + weather.currentCondition.getPressure() + " hPa");
+				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+				windDeg.setText("" + weather.wind.getDeg() + "�");*/
+					
+			}
 		}
+	
+
+	
+	private boolean ValidateFields(){
+		System.out.println("**********    ****************    "+uploadFileName);
+		if(ioName.getText().toString().trim().length() == 0){
+			ioName.requestFocus();
+			ioName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( ioSurname.getText().toString().trim().length() == 0){
+			ioSurname.requestFocus();
+			ioSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		
+		if( ioRank.getText().toString().trim().length() == 0){
+			ioRank.requestFocus();
+			ioRank.setError("sorry empty field");
+			return false;
+		}
+
+		
+		if( ioCellNo.getText().toString().trim().length() == 0){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry empty field");
+			return false;
+		}
+		if(!CellNoValidation(ioCellNo.getText().toString().trim()) || ioCellNo.getText().toString().trim().length() != 10){
+			ioCellNo.requestFocus();
+			ioCellNo.setError("sorry invalid cell no");
+			return false;
+		}
+		
+		if( foosName.getText().toString().trim().length() == 0){
+			foosName.requestFocus();
+			foosName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosSurname.getText().toString().trim().length() == 0){
+			foosSurname.requestFocus();
+			foosSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( foosRank.getText().toString().trim().length() == 0){
+			foosRank.requestFocus();
+			foosRank.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimName.getText().toString().trim().length() == 0){
+			victimName.requestFocus();
+			victimName.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimSurname.getText().toString().trim().length() == 0){
+			victimSurname.requestFocus();
+			victimSurname.setError("sorry empty field");
+			return false;
+		}
+		
+		if( victimIDNo.getText().toString().trim().length() == 0){
+			victimIDNo.requestFocus();
+			victimIDNo.setError("sorry empty field");
+			return false;
+		}
+			
+		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
+			whoFoundVictimBody.requestFocus();
+			whoFoundVictimBody.setError("sorry empty field");
+			return false;
+		}
+		
+		
+		if( generalHistory.getText().toString().length() == 0){
+			generalHistory.requestFocus();
+			generalHistory.setError("sorry empty field");
+			return false;
+		}
+		return true;
+	}
+	
+	public void clearFilelds(){
+		
+		victimName.setText("Unknown");
+		
+		victimSurname.setText("Unknown");
+		
+		victimIDNo.setText("Unknown");
+			
+		whoFoundVictimBody.setText("");
+	
+		generalHistory.setText("");
+		peopleInAircraft.setText("");
+		
+		uploadFileName = null;
+		
+		uploadFileName = new ArrayList<String>();
+		
+	    imageView0.setImageBitmap(null);
+	    imageView1.setImageBitmap(null);
+	    imageView2.setImageBitmap(null);
+	    imageView3.setImageBitmap(null);
+	    imageView4.setImageBitmap(null);
+	    imageView5.setImageBitmap(null);
+	    imageView6.setImageBitmap(null);
+	    imageView7.setImageBitmap(null);
+	    imageView8.setImageBitmap(null);
+	    
+	    imageView0.setVisibility(GONE);
+	    imageView1.setVisibility(GONE);
+	    imageView2.setVisibility(GONE);
+	    imageView3.setVisibility(GONE);
+	    imageView4.setVisibility(GONE);
+	    imageView5.setVisibility(GONE);
+	    imageView6.setVisibility(GONE);
+	    imageView7.setVisibility(GONE);
+	    imageView8.setVisibility(GONE);
+			
+	   index_gallery = 0;
+	   count = 0;
+	}
+	
+	private void CheckRadioButtons(){
+		
+		rgbUnknownGender.setChecked(true);
+		rgbUnknownRace.setChecked(true);
+		
+		//outside selected by default
+	
+		tv_sceneOType.setVisibility(VISIBLE);
+		sceneOType.setVisibility(VISIBLE);
+		
+		suicideNoteFoundNo.setChecked(true);
+		
+		bodyDecomposedNo.setChecked(true);
+		
+		medicalInterventionNo.setChecked(true);
+		bodyBurnedNo.setChecked(true);
+		bodyIntactNo.setChecked(true);
+		closeToWaterNo.setChecked(true);
+		
+		 
+	}
+	
+	private  boolean CellNoValidation(String cell) {
+		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
+		}
+	
 	
 	
 	
