@@ -528,15 +528,59 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		tv_infantDie = (TextView)findViewById(R.id.sid_tv_infantDie);
 		infantDieYes = (RadioButton)findViewById(R.id.sid_infantDieYes);
 		infantDieNo = (RadioButton)findViewById(R.id.sid_infantDieNo);
+		tv_infantDieSpecify = (TextView)findViewById(R.id.sid_tv_infantDieSpecify);
+		infantDieSpecify = (Spinner)findViewById(R.id.sid_infantDieSpecify);
+		tv_infantDieOther = (TextView)findViewById(R.id.sid_tv_infantDieOther);
+		infantDieOther = (EditText)findViewById(R.id.sid_infantDieOther);
+		tv_infant = (TextView)findViewById(R.id.sid_tv_infant);
+		infant = (Spinner)findViewById(R.id.sid_infant);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.sid_tv_whoFoundBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.sid_whoFoundBody);
 		tv_relationshipInfant = (TextView)findViewById(R.id.sid_tv_relationshipInfant);
 		relationshipInfant = (EditText)findViewById(R.id.sid_relationshipInfant);
 		tv_resuscitationAttempted = (TextView)findViewById(R.id.sid_tv_resuscitationAttempted);
 		resuscitationAttemptedYes = (RadioButton)findViewById(R.id.sid_resuscitationAttemptedYes);
 		resuscitationAttemptedNo = (RadioButton)findViewById(R.id.sid_resuscitationAttemptedNo);
+		tv_resuscitationYes = (TextView)findViewById(R.id.sid_tv_resuscitationYes);
+		resuscitationYes = (EditText)findViewById(R.id.sid_resuscitationYes);
+		tv_InfantWearing = (TextView)findViewById(R.id.sid_tv_InfantWearing);
+		InfantWearing = (EditText)findViewById(R.id.sid_InfantWearing);
+		tv_tightlyWrapped = (TextView)findViewById(R.id.sid_tv_tightlyWrapped);
+		tightlyWrappedYes = (RadioButton)findViewById(R.id.sid_tightlyWrappedYes);
+		tightlyWrappedNo = (RadioButton)findViewById(R.id.sid_tightlyWrappedNo);
+		tv_bedding = (TextView)findViewById(R.id.sid_tv_bedding);
+		bedding = (Spinner)findViewById(R.id.sid_bedding);
+		tv_beddingSpecify = (TextView)findViewById(R.id.sid_tv_beddingSpecify);
+		beddingSpecify = (EditText)findViewById(R.id.sid_beddingSpecify);
+		tv_infantFall = (TextView)findViewById(R.id.sid_tv_infantFall);
+		infantFallYes = (RadioButton)findViewById(R.id.sid_infantFallYes);
+		infantFallNo = (RadioButton)findViewById(R.id.sid_infantFallNo);
+		tv_infantSick = (TextView)findViewById(R.id.sid_tv_infantSick);
+		infantSickYes = (RadioButton)findViewById(R.id.sid_infantSickYes);
+		infantSickNo = (RadioButton)findViewById(R.id.sid_infantSickNo);
+		tv_IfYes = (TextView)findViewById(R.id.sid_tv_IfYes);
+		IfYes = (Spinner)findViewById(R.id.sid_IfYes);
+		tv_medication = (TextView)findViewById(R.id.sid_tv_medication);
+		medicationYes = (RadioButton)findViewById(R.id.sid_medicationYes);
+		medicationNo = (RadioButton)findViewById(R.id.sid_medicationNo);
+		tv_medicationSpecify = (TextView)findViewById(R.id.sid_tv_medicationSpecify);
+		medicationSpecify = (EditText)findViewById(R.id.sid_medicationSpecify);
 		
 		
 		sceneOfInjury = (TextView)findViewById(R.id.sid_sceneOfInjury);
-		
+		tv_where = (TextView)findViewById(R.id.sid_tv_where);
+		where = (Spinner)findViewById(R.id.sid_where);
+		tv_whereSpecify = (TextView)findViewById(R.id.sid_tv_whereSpecify);
+		whereSpecify = (EditText)findViewById(R.id.sid_whereSpecify);
+		tv_wherePlaced = (TextView)findViewById(R.id.sid_tv_wherePlaced);
+		wherePlaced = (Spinner)findViewById(R.id.sid_wherePlaced);
+		tv_wherePlacedSpecify = (TextView)findViewById(R.id.sid_tv_wherePlacedSpecify);
+		wherePlacedSpecify = (EditText)findViewById(R.id.sid_wherePlacedSpecify);
+		tv_whereDead = (TextView)findViewById(R.id.sid_tv_whereDead);
+		whereDead = (Spinner)findViewById(R.id.sid_whereDead);
+		tv_whereDeadSpecify = (TextView)findViewById(R.id.sid_tv_whereDeadSpecify);
+		whereDeadSpecify = (EditText)findViewById(R.id.sid_whereDeadSpecify);
+		tv_appliance = (TextView)findViewById(R.id.sid_tv_appliance);
 		applianceYes = (RadioButton)findViewById(R.id.sid_applianceYes);
 		applianceNo = (RadioButton)findViewById(R.id.sid_applianceNo);
 		tv_applianceYesSpecify = (TextView)findViewById(R.id.sid_tv_applianceYesSpecify);
@@ -546,8 +590,23 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		applianceNo = (RadioButton)findViewById(R.id.sid_applianceNo);
 		tv_weirdSmellYesSpecify = (TextView)findViewById(R.id.sid_tv_weirdSmellYesSpecify);
 		weirdSmellYesSpecify = (EditText)findViewById(R.id.sid_weirdSmellYesSpecify);
+		tv_smoke = (TextView)findViewById(R.id.sid_tv_smoke);
+		smokeYes = (RadioButton)findViewById(R.id.sid_smokeYes);
+		smokeNo = (RadioButton)findViewById(R.id.sid_smokeNo);
 		
 		theScene = (TextView)findViewById(R.id.sid_theScene);
+		tv_datePlaced = (TextView)findViewById(R.id.sid_tv_datePlaced);
+		datePlaced = (EditText)findViewById(R.id.sid_datePlaced);
+		tv_datediscovered = (TextView)findViewById(R.id.sid_tv_datediscovered);
+		datediscovered = (EditText)findViewById(R.id.sid_datediscovered);
+		tv_datedLastSeen = (TextView)findViewById(R.id.sid_tv_datedLastSeen);
+		datedLastSeen = (EditText)findViewById(R.id.sid_dateLastSeen);
+		tv_otherSIDS = (TextView)findViewById(R.id.sid_tv_otherSIDS);
+		otherSIDSYes = (RadioButton)findViewById(R.id.sid_otherSIDSYes);
+		otherSIDSNo = (RadioButton)findViewById(R.id.sid_otherSIDSNo);
+		tv_twin = (TextView)findViewById(R.id.sid_tv_twin);
+		twinYes = (RadioButton)findViewById(R.id.sid_twinYes);
+		twinNo = (RadioButton)findViewById(R.id.sid_twinNo);
 		tv_generalHistory = (TextView)findViewById(R.id.sid_tv_generalHistory);
 		generalHistory = (EditText)findViewById(R.id.sid_generalHistory);
 		
@@ -766,14 +825,7 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 				applianceYesSpecify.setVisibility(VISIBLE);
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 	}
  
@@ -1009,17 +1061,49 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 	        	victims.accumulate("infantDie", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	 
+	        victims.accumulate("infantDieOther", Encryption.bytesToHex(enc.encrypt(infantDieOther.getText().toString())));
 	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	        victims.accumulate("relationshipInfant", Encryption.bytesToHex(enc.encrypt(relationshipInfant.getText().toString())));
-	        
 	        if(resuscitationAttemptedYes.isChecked())
 	        {
-	        	victims.accumulate("victimFoundresuscitationAttempted", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("resuscitationAttempted", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimFoundresuscitationAttempted", Encryption.bytesToHex(enc.encrypt("No")));
+	        	victims.accumulate("resuscitationAttempted", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	       
+	        
+	        victims.accumulate("resuscitationYes", Encryption.bytesToHex(enc.encrypt(resuscitationYes.getText().toString())));
+	        victims.accumulate("InfantWearing", Encryption.bytesToHex(enc.encrypt(InfantWearing.getText().toString())));
+	        
+	        if(tightlyWrappedYes.isChecked())
+	        {
+	        	victims.accumulate("tightlyWrapped", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("tightlyWrapped", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        victims.accumulate("beddingSpecify", Encryption.bytesToHex(enc.encrypt(beddingSpecify.getText().toString())));
+	        
+	        if(infantFallYes.isChecked())
+	        {
+	        	victims.accumulate("infantFall", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("infantFall", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(infantSickYes.isChecked())
+	        {
+	        	victims.accumulate("infantSick", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("infantSick", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(medicationYes.isChecked())
+	        {
+	        	victims.accumulate("medication", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("medication", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+
+	        victims.accumulate("medicationSpecify", Encryption.bytesToHex(enc.encrypt(medicationSpecify.getText().toString())));
+	        
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
@@ -1140,17 +1224,49 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
         	victims.accumulate("infantDie", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
+        victims.accumulate("infantDieOther", Encryption.bytesToHex(enc.encrypt(infantDieOther.getText().toString())));
         victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
         victims.accumulate("relationshipInfant", Encryption.bytesToHex(enc.encrypt(relationshipInfant.getText().toString())));
-        
         if(resuscitationAttemptedYes.isChecked())
         {
-        	victims.accumulate("victimFoundresuscitationAttempted", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	victims.accumulate("resuscitationAttempted", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimFoundresuscitationAttempted", Encryption.bytesToHex(enc.encrypt("No")));
+        	victims.accumulate("resuscitationAttempted", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-       
+        victims.accumulate("resuscitationYes", Encryption.bytesToHex(enc.encrypt(resuscitationYes.getText().toString())));
+        victims.accumulate("InfantWearing", Encryption.bytesToHex(enc.encrypt(InfantWearing.getText().toString())));
+        
+        if(tightlyWrappedYes.isChecked())
+        {
+        	victims.accumulate("tightlyWrapped", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("tightlyWrapped", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        victims.accumulate("beddingSpecify", Encryption.bytesToHex(enc.encrypt(beddingSpecify.getText().toString())));
+        
+        if(infantFallYes.isChecked())
+        {
+        	victims.accumulate("infantFall", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("infantFall", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(infantSickYes.isChecked())
+        {
+        	victims.accumulate("infantSick", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("infantSick", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(medicationYes.isChecked())
+        {
+        	victims.accumulate("medication", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	victims.accumulate("medication", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+
+        victims.accumulate("medicationSpecify", Encryption.bytesToHex(enc.encrypt(medicationSpecify.getText().toString())));
+
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
@@ -1409,10 +1525,80 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-			
+		if( infantDieOther.getText().toString().trim().length() == 0){
+			infantDieOther.requestFocus();
+			infantDieOther.setError("sorry empty field");
+			return false;
+		}
+		if( relationshipInfant.getText().toString().trim().length() == 0){
+			relationshipInfant.requestFocus();
+			relationshipInfant.setError("sorry empty field");
+			return false;
+		}
+		if( resuscitationYes.getText().toString().trim().length() == 0){
+			resuscitationYes.requestFocus();
+			resuscitationYes.setError("sorry empty field");
+			return false;
+		}
+		if( InfantWearing.getText().toString().trim().length() == 0){
+			InfantWearing.requestFocus();
+			InfantWearing.setError("sorry empty field");
+			return false;
+		}	
+		if( beddingSpecify.getText().toString().trim().length() == 0){
+			beddingSpecify.requestFocus();
+			beddingSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( medicationSpecify.getText().toString().trim().length() == 0){
+			medicationSpecify.requestFocus();
+			medicationSpecify.setError("sorry empty field");
+			return false;
+		}
 		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
 			whoFoundVictimBody.requestFocus();
 			whoFoundVictimBody.setError("sorry empty field");
+			return false;
+		}
+		
+		if( whereSpecify.getText().toString().trim().length() == 0){
+			whereSpecify.requestFocus();
+			whereSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( wherePlacedSpecify.getText().toString().trim().length() == 0){
+			wherePlacedSpecify.requestFocus();
+			wherePlacedSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( whereDeadSpecify.getText().toString().trim().length() == 0){
+			whereDeadSpecify.requestFocus();
+			whereDeadSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( applianceYesSpecify.getText().toString().trim().length() == 0){
+			applianceYesSpecify.requestFocus();
+			applianceYesSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( weirdSmellYesSpecify.getText().toString().trim().length() == 0){
+			weirdSmellYesSpecify.requestFocus();
+			weirdSmellYesSpecify.setError("sorry empty field");
+			return false;
+		}
+		if( datePlaced.getText().toString().trim().length() == 0){
+			datePlaced.requestFocus();
+			datePlaced.setError("sorry empty field");
+			return false;
+		}
+		if( datediscovered.getText().toString().trim().length() == 0){
+			datediscovered.requestFocus();
+			datediscovered.setError("sorry empty field");
+			return false;
+		}
+		if( datedLastSeen.getText().toString().trim().length() == 0){
+			datedLastSeen.requestFocus();
+			datedLastSeen.setError("sorry empty field");
 			return false;
 		}
 		
@@ -1432,9 +1618,22 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		
 		victimIDNo.setText("Unknown");
 			
+		infantDieOther.setText("");
+		relationshipInfant.setText("");
+		resuscitationYes.setText("");
+		InfantWearing.setText("");
+		beddingSpecify.setText("");
+		medicationSpecify.setText("");
 		whoFoundVictimBody.setText("");
-		
-		
+		whereSpecify.setText("");
+		wherePlacedSpecify.setText("");
+		whereDeadSpecify.setText("");
+		applianceYesSpecify.setText("");
+		weirdSmellYesSpecify.setText("");
+		datePlaced.setText("");
+		datediscovered.setText("");
+		datedLastSeen.setText("");
+	
 		generalHistory.setText("");
 		
 		uploadFileName = null;
@@ -1476,9 +1675,6 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 	
 		
 		resuscitationAttemptedNo.setChecked(true);
-	
-		
-	
 		 
 	}
 	
