@@ -140,7 +140,7 @@ class User {
         return FALSE;
     }
     public function getAllUsers() {
-        $u_res = mysql_query("select * from users");
+        $u_res = mysql_query("select * from users order by userID desc");
         $r = mysql_num_rows($u_res);
         if($r > 0)
         {
@@ -200,7 +200,7 @@ class User {
     public function findUsers($param) {
         if(strlen($param) === 0 || $param === NULL) return null;
         
-        $u_res = mysql_query("select * from users where userName LIKE '$param%' or userFirstname LIKE '$param%' or userSurname LIKE '$param%'");
+        $u_res = mysql_query("select * from users where userName LIKE '$param%' or userFirstname LIKE '$param%' or userSurname LIKE '$param%' order by userID desc");
         if($u_res !== NULL){
             $arr = array();
             while($u_arr = mysql_fetch_array($u_res)){

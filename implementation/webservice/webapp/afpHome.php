@@ -7,74 +7,135 @@
     {  
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Control Panel</title>
-        <link rel="stylesheet" type="text/css" href="styles.css"/>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
-        <script type="text/javascript" src="jquery.js"></script>
-        <script type="text/javascript" src="pdfobject.js"></script>
-        <script type="text/javascript" src="libs/base64.js"></script>
-	<script type="text/javascript" src="libs/sprintf.js"></script>
-	<script type="text/javascript" src="jspdf.js"></script>
-        <script type="text/javascript" src="script.js"></script>
-    </head>
-    <body onload="loadafp();">
-       <?php include_once("home.php");?>
-        <div class="response"></div>
-        <div class="content">
-            <div id="Page1" class="page">
-                <div id="afpHome-left">
-                    <div class="searchForm">
-                        <input type="search" name="userSearch" id="userSearch"  /> <input type="image" name="userSearchButton" id="userSearchButton" src="images/icons/search-black.png" />
-                        <br/> <br/> <br/>
-                    </div>
-                    <div class="userList">
-                        <table id="users">
-                            <tr class="table-headers">
-                                <th>User Name</th>
-                                <th>User Firstname</th>
-                                <th>User Surname</th>
-                                <th><a href="#" id="activeUsers" title="active">Active</a> / <a href="#" id="deactiveUsers" title="deactive">Deactivated</a></th>
-                                <!--<th>Options </th> -->
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </div>
-                
-                 </div>
-               
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>mForensics</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/small-business.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+     <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+     <!-- jQuery Version 1.11.0 -->
+     <script src="js/script.js"></script>
+</head>
+
+<body onload="runMe()">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="images/logo.png" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <?php
+                    include_once './home.php';
+                ?>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Heading Row -->
+        <div class="row">
+            <h1 id="page-heading"></h1>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
         
+
+        <!-- Content Row -->
+        <div class="row page" id="Page1">
+            <div class="col-md-4">
+                <h2>Case information</h2>
+                <table class="zui-table zui-table-zebra zui-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th>Case Number (#)</th>
+                            <th>Scene Type</th>
+                            <th>Forensic Officer Assigned</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody class="case-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col-md-4 -->
             
-            <div id="Page2" class="page">
-                <div class="center">
-                <table class="insert table">
-                    <tr>
-                        <td>User Name:<br/> 
-                            <input type="text" class="formInput" id="name" name="name" placeholder="Username" /></td>
-                    </tr>
-                    <tr>
-                        <td>User Password:<br/>
-                        <input type="password" class="formInput" id="pass" name="pass" placeholder="Password" /></td>
-                    </tr>
-                    <tr>
-                        <td>Confirm Password:<br/>
-                        <input type="password" class="formInput" id="cpass" name="cpass" placeholder="Confirm Password"/></td>
-                    </tr>
-                    <tr>
-                        <td>User Firstname:<br/>
-                        <input type="text" class="formInput" id="firstname" name="firstname" placeholder="Firstname"/></td>
-                    </tr>
-                    <tr>
-                        <td>User Surname:<br/>
-                        <input type="text" class="formInput" id="surnname" name="surname" placeholder="Surname" /></td>
-                    </tr>
-                    <tr>
-                        <td>User Type:<br/>
-                       
-                            <select class="formInput" id="userType"  name="userType" onchange="getUserForm()">
+            <div class="col-md-8">
+                <h2>Scene Information</h2>
+                <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
+                <button id="assignDR" class="btn-lg">Assign Death register number</button>
+                <button id="print" class="btn-lg">Create Print Out</button>
+                            <br/><br/>
+                <table class="zui-table zui-table-vertical table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sceneInfo-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+        <div class="row page" id="Page2">
+            <div class="col-md-4">
+                <h2>Add New User</h2>
+                <form>
+                    <label for="username"><span>username *</span>
+                        <input type="text" class="formInput" id="name" name="name" placeholder="username" />
+                    </label>
+                    <label for="pass"><span>password *</span>
+                        <input type="password" class="formInput" id="pass" name="pass" placeholder="password" />
+                    </label>
+                    <label for="cpass"><span>confirm password *</span>
+                        <input type="password" class="formInput" id="cpass" name="cpass" placeholder="confirm password" />
+                    </label>
+                    <label for="firstname"><span>firstname *</span>
+                        <input type="text" class="formInput" id="firstname" name="firstname" placeholder="firstname" />
+                    </label>
+                    <label for="surname"><span>surname *</span>
+                        <input type="text" class="formInput" id="surname" name="surname" placeholder="surname" />
+                    </label>
+                    <label for="userType"><span>user type *</span>
+                        <select class="formInput" id="userType"  name="userType" onchange="getUserForm()">
                                 <option>Administrator</option>
                                 <option>Forensic practitioner</option>
 				<option>Forensic officer</option>
@@ -82,79 +143,77 @@
                                 <!--<option>Guest</option>-->
                                 <option>Forensic practitioner/Administrator</option>
                             </select>
-                        </td>
-                    </tr>
+                    </label>
                     
-                    <tr>
-                        <td>
-                            <button id="addUserButton" >Add user</button>
-                           
-                            <br/>
-                        </td>
-                    </tr>
+                    <input type="button" value="Add User" id="addUserButton" class="button btn-primary" />
+                </form>
+            </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-8">
+                <h2>User List</h2>
+                <div>
+                    <label for="userSearch">
+                        <input type="search" name="userSearch" id="userSearch" placeholder="search users"  />
+                    </label>
+                </div><br/>
+                <table class="zui-table zui-table-zebra zui-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Firstname</th>
+                            <th>Surname</th>
+                            <th>Active / Deactivated</th>
+                        </tr>
+                    </thead>
+                    <tbody class="user-table">
+                        
+                    </tbody>
                 </table>
-                </div>
-            <br/><br/>
             </div>
-            
-            <div id="Page3" class="page">
-                <div id="Page1-left">
-                    <div class="searchForm">
-
-                        <input type="search" name="search" id="search"  /> <input type="image" name="searchButton" id="searchButton" src="images/icons/search-black.png" />
-                        <br/> <br/> <br/>
-                    </div>
-                    <div class="caseList">
-                        <table id="cases">
-                            <tr class="table-headers">
-                                <th>Case Number (#)</th>
-                                <th>Scene Type</th>
-                                <th>Forensic Officer</th>
-                                <th>Options</th>
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </div>
-                <div id="Page1-right">
-                    <h1>Case Information</h1>
-                    <div class="right-content">
-                        <div class="toolbar">
-                            <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" /><button id="assignDR" class="deathreg-btn">Assign Death register number</button>
-                            <button id="printScene">Create Print Out</button>
-                            <br/>
-                        </div>
-                        <table>
-                            
-                        </table><br/>
-                        <div id="pdfRenderer"></div>
-                       
-                    </div>
-                </div>
-            </div>
-            <div id="Page4" class="page">
-                <div id="auditLog-left">
-                    <div class="searchForm">
-                        <input type="search" name="auditSearch" id="auditSearch"  /> <input type="image" name="auditSearchButton" id="auditSearchButton" src="images/icons/search-black.png" />
-                        <br/> <br/> <br/>
-                    </div>
-                    <div class="AuditList">
-                        <table id="audit">
-                            <tr class="table-headers">
-                                <th>User Name</th>
-                                <th>Audit Date &amp; Time</th>
-                                <th>Audit Action</th>
-                            </tr>
-                            
-                        </table>
-                    </div>
-                    
-                </div>
-            </div>
-            
+            <!-- /.col-md-4 -->
         </div>
-    </body>
+        <!-- /.row -->
+        <div class="row page" id="Page3">
+            <div class="col-lg-12">
+                <div>
+                    <label for="auditSearch">
+                        <input type="search" name="auditSearch" id="auditSearch" placeholder="search audit log"  />
+                    </label>
+                </div><br/>
+            <table class="zui-table zui-table-zebra zui-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Audit Date &amp; Time</th>
+                            <th>Audit Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="audit-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.row -->
+        
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; forensicsapp.co.za 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+   
+
+</body>
+
 </html>
+
 <?php
     }else{
         include_once 'errorPage.php';

@@ -1,0 +1,106 @@
+form {
+	margin: 0;
+	padding: 0;
+}
+
+form label, div label {
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	padding: 10px 0;
+}
+
+form label span, div label span {
+	color: #767676;
+	display: block;
+	float: left;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+	text-transform: capitalize;
+	width: 130px;
+}
+
+ form label input, form label select, div label input,#deathreg {
+	border: 1px solid #94acb3;
+	color: #767676;
+	display: block;
+	float: left;
+	font-size: 14px;
+	height: 50px;
+	margin: 0;
+	padding: 3px 5px;
+	width: 100%;
+}
+
+
+
+.button{
+    display: block;
+    background-color:#080808; 
+    color:#c0c0c0;
+    font-size: 14px;
+    width:100%;
+    height:50px;
+}
+
+.response{
+    min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          text-align: center;
+}
+
+.error{
+    background-color: #ac2925;
+    color: whitesmoke;
+}
+
+.success{
+    background-color: #398439;
+    color: whitesmoke;
+  
+}
+
+
+.zui-table {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.zui-table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.zui-table tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+.zui-table-zebra tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+.zui-table-zebra tbody tr:nth-child(even) {
+    background-color: #EEF7EE;
+}
+.zui-table-horizontal tbody td {
+    border-left: none;
+    border-right: none;
+}
+
+
+
+#page-heading{
+    text-align: center;
+}

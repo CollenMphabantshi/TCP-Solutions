@@ -3,9 +3,6 @@ drop database if exists forenlnm_mobileforensics;
 create database if not exists forenlnm_mobileforensics;
 use forenlnm_mobileforensics;
 
-
-
-
 create table if not exists userType
 (
     userTypeID int not null auto_increment,

@@ -2187,8 +2187,6 @@ function logout(){
 
 function login(username,pass){
     var query = new FormData();
-    
-    
     query.append("rquest","login");
     query.append("username",username);
     query.append("password",pass);

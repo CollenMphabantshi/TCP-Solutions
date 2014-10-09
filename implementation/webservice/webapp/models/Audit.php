@@ -1,4 +1,4 @@
-<?php
+ <?php
 try{
     session_start();
 }catch(Exception $ex){}
@@ -32,7 +32,7 @@ class Audit {
         $enc = new Encryption();
         if(!empty($_SESSION[$enc->md5_encrypt('s_nomor')]))
         {
-            $a_res = mysql_query("select * from audit_log");
+            $a_res = mysql_query("select * from audit_log order by audit_id desc");
             $arr = array();
             if($a_res !== FALSE)
             {

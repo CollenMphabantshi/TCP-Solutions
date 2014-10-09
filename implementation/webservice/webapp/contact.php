@@ -60,16 +60,26 @@
 
         <!-- Heading Row -->
         <div class="row">
-            <h1 id="page-heading">Welcome to mForensics</h1>
+            
         </div>
         <!-- /.row -->
 
         <hr>
 
+        <!-- Call to Action Well -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well text-center">
+                    Welcome to mForensics
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
 
         <!-- Content Row -->
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-8">
                 <h2>Login Details</h2>
                 <form>
                     <label for="username"><span>username</span>
@@ -103,3 +113,4 @@
 </body>
 
 </html>
+
