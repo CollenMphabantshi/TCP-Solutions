@@ -284,11 +284,11 @@ public class Firearm extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		
 		
-		initialize();
+		/*initialize();
 		System.out.println("Start init");
 		variablesInitialization();
 		CheckRadioButtons();
-		setOnClickEvents();
+		setOnClickEvents();*/
 		
 		
 	
@@ -589,9 +589,9 @@ public class Firearm extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		theScene = (TextView)findViewById(R.id.firearm_theScene);
 		tv_wasIt = (TextView)findViewById(R.id.firearm_tv_wasIt);
-		wasIt = (Spinner)findViewById(R.id.firearm_wasItType);
+		/*wasIt = (Spinner)findViewById(R.id.firearm_wasItType);
 		tv_areaType = (TextView)findViewById(R.id.firearm_tv_areaType);
-		areaType = (Spinner)findViewById(R.id.firearm_areaType);
+		areaType = (Spinner)findViewById(R.id.firearm_areaType);*/
 		tv_woundsArea = (TextView)findViewById(R.id.firearm_tv_woundsArea);
 		woundsArea = (Spinner)findViewById(R.id.firearm_woundsArea);
 		tv_firearmCalibre = (TextView)findViewById(R.id.firearm_tv_firearmCalibre);

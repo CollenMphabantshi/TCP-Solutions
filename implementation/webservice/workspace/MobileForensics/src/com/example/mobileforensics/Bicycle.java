@@ -1,18 +1,24 @@
 package com.example.mobileforensics;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Calendar;
+
 import java.util.Date;
+
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.apache.http.HttpResponse;
@@ -26,18 +32,27 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.mobileforensics.Blunt.Read;
-import com.example.mobileforensics.models.Weather;
+
+
+
+
+import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
+
+import com.example.mobileforensics.JSONWeatherParser;
+import com.example.mobileforensics.WeatherHttpClient;
+import com.example.mobileforensics.models.Weather;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -51,44 +66,43 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.NavUtils;
+import android.text.format.Time;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChangeListener{
-
+	
+	
+	
 	TextView value;
 
 	private EditText ioName;
-	
-	private EditText ioSurname;
-	
-	private EditText ioRank;
-	
-	private EditText ioCellNo;
-	
-	private TextView tv_foosName;
+	private EditText ioSurname;	
+	private EditText ioRank;	
+	private EditText ioCellNo;	
 	private EditText foosName;
-	private TextView tv_foosSurname;
 	private EditText foosSurname;
-	private TextView tv_foosRank;
-	private EditText foosRank;
-	
-	private TextView tv_victimName;
+	private EditText foosRank;	
 	private EditText victimName;
-	private TextView tv_victimSurname;
 	private EditText victimSurname;
-	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
 	private EditText victimAge;
 	
@@ -104,52 +118,40 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	private TextView theBody;
-	private TextView tv_bodyMoved;
-	private RadioButton bodyMovedYes;
-	private RadioButton bodyMovedNo;
-	private TextView tv_medicalIntervention;
+	
+	
+	//the body
+	
+	private RadioButton EyewitnessesYes;
+	private RadioButton EyewitnessesNo;
+	
+	private RadioButton movedSinceAccidentYes;
+	private RadioButton movedSinceAccidentNo;
 	private RadioButton medicalInterventionYes;
 	private RadioButton medicalInterventionNo;
-	private TextView tv_eyewitnesses;
-	private RadioButton eyewitnessesYes;
-	private RadioButton eyewitnessesNo;
 	
 	
-	private TextView sceneOfInjury;
-	private TextView tv_sceneOType;
-	private Spinner sceneOType;
-	private TextView tv_sceneOTypeOther;
-	private EditText sceneOTypeOther;
+	//Scene of injury
+	private Spinner AccidentOccured;
+	private EditText otherLocation;
 	
-	
-	private TextView theScene;
-	private TextView tv_victimNumber;
-	private RadioButton victimNumberSingle;
-	private RadioButton victimNumberMultiple;
-	private TextView tv_bicycleHit;
-	private Spinner bicycleHit;
-	private TextView tv_bicycleType;
-	private Spinner bicycleType;
-	private TextView tv_weatherType;
-	private RadioButton weatherTypeDark;
-	private RadioButton weatherTypeLight;
-	private RadioButton weatherTypeDusk;
-	private RadioButton weatherTypeDawn;
-	private TextView tv_weatherCondition;
+	//The Scene
+	private RadioButton singleOrMultipleYes;
+	private RadioButton singleOrMultipleNo;
+
+	private Spinner hitFrom;
+	private Spinner accidentType;
+	private Spinner weatherType;
 	private Spinner weatherCondition;
-	private TextView tv_suicideNoteFound;
-	private RadioButton suicideNoteFoundYes;
-	private RadioButton suicideNoteFoundNo;
-	private TextView tv_generalHistory;
+	private RadioButton SuicideNoteFoundYes;
+	private RadioButton SuicideNoteFoundNo;
 	private EditText generalHistory;
 	
 	private TextView response;
 
 	private Button doneButton;
 	private Button logoutButton;
-	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -185,8 +187,9 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -199,48 +202,60 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	//ImageView mImageView;
 	private static final String TAG = "upload";
 	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.bicycle);
+		//String city = "lat=-25.7547642&lon=28.2146178";
+		String city = "";
 		
-		setContentView(R.layout.bicycle);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+		try{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.bicycle);
+			
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	
 	}
 	
-
 	public String initialize(){
-		
-		if( status != ConnectionResult.SUCCESS){
-			int requestCode = 10;
-			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
-			dialog.show();
-		}else{
 			
-			map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
-			map.setMyLocationEnabled(true);
-			map.setOnMyLocationChangeListener(this);
+			if( status != ConnectionResult.SUCCESS){
+				int requestCode = 10;
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+				dialog.show();
+			}else{
+				
+				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
+				map.setMyLocationEnabled(true);
+				map.setOnMyLocationChangeListener(this);
+				
+				String city = "lat="+latitude+"&lon="+longitude;
+				JSONWeatherTask task = new JSONWeatherTask();
+				task.execute(new String[]{city});
+				location +="\n"+WeatherInfo;
+			}
+			return location;
 			
-			String city = "lat="+latitude+"&lon="+longitude;
-			JSONWeatherTask task = new JSONWeatherTask();
-			task.execute(new String[]{city});
-			location +="\n"+WeatherInfo;
-		}
-		return location;
-		
 	}
 	
 	private File createImageFile() throws IOException{
@@ -277,6 +292,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
@@ -350,9 +366,9 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
             
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
-			locate.accumulate("Bearing", loc.getBearing());
-			locate.accumulate("Altitude", loc.getAltitude());
-			locate.accumulate("Accuracy", loc.getAccuracy());
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
 			object.accumulate("Time", time);
@@ -415,28 +431,17 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.bicycle_io_name);
-		
-		ioSurname = (EditText)findViewById(R.id.bicycle_io_surname);
-		
-		ioRank = (EditText)findViewById(R.id.bicycle_io_rank);
-		
+		ioName = (EditText)findViewById(R.id.bicycle_io_name);		
+		ioSurname = (EditText)findViewById(R.id.bicycle_io_surname);		
+		ioRank = (EditText)findViewById(R.id.bicycle_io_rank);		
 		ioCellNo = (EditText)findViewById(R.id.bicycle_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.bicycle_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.bicycle_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.bicycle_tv_foos_surname);
+		foosName = (EditText)findViewById(R.id.bicycle_foos_name);;
 		foosSurname = (EditText)findViewById(R.id.bicycle_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.bicycle_tv_foos_rank);
 		foosRank = (EditText)findViewById(R.id.bicycle_foos_rank);
 		
-	
 		
-		tv_victimName = (TextView)findViewById(R.id.bicycle_tv_victim_name);
 		victimName = (EditText)findViewById(R.id.bicycle_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.bicycle_tv_victim_surname);
 		victimSurname = (EditText)findViewById(R.id.bicycle_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.bicycle_tv_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.bicycle_victim_id);
 		victimAge = (EditText)findViewById(R.id.bicycle_victim_age);
 		
@@ -450,45 +455,32 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		rgbWhite = (RadioButton)findViewById(R.id.bicycle_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.bicycle_rgbUnknownRace);
 		
-		
-		theBody = (TextView)findViewById(R.id.bicycle_tv_the_body);
-		tv_bodyMoved = (TextView)findViewById(R.id.bicycle_tv_bodyMoved);
-		bodyMovedYes = (RadioButton)findViewById(R.id.bicycle_bodyMovedYes);
-		bodyMovedNo = (RadioButton)findViewById(R.id.bicycle_bodyMovedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.bicycle_tv_medicalIntervention);
 		medicalInterventionYes = (RadioButton)findViewById(R.id.bicycle_medicalInterventionYes);
 		medicalInterventionNo = (RadioButton)findViewById(R.id.bicycle_medicalInterventionNo);
-		tv_eyewitnesses = (TextView)findViewById(R.id.bicycle_tv_eyewitnesses);
-		eyewitnessesYes = (RadioButton)findViewById(R.id.bicycle_eyewitnessesYes);
-		eyewitnessesNo = (RadioButton)findViewById(R.id.bicycle_eyewitnessesNo);
+		//the body
 		
+		EyewitnessesYes = (RadioButton)findViewById(R.id.bicycle_eyewitnessesYes);
+		EyewitnessesNo = (RadioButton)findViewById(R.id.bicycle_eyewitnessesNo);
 		
-		sceneOfInjury = (TextView)findViewById(R.id.bicycle_sceneOfInjury);
+		movedSinceAccidentYes = (RadioButton)findViewById(R.id.bicycle_bodyMovedYes);
+		movedSinceAccidentNo = (RadioButton)findViewById(R.id.bicycle_bodyMovedNo);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.bicycle_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.bicycle_medicalInterventionNo);
 		
-		tv_sceneOType = (TextView)findViewById(R.id.bicycle_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.bicycle_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.bicycle_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.bicycle_sceneOTypeOther);
+		//Scene of injury
+		AccidentOccured = (Spinner)findViewById(R.id.bicycle_sceneOType);
+		otherLocation = (EditText) findViewById(R.id.bicycle_sceneOTypeOther);
 		
-		theScene = (TextView)findViewById(R.id.bicycle_theScene);
-		tv_victimNumber = (TextView)findViewById(R.id.bicycle_tv_victimNumber);
-		victimNumberSingle = (RadioButton)findViewById(R.id.bicycle_victimNumberSingle);
-		victimNumberMultiple = (RadioButton)findViewById(R.id.bicycle_victimNumberMultitple);
-		tv_bicycleHit = (TextView)findViewById(R.id.bicycle_tv_bicycleHit);
-		bicycleHit = (Spinner)findViewById(R.id.bicycle_bicycleHit);
-		tv_bicycleType = (TextView)findViewById(R.id.bicycle_tv_bicycleType);
-		bicycleType = (Spinner)findViewById(R.id.bicycle_bicycleType);
-		tv_weatherType = (TextView)findViewById(R.id.bicycle_tv_weatherType);
-		weatherTypeDark = (RadioButton)findViewById(R.id.bicycle_weatherTypeDark);
-		weatherTypeLight = (RadioButton)findViewById(R.id.bicycle_weatherTypeLight);
-		weatherTypeDusk = (RadioButton)findViewById(R.id.bicycle_weatherTypeDusk);
-		weatherTypeDawn = (RadioButton)findViewById(R.id.bicycle_weatherTypeDawn);
-		tv_weatherCondition = (TextView)findViewById(R.id.bicycle_tv_weatherCondition);
+		//The Scene
+		singleOrMultipleYes = (RadioButton)findViewById(R.id.bicycle_victimNumberMultitple);
+		singleOrMultipleNo = (RadioButton)findViewById(R.id.bicycle_victimNumberSingle);
+		
+		hitFrom = (Spinner)findViewById(R.id.bicycle_bicycleHit);
+		accidentType = (Spinner)findViewById(R.id.bicycle_bicycleType);
+		weatherType = (Spinner)findViewById(R.id.bicycle_weatherType);
 		weatherCondition = (Spinner)findViewById(R.id.bicycle_weatherCondition);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.bicycle_tv_suicideNoteFound);
-		suicideNoteFoundYes = (RadioButton)findViewById(R.id.bicycle_SuicideNoteFoundYes);
-		suicideNoteFoundNo = (RadioButton)findViewById(R.id.bicycle_SuicideNoteFoundNo);
-		tv_generalHistory = (TextView)findViewById(R.id.bicycle_tv_generalHistory);
+		SuicideNoteFoundYes = (RadioButton)findViewById(R.id.bicycle_SuicideNoteFoundYes);
+		SuicideNoteFoundNo = (RadioButton)findViewById(R.id.bicycle_SuicideNoteFoundNo);
 		generalHistory = (EditText)findViewById(R.id.bicycle_generalHistory);
 		
 		
@@ -497,7 +489,6 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		doneButton = (Button)findViewById(R.id.bicycle_doneButton);
 		logoutButton = (Button)findViewById(R.id.bicycle_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.bicycle_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -515,16 +506,39 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.bicycle_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.bicycle_galleryLayout);
 	       // weather section
-	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
-		
-		
+	       
 		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Bicycle.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
 	
 	
 	
@@ -545,33 +559,35 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							//if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Bicycle.this, "", "Uploading file...", true);
+										/*dialog = ProgressDialog.show(Mba.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
 						                             runOnUiThread(new Runnable() {
 						                                    public void run() {
 						                                        
-						                                        Toast.makeText(Bicycle.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                        Toast.makeText(Mba.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
 						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
+						                             
+						                             for( int i=0;i < numberOfImages; i++){
+						                            	 Toast.makeText(Mba.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
+						                            	 uploadFile( uploadFileName.get(i) );
+						                            	 i++;
+						                             	}
+						                                               
 						                        }
-						                      }).start(); 
+						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
@@ -580,12 +596,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 										e.printStackTrace();
 									}
 										
-							//}
-							//else{
-								
-								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
-								
-							//}
+							
 						}else{
 							Toast.makeText(Bicycle.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -641,6 +652,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	readAllFiles();
             	}
             	
             }
@@ -652,44 +664,26 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","blunt"));
+		        pairs.add(new BasicNameValuePair("category","mba"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
-			}
-		});
-				
-		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
+		        new Read().execute(pairs);*/
 				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneOTypeOther.setVisibility(VISIBLE);
-							sceneOTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
 				}catch(Exception e){e.printStackTrace();}
 			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
 		});
+		
+		
+		
+		/**
+		 * 	Spinner onclick event
+		 */
+		
 		
 	}
 	
@@ -704,8 +698,8 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -889,8 +883,8 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("bicycle"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -919,15 +913,12 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
 	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
 	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
-	        if(bodyMovedYes.isChecked())
-	        {
-	        	victims.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
+	        victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("null")));
+	        
 	        
 	        if(medicalInterventionYes.isChecked())
 	        {
@@ -935,52 +926,59 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	        }else{
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
 	        
-	        victims.accumulate("bodyBurned", "null");
-	        victims.accumulate("bodyIntact","null");
-	        victims.accumulate("whoFoundVictimBody", null);
-	        
-	        if(eyewitnessesYes.isChecked())
+	        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("victimInside",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("victimOutside",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("victimFoundCloseToWater",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("suicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt("null")));
+	        if(SuicideNoteFoundYes.isChecked())
 	        {
-	        	victims.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
 	        
-	        
-	        victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-		    victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	       
-		    
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("bicycleOType",getIOType() );
+	        info.accumulate("bicycleOType", Encryption.bytesToHex(enc.encrypt((String)AccidentOccured.getSelectedItem())));
 	        
 	        
-	        if(victimNumberSingle.isChecked())
+	        
+	        if(EyewitnessesYes .isChecked())
+	        {
+	        	info.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        
+	        if(movedSinceAccidentYes .isChecked())
+	        {
+	        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        
+	        
+	        if(singleOrMultipleYes .isChecked())
 	        {
 	        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Single")));
 	        }else{
 	        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Multiple")));
 	        }
 	        
-	        String bh = (String)bicycleHit.getSelectedItem();
-	        info.accumulate("bicycleHit", Encryption.bytesToHex(enc.encrypt(bh)));
-	        bh = (String)bicycleType.getSelectedItem();
-	        info.accumulate("bicycleType", Encryption.bytesToHex(enc.encrypt(bh)));
-	        
-	        if(weatherTypeDark.isChecked())
-	        {
-	        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dark")));
-	        }else  if(weatherTypeLight.isChecked()){
-	        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Light")));
-	        }else  if(weatherTypeDusk.isChecked()){
-	        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dusk")));
-	        }else{
-	        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dawn")));
-	        }
-	        
+	        info.accumulate("bicycleHit", Encryption.bytesToHex(enc.encrypt((String)hitFrom.getSelectedItem())));
+	        info.accumulate("bicycleType", Encryption.bytesToHex(enc.encrypt((String)accidentType.getSelectedItem()))); 
+	        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt((String)weatherType.getSelectedItem())));
+	        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt((String)weatherCondition.getSelectedItem())));
 	        array.put(info);
 	        obj.accumulate("object", array);
 	        currentDataSaved = obj;
@@ -994,21 +992,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		}
 	}
 	
-	public String getIOType(){
-		try{
-			String type = "";
-			
-			type = (String)sceneOType.getSelectedItem();
-			if(type.toLowerCase().equals("other")){
-					type = sceneOTypeOther.getText().toString();
-			}
-			return Encryption.bytesToHex(enc.encrypt(type));
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 	
 	public String getVictimGender(){
 		try{
@@ -1061,12 +1045,12 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 	
@@ -1087,7 +1071,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1101,14 +1085,9 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+      //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+        victims.accumulate("bodyDecomposed", "null");
         
-        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
-        if(bodyMovedYes.isChecked())
-        {
-        	victims.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
-        }
         
         if(medicalInterventionYes.isChecked())
         {
@@ -1117,50 +1096,57 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("bodyBurned", "null");
+        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
+        
         victims.accumulate("bodyIntact","null");
-        victims.accumulate("whoFoundVictimBody", null);
         
-        if(eyewitnessesYes.isChecked())
+        
+        if(SuicideNoteFoundYes.isChecked())
         {
-        	victims.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
         }
+      
+        victims.accumulate("numberOfPreviousAttempts", "null");
         
         
-        victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-	    victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+        
+        
        
-	    
+       
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("bicycleOType",getIOType() );
+       
         
-        
-        if(victimNumberSingle.isChecked())
+        if(EyewitnessesYes .isChecked())
         {
-        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Single")));
+        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Multiple")));
+        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        String bh = (String)bicycleHit.getSelectedItem();
-        info.accumulate("bicycleHit", Encryption.bytesToHex(enc.encrypt(bh)));
-        bh = (String)bicycleType.getSelectedItem();
-        info.accumulate("bicycleType", Encryption.bytesToHex(enc.encrypt(bh)));
         
-        if(weatherTypeDark.isChecked())
+        if(movedSinceAccidentYes .isChecked())
         {
-        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dark")));
-        }else  if(weatherTypeLight.isChecked()){
-        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Light")));
-        }else  if(weatherTypeDusk.isChecked()){
-        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dusk")));
+        	info.accumulate("bodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt("Dawn")));
+        	info.accumulate("bodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        
+        
+        if(singleOrMultipleYes .isChecked())
+        {
+        	info.accumulate("", Encryption.bytesToHex(enc.encrypt("Single")));
+        }else{
+        	info.accumulate("", Encryption.bytesToHex(enc.encrypt("Multiple")));
+        }
+        
+        info.accumulate("motorbikeHitFrom", Encryption.bytesToHex(enc.encrypt(hitFrom.getSelectedItem().toString())));
+        info.accumulate("typeOfAccident", Encryption.bytesToHex(enc.encrypt(accidentType.getSelectedItem().toString()))); 
+        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt(weatherType.getSelectedItem().toString())));
+        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt(weatherCondition.getSelectedItem().toString())));
         
         array.put(info);
         obj.accumulate("object", array);
@@ -1239,11 +1225,20 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 					System.out.println("STATUS: "+status);
 					System.out.println("MESSAGE: "+message);
 					response.setVisibility(VISIBLE);
+					Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						
+						try{
+							message = message.split(".")[0];
+							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
+						
+		                
 						response.setText(message);
 					}
 				}
@@ -1349,7 +1344,7 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
@@ -1416,7 +1411,6 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-			
 		
 		
 		if( generalHistory.getText().toString().length() == 0){
@@ -1434,7 +1428,6 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		victimSurname.setText("Unknown");
 		
 		victimIDNo.setText("Unknown");
-			
 		
 		generalHistory.setText("");
 		
@@ -1473,26 +1466,15 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		//outside selected by default
 		
-		tv_sceneOType.setVisibility(VISIBLE);
-		sceneOType.setVisibility(VISIBLE);
-		
-		suicideNoteFoundNo.setChecked(true);
-		
-		bodyMovedNo.setChecked(true);
-	
 		medicalInterventionNo.setChecked(true);
-	
-		eyewitnessesNo.setChecked(true);
-		
-		
-		victimNumberSingle.setChecked(true);
-	
-		weatherTypeLight.setChecked(true);
-		 
+	 
 	}
 	
 	private  boolean CellNoValidation(String cell) {
 		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
-	}
-
+		}
+	
+	
+	
+	
 }

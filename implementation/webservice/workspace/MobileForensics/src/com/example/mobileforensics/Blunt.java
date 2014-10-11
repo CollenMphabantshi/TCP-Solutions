@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -34,6 +32,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 
@@ -221,7 +220,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -257,8 +256,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -271,39 +271,38 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	//ImageView mImageView;
 	private static final String TAG = "upload";
 	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
-		try{
 		String city = "";
-		//uploadFileName = new ArrayList<String>();
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.blunt);
+		
 		try{
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		}catch(Exception ex){
-			ex.printStackTrace();
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.blunt);
+			
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
+		
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-		
-		
-		
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
-		
-		
 	
 	}
 	
@@ -331,52 +330,20 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "Blunt_" + timeStamp;
+	    String imageFileName = "Blunt_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
-	    File path = Environment.getExternalStoragePublicDirectory("/picupload");
-	    //File dir = new File(storageDir);
-	   // if (!dir.exists())
-	   // //	dir.mkdir();
-	    File file = new File(path, imageFileName + ".png");
-	   
-	    //File image = new File(storageDir + "/" + imageFileName + ".jpg");
+	    File dir = new File(storageDir);
+	    if (!dir.exists())
+	    	dir.mkdir();
+	    
+	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
 
 	    // Save a file: path for use with ACTION_VIEW intents
-	    mCurrentPhotoPath = file.getAbsolutePath();
+	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
-	   return file;
+	    return image;
 		
 	}
-	
-	public void readAllFiles(){
-	    	
-	    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
-	    	Log.d("Files", "Path: " + path);
-	    	File f = new File(path);        
-	    	File files[] = f.listFiles();
-	    	Log.d("Files", "Size: "+ files.length);
-	    	for (int i=0; i < files.length; i++)
-	    	{
-	    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
-	        	//{
-	        		uploadFileName.add(path+files[i].getName());
-	    			Log.d("Files", "FileName:" + files[i].getName());
-	        	//}
-	    	    
-	    	}
-	    	
-	    }
-	   public String getExtesion(String filename){
-		   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
-		   return extension;
-	   }
-	   
-	   public void clearImageData(){
-		   String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
-		   File f = new File(path); 
-		 for(File file: f.listFiles()) file.delete();
-	   }
-   
 	
 	private void dispatchTakePictureIntent(){
 		
@@ -394,6 +361,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
@@ -467,9 +435,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
             
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
-			locate.accumulate("Bearing", loc.getBearing());
-			locate.accumulate("Altitude", loc.getAltitude());
-			locate.accumulate("Accuracy", loc.getAccuracy());
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
 			object.accumulate("Time", time);
@@ -681,7 +649,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.blunt_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.blunt_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -691,6 +659,31 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			e.printStackTrace();
 		}
 	}
+	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Blunt.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
 	
 	
 	
@@ -709,14 +702,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
 				try{
-					readAllFiles();
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
-						if(ValidateFields())
-							{
-						if(uploadFileName.size() > 0){
+						if(ValidateFields()){
+							
 								
 									try{
 										
@@ -731,32 +723,25 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                                        
 						                                        Toast.makeText(Blunt.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
-						                                });    
+						                                });                      
 						                             
-						                             int i = 0;
-						                             while( i < uploadFileName.size()){
-						                            	 //filename = uploadFileName.get(i);
-						                            	 System.out.println("file name: "+uploadFileName.get(i));
+						                             for( int i=0;i < numberOfImages; i++){
+						                            	 Toast.makeText(Blunt.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
 						                            	 uploadFile( uploadFileName.get(i) );
 						                            	 i++;
-						                             }                    
+						                             	}
+						                                               
 						                        }
-						                      }).start(); 
+						                      }).start();
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
-										//clearImageData();
 										Toast.makeText(Blunt.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
-								
-								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
-								
-							}
+							
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -812,6 +797,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	readAllFiles();
             	}
             	
             }
@@ -823,12 +809,17 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
 		        pairs.add(new BasicNameValuePair("category","blunt"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				try{
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
+				}catch(Exception e){e.printStackTrace();}
 			}
 		});
 		
@@ -1010,7 +1001,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
 	            //uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -1194,7 +1185,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
@@ -1470,6 +1461,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1773,9 +1765,17 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 					response.setVisibility(VISIBLE);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						
+						try{
+							message = message.split(".")[0];
+							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
+						
+		                
 						response.setText(message);
 					}
 				}
@@ -1881,7 +1881,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");

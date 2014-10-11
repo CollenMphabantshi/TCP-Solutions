@@ -29,13 +29,7 @@
 				android:orientation="vertical"
 				android:gravity="center_horizontal"
 			    >
-			<TextView
-			    android:id="@+id/drowning_tv_io"			            
-				style="@style/sub_headings"
-				android:text="Investigating Officer Information"
-				
-				android:visibility="visible"
-			/>
+			
 			<!-- Geolocation and weather -->
 			<fragment 
 	        android:id="@+id/fragId"
@@ -43,7 +37,13 @@
 	        android:layout_width="500dp"
 	        android:layout_height="300dp"
 	        />
-			
+			<TextView
+			    android:id="@+id/drowning_tv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
 		    <TextView 
 		        android:id="@+id/value"
 		        android:layout_width="fill_parent"
@@ -1044,7 +1044,7 @@
 				    android:id="@+id/drowning_waterType"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:entries="@array/outsideTypes"
+					android:entries="@array/deceasedDrownIn"
 					android:prompt="@string/choose"
 					
 					android:layout_row="0"

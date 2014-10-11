@@ -1364,7 +1364,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="Head"
-			        android:onClick="onCheckboxClicked"
+			        android:layout_margin="5dp"
 			        android:layout_row="4"
             	android:layout_column="1"/>
 				
@@ -1372,7 +1372,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="Thorax"
-			        android:onClick="onCheckboxClicked"
+			        android:layout_margin="5dp"
 			        android:layout_row="5"
             	android:layout_column="0"/>
 				
@@ -1380,7 +1380,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="Abdomen"
-			        android:onClick="onCheckboxClicked"
+			        android:layout_margin="5dp"
 			        android:layout_row="5"
             	android:layout_column="1"/>
 				
@@ -1388,7 +1388,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="Arms"
-			        android:onClick="onCheckboxClicked"
+			        android:layout_margin="5dp"
 			        android:layout_row="6"
             	android:layout_column="0"/>
 				
@@ -1396,51 +1396,32 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:text="Legs"
-			        android:onClick="onCheckboxClicked"
+			        android:layout_margin="5dp"
 			        android:layout_row="6"
             	android:layout_column="1"/>
 				
 				<TextView
-				    android:id="@+id/sharp_tv_chockingSuspected"
+				    android:id="@+id/sharp_tv_injuriesMainlyOn"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 				
 					style="@style/tv_question"
-					android:text="Is there a suspicion of chocking?"
+					android:text="The injury (injuries) are mainly on the "
 					android:layout_row="7"
             	android:layout_column="0"
 					/>
 				
-				
-				<RadioGroup 
-			    android:id="@+id/sharp_rgChockingSuspected"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			   android:layout_row="7"
+				<Spinner
+				    android:id="@+id/sharp_injuriesMainlyOn"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/sharpInjuriesMainlyOn"
+					android:prompt="@string/choose"
+					
+					android:layout_row="7"
             	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/sharp_ChockingSuspectedYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
 				    />
-				    
-				    <RadioButton
-				    android:id="@+id/sharp_ChockingSuspectedNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
 				<TextView
 				    android:id="@+id/sharp_tv_suicideNoteFound"
 					android:layout_width="wrap_content"

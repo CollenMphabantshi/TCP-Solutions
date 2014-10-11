@@ -87,7 +87,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Electrocutionlightning extends Activity/* implements GlobalMethods, OnMyLocationChangeListener*/{
+public class Electrocutionlightning extends Activity implements GlobalMethods, OnMyLocationChangeListener{
 	
 	
 	
@@ -296,7 +296,7 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 		
 	
 	}
-	/*
+	
 	
 	public String initialize(){
 			
@@ -322,7 +322,7 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "electrocutionLightning_" + timeStamp + "_";
+	    String imageFileName = "electrocution_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
@@ -491,138 +491,138 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.electrocutionLightning_io_name);
+		ioName = (EditText)findViewById(R.id.electrocution_io_name);
 		
-		ioSurname = (EditText)findViewById(R.id.electrocutionLightning_io_surname);
+		ioSurname = (EditText)findViewById(R.id.electrocution_io_surname);
 		
-		ioRank = (EditText)findViewById(R.id.electrocutionLightning_io_rank);
+		ioRank = (EditText)findViewById(R.id.electrocution_io_rank);
 		
-		ioCellNo = (EditText)findViewById(R.id.electrocutionLightning_io_cell);
+		ioCellNo = (EditText)findViewById(R.id.electrocution_io_cell);
 		
-		tv_foosName = (TextView)findViewById(R.id.electrocutionLightning_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.electrocutionLightning_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.electrocutionLightning_tv_foos_surname);
-		foosSurname = (EditText)findViewById(R.id.electrocutionLightning_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.electrocutionLightning_tv_foos_rank);
-		foosRank = (EditText)findViewById(R.id.electrocutionLightning_foos_rank);
+		tv_foosName = (TextView)findViewById(R.id.electrocution_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.electrocution_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.electrocution_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.electrocution_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.electrocution_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.electrocution_foos_rank);
 		
 	
 		
-		tv_victimName = (TextView)findViewById(R.id.electrocutionLightning_tv_victim_name);
-		victimName = (EditText)findViewById(R.id.electrocutionLightning_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.electrocutionLightning_tv_victim_surname);
-		victimSurname = (EditText)findViewById(R.id.electrocutionLightning_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.electrocutionLightning_tv_victim_id);
-		victimIDNo = (EditText)findViewById(R.id.electrocutionLightning_victim_id);
-		victimAge = (EditText)findViewById(R.id.electrocutionLightning_victim_age);
+		tv_victimName = (TextView)findViewById(R.id.electrocution_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.electrocution_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.electrocution_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.electrocution_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.electrocution_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.electrocution_victim_id);
+		victimAge = (EditText)findViewById(R.id.electrocution_victim_age);
 		
-		rgbMale = (RadioButton)findViewById(R.id.electrocutionLightning_rgbMale);
-		rgbFemale = (RadioButton)findViewById(R.id.electrocutionLightning_rgbFemale);
-		rgbUnknownGender = (RadioButton)findViewById(R.id.electrocutionLightning_rgbUnknownGender);
+		rgbMale = (RadioButton)findViewById(R.id.electrocution_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.electrocution_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.electrocution_rgbUnknownGender);
 		
-		rgbAsian = (RadioButton)findViewById(R.id.electrocutionLightning_rgbAsian);
-		rgbBlack = (RadioButton)findViewById(R.id.electrocutionLightning_rgbBlack);
-		rgbColoured = (RadioButton)findViewById(R.id.electrocutionLightning_rgbColoured);
-		rgbWhite = (RadioButton)findViewById(R.id.electrocutionLightning_rgbWhite);
-		rgbUnknownRace = (RadioButton)findViewById(R.id.electrocutionLightning_rgbUnknownRace);
-		
-		
-		theBody = (TextView)findViewById(R.id.electrocutionLightning_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.electrocutionLightning_tv_bodyDecomposed);
-		bodyDecomposedYes = (RadioButton)findViewById(R.id.electrocutionLightning_bodyDecomposedYes);
-		bodyDecomposedNo = (RadioButton)findViewById(R.id.electrocutionLightning_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.electrocutionLightning_tv_medicalIntervention);
-		medicalInterventionYes = (RadioButton)findViewById(R.id.electrocutionLightning_medicalInterventionYes);
-		medicalInterventionNo = (RadioButton)findViewById(R.id.electrocutionLightning_medicalInterventionNo);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.electrocutionLightning_tv_whoFoundVictimBody);
-		whoFoundVictimBody = (EditText)findViewById(R.id.electrocutionLightning_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.electrocutionLightning_tv_closeToWater);
-		closeToWaterYes = (RadioButton)findViewById(R.id.electrocutionLightning_closeToWaterYes);
-		closeToWaterNo = (RadioButton)findViewById(R.id.electrocutionLightning_closeToWaterNo);
-		tv_anyWitnesses = (TextView)findViewById(R.id.electrocutionLightning_tv_anyWitnesses);
-		anyWitnessesYes = (RadioButton)findViewById(R.id.electrocutionLightning_anyWitnessesYes);
-		anyWitnessesNo = (RadioButton)findViewById(R.id.electrocutionLightning_anyWitnessesNo);
-		tv_whenDidVictimDie = (TextView)findViewById(R.id.electrocutionLightning_tv_whenDidVictimDie);
-		whenDidVictimDie = (Spinner)findViewById(R.id.electrocutionLightning_whenDidVictimDie);
-		tv_whatWasVictimDoing = (TextView)findViewById(R.id.electrocutionLightning_tv_whatWasVictimDoing);
-		whatWasVictimDoing = (EditText)findViewById(R.id.electrocutionLightning_whatWasVictimDoing);
-		tv_victimFallFromHeight = (TextView)findViewById(R.id.electrocutionLightning_tv_victimFallFromHeight);
-		victimFallFromHeightYes = (RadioButton)findViewById(R.id.electrocutionLightning_victimFallFromHeightYes);
-		victimFallFromHeightNo = (RadioButton)findViewById(R.id.electrocutionLightning_victimFallFromHeightNo);
-		tv_bodyBurnt = (TextView)findViewById(R.id.electrocutionLightning_tv_bodyBurnt);
-		bodyBurntYes = (RadioButton)findViewById(R.id.electrocutionLightning_bodyBurntYes);
-		bodyBurntNo = (RadioButton)findViewById(R.id.electrocutionLightning_bodyBurntNo);
-		tv_voltage = (TextView)findViewById(R.id.electrocutionLightning_tv_bodyBurnt);
-		voltageHigh = (RadioButton)findViewById(R.id.electrocutionLightning_voltageHigh);
-		voltageLow = (RadioButton)findViewById(R.id.electrocutionLightning_voltageLow);
+		rgbAsian = (RadioButton)findViewById(R.id.electrocution_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.electrocution_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.electrocution_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.electrocution_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.electrocution_rgbUnknownRace);
 		
 		
-		sceneOfInjury = (TextView)findViewById(R.id.electrocutionLightning_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.electrocutionLightning_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.electrocutionLightning_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.electrocutionLightning_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.electrocutionLightning_tv_whereInside);
-		sceneIType = (Spinner)findViewById(R.id.electrocutionLightning_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.electrocutionLightning_tv_sceneITypeOther);
-		sceneITypeOther = (EditText)findViewById(R.id.electrocutionLightning_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.electrocutionLightning_tv_doorLocked);
-		doorLockedYes = (RadioButton)findViewById(R.id.electrocutionLightning_DoorLockedYes);
-		doorLockedNo = (RadioButton)findViewById(R.id.electrocutionLightning_DoorLockedNo);
-		tv_windowsClosed = (TextView)findViewById(R.id.electrocutionLightning_tv_windowsClosed);
-		windowsClosedYes = (RadioButton)findViewById(R.id.electrocutionLightning_WindowsClosedYes);
-		windowsClosedNo = (RadioButton)findViewById(R.id.electrocutionLightning_WindowsClosedNo);
-		tv_windowsBroken = (TextView)findViewById(R.id.electrocutionLightning_tv_windowsBroken);
-		windowsBrokenYes = (RadioButton)findViewById(R.id.electrocutionLightning_WindowsBrokenYes);
-		windowsBrokenNo = (RadioButton)findViewById(R.id.electrocutionLightning_WindowsBrokenNo);
-		tv_victimAlone = (TextView)findViewById(R.id.electrocutionLightning_tv_victimAlone);
-		victimAloneYes = (RadioButton)findViewById(R.id.electrocutionLightning_VictimAloneYes);
-		victimAloneNo = (RadioButton)findViewById(R.id.electrocutionLightning_VictimAloneNo);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.electrocutionLightning_tv_peopleWithVictim);
-		peopleWithVictim = (EditText)findViewById(R.id.electrocutionLightning_peopleWithVictim);
-		tv_sceneOType = (TextView)findViewById(R.id.electrocutionLightning_tv_sceneOType);
-		sceneOType = (Spinner)findViewById(R.id.electrocutionLightning_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.electrocutionLightning_tv_sceneOTypeOther);
-		sceneOTypeOther = (EditText)findViewById(R.id.electrocutionLightning_sceneOTypeOther);
+		theBody = (TextView)findViewById(R.id.electrocution_tv_the_body);
+		tv_bodyDecomposed = (TextView)findViewById(R.id.electrocution_tv_bodyDecomposed);
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.electrocution_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.electrocution_bodyDecomposedNo);
+		tv_medicalIntervention = (TextView)findViewById(R.id.electrocution_tv_medicalIntervention);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.electrocution_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.electrocution_medicalInterventionNo);
+		tv_whoFoundVictimBody = (TextView)findViewById(R.id.electrocution_tv_whoFoundVictimBody);
+		whoFoundVictimBody = (EditText)findViewById(R.id.electrocution_whoFoundVictimBody);
+		tv_closeToWater = (TextView)findViewById(R.id.electrocution_tv_closeToWater);
+		closeToWaterYes = (RadioButton)findViewById(R.id.electrocution_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.electrocution_closeToWaterNo);
+		/*tv_anyWitnesses = (TextView)findViewById(R.id.electrocution_tv_anyWitnesses);
+		anyWitnessesYes = (RadioButton)findViewById(R.id.electrocution_anyWitnessesYes);
+		anyWitnessesNo = (RadioButton)findViewById(R.id.electrocution_anyWitnessesNo);
+		tv_whenDidVictimDie = (TextView)findViewById(R.id.electrocution_tv_whenDidVictimDie);
+		whenDidVictimDie = (Spinner)findViewById(R.id.electrocution_whenDidVictimDie);
+		tv_whatWasVictimDoing = (TextView)findViewById(R.id.electrocution_tv_whatWasVictimDoing);
+		whatWasVictimDoing = (EditText)findViewById(R.id.electrocution_whatWasVictimDoing);
+		tv_victimFallFromHeight = (TextView)findViewById(R.id.electrocution_tv_victimFallFromHeight);
+		victimFallFromHeightYes = (RadioButton)findViewById(R.id.electrocution_victimFallFromHeightYes);
+		victimFallFromHeightNo = (RadioButton)findViewById(R.id.electrocution_victimFallFromHeightNo);
+		tv_bodyBurnt = (TextView)findViewById(R.id.electrocution_tv_bodyBurnt);
+		bodyBurntYes = (RadioButton)findViewById(R.id.electrocution_bodyBurntYes);
+		bodyBurntNo = (RadioButton)findViewById(R.id.electrocution_bodyBurntNo);
+		tv_voltage = (TextView)findViewById(R.id.electrocution_tv_bodyBurnt);
+		voltageHigh = (RadioButton)findViewById(R.id.electrocution_voltageHigh);
+		voltageLow = (RadioButton)findViewById(R.id.electrocution_voltageLow);*/
 		
 		
-		sceneLook = (TextView)findViewById(R.id.electrocutionLightning_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.electrocutionLightning_tv_signsOfStruggle);
-		signsOfStruggleYes = (RadioButton)findViewById(R.id.electrocutionLightning_SignsOfStruggleYes);
-		signsOfStruggleNo = (RadioButton)findViewById(R.id.electrocutionLightning_SignsOfStruggleNo);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.electrocutionLightning_tv_alcoholBottleAround);
-		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.electrocutionLightning_AlcoholBottleAroundYes);
-		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.electrocutionLightning_AlcoholBottleAroundNo);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.electrocutionLightning_tv_drugParaphernalia);
-		drugParaphernaliaYes = (RadioButton)findViewById(R.id.electrocutionLightning_DrugParaphernaliaYes);
-		drugParaphernaliaNo = (RadioButton)findViewById(R.id.electrocutionLightning_DrugParaphernaliaNo);
+		sceneOfInjury = (TextView)findViewById(R.id.electrocution_sceneOfInjury);
+		tv_sceneIOType = (TextView)findViewById(R.id.electrocution_tv_sceneIOType);
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.electrocution_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.electrocution_SceneIOTypeOutside);
+		tv_whereInside = (TextView)findViewById(R.id.electrocution_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.electrocution_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.electrocution_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.electrocution_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.electrocution_tv_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.electrocution_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.electrocution_DoorLockedNo);
+		tv_windowsClosed = (TextView)findViewById(R.id.electrocution_tv_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.electrocution_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.electrocution_WindowsClosedNo);
+		tv_windowsBroken = (TextView)findViewById(R.id.electrocution_tv_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.electrocution_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.electrocution_WindowsBrokenNo);
+		tv_victimAlone = (TextView)findViewById(R.id.electrocution_tv_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.electrocution_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.electrocution_VictimAloneNo);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.electrocution_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.electrocution_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.electrocution_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.electrocution_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.electrocution_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.electrocution_sceneOTypeOther);
 		
 		
-		theScene = (TextView)findViewById(R.id.electrocutionLightning_theScene);
-		tv_anyOpenWire = (TextView)findViewById(R.id.electrocutionLightning_tv_anyOpenWire);
-		anyOpenWireYes = (RadioButton)findViewById(R.id.electrocutionLightning_anyOpenWireYes);
-		anyOpenWireNo = (RadioButton)findViewById(R.id.electrocutionLightning_anyOpenWireNo);
-		tv_sceneWet = (TextView)findViewById(R.id.electrocutionLightning_tv_sceneWet);
-		sceneWetYes = (RadioButton)findViewById(R.id.electrocutionLightning_sceneWetYes);
-		sceneWetNo = (RadioButton)findViewById(R.id.electrocutionLightning_sceneWetNo);
-		tv_deBarkingOfTrees = (TextView)findViewById(R.id.electrocutionLightning_tv_deBarkingOfTrees);
-		deBarkingOfTreesYes = (RadioButton)findViewById(R.id.electrocutionLightning_deBarkingOfTreesYes);
-		deBarkingOfTreesNo = (RadioButton)findViewById(R.id.electrocutionLightning_deBarkingOfTreesNo);
-		tv_anyOtherEvidence = (TextView)findViewById(R.id.electrocutionLightning_tv_anyOtherEvidence);
-		anyOtherEvidenceYes = (RadioButton)findViewById(R.id.electrocutionLightning_anyOtherEvidenceYes);
-		anyOtherEvidenceNo = (RadioButton)findViewById(R.id.electrocutionLightning_anyOtherEvidenceNo);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.electrocutionLightning_tv_suicideNoteFound);
-		suicideNoteFoundYes = (RadioButton)findViewById(R.id.electrocutionLightning_SuicideNoteFoundYes);
-		suicideNoteFoundNo = (RadioButton)findViewById(R.id.electrocutionLightning_SuicideNoteFoundNo);
-		tv_generalHistory = (TextView)findViewById(R.id.electrocutionLightning_tv_generalHistory);
-		generalHistory = (EditText)findViewById(R.id.electrocutionLightning_generalHistory);
+		sceneLook = (TextView)findViewById(R.id.electrocution_sceneLook);
+		tv_signsOfStruggle = (TextView)findViewById(R.id.electrocution_tv_signsOfStruggle);
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.electrocution_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.electrocution_SignsOfStruggleNo);
+		tv_alcoholBottleAround = (TextView)findViewById(R.id.electrocution_tv_alcoholBottleAround);
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.electrocution_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.electrocution_AlcoholBottleAroundNo);
+		tv_drugParaphernalia = (TextView)findViewById(R.id.electrocution_tv_drugParaphernalia);
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.electrocution_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.electrocution_DrugParaphernaliaNo);
 		
 		
-		response = (TextView)findViewById(R.id.electrocutionLightning_tv_response);
+		theScene = (TextView)findViewById(R.id.electrocution_theScene);
+		/*tv_anyOpenWire = (TextView)findViewById(R.id.electrocution_tv_anyOpenWire);
+		anyOpenWireYes = (RadioButton)findViewById(R.id.electrocution_anyOpenWireYes);
+		anyOpenWireNo = (RadioButton)findViewById(R.id.electrocution_anyOpenWireNo);
+		tv_sceneWet = (TextView)findViewById(R.id.electrocution_tv_sceneWet);
+		sceneWetYes = (RadioButton)findViewById(R.id.electrocution_sceneWetYes);
+		sceneWetNo = (RadioButton)findViewById(R.id.electrocution_sceneWetNo);
+		tv_deBarkingOfTrees = (TextView)findViewById(R.id.electrocution_tv_deBarkingOfTrees);
+		deBarkingOfTreesYes = (RadioButton)findViewById(R.id.electrocution_deBarkingOfTreesYes);
+		deBarkingOfTreesNo = (RadioButton)findViewById(R.id.electrocution_deBarkingOfTreesNo);
+		tv_anyOtherEvidence = (TextView)findViewById(R.id.electrocution_tv_anyOtherEvidence);
+		anyOtherEvidenceYes = (RadioButton)findViewById(R.id.electrocution_anyOtherEvidenceYes);
+		anyOtherEvidenceNo = (RadioButton)findViewById(R.id.electrocution_anyOtherEvidenceNo);
+		tv_suicideNoteFound = (TextView)findViewById(R.id.electrocution_tv_suicideNoteFound);
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.electrocution_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.electrocution_SuicideNoteFoundNo);*/
+		tv_generalHistory = (TextView)findViewById(R.id.electrocution_tv_generalHistory);
+		generalHistory = (EditText)findViewById(R.id.electrocution_generalHistory);
 		
-		doneButton = (Button)findViewById(R.id.electrocutionLightning_doneButton);
-		logoutButton = (Button)findViewById(R.id.electrocutionLightning_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.electrocutionLightning_BackToMenu);
+		response = (TextView)findViewById(R.id.electrocution_tv_response);
+		
+		doneButton = (Button)findViewById(R.id.electrocution_doneButton);
+		logoutButton = (Button)findViewById(R.id.electrocution_logoutButton);
+		
+		BackToMenu = (Button)findViewById(R.id.electrocution_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -640,7 +640,7 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.electrocutionLightning_galleryLayout);
+	       Gallery = (GridLayout) findViewById(R.id.electrocution_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -1777,16 +1777,16 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
 					imgView.setImageBitmap(img);
 				}*/
-				//WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
 				//weatherInfo.setText(WeatherInfo);
-				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
-				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
-				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
+				//cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				//condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");
 				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
 				press.setText("" + weather.currentCondition.getPressure() + " hPa");
 				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 				windDeg.setText("" + weather.wind.getDeg() + "�");*/
-		/*			
+					
 			}
 		}
 	
@@ -2026,7 +2026,7 @@ public class Electrocutionlightning extends Activity/* implements GlobalMethods,
 		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
 		}
 	
-	*/
+	
 	
 	
 }

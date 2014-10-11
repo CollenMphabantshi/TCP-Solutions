@@ -1014,7 +1014,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Single/ multiple victims on the motorcycle?"
+					android:text="Single/ multiple victims on the\n motorcycle?"
 					android:layout_row="0"
             	android:layout_column="0"
 					
@@ -1035,7 +1035,7 @@
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
-			    	android:text="yes"
+			    	android:text="single"
 					
 				    />
 				    
@@ -1044,30 +1044,12 @@
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
-			    	android:text="no"
+			    	android:text="multiple"
 					
 				    />
 				    
 				</RadioGroup>
 				
-				<TextView
-				    android:id="@+id/mba_tv_howManyVictims"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="If multiple, how many?"
-					android:layout_row="1"
-            	android:layout_column="0"
-					/>
-				<EditText
-				    android:id="@+id/mba_howManyVictims"
-				    android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					android:layout_row="1"
-            	android:layout_column="1"
-				    />
 				
 				<TextView 
 				    android:id="@+id/mba_tv_hitFrom"

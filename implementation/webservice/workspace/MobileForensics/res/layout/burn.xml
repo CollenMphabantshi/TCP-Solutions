@@ -8,8 +8,8 @@
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Blunt force injury/ assault"
-		style="@style/heading"/>"
+		android:text="Burn"
+		style="@style/heading"/>
 	
     <ScrollView 
         android:layout_width="match_parent"
@@ -29,13 +29,7 @@
 				android:orientation="vertical"
 				android:gravity="center_horizontal"
 			    >
-			<TextView
-			    android:id="@+id/burn_tv_io"			            
-				style="@style/sub_headings"
-				android:text="Investigating Officer Information"
-				
-				android:visibility="visible"
-			/>
+			
 			<!-- Geolocation and weather -->
 			<fragment 
 	        android:id="@+id/fragId"
@@ -43,6 +37,13 @@
 	        android:layout_width="500dp"
 	        android:layout_height="300dp"
 	        />
+			<TextView
+			    android:id="@+id/burn_tv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
 			
 		    <TextView 
 		        android:id="@+id/value"
@@ -1368,48 +1369,7 @@
         		android:columnCount="2"
 			    >
 				
-				<TextView 
-				     android:id="@+id/burn_tv_communityAssault"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Drug paraphernalia?"
-					android:layout_row="0"
-            	android:layout_column="0"
-					
-					/>
 				
-				<RadioGroup 
-			    android:id="@+id/burn_rgCommunityAssault"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="0"
-            	android:layout_column="1"
-			   
-			    >
-				    <RadioButton
-				    android:id="@+id/burn_CommunityAssaultYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/burn_CommunityAssaultNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
 				
 				<TextView
 				    android:id="@+id/burn_tv_accelerantsAtScene"
@@ -1418,7 +1378,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Are there any accelerants/containers with accelerants at scene?"
+					android:text="Are there any accelerants/containers \nwith accelerants at scene?"
 					android:layout_row="1"
             	android:layout_column="0"
 					/>
@@ -1540,7 +1500,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Are there any potential weapons on the scene?"
+					android:text="Are there any potential weapons on the\n scene?"
 					android:layout_row="4"
             	android:layout_column="0"
 					/>

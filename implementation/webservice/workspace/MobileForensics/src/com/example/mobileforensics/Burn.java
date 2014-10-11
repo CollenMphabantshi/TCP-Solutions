@@ -298,11 +298,11 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		
 		
 		
-		initialize();
+		/*initialize();
 		variablesInitialization();
 		CheckRadioButtons();
 		setOnClickEvents();
-		showHideButtons();
+		showHideButtons();*/
 		
 	
 	}
@@ -612,9 +612,9 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		anyPotentialWeaponsNo = (RadioButton)findViewById(R.id.burn_anyPotentialWeaponsNo);
 		
 		theScene = (TextView)findViewById(R.id.burn_theScene);
-		tv_communityAssault = (TextView)findViewById(R.id.burn_tv_communityAssault);
+		/*tv_communityAssault = (TextView)findViewById(R.id.burn_tv_communityAssault);
 		communityAssaultYes = (RadioButton)findViewById(R.id.burn_CommunityAssaultYes);
-		communityAssaultNo = (RadioButton)findViewById(R.id.burn_CommunityAssaultNo);
+		communityAssaultNo = (RadioButton)findViewById(R.id.burn_CommunityAssaultNo);*/
 		tv_foulPlaySuspected = (TextView)findViewById(R.id.burn_tv_foulPlaySuspected);
 		foulPlaySuspectedYes = (RadioButton)findViewById(R.id.burn_foulPlaySuspectedYes);
 		foulPlaySuspectedNo = (RadioButton)findViewById(R.id.burn_foulPlaySuspectedNo);
