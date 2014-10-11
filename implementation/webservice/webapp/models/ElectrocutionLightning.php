@@ -53,21 +53,21 @@ class ElectrocutionLightning extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Lightning/ electrocution",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
-                $this->electrocutionLightningIOType = $formData['object'][$i]['electrocutionLightningIOType'];
-                $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
-                $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
-                $this->anyOpenWire = $formData['object'][$i]['anyOpenWire'];
-                $this->sceneWet = $formData['object'][$i]['sceneWet'];
-                $this->deBarkingOfTrees = $formData['object'][$i]['deBarkingOfTrees'];
-                $this->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
-                $this->whenDidVictimDie = $formData['object'][$i]['whenDidVictimDie'];
-                $this->whatWasVictimDoing = $formData['object'][$i]['whatWasVictimDoing'];
-                $this->victimFallFromHeight = $formData['object'][$i]['victimFallFromHeight'];
-                $this->voltage = $formData['object'][$i]['voltage'];
-                $this->anyOtherEvidence = $formData['object'][$i]['anyOtherEvidence'];
+                $this->paraObjAll->electrocutionLightningIOType = $formData['object'][$i]['electrocutionLightningIOType'];
+                $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
+                $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+                $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->paraObjAll->anyOpenWire = $formData['object'][$i]['anyOpenWire'];
+                $this->paraObjAll->sceneWet = $formData['object'][$i]['sceneWet'];
+                $this->paraObjAll->deBarkingOfTrees = $formData['object'][$i]['deBarkingOfTrees'];
+                $this->paraObjAll->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
+                $this->paraObjAll->whenDidVictimDie = $formData['object'][$i]['whenDidVictimDie'];
+                $this->paraObjAll->whatWasVictimDoing = $formData['object'][$i]['whatWasVictimDoing'];
+                $this->paraObjAll->victimFallFromHeight = $formData['object'][$i]['victimFallFromHeight'];
+                $this->paraObjAll->voltage = $formData['object'][$i]['voltage'];
+                $this->paraObjAll->anyOtherEvidence = $formData['object'][$i]['anyOtherEvidence'];
                  //
                $sceneID = $this->createScene();
                  if($sceneID == NULL){

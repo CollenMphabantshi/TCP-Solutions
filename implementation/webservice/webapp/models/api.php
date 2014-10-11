@@ -1002,7 +1002,8 @@ private function addCase() {
                 }
                 break;
             case "electrocutionlightning":
-                
+                $error = array('status' => "Failed", "msg" => "----------------------");
+                    $this->response($this->json($error), 400);
                 if(!empty($rd))
                 {
                     $formData = $this->jsonToArray($rd);   

@@ -31,17 +31,25 @@
     <script src="js/bootstrap.min.js"></script>
      <!-- jQuery Version 1.11.0 -->
      
-        <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="jquery-ui-1.8.17.custom.min.js"></script>
+        
 	<script type="text/javascript" src="jspdf.js"></script>
         <script type="text/javascript" src="libs/FileSaver.js"></script>
 	<script type="text/javascript" src="libs/BlobBuilder.js"></script>
-	<script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
 	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
 	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
 	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addhtml.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.autoprint.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.javascript.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.cell.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.total_pages.js"></script>
+        <script type="text/javascript" src="jspdf.PLUGINTEMPLATE.js"></script>
+        <script type="text/javascript" src="js/html2canvas.js"></script>
+        <script type="text/javascript" src="rasterizeHTML.js"></script>
         <script type="text/javascript" src="js/jspdf.debug.js"></script>
 	<script type="text/javascript" src="js/basic.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
         
 </head>
 
@@ -108,21 +116,23 @@
             
             <div class="col-md-8">
                 <h2>Scene Information</h2>
-                <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
-                <button id="assignDR" class="btn-lg">Assign Death register number</button>
-                <button id="print" class="btn-lg">Create Print Out</button>
-                            <br/><br/>
-                <table class="zui-table zui-table-vertical table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody class="sceneInfo-table">
-                        
-                    </tbody>
-                </table>
+                <div class="sceneInfo">
+                    <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
+                    <button id="assignDR" class="btn-lg">Assign Death register number</button>
+                    <button id="print" class="btn-lg">Create Print Out</button>
+                                <br/><br/>
+                    <table class="zui-table zui-table-vertical table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sceneInfo-table">
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.col-md-4 -->
         </div>

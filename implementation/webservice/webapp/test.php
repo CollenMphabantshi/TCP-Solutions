@@ -20,12 +20,16 @@
 	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
 	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
 	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addhtml.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.autoprint.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.javascript.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.cell.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.total_pages.js"></script>
         <script type="text/javascript" src="js/html2canvas.js"></script>
-        <script type="text/javascript" src="addHtml.js"></script>
         <script type="text/javascript" src="rasterizeHTML.js"></script>
         <script type="text/javascript" src="js/jspdf.debug.js"></script>
 	<script type="text/javascript" src="js/basic.js"></script>
-        <script type="text/javascript" src="js/"></script>
+        
         
         <script type="text/javascript">
  
@@ -42,12 +46,55 @@
                     var iframe = document.getElementById('preview-pane');
                     
                     iframe.src = doc.output('datauristring');*/
-                    var pdf = new jsPDF('p','pt','a4');
+                     var doc = new jsPDF();
+    var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+    };
 
-pdf.addHTML(document.body,function() {
-	var string = pdf.output('datauristring');
-	$('.preview-pane').attr('src', string);
-});
+   $('#cmd').click(function () {
+
+        var table = tableToJson($('#mytable').get(0))
+        var doc = new jsPDF('p','pt', 'a4', true);
+        doc.cellInitialize();
+        $.each(table, function (i, row){
+            console.debug(row);
+            $.each(row, function (j, cell){
+                doc.cell(10, 50,150, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+            })
+        })
+
+
+        doc.save('sample-file.pdf');
+    });
+    function tableToJson(table) {
+            var data = [];
+
+            // first row needs to be headers
+            var headers = [];
+            for (var i=0; i<table.rows[0].cells.length; i++) {
+                headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+            }
+
+
+            // go through cells
+            for (var i=0; i<table.rows.length; i++) {
+
+                var tableRow = table.rows[i];
+                var rowData = {};
+
+                for (var j=0; j<tableRow.cells.length; j++) {
+
+                    rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+                }
+
+                data.push(rowData);
+            }       
+
+            return data;
+        }
                 });
         </script>
     </head>
@@ -62,8 +109,25 @@ pdf.addHTML(document.body,function() {
             <iframe class="preview-pane" id="preview-pane" type="application/pdf" width="100%" frameborder="0" style="position:relative;z-index:999" >
                 
             </iframe>
-            <div id="editor"><h1>ffff</h1></div>
-                
+            <table id="mytable" class="zui-table zui-table-zebra zui-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th>Case Number (#)</th>
+                            <th>Scene Type</th>
+                            <th>Forensic Officer Assigned</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody class="case-table">
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>C</td>
+                            <td>D</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <button id="cmd">Download</button>
            
         
     </body>

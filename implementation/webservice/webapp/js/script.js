@@ -9,6 +9,11 @@ var currentSceneType = null;
 
 $(document).ready(function(p){
     showPage(1);
+    var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+    };
     $("#loginButton").click(function(){
         login(); 
     });
@@ -99,8 +104,25 @@ $(document).ready(function(p){
          
     });
     
-    $("#printScene").click(function(){
-        pdfRender();
+    
+    
+    $('#print').click(function () {
+        
+        var table = tableToJson($('.sceneInfo-table').get(0))
+        var doc = new jsPDF('p','pt', 'a4', true);
+        doc.cellInitialize();
+        $.each(table, function (i, row){
+            console.debug(row);
+            
+            $.each(row, function (j, cell){
+                doc.cell(10, 50,300, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+            });
+        });
+
+        //alert('case-'+currentCaseNumber+'.pdf');
+        //doc.save('case-'+currentCaseNumber+'.pdf');
+         $(".sceneInfo").html("<iframe id='viewer' width='100%' height='600px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>");
+         $("#viewer").attr("src",doc.output('datauristring'));
     });
     
     $("#logout").click(function(){
@@ -2410,3 +2432,33 @@ function pdfRender(){
         }
     }).embed("pdfRenderer");*/
 }
+
+
+
+function tableToJson(table) {
+            var data = [];
+
+            // first row needs to be headers
+            var headers = [];
+            for (var i=0; i<table.rows[0].cells.length; i++) {
+                headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+            }
+
+            //alert(table.rows.length);
+            // go through cells
+            for (var i=0; i<table.rows.length; i++) {
+
+                var tableRow = table.rows[i];
+                var rowData = {};
+
+                for (var j=0; j<tableRow.cells.length; j++) {
+
+                    rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+                }
+
+                data.push(rowData);
+            }       
+
+            return data;
+        }
