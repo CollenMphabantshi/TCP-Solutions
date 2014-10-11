@@ -89,10 +89,28 @@ class Suda extends Scene{
     }
     
     public function addSuda($sceneID,$inside,$object) {
+        $sudaIOType = $this->paraObjAll->sudaIOType;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+        $strangulationSuspected = $this->paraObjAll->strangulationSuspected;
+        $smotheringSuspected = $this->paraObjAll->smotheringSuspected;
+        $chockingSuspected = $this->paraObjAll->chockingSuspected;
+        $anyHeatingDevices = $this->paraObjAll->anyHeatingDevices;
+        $wierdSmellInAir = $this->paraObjAll->wierdSmellInAir;
+        $victimHistory = $this->paraObjAll->victimHistory;
+        $victimHadAnySymptoms = $this->paraObjAll->victimHadAnySymptoms;
+        $victimTakeMedication = $this->paraObjAll->victimTakeMedication;
+        $familyMedicalHistory = $this->paraObjAll->familyMedicalHistory;
         
-        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$this->paraObjAll->sudaIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->strangulationSuspected','$this->paraObjAll->smotheringSuspected','$this->paraObjAll->chockingSuspected','$this->paraObjAll->anyHeatingDevices','$this->paraObjAll->wierdSmellInAir','$this->paraObjAll->victimHistory','$this->paraObjAll->victimTakeMedication','$this->paraObjAll->victimHadAnySymptoms','$this->paraObjAll->familyMedicalHistory')");
-        if($h_res == FALSE){
+        
+        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$sudaIOType','$signsOfStruggle','$alcoholBottleAround','$drugParaphernalia','$strangulationSuspected','$smotheringSuspected','$chockingSuspected','$anyHeatingDevices','$wierdSmellInAir','$victimHistory','$victimTakeMedication','$victimHadAnySymptoms','$familyMedicalHistory')");
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }else{
+            $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
             $this->api->response($this->api->json($error), 400);
         }
         

@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>mForensics</title>
+    <title>m-Forensics</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -30,7 +30,19 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
      <!-- jQuery Version 1.11.0 -->
-     <script src="js/script.js"></script>
+     
+        <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.8.17.custom.min.js"></script>
+	<script type="text/javascript" src="jspdf.js"></script>
+        <script type="text/javascript" src="libs/FileSaver.js"></script>
+	<script type="text/javascript" src="libs/BlobBuilder.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="js/jspdf.debug.js"></script>
+	<script type="text/javascript" src="js/basic.js"></script>
+        
 </head>
 
 <body onload="runMe()">

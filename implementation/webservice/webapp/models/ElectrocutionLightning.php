@@ -90,11 +90,24 @@ class ElectrocutionLightning extends Scene{
     
     public function addElectrocutionLightning($sceneID,$inside,$object) {
         
+       $electrocutionLightningIOType = $this->paraObjAll->electrocutionLightningIOType;
+       $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+       $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+       $anyOpenWire = $this->paraObjAll->anyOpenWire;
+       $anyOtherEvidence = $this->paraObjAll->anyOtherEvidence;
+       $anyWitnesses = $this->paraObjAll->anyWitnesses;
+       $deBarkingOfTrees = $this->paraObjAll->deBarkingOfTrees;
+       $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+       $sceneWet = $this->paraObjAll->sceneWet;
+       $victimFallFromHeight = $this->paraObjAll->victimFallFromHeight;
+       $voltage = $this->paraObjAll->voltage;
+       $whatWasVictimDoing = $this->paraObjAll->whatWasVictimDoing;
+       $whenDidVictimDie = $this->paraObjAll->whenDidVictimDie;
        
        $h_res = mysql_query("insert into electrocutionlightning values(0,"
-        .$sceneID.",'$this->paraObjAll->electrocutionLightningIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->anyOpenWire','$this->paraObjAll->sceneWet','$this->paraObjAll->deBarkingOfTrees','$this->paraObjAll->paraObjAll->anyWitnesses','$this->paraObjAll->paraObjAll->whenDidVictimDie','$this->paraObjAll->paraObjAll->whatWasVictimDoing','$this->paraObjAll->victimFallFromHeight','$this->paraObjAll->voltage','$this->paraObjAll->anyOtherEvidence')");
+        .$sceneID.",'$electrocutionLightningIOType','signsOfStruggle','$alcoholBottleAround','$drugParaphernalia','$anyOpenWire','$sceneWet','$deBarkingOfTrees','$anyWitnesses','$whenDidVictimDie','$whatWasVictimDoing','$victimFallFromHeight','$voltage','$anyOtherEvidence')");
         
-        if($h_res == FALSE){
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }

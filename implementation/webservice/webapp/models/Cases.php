@@ -45,7 +45,7 @@ class Cases {
         }
     }
     public function getAllCases() {
-        $c_res = mysql_query("select * from cases");
+        $c_res = mysql_query("select * from cases order by caseNumber desc");
         $cases = array();
         
         while($c_array = mysql_fetch_array($c_res)){

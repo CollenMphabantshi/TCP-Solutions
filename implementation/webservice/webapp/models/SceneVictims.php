@@ -1,5 +1,6 @@
 <?php
 require_once './connect.php';
+require_once '../encryptions.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +21,7 @@ class SceneVictims {
          $this->api = $api;
 	if($victims != NULL && $sceneID != NULL){
             $this->sceneID = $sceneID;
+            $enc = new Encryption();
             
                 $v = new Victims($victims[0],$api);
                 $this->victimID = $v->addVictim();

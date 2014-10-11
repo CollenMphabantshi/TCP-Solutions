@@ -868,10 +868,12 @@ private function viewCases() {
 // receives request to add a new case
 
 private function addCase() {
+    
     if($this->get_request_method() != "POST")
     {
        $this->response('',406);
     }
+    
     if((function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())    || (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase'))!="off")) ){
             stripslashes_deep($_POST);
             stripslashes_deep($_COOKIE);
@@ -939,7 +941,7 @@ private function addCase() {
                     if($formData != NULL){
                         $obj = new Blunt($formData,$this);
                     }else{
-                            $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+                           $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
                           $this->response($this->json($error), 400);
                     }
                 }else{

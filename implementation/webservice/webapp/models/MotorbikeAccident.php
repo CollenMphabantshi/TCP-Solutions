@@ -29,6 +29,8 @@ class MotorbikeParameters{
     public $victimWearingHelmet;
     public $weatherType;
     public $weatherCondition;
+    public $helmetStillOn;
+    public $helmetRemovedBy;
     
     public $MotorbikeCases;
     public $caseObj;
@@ -54,10 +56,12 @@ class MotorbikeAccident extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Bicycle",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Motorbike accident",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                
                 $this->paraObjAll->victimWearingProtectiveClothing = $formData['object'][$i]['victimWearingProtectiveClothing'];
                 $this->paraObjAll->mbaOutsideType = $formData['object'][$i]['mbaOutsideType'];
+                
                 $this->paraObjAll->victimsOnMotorcycle = $formData['object'][$i]['victimsOnMotorcycle'];
                 $this->paraObjAll->motorbikeHitFrom = $formData['object'][$i]['motorbikeHitFrom'];
                 $this->paraObjAll->typeOfAccident = $formData['object'][$i]['typeOfAccident'];
@@ -70,9 +74,13 @@ class MotorbikeAccident extends Scene{
                 $this->paraObjAll->victimWearingHelmet = $formData['object'][$i]['victimWearingHelmet'];
                 $this->paraObjAll->weatherType = $formData['object'][$i]['weatherType'];
                 $this->paraObjAll->weatherCondition = $formData['object'][$i]['weatherCondition'];
-                    //
+                $this->paraObjAll->helmetStillOn = $formData['object'][$i]['helmetStillOn'];
+                $this->paraObjAll->helmetRemovedBy = $formData['object'][$i]['helmetRemovedBy'];
+                 
+                //
                $sceneID = $this->createScene();
-                 if($sceneID == NULL){
+                
+               if($sceneID === NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);
                  }
@@ -87,11 +95,31 @@ class MotorbikeAccident extends Scene{
     }
     
     public function addMotorbikeAccidents($sceneID) {
-       
-        $h_res = mysql_query("insert into mba values(0,"
-        .$sceneID.",'$this->paraObjAll->victimWearingProtectiveClothing','$this->paraObjAll->mbaOutsideType','$$this->paraObjAll->victimsOnMotorcycle','$this->paraObjAll->motorbikeHitFrom','$this->paraObjAll->typeOfAccident','$this->paraObjAll->victimFlungRoad','$this->paraObjAll->victimFlungBanister','$this->paraObjAll->victimFlungCar','$this->paraObjAll->motorBikeFellOnVictim','$this->paraObjAll->anyWitnesses','$this->paraObjAll->bodyMoved','$this->paraObjAll->victimWearingHelmet','$this->paraObjAll->weatherType','$this->paraObjAll->weatherCondition')");
+        $victimWearingProtectiveClothing = $this->paraObjAll->victimWearingProtectiveClothing;
+        $mbaOutsideType = $this->paraObjAll->mbaOutsideType;
+        $victimsOnMotorcycle = $this->paraObjAll->victimsOnMotorcycle;
+        $motorbikeHitFrom = $this->paraObjAll->motorbikeHitFrom;
+        $typeOfAccident = $this->paraObjAll->typeOfAccident;
+        $victimFlungRoad = $this->paraObjAll->victimFlungRoad;
+        $victimFlungBanister = $this->paraObjAll->victimFlungBanister;
+        $victimFlungCar = $this->paraObjAll->victimFlungCar;
+        $motorBikeFellOnVictim = $this->paraObjAll->motorBikeFellOnVictim;
+        $anyWitnesses = $this->paraObjAll->anyWitnesses;
+        $bodyMoved = $this->paraObjAll->bodyMoved;
+        $victimWearingHelmet = $this->paraObjAll->victimWearingHelmet;
+        $weatherType = $this->paraObjAll->weatherType;
+        $weatherCondition = $this->paraObjAll->weatherCondition;
+        $helmetStillOn = $this->paraObjAll->helmetStillOn;
+        $helmetRemovedBy = $this->paraObjAll->helmetRemovedBy;
         
-        if($h_res == FALSE){
+        
+       $q = "INSERT INTO mba(mbaID, sceneID, victimWearingProtectiveClothing, mbaOutsideType, victimsOnMotorcycle, motorbikeHitFrom, typeOfAccident, victimFlungRoad, victimFlungBanister, victimFlungCar, motorBikeFellOnVictim, anyWitnesses, bodyMoved, victimWearingHelmet, weatherType, weatherCondition, helmetStillOn, helmetRemovedBy)"
+        . " VALUES(0,$sceneID,'$victimWearingProtectiveClothing','$mbaOutsideType','$victimsOnMotorcycle','$motorbikeHitFrom','$typeOfAccident','$victimFlungRoad','$victimFlungBanister','$victimFlungCar','$motorBikeFellOnVictim','$anyWitnesses','$bodyMoved','$victimWearingHelmet','$weatherType','$weatherCondition','$helmetStillOn','$helmetRemovedBy')";
+        //$this->api->response($this->api->json($error), 400);
+       
+        $h_res = mysql_query($q);
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }

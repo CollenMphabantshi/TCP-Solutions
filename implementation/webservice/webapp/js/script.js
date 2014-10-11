@@ -99,6 +99,10 @@ $(document).ready(function(p){
          
     });
     
+    $("#printScene").click(function(){
+        pdfRender();
+    });
+    
     $("#logout").click(function(){
         logout();
     });
@@ -293,8 +297,8 @@ function getAuditLog(){
     }
 }
 function loadSceneInfo(view){
-    $(".right-content table").show();
-    $(".right-content #pdfRenderer").hide();
+    $(".caseInfo-table").show();
+    $("#pdfRenderer").hide();
     try{
        currentCaseNumber = view.id;
         var query = new FormData();
@@ -1576,7 +1580,8 @@ function resetAllFields(){
 }
  
 function pdfRender(){
-    $(".right-content table").hide();
+    alert("...");
+    $(".caseInfo-table").hide();
     
     var doc = new jsPDF();
     doc.setFontSize(24);

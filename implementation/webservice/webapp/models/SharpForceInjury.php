@@ -41,14 +41,14 @@ class SharpForceInjury extends Scene{
         $this->paraObjAll =new sharpParameters();
         
         $this->paraObjAll->sharpCases = array();
-        
+       $enc = new Encryption(); 
         if($formData == NULL)
         {
             parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Sharp force injury/ stab injury",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->sharpIOType = $formData['object'][$i]['sharpIOType'];
                 $this->paraObjAll->sharpObjectSuspected = $formData['object'][$i]['sharpObjectSuspected'];
@@ -67,7 +67,7 @@ class SharpForceInjury extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                if($enc->decrypt_request($formData['object'][$i]['victims']['victimInside']) === "Yes"){
                     $this->addSharpForceInjury($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addSharpForceInjury($sceneID,FALSE,null);
@@ -80,9 +80,18 @@ class SharpForceInjury extends Scene{
     }
     
     public function addSharpForceInjury($sceneID,$inside,$object) {
+        $sharpIOType = $this->paraObjAll->sharpIOType;
+        $sharpObjectSuspected = $this->paraObjAll->sharpObjectSuspected;
+        $sharpObjectAtScene = $this->paraObjAll->sharpObjectAtScene;
+        $sharpForceInjuries = $this->paraObjAll->sharpForceInjuries;
+        $theInjuryConcentrated = $this->paraObjAll->theInjuryConcentrated;
+        $theInjuryMainlyOn = $this->paraObjAll->theInjuryMainlyOn;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
         
         $h_res = mysql_query("insert into sharp values(0,"
-        .$sceneID.",'$this->paraObjAll->sharpIOType','$this->paraObjAll->sharpObjectSuspected','$this->paraObjAll->sharpObjectAtScene','$this->paraObjAll->sharpForceInjuries','$this->paraObjAll->theInjuryConcentrated','$this->paraObjAll->theInjuryMainlyOn','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia')");
+        .$sceneID.",'$sharpIOType','$sharpObjectSuspected','$sharpObjectAtScene','$sharpForceInjuries','$theInjuryConcentrated','$theInjuryMainlyOn','$signsOfStruggle','$alcoholBottleAround','$drugParaphernalia')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);

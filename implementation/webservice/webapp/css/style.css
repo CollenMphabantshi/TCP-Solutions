@@ -104,3 +104,8 @@ form label span, div label span {
 #page-heading{
     text-align: center;
 }
+
+.table-header{
+    font-weight:bold;
+    font-size:16pt;
+}

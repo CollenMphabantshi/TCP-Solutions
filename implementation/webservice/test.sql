@@ -146,18 +146,18 @@ create table if not exists victims
     victimName text not null,
     victimSurname text not null,
     `whoFoundVictimBody` text NOT NULL,
-    bodyDecompose text NOT NULL,
-    medicalIntervention text NOT NULL,
+    bodyDecompose text NULL,
+    medicalIntervention text NULL,
     bodyBurned text NULL,
     bodyIntact text NULL,
-    `victimInside` text NOT NULL,
-    `victimOutside` text NOT NULL,
+    `victimInside` text NULL,
+    `victimOutside` text NULL,
     `victimFoundCloseToWater` text NOT NULL,
     `victimSuicideNoteFound` text NOT NULL,
     `victimGeneralHistory` text NOT NULL,
     `rapeHomicideSuspected` text NOT NULL,
-    `suicideSuspected` text NOT NULL,
-    previousAttempts text NOT NULL,
+    `suicideSuspected` text NULL,
+    previousAttempts text NULL,
     numberOfPreviousAttempts int not null,
     victimAge text not null,
     primary key(victimID)
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS aviation (
   `weatherCondition` text NOT NULL,
   `weatherType` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
-) ;
+);
 
 
 CREATE TABLE IF NOT EXISTS `bicycleType` (
@@ -591,6 +591,8 @@ CREATE TABLE IF NOT EXISTS `mba` (
     victimWearingHelmet text null,
     weatherType text null,
     weatherCondition text null,
+    helmetStillOn text null,
+    helmetRemovedBy text null,
       FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
@@ -670,18 +672,18 @@ CREATE TABLE IF NOT EXISTS `sec48` (
 
 
 CREATE TABLE IF NOT EXISTS `sharp`(
-  `sharpID` int NOT NULL auto_increment primary key,
-   sceneID int not null,
-   `sharpIOType` text NOT NULL,
-   sharpObjectSuspected text not null,
+ `sharpID` int NOT NULL auto_increment primary key,
+  sceneID int not null,
+  `sharpIOType` text NOT NULL,
+  sharpObjectSuspected text not null,
   `sharpObjectAtScene` text NOT NULL,
   `sharpForceInjuries` text NOT NULL,
   `theInjuryConcentrated` text NOT NULL,
-   `theInjuryMainlyOn` text NOT NULL,
-    `signsOfStruggle` text NOT NULL,
+  `theInjuryMainlyOn` text NOT NULL,
+  `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
-     FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
+    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
 );
 
 CREATE TABLE IF NOT EXISTS `sharpinside` (
