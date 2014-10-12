@@ -128,37 +128,28 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	private TextView theBody;
-	private TextView tv_bodyDecomposed;
+	//the body
+	
 	private RadioButton bodyDecomposedYes;
-	private RadioButton bodyDecomposedNo;
-	private TextView tv_medicalIntervention;
+	private RadioButton bodyDecomposedNo;	
 	private RadioButton medicalInterventionYes;
-	private RadioButton medicalInterventionNo;
-	private TextView tv_whoFoundVictimBody;
-	private EditText whoFoundVictimBody;
-	private TextView tv_closeToWater;
+	private RadioButton medicalInterventionNo;	
+	private EditText whoFoundVictimBody;	
 	private RadioButton closeToWaterYes;
-	private RadioButton closeToWaterNo;
-	private TextView tv_anyWitnesses;
+	private RadioButton closeToWaterNo;	
 	private RadioButton anyWitnessesYes;
-	private RadioButton anyWitnessesNo;
-	private TextView tv_whenDidVictimDie;
-	private Spinner whenDidVictimDie;
-	private TextView tv_whatWasVictimDoing;
-	private EditText whatWasVictimDoing;
-	private TextView tv_victimFallFromHeight;
+	private RadioButton anyWitnessesNo;	
+	private Spinner whenDidVictimDie;	
+	private EditText whatWasVictimDoing;	
 	private RadioButton victimFallFromHeightYes;
-	private RadioButton victimFallFromHeightNo;
-	private TextView tv_bodyBurnt;
+	private RadioButton victimFallFromHeightNo;	
 	private RadioButton bodyBurntYes;
-	private RadioButton bodyBurntNo;
-	private TextView tv_voltage;
+	private RadioButton bodyBurntNo;	
 	private RadioButton voltageHigh;
 	private RadioButton voltageLow;
 	
 	
-	private TextView sceneOfInjury;
+	//the scene injury
 	private TextView tv_sceneIOType;
 	private RadioButton sceneIOTypeInside;
 	private RadioButton sceneIOTypeOutside;
@@ -185,7 +176,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
 	
-	private TextView sceneLook;
+	//scene look
 	private TextView tv_signsOfStruggle;
 	private RadioButton signsOfStruggleYes;
 	private RadioButton signsOfStruggleNo;
@@ -196,23 +187,18 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	private RadioButton drugParaphernaliaYes;
 	private RadioButton drugParaphernaliaNo;
 	
-	private TextView theScene;
-	private TextView tv_anyOpenWire;
+	// the scene
+	
 	private RadioButton anyOpenWireYes;
-	private RadioButton anyOpenWireNo;
-	private TextView tv_sceneWet;
+	private RadioButton anyOpenWireNo;	
 	private RadioButton sceneWetYes;
-	private RadioButton sceneWetNo;
-	private TextView tv_deBarkingOfTrees;
+	private RadioButton sceneWetNo;	
 	private RadioButton deBarkingOfTreesYes;
-	private RadioButton deBarkingOfTreesNo;
-	private TextView tv_anyOtherEvidence;
+	private RadioButton deBarkingOfTreesNo;	
 	private RadioButton anyOtherEvidenceYes;
-	private RadioButton anyOtherEvidenceNo;
-	private TextView tv_suicideNoteFound;
+	private RadioButton anyOtherEvidenceNo;	
 	private RadioButton suicideNoteFoundYes;
-	private RadioButton suicideNoteFoundNo;
-	private TextView tv_generalHistory;
+	private RadioButton suicideNoteFoundNo;	
 	private EditText generalHistory;
 	
 	private TextView response;
@@ -288,10 +274,10 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		
 		
 		
-		/*initialize();
+		initialize();
 		variablesInitialization();
 		CheckRadioButtons();
-		setOnClickEvents();*/
+		setOnClickEvents();
 		
 		
 	
@@ -527,37 +513,36 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		rgbUnknownRace = (RadioButton)findViewById(R.id.electrocution_rgbUnknownRace);
 		
 		
-		theBody = (TextView)findViewById(R.id.electrocution_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.electrocution_tv_bodyDecomposed);
+		//the body
 		bodyDecomposedYes = (RadioButton)findViewById(R.id.electrocution_bodyDecomposedYes);
 		bodyDecomposedNo = (RadioButton)findViewById(R.id.electrocution_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.electrocution_tv_medicalIntervention);
+		
 		medicalInterventionYes = (RadioButton)findViewById(R.id.electrocution_medicalInterventionYes);
 		medicalInterventionNo = (RadioButton)findViewById(R.id.electrocution_medicalInterventionNo);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.electrocution_tv_whoFoundVictimBody);
+		
 		whoFoundVictimBody = (EditText)findViewById(R.id.electrocution_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.electrocution_tv_closeToWater);
+		
 		closeToWaterYes = (RadioButton)findViewById(R.id.electrocution_closeToWaterYes);
 		closeToWaterNo = (RadioButton)findViewById(R.id.electrocution_closeToWaterNo);
-		/*tv_anyWitnesses = (TextView)findViewById(R.id.electrocution_tv_anyWitnesses);
-		anyWitnessesYes = (RadioButton)findViewById(R.id.electrocution_anyWitnessesYes);
-		anyWitnessesNo = (RadioButton)findViewById(R.id.electrocution_anyWitnessesNo);
-		tv_whenDidVictimDie = (TextView)findViewById(R.id.electrocution_tv_whenDidVictimDie);
+		
+		anyWitnessesYes = (RadioButton)findViewById(R.id.electrocution__struckByLightYes);
+		anyWitnessesNo = (RadioButton)findViewById(R.id.electrocution__struckByLightNo);
+		
 		whenDidVictimDie = (Spinner)findViewById(R.id.electrocution_whenDidVictimDie);
-		tv_whatWasVictimDoing = (TextView)findViewById(R.id.electrocution_tv_whatWasVictimDoing);
+		
 		whatWasVictimDoing = (EditText)findViewById(R.id.electrocution_whatWasVictimDoing);
-		tv_victimFallFromHeight = (TextView)findViewById(R.id.electrocution_tv_victimFallFromHeight);
+		
 		victimFallFromHeightYes = (RadioButton)findViewById(R.id.electrocution_victimFallFromHeightYes);
 		victimFallFromHeightNo = (RadioButton)findViewById(R.id.electrocution_victimFallFromHeightNo);
-		tv_bodyBurnt = (TextView)findViewById(R.id.electrocution_tv_bodyBurnt);
+		
 		bodyBurntYes = (RadioButton)findViewById(R.id.electrocution_bodyBurntYes);
 		bodyBurntNo = (RadioButton)findViewById(R.id.electrocution_bodyBurntNo);
-		tv_voltage = (TextView)findViewById(R.id.electrocution_tv_bodyBurnt);
+		
 		voltageHigh = (RadioButton)findViewById(R.id.electrocution_voltageHigh);
-		voltageLow = (RadioButton)findViewById(R.id.electrocution_voltageLow);*/
+		voltageLow = (RadioButton)findViewById(R.id.electrocution_voltageLow);
 		
 		
-		sceneOfInjury = (TextView)findViewById(R.id.electrocution_sceneOfInjury);
+		//scene of injury
 		tv_sceneIOType = (TextView)findViewById(R.id.electrocution_tv_sceneIOType);
 		sceneIOTypeInside = (RadioButton)findViewById(R.id.electrocution_SceneIOTypeInside);
 		sceneIOTypeOutside = (RadioButton)findViewById(R.id.electrocution_SceneIOTypeOutside);
@@ -585,7 +570,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		sceneOTypeOther = (EditText)findViewById(R.id.electrocution_sceneOTypeOther);
 		
 		
-		sceneLook = (TextView)findViewById(R.id.electrocution_sceneLook);
+		//scene look
 		tv_signsOfStruggle = (TextView)findViewById(R.id.electrocution_tv_signsOfStruggle);
 		signsOfStruggleYes = (RadioButton)findViewById(R.id.electrocution_SignsOfStruggleYes);
 		signsOfStruggleNo = (RadioButton)findViewById(R.id.electrocution_SignsOfStruggleNo);
@@ -597,23 +582,19 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		drugParaphernaliaNo = (RadioButton)findViewById(R.id.electrocution_DrugParaphernaliaNo);
 		
 		
-		theScene = (TextView)findViewById(R.id.electrocution_theScene);
-		/*tv_anyOpenWire = (TextView)findViewById(R.id.electrocution_tv_anyOpenWire);
+		//scene
+		
 		anyOpenWireYes = (RadioButton)findViewById(R.id.electrocution_anyOpenWireYes);
-		anyOpenWireNo = (RadioButton)findViewById(R.id.electrocution_anyOpenWireNo);
-		tv_sceneWet = (TextView)findViewById(R.id.electrocution_tv_sceneWet);
+		anyOpenWireNo = (RadioButton)findViewById(R.id.electrocution_anyOpenWireNo);		
 		sceneWetYes = (RadioButton)findViewById(R.id.electrocution_sceneWetYes);
-		sceneWetNo = (RadioButton)findViewById(R.id.electrocution_sceneWetNo);
-		tv_deBarkingOfTrees = (TextView)findViewById(R.id.electrocution_tv_deBarkingOfTrees);
-		deBarkingOfTreesYes = (RadioButton)findViewById(R.id.electrocution_deBarkingOfTreesYes);
-		deBarkingOfTreesNo = (RadioButton)findViewById(R.id.electrocution_deBarkingOfTreesNo);
-		tv_anyOtherEvidence = (TextView)findViewById(R.id.electrocution_tv_anyOtherEvidence);
-		anyOtherEvidenceYes = (RadioButton)findViewById(R.id.electrocution_anyOtherEvidenceYes);
-		anyOtherEvidenceNo = (RadioButton)findViewById(R.id.electrocution_anyOtherEvidenceNo);
-		tv_suicideNoteFound = (TextView)findViewById(R.id.electrocution_tv_suicideNoteFound);
+		sceneWetNo = (RadioButton)findViewById(R.id.electrocution_sceneWetNo);		
+		deBarkingOfTreesYes = (RadioButton)findViewById(R.id.electrocution_barkingTreesYes);
+		deBarkingOfTreesNo = (RadioButton)findViewById(R.id.electrocution_barkingTreesNo);		
+		anyOtherEvidenceYes = (RadioButton)findViewById(R.id.electrocution_evidenceLightningYes);
+		anyOtherEvidenceNo = (RadioButton)findViewById(R.id.electrocution_evidenceLightningNo);		
 		suicideNoteFoundYes = (RadioButton)findViewById(R.id.electrocution_SuicideNoteFoundYes);
-		suicideNoteFoundNo = (RadioButton)findViewById(R.id.electrocution_SuicideNoteFoundNo);*/
-		tv_generalHistory = (TextView)findViewById(R.id.electrocution_tv_generalHistory);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.electrocution_SuicideNoteFoundNo);
+		
 		generalHistory = (EditText)findViewById(R.id.electrocution_generalHistory);
 		
 		
@@ -679,7 +660,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Electrocutionlightning.this, "", "Uploading file...", true);
+										/*dialog = ProgressDialog.show(Electrocutionlightning.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
@@ -696,7 +677,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 						                            	 
 						                             }                   
 						                        }
-						                      }).start(); 
+						                      }).start(); */
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
@@ -1128,7 +1109,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
 			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("electrocutionlightning"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1159,7 +1140,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
 	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
-	        
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
 	        if(bodyDecomposedYes.isChecked())
 	        {
@@ -1201,10 +1182,25 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }
 	        
+	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
 	       
-	       
+	        
+	        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("suicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt("null")));
+	        if(suicideNoteFoundYes.isChecked())
+	        {
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
+	        
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	        
+	        
 	        
 	        info.accumulate("electrocutionlightningIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
@@ -1639,7 +1635,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-          
+            Toast.makeText(getApplicationContext(), line+"**************Failled***************", Toast.LENGTH_LONG);
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1686,8 +1682,10 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 					if(status.toLowerCase().equals("failed"))
 					{
 						response.setText(message);
-						saveData(currentDataSaved);
+						//saveData(currentDataSaved);
+						Toast.makeText(getApplicationContext(), "**************Failled***************", Toast.LENGTH_LONG);
 					}else{
+						Toast.makeText(getApplicationContext(), "*****************Success**************", Toast.LENGTH_LONG);
 						response.setText(message);
 					}
 				}

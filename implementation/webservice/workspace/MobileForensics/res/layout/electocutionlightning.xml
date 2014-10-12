@@ -627,7 +627,7 @@
 				    
 				</RadioGroup> 
 				<TextView 
-				    android:id="@+id/electrocution__tv_suicideSuspected"
+				    android:id="@+id/electrocution__tv_whenDidVictimDie"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -640,7 +640,7 @@
 					/>
 				
 				<Spinner
-				    android:id="@+id/electrocution__suicideSuspected"
+				    android:id="@+id/electrocution_whenDidVictimDie"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/electrocutionVictimDie"
@@ -652,7 +652,7 @@
 				
 				
 				<TextView 
-				    android:id="@+id/electrocution__tv_lightningStrike"
+				    android:id="@+id/electrocution__tv_whatWasVictimDoing"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -664,38 +664,17 @@
             		android:layout_column="0"
 					/>
 				
-				<RadioGroup 
-			    android:id="@+id/electrocution__rglightningStrike"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    
-			    android:layout_row="6"
+				<EditText
+					android:id="@+id/electrocution_whatWasVictimDoing"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="6"
             		android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/electrocution__lightningStrikeYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/electrocution__lightningStrikeNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
+					/>
 				
 				<TextView 
-				    android:id="@+id/electrocution__tv_victimFall"
+				    android:id="@+id/electrocution__tv_victimFallFromHeigh"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -708,7 +687,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgvictimFall"
+			    android:id="@+id/electrocution__rgvictimFallFromHeigh"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -718,7 +697,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__victimFallYes"
+				    android:id="@+id/electrocution_victimFallFromHeightYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -727,7 +706,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__victimFallNo"
+				    android:id="@+id/electrocution_victimFallFromHeightNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -761,7 +740,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__bodyBurntYes"
+				    android:id="@+id/electrocution_bodyBurntYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -770,7 +749,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__bodyBurntNo"
+				    android:id="@+id/electrocution_bodyBurntNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -781,7 +760,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				    android:id="@+id/electrocution__tv_wasIt"
+				    android:id="@+id/electrocution__tv_voltage"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -794,7 +773,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgwasIt"
+			    android:id="@+id/electrocution__rgvoltage"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -804,7 +783,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__wasItYes"
+				    android:id="@+id/electrocution_voltageHigh"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -813,7 +792,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__wasItNo"
+				    android:id="@+id/electrocution_voltageLow"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1347,7 +1326,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgopenWire"
+			    android:id="@+id/electrocution_rgopenWire"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1357,7 +1336,7 @@
 			   
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__openWireYes"
+				    android:id="@+id/electrocution_anyOpenWireYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1366,7 +1345,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__openWireNo"
+				    android:id="@+id/electrocution_anyOpenWireNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1378,7 +1357,7 @@
 				
 				
 				<TextView 
-				     android:id="@+id/electrocution__tv_sceneWet"
+				     android:id="@+id/electrocution_tv_sceneWet"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1391,7 +1370,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgsceneWet"
+			    android:id="@+id/electrocution_rgsceneWet"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1401,7 +1380,7 @@
 			   
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__sceneWetYes"
+				    android:id="@+id/electrocution_sceneWetYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1410,7 +1389,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__sceneWetNo"
+				    android:id="@+id/electrocution_sceneWetNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1421,7 +1400,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				     android:id="@+id/electrocution__tv_barkingTrees"
+				     android:id="@+id/electrocution_tv_barkingTrees"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1434,7 +1413,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgbarkingTrees"
+			    android:id="@+id/electrocution_rgbarkingTrees"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1444,7 +1423,7 @@
 			   
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__barkingTreesYes"
+				    android:id="@+id/electrocution_barkingTreesYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1453,7 +1432,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__barkingTreesNo"
+				    android:id="@+id/electrocution_barkingTreesNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1464,7 +1443,7 @@
 				</RadioGroup>
 				
 				<TextView 
-				     android:id="@+id/electrocution__tv_evidenceLightning"
+				     android:id="@+id/electrocution_tv_evidenceLightning"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1477,7 +1456,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgevidenceLightning"
+			    android:id="@+id/electrocution_rgevidenceLightning"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1487,7 +1466,7 @@
 			   
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__evidenceLightningYes"
+				    android:id="@+id/electrocution_evidenceLightningYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1496,7 +1475,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__evidenceLightningNo"
+				    android:id="@+id/electrocution_evidenceLightningNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1521,7 +1500,7 @@
 					/>
 			
 				<RadioGroup 
-			    android:id="@+id/electrocution__rgSuicideNoteFound"
+			    android:id="@+id/electrocution_rgSuicideNoteFound"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1530,7 +1509,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/electrocution__SuicideNoteFoundYes"
+				    android:id="@+id/electrocution_SuicideNoteFoundYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1539,7 +1518,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/electrocution__SuicideNoteFoundNo"
+				    android:id="@+id/electrocution_SuicideNoteFoundNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
