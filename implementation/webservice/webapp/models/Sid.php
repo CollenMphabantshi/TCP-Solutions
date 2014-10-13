@@ -47,9 +47,13 @@ class Sid extends Scene{
         {
             parent::__construct(null,null,"","","","","","","",null,$api);
         }else {
+        
+        
+        		
+        
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Sid",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Sudden unexpected death of an infant (SUDI)",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->sidIOType = $formData['object'][$i]['sidIOType'];
                 $this->resuscitationAttemped = $formData['object'][$i]['resuscitationAttemped'];
@@ -78,7 +82,6 @@ class Sid extends Scene{
                 $this->anySmokeSmell = $formData['object'][$i]['anySmokeSmell'];
                 $this->infantOneOfTwins = $formData['object'][$i]['infantOneOfTwins'];
                 
-                    //
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -86,7 +89,7 @@ class Sid extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-               
+               	$this->addSid($sceneID);
             }
             
         }
@@ -97,17 +100,40 @@ class Sid extends Scene{
         if($this->infantSickLately != NULL)
         {
             $h_res = mysql_query("insert into sid values(0,"
-            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately','$this->infantSickLatelyDescription','$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing','$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices','$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
+            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately','$this->infantSickLatelyDescription',"
+                    . "'$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped',"
+                    . "'$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered',"
+                    . "'$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced',"
+                    . "'$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing',"
+                    . "'$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices',"
+                    . "'$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
+         
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+            
         }else{
            $h_res = mysql_query("insert into sid values(0,"
-            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately',null,'$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped','$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered','$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced','$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing','$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices','$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
+            . "".$sceneID.",'$this->sidIOType','$this->resuscitationAttemped','$this->infantSickLately',null,"
+            . "'$this->infantOnMedication','$this->fallsOrInjuryExperience','$this->infantWearing','$this->infantTightlyWrapped',"
+            . "'$this->beddingOverInfant','$this->whoFoundVictimBody','$this->dateAndTimeLastPlaced','$this->dateAndTimeDeathDiscovered',"
+            . "'$this->dateAndTimeLastSeenAlive','$this->anySIDSdeeaths','$this->photoAfterBodyRemoved','$this->infantLastPlaced',"
+            . "'$this->infantLastSeenAlive','$this->whereInfantFoundDead','$this->dieDuringSleep','$this->whatWasInfantDoing',"
+            . "'$this->whatHappenedToInfant','$this->relationshiptoInfant','$this->whoAttempedResuscitation','$this->anyHeatingDevices',"
+            . "'$this->anyWeirdSmell','$this->anySmokeSmell','$this->infantOneOfTwins')");
+            
+            if($h_res === FALSE){
+                 $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                 $this->api->response($this->api->json($error), 400);
+             }
+            
         
         }
 
     }
     public function getAllSid() {
         try{
-            
             $h_res = mysql_query("select * from sid");
             $h_rows = mysql_num_rows($h_res);
             $h_i = 0;
@@ -152,7 +178,6 @@ class Sid extends Scene{
                 $h_array['infantOneOfTwins'] = $array['infantOneOfTwins'];
                 
                 $f_array[] = $h_array; 
-                
                 
                 $tmp = $this->sceneVictim->getSceneVictims($h_array['sceneID']);
                 $v_i = $v_i + count($tmp);

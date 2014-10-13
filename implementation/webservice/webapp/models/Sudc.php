@@ -21,13 +21,20 @@ class Sudc extends Scene{
     private $smotheringSuspected;
     private $chockingSuspected;
     private $anyHeatingDevices;
+    private $specifiedAppliences;
     private $wierdSmellInAir;
+    private $specifiedSmell;
+    private $victimBusy;
+    private $victimBusySpecified;
     private $physicalExercise;
     private $familyMedicalHistory;
     private $familyMembersSufferingFrom;
-    private $victimSustainInjury;
-    private $victimHadSymptomsBefore;
+    private $familyMembersSuffering;
+    private $victimFell;
+    private $victimComplain;
+    private $victimComplainSpecified;
     private $victimTakeMedication;
+    private $victimTakeMedicationSpecified;
     private $suspisionOfAssault;
     private $suspisionOfOverdose;
     
@@ -39,8 +46,9 @@ class Sudc extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Sudc",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Sudden unexpected death of a child  (1 – 18 years)",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
+                
                 $this->sudcIOType = $formData['object'][$i]['sudcIOType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
@@ -49,17 +57,26 @@ class Sudc extends Scene{
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
                 $this->anyHeatingDevices = $formData['object'][$i]['anyHeatingDevices'];
+                $this->specifiedAppliences = $formData['object'][$i]['specifiedAppliences'];
                 $this->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
+                $this->specifiedSmell = $formData['object'][$i]['specifiedSmell'];
+                $this->victimBusy = $formData['object'][$i]['victimBusy'];
+                $this->victimBusySpecified = $formData['object'][$i]['victimBusySpecified'];
                 $this->physicalExercise = $formData['object'][$i]['physicalExercise'];
                 $this->familyMedicalHistory = $formData['object'][$i]['familyMedicalHistory'];
                 $this->familyMembersSufferingFrom = $formData['object'][$i]['familyMembersSufferingFrom'];
-                $this->victimSustainInjury = $formData['object'][$i]['victimSustainInjury'];
-                $this->victimHadSymptomsBefore = $formData['object'][$i]['victimHadSymptomsBefore'];
+                $this->familyMembersSuffering = $formData['object'][$i]['familyMembersSuffering'];
+                $this->victimFell = $formData['object'][$i]['victimFell'];
+                $this->victimComplain = $formData['object'][$i]['victimComplain'];
+                $this->victimComplainSpecified = $formData['object'][$i]['victimComplainSpecified'];
                 $this->victimTakeMedication = $formData['object'][$i]['victimTakeMedication'];
+                $this->victimTakeMedicationSpecified = $formData['object'][$i]['victimTakeMedicationSpecified'];
                 $this->suspisionOfAssault = $formData['object'][$i]['suspisionOfAssault'];
                 $this->suspisionOfOverdose = $formData['object'][$i]['suspisionOfOverdose'];
                     //
                 $sceneID = $this->createScene();
+                $error = array('status' => "Failed", "msg" => "sceneID=".$sceneID);
+                     $this->api->response($this->api->json($error), 400);
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
@@ -76,21 +93,30 @@ class Sudc extends Scene{
     }
     
     private function addSudc($sceneID,$inside,$object) {
-        $h_res = mysql_query("insert into sudc values(0,".$sceneID.",'$this->sudcIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->anyHeatingDevices','$this->wierdSmellInAir','$this->physicalExercise','$this->familyMedicalHistory','$this->familyMembersSufferingFrom','$this->victimSustainInjury','$this->victimHadSymptomsBefore','$this->suspisionOfAssault','$this->suspisionOfOverdose')");
+        $enc = new Encryption();
+        $h_res = mysql_query("insert into sudc values(0,$sceneID,'$this->sudcIOType','$this->signsOfStruggle','$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected',"
+                . "'$this->anyHeatingDevices','$this->anyHeatingDevices','$this->wierdSmellInAir','$this->specifiedSmell','$this->victimBusy',"
+                . "'$this->victimBusySpecified','$this->physicalExercise','$this->familyMedicalHistory',"
+                . "'$this->familyMembersSufferingFrom','$this->familyMembersSuffering','$this->victimFell','$this->victimComplain',"
+                . "'$this->victimComplainSpecified','$this->victimTakeMedication','$this->victimTakeMedicationSpecified',"
+                . "'$this->suspisionOfAssault','$this->suspisionOfOverdose')");
         
         if($inside == TRUE){
             $h_res = mysql_query("select sudcID from sudc where sceneID=".$sceneID);
             $sudcID = mysql_result($h_res,0,'sudcID');
+            $enc = new Encryption();
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            
+            if($enc->decrypt_request($va) !== "Yes")
             {
-                $hi_res = mysql_query("insert into sudcinside values(0,".$sudcID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into sudcinside values(0,$sudcID,'$dl','$wc','$wb','$va','$pv')");
             }else{
-                $hi_res = mysql_query("insert into sudcinside values(0,".$sudcID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into sudcinside values(0,$sudcID,'$dl','$wc','$wb','$va',null)");
             }
         }
     }
@@ -118,16 +144,23 @@ class Sudc extends Scene{
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
                 $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
+                $h_array['specifiedAppliences'] = $array['specifiedAppliences'];
                 $h_array['wierdSmellInAir'] = $array['wierdSmellInAir'];
+                $h_array['specifiedSmell'] = $array['specifiedSmell'];
+                $h_array['victimBusy'] = $array['victimBusy'];
+                $h_array['victimBusySpecified'] = $array['victimBusySpecified'];
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 $h_array['physicalExercise'] = $array['physicalExercise'];
                 $h_array['familyMedicalHistory'] = $array['familyMedicalHistory'];
                 $h_array['familyMembersSufferingFrom'] = $array['familyMembersSufferingFrom'];
-                $h_array['victimSustainInjury'] = $array['victimSustainInjury'];
-                $h_array['victimHadSymptomsBefore'] = $array['victimHadSymptomsBefore'];
+                $h_array['familyMembersSuffering'] = $array['familyMembersSuffering'];
+                $h_array['victimFell'] = $array['victimFell'];
+                $h_array['victimComplain'] = $array['victimComplain'];
+                $h_array['victimComplainSpecified'] = $array['victimComplainSpecified'];
                 $h_array['victimTakeMedication'] = $array['victimTakeMedication'];
+                $h_array['victimTakeMedicationSpecified'] = $array['victimTakeMedicationSpecified'];
                 $h_array['suspisionOfAssault'] = $array['suspisionOfAssault'];
                 $h_array['suspisionOfOverdose'] = $array['suspisionOfOverdose'];
                 
@@ -201,16 +234,23 @@ class Sudc extends Scene{
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
                 $h_array['anyHeatingDevices'] = $array['anyHeatingDevices'];
+                $h_array['specifiedAppliences'] = $array['specifiedAppliences'];
                 $h_array['wierdSmellInAir'] = $array['wierdSmellInAir'];
+                $h_array['specifiedSmell'] = $array['specifiedSmell'];
+                $h_array['victimBusy'] = $array['victimBusy'];
+                $h_array['victimBusySpecified'] = $array['victimBusySpecified'];
                 $h_array['strangulationSuspected'] = $array['strangulationSuspected'];
                 $h_array['smotheringSuspected'] = $array['smotheringSuspected'];
                 $h_array['chockingSuspected'] = $array['chockingSuspected'];
                 $h_array['physicalExercise'] = $array['physicalExercise'];
                 $h_array['familyMedicalHistory'] = $array['familyMedicalHistory'];
                 $h_array['familyMembersSufferingFrom'] = $array['familyMembersSufferingFrom'];
-                $h_array['victimSustainInjury'] = $array['victimSustainInjury'];
-                $h_array['victimHadSymptomsBefore'] = $array['victimHadSymptomsBefore'];
+                $h_array['familyMembersSuffering'] = $array['familyMembersSuffering'];
+                $h_array['victimFell'] = $array['victimFell'];
+                $h_array['victimComplain'] = $array['victimComplain'];
+                $h_array['victimComplainSpecified'] = $array['victimComplainSpecified'];
                 $h_array['victimTakeMedication'] = $array['victimTakeMedication'];
+                $h_array['victimTakeMedicationSpecified'] = $array['victimTakeMedicationSpecified'];
                 $h_array['suspisionOfAssault'] = $array['suspisionOfAssault'];
                 $h_array['suspisionOfOverdose'] = $array['suspisionOfOverdose'];
                 

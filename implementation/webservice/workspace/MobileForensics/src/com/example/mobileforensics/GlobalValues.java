@@ -1,8 +1,8 @@
 package com.example.mobileforensics;
 
 public class GlobalValues {
-	//public final static String WS_URL = "http://forensicsapp.co.za/webapp/models/api.php";
-	public final static String WS_URL = "https://196.248.120.208/webapp/models/api.php";
+	public final static String WS_URL = "http://forensicsapp.co.za/webapp/models/api.php";
+	//public final static String WS_URL = "https://196.248.121.16/webapp/models/api.php";
 	public static int PAGES = 7;
 	
 	public static void setPages(int num){

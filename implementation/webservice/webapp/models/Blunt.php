@@ -107,7 +107,7 @@ class Blunt extends Scene{
         {
             $vid = mysql_result($sv_res, 0,'victimID');
         }
-        $error = array('status' => "Success", "msg" => "Request to add case was successful.".$vid);
+        $error = array('status' => "Success", "msg" => "Request to add case was successful.");
         $this->api->response($this->api->json($error), 400);
     }
     public function getAllBlunts() {

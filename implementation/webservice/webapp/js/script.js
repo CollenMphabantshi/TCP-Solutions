@@ -9,6 +9,8 @@ var currentSceneType = null;
 
 $(document).ready(function(p){
     showPage(1);
+    $("#pdfView").hide();
+          $(".sceneView").show();
     var specialElementHandlers = {
         '#editor': function (element, renderer) {
             return true;
@@ -108,21 +110,58 @@ $(document).ready(function(p){
     
     $('#print').click(function () {
         
-        var table = tableToJson($('.sceneInfo-table').get(0))
-        var doc = new jsPDF('p','pt', 'a4', true);
-        doc.cellInitialize();
-        $.each(table, function (i, row){
-            console.debug(row);
-            
-            $.each(row, function (j, cell){
-                doc.cell(10, 50,300, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
-            });
-        });
+       
+       var doc = new jsPDF();
 
-        //alert('case-'+currentCaseNumber+'.pdf');
-        //doc.save('case-'+currentCaseNumber+'.pdf');
-         $(".sceneInfo").html("<iframe id='viewer' width='100%' height='600px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>");
+                    // We'll make our own renderer to skip this editor
+                    var specialElementHandlers = {
+                            '#editor': function(element, renderer){
+                                    return true;
+                            }
+                    };
+
+                    // All units are in the set measurement for the document
+                    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+
+                    doc.fromHTML($("#tables").get(0), 15, 15, {
+                            'width': 170, 
+                            'elementHandlers': specialElementHandlers
+                    });
+          $("#pdfView").show();
+          $(".sceneView").hide();
+          $("#downloadPdf").remove();
+          
+          $("#pdfView").before("<a id='downloadPdf' href='"+doc.output('datauristring')+"' class='btn-lg'>Download</a>");
          $("#viewer").attr("src",doc.output('datauristring'));
+    });
+    
+    $('#printAudit').click(function () {
+        
+       
+       var doc = new jsPDF();
+
+                    // We'll make our own renderer to skip this editor
+                    var specialElementHandlers = {
+                            '#editor': function(element, renderer){
+                                    return true;
+                            }
+                    };
+
+                    // All units are in the set measurement for the document
+                    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+
+                    doc.fromHTML($("#audits").get(0), 15, 15, {
+                            'width': 170, 
+                            'elementHandlers': specialElementHandlers
+                    });
+          
+         
+         $("#auditPdf").attr("src",doc.output('datauristring'));
+    });
+    
+    $("#close").click(function(){
+        $("#pdfView").hide();
+          $(".sceneView").show();
     });
     
     $("#logout").click(function(){
@@ -319,9 +358,11 @@ function getAuditLog(){
     }
 }
 function loadSceneInfo(view){
-    $(".caseInfo-table").show();
-    $("#pdfRenderer").hide();
+    $("#pdfView").hide();
+    $(".sceneView").show();
+    $("#downloadPdf").remove();
     try{
+        
        currentCaseNumber = view.id;
         var query = new FormData();
         query.append("rquest","getSceneData");
@@ -336,6 +377,10 @@ function loadSceneInfo(view){
             
             var obj = JSON.parse(request.responseText);
             currentCase = obj;
+            
+            var location = JSON.parse(obj.sceneLocation);
+            var locations = JSON.parse(location.Location);
+            
             data += "<tr>";
             data += "<td>Time of scene:</td><td>"+obj.sceneTime+"</td>";
             data += "</tr>";
@@ -343,7 +388,7 @@ function loadSceneInfo(view){
             data += "<td>Date of scene:</td><td>"+obj.sceneDate+"</td>";
             data += "</tr>";
             data += "<tr>";
-            data += "<td>Location of scene:</td><td>"+obj.sceneLocation+"</td>";
+            data += "<td>Location of scene:</td><td>"+locations.Address+", Latitude:"+locations.Latitude+", Longitude:"+locations.Longitude+"</td>";
             data += "</tr>";
             data += "<tr>";
             data += "<td>Temperature of scene:</td><td>"+obj.sceneTemparature+"</td>";
@@ -1158,10 +1203,10 @@ function getSceneTypeData(type,sceneData){
                         data += "<td>Number of cars drove over the body:</td><td>"+sceneData.numberOfCarsDroveOverBody+"</td>";
                         data += "</tr>";
                         data += "<tr>";
-                        data += "<td>Victim was:</td><td>"+sceneData.victimWas+"</td>";
+                        data += "<td>Victim was:</td><td>"+sceneData.victimJumped+"</td>";
                         data += "</tr>";
                         data += "<tr>";
-                        data += "<td>Weather condition type:</td><td>"+sceneData.weatherConditionType+"</td>";
+                        data += "<td>Weather condition type:</td><td>"+sceneData.weatherType+"</td>";
                         data += "</tr>";
                         data += "<tr>";
                         data += "<td>Weather condition:</td><td>"+sceneData.weatherCondition+"</td>";

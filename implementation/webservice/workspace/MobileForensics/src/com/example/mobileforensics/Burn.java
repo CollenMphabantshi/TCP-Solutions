@@ -230,7 +230,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private LinearLayout Gallery;
+	private GridLayout Gallery;
 	private JSONObject json;
 
 	
@@ -286,31 +286,24 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.burn);
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
-		try{
-			setContentView(R.layout.burn);
-			try{
-				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-				if (!enabled) {
-					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-					  startActivity(intent);
-					} 
-				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			
-			initialize();
-			variablesInitialization();
-			CheckRadioButtons();
-			setOnClickEvents();
-			showHideButtons();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
+		
+		/*initialize();
+		variablesInitialization();
+		CheckRadioButtons();
+		setOnClickEvents();
+		showHideButtons();*/
+		
 	
 	}
 	
@@ -619,9 +612,9 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		anyPotentialWeaponsNo = (RadioButton)findViewById(R.id.burn_anyPotentialWeaponsNo);
 		
 		theScene = (TextView)findViewById(R.id.burn_theScene);
-		tv_communityAssault = (TextView)findViewById(R.id.burn_tv_communityAssault);
+		/*tv_communityAssault = (TextView)findViewById(R.id.burn_tv_communityAssault);
 		communityAssaultYes = (RadioButton)findViewById(R.id.burn_CommunityAssaultYes);
-		communityAssaultNo = (RadioButton)findViewById(R.id.burn_CommunityAssaultNo);
+		communityAssaultNo = (RadioButton)findViewById(R.id.burn_CommunityAssaultNo);*/
 		tv_foulPlaySuspected = (TextView)findViewById(R.id.burn_tv_foulPlaySuspected);
 		foulPlaySuspectedYes = (RadioButton)findViewById(R.id.burn_foulPlaySuspectedYes);
 		foulPlaySuspectedNo = (RadioButton)findViewById(R.id.burn_foulPlaySuspectedNo);
@@ -664,7 +657,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (LinearLayout) findViewById(R.id.burn_galleryLayout);
+	       Gallery = (GridLayout) findViewById(R.id.burn_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -1172,8 +1165,8 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("burn"))));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1388,7 +1381,6 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
 	
 	public String getIOType(){
@@ -1466,7 +1458,6 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
-				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -2148,8 +2139,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		
 		wierdSmellNo.setChecked(true);
 	
-		wasBodyHospitilizedNo.setChecked(true);
-		 anyPotentialWeaponsNo.setChecked(true);
+		 
 	}
 	
 	private  boolean CellNoValidation(String cell) {

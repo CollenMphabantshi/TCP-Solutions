@@ -69,6 +69,7 @@ class Cases {
             
             $c_res = mysql_query("select * from cases where FOPersonelNumber='$FOPersonelNumber' order by sceneID desc");
             $arr = array();
+            
             while($a = mysql_fetch_array($c_res))
             {
                 $carr = array();

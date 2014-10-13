@@ -1,0 +1,10 @@
+package com.example.mobileforensics.helpers;
+
+import java.util.ArrayList;
+
+public class CaseList extends ArrayList<Case>{
+
+	public Case findCase(){
+		
+	}
+}

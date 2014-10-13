@@ -12,7 +12,6 @@ public class BasicCaseData extends Activity {
 	private String username;
 	private TextView vicName;
 	private TextView vicID;
-	private TextView vicAge;
 	private TextView ioName;
 	private TextView ioCellNo;
 	private TextView foosName;
@@ -29,7 +28,6 @@ public class BasicCaseData extends Activity {
 			
 			vicName = (TextView) findViewById(R.id.bci_VicName);
 			vicID = (TextView) findViewById(R.id.bci_vicID);
-			vicAge = (TextView) findViewById(R.id.bci_vicAge);
 			ioName = (TextView) findViewById(R.id.bci_io);
 			foosName = (TextView) findViewById(R.id.bci_foos);
 			sceneTime = (TextView) findViewById(R.id.bci_sceneTime);
@@ -38,7 +36,6 @@ public class BasicCaseData extends Activity {
 			
 			vicName.setText(getIntent().getExtras().getString("VicName"));
 			vicID.setText(getIntent().getExtras().getString("VicID"));
-			vicAge.setText(getIntent().getExtras().getString("VicAge"));
 			ioName.setText(getIntent().getExtras().getString("ioName"));
 			foosName.setText(getIntent().getExtras().getString("foosName"));
 			sceneTime.setText(getIntent().getExtras().getString("SceneDate")+" "+getIntent().getExtras().getString("SceneTime"));
@@ -70,21 +67,13 @@ public class BasicCaseData extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		/*Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
-		try{
-			select.putExtra("USERNAME", username);
-		}catch(Exception e){e.printStackTrace();}
-		startActivity(select);*/
+		
 	}
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		/*Intent select = new Intent(getApplicationContext(),PreviousCaseBasicInfo.class);
-		try{
-			select.putExtra("USERNAME", username);
-		}catch(Exception e){e.printStackTrace();}
-		startActivity(select);*/
+		
 	}
 }

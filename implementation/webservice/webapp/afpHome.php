@@ -117,21 +117,31 @@
             <div class="col-md-8">
                 <h2>Scene Information</h2>
                 <div class="sceneInfo">
-                    <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
-                    <button id="assignDR" class="btn-lg">Assign Death register number</button>
-                    <button id="print" class="btn-lg">Create Print Out</button>
-                                <br/><br/>
-                    <table class="zui-table zui-table-vertical table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody class="sceneInfo-table">
+                    <div id="pdfView">
+                        <!-- <a href="#" id="close" class="btn-lg btn-block">Close</a> -->
+                        <br/>
+                    <iframe id='viewer' width='100%' height='600px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>
+                    </div>
+                    <div class="sceneView">
+                        <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
+                        <button id="assignDR" class="btn-lg">Assign Death register number</button>
+                        <button id="print" class="btn-lg">Create Print Out</button>
+                        <br/><br/>
+                        <div id="tables">
+                            <table class="zui-table zui-table-vertical table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sceneInfo-table">
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             <!-- /.col-md-4 -->
@@ -196,24 +206,30 @@
         </div>
         <!-- /.row -->
         <div class="row page" id="Page3">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div>
                     <label for="auditSearch">
                         <input type="search" name="auditSearch" id="auditSearch" placeholder="search audit log"  />
                     </label>
                 </div><br/>
-            <table class="zui-table zui-table-zebra zui-table-horizontal">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Audit Date &amp; Time</th>
-                            <th>Audit Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="audit-table">
-                        
-                    </tbody>
-                </table>
+                <button id="printAudit" class="btn-lg">Create Print Out</button><br/><br/>
+                <div id="audits">
+                    <table class="zui-table zui-table-zebra zui-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Audit Date &amp; Time</th>
+                                <th>Audit Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="audit-table">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <iframe id='auditPdf' width='100%' height='700px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>
             </div>
         </div>
         <!-- /.row -->

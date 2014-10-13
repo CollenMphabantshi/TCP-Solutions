@@ -578,7 +578,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="10"
+				android:rowCount="3"
         		android:columnCount="2"
 			    >
 				
@@ -743,52 +743,17 @@
             	android:layout_column="0"
 					/>
 				
-				<RadioGroup 
-			    android:id="@+id/bicycle_rgWeatherType"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="3"
+				<Spinner
+				    android:id="@+id/bicycle_weatherType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/WeatherType"
+					android:prompt="@string/choose"
+					
+					android:layout_row="3"
             	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/bicycle_weatherTypeDark"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="dark"
-					
 				    />
-				    
-				    <RadioButton
-				    android:id="@+id/bicycle_weatherTypeLight"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="light"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/bicycle_weatherTypeDusk"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="dusk"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/bicycle_weatherTypeDawn"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="dawn"
-					
-				    />
-				    
-				</RadioGroup>
+				
 				<TextView
 				    android:id="@+id/bicycle_tv_weatherCondition"
 					android:layout_width="wrap_content"

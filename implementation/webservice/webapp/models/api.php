@@ -1345,8 +1345,10 @@ public function getFOCaseList()
     
      try {
         $enc = new Encryption();
+        
         $FOPersonelNumber = $enc->decrypt_request($this->_request['fopnumber']);
         $cases = new Cases(null, null,$this);
+        
         //$error = array('status' => "Success", "msg" => "Request was denied.");
         $this->response($this->json($cases->getCasesByFO($FOPersonelNumber)), 200);
      } catch (Exception $ex){

@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="179" key="DIALOG_Y_ORIGIN"/>
-		<item value="1010" key="DIALOG_X_ORIGIN"/>
-		<item value="381" key="DIALOG_HEIGHT"/>
+		<item value="83" key="DIALOG_Y_ORIGIN"/>
+		<item value="1008" key="DIALOG_X_ORIGIN"/>
+		<item value="306" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,23 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="victimAlone" key="selection"/>
+		<item value="sid_" key="selection"/>
 		<list key="findhistory">
-			<item value="victimalone"/>
+			<item value="sudi_"/>
+			<item value="mba_"/>
+			<item value="electrocutionLightning_"/>
+			<item value="electrocution"/>
+			<item value="blunt_"/>
+			<item value="Mba"/>
 			<item value="blunt"/>
-			<item value="waterType"/>
-			<item value="water"/>
-			<item value="theScene"/>
-			<item value="addCase"/>
-			<item value="adapter"/>
-			<item value="blunt_nextButton"/>
+			<item value="spinner"/>
 		</list>
 		<list key="replacehistory">
-			<item value="firearm"/>
-			<item value="drowning"/>
-			<item value="d"/>
-			<item value="crush"/>
-			<item value="foetus"/>
+			<item value="sid_"/>
+			<item value="sudi_"/>
+			<item value="electrocution_"/>
+			<item value="bicycle_"/>
+			<item value="gassing_"/>
+			<item value="sharp_"/>
+			<item value="mba"/>
+			<item value="Mba"/>
 		</list>
 	</section>
 </section>

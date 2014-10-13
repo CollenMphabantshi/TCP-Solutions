@@ -4,18 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:gravity="center_horizontal" >
-    
+   
     <TextView 		
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="Gassing"
-		style="@style/heading"/>"
-	
+		style="@style/heading"/>
+
     <ScrollView 
         android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
+	    
 	    android:scrollbars="vertical">
+	   
 		<LinearLayout 
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -428,7 +430,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="12"
+				android:rowCount="11"
         		android:columnCount="2"
 			    >
 				
@@ -540,18 +542,21 @@
             		android:layout_column="1"
 					/>
 				
-				<TextView 
-				    android:id="@+id/gassing_tv_foundInCar"
+				<TextView
+				    android:id="@+id/gassing_tv_victimInCar"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
+					
 					style="@style/tv_question"
-					android:text="Was the victim found in a car?"
+					android:text="Was the victim found in a car?\nIf yes: (PLEASE TAKE A PHOTOGRAPH)"
+					
 					android:layout_row="3"
             		android:layout_column="0"
 					/>
+				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgFoundInCar"
+			    android:id="@+id/gassing_rgvictimInCar"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -561,7 +566,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_foundInCarYes"
+				    android:id="@+id/gassing_victimInCarYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -570,7 +575,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_foundInCarNo"
+				    android:id="@+id/gassing_victimInCarNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -578,20 +583,22 @@
 					
 				    />
 				    
-				</RadioGroup>
-				
-				<TextView 
-				    android:id="@+id/gassing_tv_wasCarRunning"
+				</RadioGroup> 
+				<TextView
+				    android:id="@+id/gassing_tv_carRunning"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
+					
 					style="@style/tv_question"
 					android:text="Was the car running?"
+					
 					android:layout_row="4"
             		android:layout_column="0"
 					/>
+				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgWasCarRunning"
+			    android:id="@+id/gassing_rgcarRunning"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -601,7 +608,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_wasCarRunningYes"
+				    android:id="@+id/gassing_carRunningYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -610,7 +617,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_wasCarRunningNo"
+				    android:id="@+id/gassing_carRunningNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -618,20 +625,22 @@
 					
 				    />
 				    
-				</RadioGroup>
-				
+				</RadioGroup> 
 				<TextView 
-				    android:id="@+id/gassing_tv_carWindowClosed"
+				    android:id="@+id/gassing_tv_windowsCarClosed"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
+					
 					style="@style/tv_question"
 					android:text="Where the windows of the car closed?"
+					
 					android:layout_row="5"
             		android:layout_column="0"
 					/>
+				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgCarWindowClosed"
+			    android:id="@+id/gassing_rgwindowsCarClosed"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -641,7 +650,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_carWindowClosedYes"
+				    android:id="@+id/gassing_windowsCarClosedYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -650,7 +659,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_carWindowClosedNo"
+				    android:id="@+id/gassing_windowsCarClosedNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -665,13 +674,16 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
+					
 					style="@style/tv_question"
-					android:text="Where there a pipe connected between the exhaust and the window?"
+					android:text="Where there a pipe connected between\n the exhaust and the window?"
+					
 					android:layout_row="6"
             		android:layout_column="0"
 					/>
+				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgPipeConnected"
+			    android:id="@+id/gassing_rgpipeConnected"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -699,9 +711,9 @@
 				    />
 				    
 				</RadioGroup>
-				 
+				
 				<TextView 
-				    android:id="@+id/gassing_tv_suicideSuspected"
+				    android:id="@+id/gassing_tv_suicideSuspicion"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -714,7 +726,7 @@
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgSuicideSuspected"
+			    android:id="@+id/gassing_rgsuicideSuspicion"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -724,7 +736,7 @@
             		android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_suicideSuspectedYes"
+				    android:id="@+id/gassing_suicideSuspicionYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -733,7 +745,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_suicideSuspectedNo"
+				    android:id="@+id/gassing_suicideSuspicionNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -750,14 +762,14 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Any previous attempts?"
+					android:text="Previous suicide attempts?"
 					
 					android:layout_row="8"
             		android:layout_column="0"
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgPreviousAttempts"
+			    android:id="@+id/gassing_rgpreviousAttempts"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -785,6 +797,7 @@
 				    />
 				    
 				</RadioGroup>
+				
 				<TextView 
 				    android:id="@+id/gassing_tv_howManyAttempts"
 					android:layout_width="wrap_content"
@@ -806,46 +819,6 @@
             		android:layout_column="1"
 					/>
 				
-				<TextView
-				    android:id="@+id/gassing_tv_suicideNoteFound"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_margin="5dp"
-					
-					style="@style/tv_question"
-					android:text="Is there a Suicide note on scene?"
-					android:layout_row="10"
-            	android:layout_column="0"
-					/>
-			
-				<RadioGroup 
-			    android:id="@+id/gassing_rgSuicideNoteFound"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:orientation="horizontal"
-			    android:layout_row="10"
-            	android:layout_column="1"
-			    >
-				    <RadioButton
-				    android:id="@+id/gassing_SuicideNoteFoundYes"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="yes"
-					
-				    />
-				    
-				    <RadioButton
-				    android:id="@+id/gassing_SuicideNoteFoundNo"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:checked="false"
-			    	android:text="no"
-					
-				    />
-				    
-				</RadioGroup>
 				</GridLayout>
 				<!-- The Body ends here... -->
 				
@@ -1134,19 +1107,21 @@
 				    />
 				
 				<TextView
-				    android:id="@+id/gassing_tv_gassingAppliances" 
+				    android:id="@+id/gassing_tv_fireorgas" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Was there a heater or open fire/gas heater/ galley blik or other heating or generator device in room where deceased was found?"
+					android:text="Was there a heater or open fire/gas \nheater/ galley blik or other heating \nor generator device in room where\n deceased was found
+"
 					android:layout_row="8"
             	android:layout_column="0"
+					
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgGassingAppliances"
+			    android:id="@+id/gassing_rgfireorgas"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1155,7 +1130,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_gassingAppliancesYes"
+				    android:id="@+id/gassing_fireorgasYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1164,7 +1139,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_gassingAppliancesNo"
+				    android:id="@+id/gassing_fireorgasNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1173,21 +1148,21 @@
 				    />
 				    
 				</RadioGroup>
-				
 				<TextView
-				    android:id="@+id/gassing_tv_gassingSmell" 
+				    android:id="@+id/gassing_tv_weiredSmell" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is there a weird smell in the air (e.g. gas, chemical)?"
+					android:text="Is there a weird smell in the air (e.g. gas,\n chemical)"
 					android:layout_row="9"
             	android:layout_column="0"
+					
 					/>
 				
 				<RadioGroup 
-			    android:id="@+id/gassing_rgGassingSmell"
+			    android:id="@+id/gassing_rgweiredSmell"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
@@ -1196,7 +1171,7 @@
             	android:layout_column="1"
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_gassingSmellYes"
+				    android:id="@+id/gassing_weiredSmellYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1205,7 +1180,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_gassingSmellNo"
+				    android:id="@+id/gassing_weiredSmellNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1214,6 +1189,28 @@
 				    />
 				    
 				</RadioGroup>
+				
+				<TextView 
+				    android:id="@+id/gassing_tv_gasYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes, specify?"
+					android:layout_row="10"
+            	android:layout_column="0"
+					
+					/>
+				<EditText
+				    android:id="@+id/gassing_gasYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="10"
+            	android:layout_column="1"
+				    />
+				
+				
 				<TextView
 				    android:id="@+id/gassing_tv_sceneOType" 
 					android:layout_width="wrap_content"
@@ -1223,7 +1220,7 @@
 					style="@style/tv_question"
 					android:text="Where outside?"
 					
-					android:layout_row="10"
+					android:layout_row="11"
             	android:layout_column="0"
 					/>
 				<Spinner
@@ -1233,7 +1230,7 @@
 					android:entries="@array/outsideTypes"
 					android:prompt="@string/choose"
 					
-					android:layout_row="10"
+					android:layout_row="11"
             	android:layout_column="1"
 				    />
 				
@@ -1247,7 +1244,7 @@
 					
 					style="@style/tv_question"
 					android:text="If Other, specify?"
-					android:layout_row="11"
+					android:layout_row="12"
             	android:layout_column="0"
 					
 					/>
@@ -1255,7 +1252,7 @@
 				    android:id="@+id/gassing_sceneOTypeOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="11"
+					android:layout_row="12"
             	android:layout_column="1"
 				    />
 				</GridLayout>
@@ -1371,33 +1368,30 @@
 				    />
 				    
 				</RadioGroup>
-				
-				<TextView 
-				    android:id="@+id/gassing_tv_medicationPoisonOnScene"
+			
+					<TextView
+				    android:id="@+id/gassing_tv_medicationPoison"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Medication/poison on the scene?"
+					android:text="Medication/poison on the scene"
 					android:layout_row="2"
             	android:layout_column="0"
-					
 					/>
-				
-				
+			
 				<RadioGroup 
-			    android:id="@+id/gassing_rgMedicationPoisonOnScene"
+			    android:id="@+id/gassing_rgmedicationPoison"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    android:layout_row="2"
             	android:layout_column="1"
-			    
 			    >
 				    <RadioButton
-				    android:id="@+id/gassing_medicationPoisonOnSceneYes"
+				    android:id="@+id/gassing_medicationPoisonYes"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1406,7 +1400,7 @@
 				    />
 				    
 				    <RadioButton
-				    android:id="@+id/gassing_medicationPoisonOnSceneNo"
+				    android:id="@+id/gassing_medicationPoisonNo"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:checked="false"
@@ -1414,7 +1408,7 @@
 					
 				    />
 				    
-				</RadioGroup>
+				</RadioGroup>	
 				<TextView
 				    android:id="@+id/gassing_tv_drugParaphernalia"
 					android:layout_width="wrap_content"
@@ -1479,9 +1473,7 @@
 				android:rowCount="10"
         		android:columnCount="2"
 			    >
-				
-				
-				<TextView
+					<TextView
 				    android:id="@+id/gassing_tv_generalHistory"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -1489,14 +1481,14 @@
 					
 					style="@style/tv_question"
 					android:text="Victim General history?"
-					android:layout_row="0"
+					android:layout_row="7"
             	android:layout_column="0"
 					/>
 				<EditText
 				    android:id="@+id/gassing_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="0"
+					android:layout_row="7"
             	android:layout_column="1"
 				    />
 				</GridLayout>
@@ -1682,5 +1674,6 @@
 				</GridLayout>
 		</LinearLayout>
 		
-	</ScrollView>    	
+	</ScrollView> 
+	
 </LinearLayout>

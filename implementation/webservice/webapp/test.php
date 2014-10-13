@@ -46,87 +46,200 @@
                     var iframe = document.getElementById('preview-pane');
                     
                     iframe.src = doc.output('datauristring');*/
-                     var doc = new jsPDF();
-    var specialElementHandlers = {
-        '#editor': function (element, renderer) {
-            return true;
-        }
-    };
+        
+                    $("#cmd").click(function(){
+                    var doc = new jsPDF();
 
-   $('#cmd').click(function () {
+                    // We'll make our own renderer to skip this editor
+                    var specialElementHandlers = {
+                            '#editor': function(element, renderer){
+                                    return true;
+                            }
+                    };
 
-        var table = tableToJson($('#mytable').get(0))
-        var doc = new jsPDF('p','pt', 'a4', true);
-        doc.cellInitialize();
-        $.each(table, function (i, row){
-            console.debug(row);
-            $.each(row, function (j, cell){
-                doc.cell(10, 50,150, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
-            })
-        })
+                    // All units are in the set measurement for the document
+                    // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
 
+                    doc.fromHTML($("#tables").get(0), 15, 15, {
+                            'width': 170, 
+                            'elementHandlers': specialElementHandlers
+                    });
 
-        doc.save('sample-file.pdf');
-    });
-    function tableToJson(table) {
-            var data = [];
-
-            // first row needs to be headers
-            var headers = [];
-            for (var i=0; i<table.rows[0].cells.length; i++) {
-                headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-            }
-
-
-            // go through cells
-            for (var i=0; i<table.rows.length; i++) {
-
-                var tableRow = table.rows[i];
-                var rowData = {};
-
-                for (var j=0; j<tableRow.cells.length; j++) {
-
-                    rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
-                }
-
-                data.push(rowData);
-            }       
-
-            return data;
-        }
-                });
+                    $(".preview-pane").attr("src",doc.output("datauristring"));
+  
+                    });
+        });
+    
+                
         </script>
     </head>
         <body>
         <div id="header">
             <header class="header-content">
-                sdffsdfsdfsdfsdf
+                
             </header>
             <a id="bypassme">OOO</a>
         </div>
             
-            <iframe class="preview-pane" id="preview-pane" type="application/pdf" width="100%" frameborder="0" style="position:relative;z-index:999" >
+            <iframe class="preview-pane" id="preview-pane" type="application/pdf" width="100%" height="600px" frameborder="0" style="position:relative;z-index:999" >
                 
             </iframe>
+            <div id="tables">
             <table id="mytable" class="zui-table zui-table-zebra zui-table-horizontal">
                     <thead>
                         <tr>
                             <th>Case Number (#)</th>
                             <th>Scene Type</th>
-                            <th>Forensic Officer Assigned</th>
-                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody class="case-table">
                         <tr>
+                            <td>1</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
                             <td>A</td>
                             <td>B</td>
-                            <td>C</td>
-                            <td>D</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
             <button id="cmd">Download</button>
            
         

@@ -38,7 +38,7 @@ public class SceneMenu extends Activity{
 						        		 "Sudden unexpected death of a child  (1 – 18 years)",
 						        		 "Sudden unexpected death of an adult/ found dead",
 						        		 "Foetus / Abandoned baby", 
-                                         "Section 48  death –surgical case", 
+                                         "Section 56  death –surgical case", 
                                          "Road traffic accidents (Pedestrian vehicle accident)", 
                                          "Road traffic accidents (Bicycle accident)", 
                                          "Road traffic accidents (Motorbike accident)", 
@@ -58,7 +58,7 @@ public class SceneMenu extends Activity{
                                          "Lightning/ electrocution"  
                                          
                                         };
-        final String[] classes = new String[] {"Sudi","Sudc","Suda","Foetusabandonedbaby","Sec48"
+        final String[] classes = new String[] {"Sudi","Sudc","Suda","Foetusabandonedbaby","Sec56"
         		,"Pedestrian","Bicycle","Mba","Mva","Railway","Aviation","Fromheight","Crushinjury"
         		,"Firearm","Sharp","Blunt","Drowning","Gassing","Hanging","Ingestionoverdosepoisoning","Burn","Electrocutionlightning"};
         
@@ -95,7 +95,7 @@ public class SceneMenu extends Activity{
 					}catch(Exception e){e.printStackTrace();}
 					startActivity(select);
 					
-				}catch (ClassNotFoundException e) {
+				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

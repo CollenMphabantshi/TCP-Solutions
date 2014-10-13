@@ -17,6 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.mobileforensics.helpers.Case;
+import com.example.mobileforensics.helpers.CaseList;
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,6 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 public class PreviousCaseBasicInfo  extends Activity{
 
@@ -47,6 +51,8 @@ public class PreviousCaseBasicInfo  extends Activity{
 	private String searchVal;
 	private Encryption enc;
 	private EditText searchBox;
+	private CaseList clist;
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -57,14 +63,17 @@ public class PreviousCaseBasicInfo  extends Activity{
 			
 			initialiseVariables();
 			setEventMethods();
-			Encryption enc = new Encryption();
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 	        pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("getFOCaseList"))));
+	        
 	        pairs.add(new BasicNameValuePair("fopnumber",Encryption.bytesToHex(enc.encrypt(username)) ));
 	        new Read().execute(pairs);
 	        
+	        
 		}catch(Exception e){e.printStackTrace();}
-				
+		
+		
+		
 	}
 	
 	public void initialiseVariables(){
@@ -76,7 +85,7 @@ public class PreviousCaseBasicInfo  extends Activity{
 		list = (ListView) findViewById(R.id.previousCase_lv);
 		searchBox = (EditText) findViewById(R.id.previousCase_searchBox);
 		caseData = new ArrayList<String>();
-		
+		clist = new CaseList();
 	}
 	
 	public void setEventMethods(){
@@ -97,9 +106,10 @@ public class PreviousCaseBasicInfo  extends Activity{
 					Intent select = new Intent(getApplicationContext(), BasicCaseData.class);
 					try{
 						select.putExtra("USERNAME", getIntent().getExtras().getString("USERNAME"));
+						
+						/*
 						select.putExtra("VicName", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicName"))));
 						select.putExtra("VicID", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicID"))));
-						select.putExtra("VicAge", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("vicAge"))));
 						select.putExtra("SceneTime", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneTime"))));
 						select.putExtra("SceneDate", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneDate"))));
 						select.putExtra("SceneLocation", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("sceneLocation"))));
@@ -107,6 +117,17 @@ public class PreviousCaseBasicInfo  extends Activity{
 						select.putExtra("ioName", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("ioName"))));
 						select.putExtra("ioCellNumber", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("ioCellNumber"))));
 						select.putExtra("foosName", new String(enc.decrypt(json.getJSONObject(position).getJSONArray("sceneData").getJSONObject(0).getString("foosName"))));
+						*/
+						select.putExtra("VicName", clist.get(position).getVicName());
+						select.putExtra("VicID", clist.get(position).getVicID());
+						select.putExtra("SceneTime", clist.get(position).getSceneTime());
+						select.putExtra("SceneDate", clist.get(position).getSceneDate());
+						select.putExtra("SceneLocation",clist.get(position).getSceneLocation() );
+						select.putExtra("SceneTemperature", clist.get(position).getSceneTemp());
+						select.putExtra("ioName", clist.get(position).getIoName());
+						select.putExtra("ioCellNumber", clist.get(position).getIoCellNo());
+						select.putExtra("foosName", clist.get(position).getFoosName());
+						
 						startActivity(select);
 					}catch(Exception e)
 					{e.printStackTrace();}
@@ -150,10 +171,16 @@ public class PreviousCaseBasicInfo  extends Activity{
 		try{
 			if(search != null && search.length() != 0)
 			{
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		        pairs.add(new BasicNameValuePair("rquest","findFOCases"));
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		        pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("findFOCases"))));
 		        pairs.add(new BasicNameValuePair("search",Encryption.bytesToHex(enc.encrypt(search)) ));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				caseData = clist.findCase(search);
+				System.out.println("SIZE="+clist.size());
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				        android.R.layout.simple_list_item_1, android.R.id.text1,caseData.toArray(new String[]{}));
+				// Assign adapter to ListView
+				list.setAdapter(adapter);
 			}
 	        
 		}catch(Exception e){e.printStackTrace();}
@@ -161,12 +188,23 @@ public class PreviousCaseBasicInfo  extends Activity{
 	public void addToList() throws Exception{
 		try{
 			caseData.clear();
+			clist.clear();
 		}catch(Exception e){e.printStackTrace();}
 		for(int i =0; i < json.length();i++){
 			String sceneType = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTypeID");
 			String mDate = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneDate");
 			String mTime = json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTime");
-			System.out.println("------("+i+") : "+(new String(enc.decrypt(json.getJSONObject(i).getString("caseNumber")))));
+			String vicName = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("vicName")));
+			String vicID = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("vicID")));
+			String ioName = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("ioName")));
+			String ioCellNo = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("ioCellNumber")));
+			String foosName = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("foosName")));
+			String sceneLocation = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneLocation")));
+			String sceneDate = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneDate")));
+			String sceneTime = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTime")));
+			String sceneTemp = new String(enc.decrypt(json.getJSONObject(i).getJSONArray("sceneData").getJSONObject(0).getString("sceneTemparature")));
+			
+			clist.add(new Case(vicName, vicID, ioName,ioCellNo, foosName, sceneLocation, sceneDate, sceneTime, sceneTemp, new String(enc.decrypt(sceneType))));
 			caseData.add(new String(enc.decrypt(sceneType))+" \t\t"+new String(enc.decrypt(mDate))+"\t"+new String(enc.decrypt(mTime)));
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

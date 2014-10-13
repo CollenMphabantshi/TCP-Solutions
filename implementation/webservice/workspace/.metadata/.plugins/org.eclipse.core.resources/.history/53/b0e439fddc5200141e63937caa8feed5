@@ -1,0 +1,18 @@
+package com.example.mobileforensics.helpers;
+
+import java.util.ArrayList;
+
+public class CaseList extends ArrayList<Case>{
+
+	public ArrayList<String> findCase(String search){
+		
+		for(int i = 0; i < this.size();i++)
+		{
+			if(this.get(i).getSceneType().toLowerCase().contains(search.toLowerCase())
+				|| this.get(i).getSceneDateTime().toLowerCase().contains(search.toLowerCase())	){
+				
+			}
+		}
+		return null;
+	}
+}

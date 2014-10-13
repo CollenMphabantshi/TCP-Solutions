@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -255,8 +256,9 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -359,6 +361,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
@@ -657,6 +660,31 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 		}
 	}
 	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Blunt.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
+	
 	
 	
 	@Override
@@ -676,10 +704,11 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
@@ -695,12 +724,13 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 						                                        Toast.makeText(Blunt.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
 						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
+						                             
+						                             for( int i=0;i < numberOfImages; i++){
+						                            	 Toast.makeText(Blunt.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
+						                            	 uploadFile( uploadFileName.get(i) );
+						                            	 i++;
+						                             	}
+						                                               
 						                        }
 						                      }).start();
 						                doneButton.setVisibility(VISIBLE);
@@ -711,12 +741,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 										e.printStackTrace();
 									}
 										
-							}
-							else{
-								
-								Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
-								
-							}
+							
 						}else{
 							Toast.makeText(Blunt.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -772,6 +797,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	readAllFiles();
             	}
             	
             }
@@ -974,8 +1000,8 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -1061,7 +1087,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 	                   conn.setRequestProperty("ENCTYPE", "multipart/form-data");
 	                   conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 	                   conn.setRequestProperty("uploaded_file", fileName); 
-	                   conn.setRequestProperty("victimID", ""+currentVictimID); 
+	                    
 	                   dos = new DataOutputStream(conn.getOutputStream());
 	          
 	                   dos.writeBytes(twoHyphens + boundary + lineEnd); 
@@ -1855,7 +1881,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");

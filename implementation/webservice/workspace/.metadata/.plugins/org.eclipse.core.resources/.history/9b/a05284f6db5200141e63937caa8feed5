@@ -1,0 +1,15 @@
+package com.example.mobileforensics.helpers;
+
+public class Case {
+	private String vicName;
+	private String vicID;
+	private String ioName;
+	private String foosName;
+	private String sceneLocation;
+	private String sceneDateTime;
+	private String sceneTemp;
+	private String sceneType;
+	 
+	
+	
+}

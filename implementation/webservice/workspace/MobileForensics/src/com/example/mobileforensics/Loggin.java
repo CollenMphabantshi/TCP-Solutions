@@ -40,6 +40,10 @@ public class Loggin extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loggin);
 		this.intialiseVariable();
+		
+		//Intent open = new Intent("com.example.mobileforensics.HOME");
+		
+		//startActivity(open);
 		this.doLogin();
 	}
 	
@@ -83,7 +87,7 @@ public class Loggin extends Activity{
 		
         try {
         	List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
-        	//pairs.add(new BasicNameValuePair("rquest","login"));
+        	
             pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("login"))));
 			pairs.add(new BasicNameValuePair("username",Encryption.bytesToHex(enc.encrypt(user))));
 			pairs.add(new BasicNameValuePair("password",Encryption.bytesToHex(enc.encrypt(pass))));  

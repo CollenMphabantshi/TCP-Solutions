@@ -87,7 +87,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Fromheight extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+public class Fromheight extends Activity /*implements GlobalMethods, OnMyLocationChangeListener*/{
 	
 	
 	
@@ -212,7 +212,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 	private Button doneButton;
 	private Button logoutButton;
 	private Button BackToMenu;
-	private LinearLayout Gallery;
+	private GridLayout Gallery;
 	private JSONObject json;
 
 	
@@ -268,34 +268,28 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
 		super.onCreate(savedInstanceState);
-		try{
-			setContentView(R.layout.fromheight);
-			try{
-				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-				if (!enabled) {
-					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-					  startActivity(intent);
-					} 
-				status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			
-			initialize();
-			variablesInitialization();
-			CheckRadioButtons();
-			setOnClickEvents();
+		setContentView(R.layout.fromheight);
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled) {
+			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+			  startActivity(intent);
+			} 
+		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
+		
+		//initialize();
+		//variablesInitialization();
+		//CheckRadioButtons();
+		//setOnClickEvents();
+		
+		
 	
 	}
 	
-	public String initialize(){
+	/*public String initialize(){
 			
 			if( status != ConnectionResult.SUCCESS){
 				int requestCode = 10;
@@ -630,7 +624,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (LinearLayout) findViewById(R.id.height_galleryLayout);
+	       Gallery = (GridLayout) findViewById(R.id.height_galleryLayout);
 	       // weather section
 	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
 		
@@ -782,7 +776,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		 * 	Spinner onclick event
 		 */
 		
-		previousAttemptsYes.setOnClickListener(new OnClickListener() {
+	/*	previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -1138,8 +1132,8 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("fromheight"))));
+			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1390,7 +1384,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
-				victimAge.setText("Unknown");
+				victimAge.setText("0");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1762,7 +1756,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
 					imgView.setImageBitmap(img);
 				}*/
-				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+			//	WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
 				//weatherInfo.setText(WeatherInfo);
 				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
 				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
@@ -1771,7 +1765,7 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 				press.setText("" + weather.currentCondition.getPressure() + " hPa");
 				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 				windDeg.setText("" + weather.wind.getDeg() + "�");*/
-					
+	/*				
 			}
 		}
 	
@@ -2035,6 +2029,6 @@ public class Fromheight extends Activity implements GlobalMethods, OnMyLocationC
 		}
 	
 	
-	
+	*/
 	
 }

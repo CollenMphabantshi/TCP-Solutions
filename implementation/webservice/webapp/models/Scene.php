@@ -41,6 +41,8 @@ class Scene{
                     $this->date = $_date;
                     $this->location = $_location;
                     $this->temperature = $_temperature;
+                    $error = array('status' => "Failed", "msg" => "time=".$_time);
+            $this->api->response($this->api->json($error), 400);
                     $this->investigatingOfficerName = $_investigatingOfficerName;
                     $this->investigatingOfficerRank = $_investigatingOfficerRank;
                     $this->investigatingOfficerCellNo = $_investigatingOfficerCellNo;

@@ -39,7 +39,13 @@
 	        android:layout_width="500dp"
 	        android:layout_height="300dp"
 	        />
-			
+			<TextView
+			    android:id="@+id/blunt_tv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
 		    <TextView 
 		        android:id="@+id/value"
 		        android:layout_width="fill_parent"
@@ -59,13 +65,7 @@
 		   
 				
 		    <!--  -->
-			<TextView
-			    android:id="@+id/blunt_tv_io"			            
-				style="@style/sub_headings"
-				android:text="Investigating Officer Information"
-				
-				android:visibility="visible"
-			/>
+			
 			<GridLayout
 			    android:id="@+id/blunt_rl1"
 				android:layout_width="fill_parent"

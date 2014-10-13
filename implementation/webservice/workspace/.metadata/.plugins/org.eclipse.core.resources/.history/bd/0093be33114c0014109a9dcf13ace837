@@ -1,0 +1,1699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center_horizontal" >
+   
+    <TextView 		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Lightning/ electrocution"
+		style="@style/heading"/>
+
+    <ScrollView 
+        android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    
+	    android:scrollbars="vertical">
+	   
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"  
+			android:gravity="center_horizontal">
+			
+		    <LinearLayout
+			    android:id="@+id/electrocutioninfoLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+			
+			<!-- Geolocation and weather -->
+			<fragment 
+	        android:id="@+id/fragId"
+	        android:name="com.google.android.gms.maps.MapFragment"
+	        android:layout_width="500dp"
+	        android:layout_height="300dp"
+	        />
+			
+		    <TextView 
+		        android:id="@+id/value"
+		        android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text=""
+				android:visibility="gone"
+		        />
+		   
+		    
+		    <TextView
+				  android:id="@+id/bluntWeatherInfo"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content"
+				  android:text="weather Info"
+				  android:visibility="gone"
+				         />
+		   
+				
+		    <!--  -->
+			<TextView
+			    android:id="@+id/electrocutiontv_io"			            
+				style="@style/sub_headings"
+				android:text="Investigating Officer Information"
+				
+				android:visibility="visible"
+			/>
+			<GridLayout
+			    android:id="@+id/electrocutionrl1"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="4"
+        		android:columnCount="2">
+							        
+				<TextView 
+					android:id="@+id/electrocutiontv_io_name"
+					style="@style/tv_question"
+					android:text="Name"
+					android:layout_row="0"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionio_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_io_surname"
+					style="@style/tv_question"
+					android:text="Surname"
+					android:layout_row="1"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionio_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="1"
+            		android:layout_column="1"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_io_rank"
+					style="@style/tv_question"
+					android:text="Rank"
+					android:layout_row="2"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionio_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            		android:layout_column="1"/>
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_io_cell"
+					style="@style/tv_question"
+					android:text="Cell"
+					android:layout_row="3"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionio_cell"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
+            		android:layout_column="1"/>				       
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/electrocutiontv_foos"			            
+				style="@style/sub_headings"
+				android:text="First Officer On Scene"
+				
+			/>
+			<GridLayout 
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="3"
+        		android:columnCount="2">
+							        
+				<TextView 
+					android:id="@+id/electrocutiontv_foos_name"
+					style="@style/tv_question"
+					android:text="Name"
+					android:layout_row="0"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionfoos_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_foos_surname"
+					style="@style/tv_question"
+					android:text="Surname"
+					android:layout_row="1"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionfoos_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="1"
+            		android:layout_column="1"/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_foos_rank"
+					style="@style/tv_question"
+					android:text="Rank"
+					android:layout_row="2"
+            		android:layout_column="0"/>
+				<EditText 
+					android:id="@+id/electrocutionfoos_rank"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            		android:layout_column="1"/>
+								       
+			</GridLayout>
+			</LinearLayout>
+			
+		    <LinearLayout
+			    android:id="@+id/electrocutiondemographicLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+			<TextView
+			    android:id="@+id/electrocutiontv_victimGender"	            
+				
+				android:text="Victim Gender"
+				style="@style/sub_headings"
+				android:layout_marginTop="10dp"
+			
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="1"
+        		android:columnCount="1">
+			<RadioGroup 
+			    android:id="@+id/electrocutionrgGender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="left"
+			    android:orientation="horizontal"
+			    android:layout_row="0"
+            	android:layout_column="0"
+			    
+			    >
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbMale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Male"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbFemale"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Female"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbUnknownGender"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			    	
+			        />
+			</RadioGroup>
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/electrocutiontv_victimRace"			            
+				style="@style/sub_headings"
+				android:text="Victim Race"
+				
+				android:layout_marginTop="10dp"
+				
+				
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="1"
+        		android:columnCount="1">
+			<RadioGroup 
+			    android:id="@+id/electrocutionrgRace"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="left"
+			    android:orientation="horizontal"
+			    android:layout_row="0"
+            	android:layout_column="0"
+			    >
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbAsian"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Asian"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbBlack"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Black"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbColoured"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Coloured"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbWhite"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="White"
+			    	
+			        />
+			    <RadioButton 
+			        android:id="@+id/electrocutionrgbUnknownRace"
+			        android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:checked="false"
+			    	android:text="Unknown"
+			    	
+			        />
+			</RadioGroup>
+			</GridLayout>
+			
+			<TextView
+			    android:id="@+id/electrocutiontv_victimInfo"			            
+				style="@style/sub_headings"
+				android:text="Victim Information (if known individual)"
+				android:layout_margin="5dp"
+				
+				
+			/>
+			<GridLayout 
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="9"
+        		android:columnCount="2">
+							        
+				<TextView 
+					android:id="@+id/electrocutiontv_victim_name"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Name"
+					android:layout_row="0"
+            		android:layout_column="0"
+            		style="@style/tv_question"
+					/>
+				<EditText 
+					android:id="@+id/electrocutionvictim_name"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="0"
+            		android:layout_column="1"
+					/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_victim_surname"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					style="@style/tv_question"
+					android:text="Victim Surname"
+					android:layout_row="1"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/electrocutionvictim_surname"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="1"
+            		android:layout_column="1"
+					/>
+							       
+							       
+				<TextView 
+					android:id="@+id/electrocutiontv_victim_id"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					
+					android:text="ID Number"
+					style="@style/tv_question"
+					android:layout_row="2"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/electrocutionvictim_id"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="2"
+            		android:layout_column="1"
+					/>
+				<TextView 
+					android:id="@+id/electrocutiontv_victim_age"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					android:text="Victim Estimated age"
+					style="@style/tv_question"
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/electrocutionvictim_age"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>
+								       
+				</GridLayout>
+				</LinearLayout>
+				
+		    <!-- The body Starts  -->
+		    	<TextView 
+				    android:id="@+id/electrocutiontv_the_body"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/the_body"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/electrocutiontheBodyLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="9"
+        		android:columnCount="2"
+			    >
+				
+				<TextView 
+				    android:id="@+id/electrocutiontv_bodyDecomposed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the body decomposed?"
+					android:layout_row="0"
+            		android:layout_column="0"
+					
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgBodyDecomposed"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionbodyDecomposedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionbodyDecomposedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				
+				    
+				<TextView 
+				    android:id="@+id/electrocutiontv_medicalIntervention"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there any medical intervention?"
+					
+					android:layout_row="1"
+            		android:layout_column="0"
+					/>
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgMedicalIntervention"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="1"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionmedicalInterventionYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionmedicalInterventionNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_whoFoundVictimBody" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Who found victim body?"
+					
+					android:layout_row="2"
+            		android:layout_column="0"
+					/>
+				<EditText
+					android:id="@+id/electrocutionwhoFoundVictimBody"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="2"
+            		android:layout_column="1"
+					/>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_closeToWater"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the victim found close to water?"
+					
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgCloseToWater"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="3"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutioncloseToWaterYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutioncloseToWaterNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				<TextView
+				    android:id="@+id/electrocutiontv_struckByLight"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Did a witness see the victim get \nelectrocuted/ struck by lightning?"
+					
+					android:layout_row="4"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocution_rgstruckByLight"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="4"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocution_struckByLightYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocution_struckByLightNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				<TextView 
+				    android:id="@+id/electrocution_tv_suicideSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes, did the victim die:"
+					
+					android:layout_row="5"
+            		android:layout_column="0"
+					/>
+				
+				<Spinner
+				    android:id="@+id/electrocution_suicideSuspected"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/electrocutionVictimDie"
+					
+					android:layout_row="1"
+            	android:layout_column="1"
+				    />
+				
+				
+				
+				<TextView 
+				    android:id="@+id/electrocutiontv_previousAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Any previous attempts?"
+					
+					android:layout_row="6"
+            		android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgPreviousAttempts"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="6"
+            		android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionpreviousAttemptsYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionpreviousAttemptsNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/electrocutiontv_howManyAttempts"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="How many attempts?"
+				
+					android:layout_row="7"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/electrocutionhowManyAttempts"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="7"
+            		android:layout_column="1"
+					/>
+				
+				</GridLayout>
+				<!-- The Body ends here... -->
+				
+		    	<!-- The Scene of injury starts  -->
+		    	<TextView
+				    android:id="@+id/electrocutionsceneOfInjury"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/scene_of_injury"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/electrocutionsceneOfInjuryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_sceneIOType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the scene Outside or Inside?"
+					android:layout_row="0"
+            		android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgSceneIOType"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			   
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionSceneIOTypeInside"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="Inside"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionSceneIOTypeOutside"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="Outside"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/electrocutiontv_whereInside"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Where inside?"
+					android:layout_row="1"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/electrocutionsceneIType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/insideTypes"
+					android:prompt="@string/choose"
+					android:layout_row="1"
+            	android:layout_column="1"
+				    />
+				<TextView 
+				    android:id="@+id/electrocutiontv_sceneITypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If Other, specify?"
+					
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/electrocutionsceneITypeOther"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="2"
+            	android:layout_column="1"
+				    />
+				<TextView
+				    android:id="@+id/electrocutiontv_doorLocked" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the door locked from the inside?"
+					android:layout_row="3"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgDoorLocked"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="3"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionDoorLockedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionDoorLockedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/electrocutiontv_windowsClosed" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Were the windows closed?"
+					android:layout_row="4"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgWindowsClosed"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="4"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionWindowsClosedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionWindowsClosedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/electrocutiontv_windowsBroken" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are any of the windows broken?"
+					android:layout_row="5"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgWindowsBroken"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="5"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionWindowsBrokenYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionWindowsBrokenNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/electrocutiontv_victimAlone" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the victim alone at the time of death?"
+					android:layout_row="6"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgVictimAlone"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="6"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionVictimAloneYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionVictimAloneNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView 
+				    android:id="@+id/electrocutiontv_peopleWithVictim"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Who was with victim? (specify)"
+					android:layout_row="7"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/electrocutionpeopleWithVictim"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="7"
+            	android:layout_column="1"
+				    />
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_sceneOType" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Where outside?"
+					
+					android:layout_row="8"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/electrocutionsceneOType"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/outsideTypes"
+					android:prompt="@string/choose"
+					
+					android:layout_row="8"
+            	android:layout_column="1"
+				    />
+				
+				
+				
+				<TextView 
+				    android:id="@+id/electrocutiontv_sceneOTypeOther"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If Other, specify?"
+					android:layout_row="9"
+            	android:layout_column="0"
+					
+					/>
+				<EditText
+				    android:id="@+id/electrocutionsceneOTypeOther"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="9"
+            	android:layout_column="1"
+				    />
+				</GridLayout>
+				<!-- Scene of injury ends here... -->
+				
+		    	<!-- The Scene look starts -->
+		    	
+		    	<TextView 
+				    android:id="@+id/electrocutionsceneLook"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/scene_look"
+					
+					/>
+		    	<GridLayout
+			    android:id="@+id/electrocutionsceneLookLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_signsOfStruggle" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Are there any signs of struggle?"
+					
+					android:layout_row="0"
+            	android:layout_column="0"
+					
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgSignsOfStruggle"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="0"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionSignsOfStruggleYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionSignsOfStruggleNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView 
+				    android:id="@+id/electrocutiontv_alcoholBottleAround"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Alcohol bottle standing around?"
+					android:layout_row="1"
+            	android:layout_column="0"
+					
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgAlcoholBottleAround"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="1"
+            	android:layout_column="1"
+			    
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionAlcoholBottleAroundYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionAlcoholBottleAroundNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_drugParaphernalia"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Drug paraphernalia?"
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgDrugParaphernalia"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="2"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionDrugParaphernaliaYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionDrugParaphernaliaNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				</GridLayout>
+				<!-- Scene look ends here -->
+				
+				<!-- The Scene starts  -->
+				
+				<TextView 
+				    android:id="@+id/electrocutiontheScene"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					
+					android:text="@string/the_scene"
+					
+					/>
+				
+		    	<GridLayout
+			    android:id="@+id/electrocutiontheSceneLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:layout_marginLeft="10dp"
+				android:paddingLeft="20dp"
+				android:rowCount="10"
+        		android:columnCount="2"
+			    >
+				
+				<TextView 
+				     android:id="@+id/electrocutiontv_communityAssault"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Drug paraphernalia?"
+					android:layout_row="0"
+            	android:layout_column="0"
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgCommunityAssault"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="0"
+            	android:layout_column="1"
+			   
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionCommunityAssaultYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionCommunityAssaultNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_bluntObjectUsed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="What is  the suspected blunt force object used?"
+					android:layout_row="1"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/electrocutionbluntObjectUsed"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="1"
+            	android:layout_column="1"
+				    />
+				
+				<TextView 
+				    android:id="@+id/electrocutiontv_bluntForceObjectOnScene"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the blunt force object still on scene?"
+					android:layout_row="2"
+            	android:layout_column="0"
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgBluntForceObjectOnScene"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="2"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionBluntForceObjectOnSceneYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionBluntForceObjectOnSceneNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_strangulationSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there a suspicion of strangulation?"
+					android:layout_row="3"
+            	android:layout_column="0"
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgStrangulationSuspected"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="3"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionStrangulationSuspectedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionStrangulationSuspectedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_smotheringSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there a suspicion of smothering?"
+					android:layout_row="4"
+            	android:layout_column="0"
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgSmotheringSuspected"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="4"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionSmotheringSuspectedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionSmotheringSuspectedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_chockingSuspected"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+				
+					style="@style/tv_question"
+					android:text="Is there a suspicion of chocking?"
+					android:layout_row="5"
+            	android:layout_column="0"
+					/>
+				
+				
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgChockingSuspected"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			   android:layout_row="5"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionChockingSuspectedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionChockingSuspectedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
+				    android:id="@+id/electrocutiontv_suicideNoteFound"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is there a Suicide note on scene?"
+					android:layout_row="6"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/electrocutionrgSuicideNoteFound"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="6"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/electrocutionSuicideNoteFoundYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/electrocutionSuicideNoteFoundNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_generalHistory"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Victim General history?"
+					android:layout_row="7"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/electrocutiongeneralHistory"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="7"
+            	android:layout_column="1"
+				    />
+				</GridLayout>
+				<!-- The Scene ends here... -->
+				<LinearLayout
+			    android:id="@+id/electrocutiongalleryLayout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center_horizontal"
+			    >
+				<TextView 
+				    android:id="@+id/electrocutiontheGallery"
+					style="@style/main_headings"
+					android:layout_marginTop="100dp"
+					android:text="@string/the_gallery"
+					
+					/>
+				
+				       
+				     <TextView
+				         android:layout_width="fill_parent"
+				         android:layout_height="wrap_content"
+				         android:text=""
+				         android:id="@+id/messageText"
+				         android:textColor="#000000"
+				         android:textStyle="bold"
+				     />
+				     
+				     
+				     <GridLayout 
+				         android:layout_width="match_parent"
+				         android:layout_height="match_parent"
+				         android:layout_margin="5dp"
+				         android:padding="5dp"
+				         android:columnCount="3"
+				         android:rowCount="4"
+				         android:id="@+id/electrocutionGallery"
+				         android:visibility="visible">
+				         
+				       
+				         <ImageView
+				        android:id="@+id/imgView0"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView1"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView2"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="0"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView3"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView4"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView5"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="1"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView6"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="0"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView7"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="1"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				         
+				         <ImageView
+				        android:id="@+id/imgView8"
+				        android:layout_width="200dp"
+				        android:layout_height="200dp"
+				        android:layout_weight="1"
+				        android:layout_column="2"
+				        android:layout_row="2"
+				        android:visibility="gone"/>
+				      
+				     </GridLayout>
+				    <Button
+				        android:id="@+id/buttonLoadPicture"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="0"
+				        android:text="Select image from gallery"
+				        android:layout_gravity="center"></Button>
+				
+				</LinearLayout>
+				
+				<TextView
+				    android:id="@+id/electrocutiontv_response"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					android:layout_marginTop="100dp"
+					android:textStyle="bold"
+					android:textSize="15sp"
+					android:text="@string/send_response"
+					android:visibility="gone"
+					/>
+				
+				<GridLayout 
+				         android:layout_width="match_parent"
+				         android:layout_height="match_parent"
+				         android:layout_margin="5dp"
+				         android:padding="5dp"
+				         android:columnCount="3"
+				         android:layout_gravity="center_horizontal"
+				         android:rowCount="1"
+				         android:visibility="visible">
+				<Button
+				    android:id="@+id/electrocutionBackToMenu"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:layout_column="0"
+				    android:layout_row="0"
+				    android:text="MENU"
+				    android:visibility="gone" 
+				    />
+				
+				<Button
+				    android:id="@+id/electrocutiondoneButton"
+				    android:layout_width="200dp"
+				    android:layout_height="wrap_content"
+				    android:layout_column="1"
+				    android:layout_row="0"
+				    android:text="SUBMIT"
+				     android:visibility="visible"
+				    />
+				<Button
+				    android:id="@+id/electrocutionlogoutButton"
+				    android:layout_width="200dp"
+				    android:layout_height="wrap_content"
+				    android:layout_column="2"
+				    android:layout_row="0"
+				    android:text="LOGOUT"
+				     android:visibility="visible"
+				    />
+				</GridLayout>
+		</LinearLayout>
+		
+	</ScrollView> 
+	
+</LinearLayout>
