@@ -51,7 +51,7 @@ class Bicycle extends Scene {
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Bicycle accident",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Bicycle",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->bicycleOType = $formData['object'][$i]['bicycleOType'];
                 $this->paraObjAll->bicycleNumPeople = $formData['object'][$i]['bicycleNumPeople'];
@@ -63,13 +63,12 @@ class Bicycle extends Scene {
                 $this->paraObjAll->wasBodyMoved = $formData['object'][$i]['wasBodyMoved'];
                     //
                $sceneID = $this->createScene();
-                 if($sceneID === NULL){
+                 if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                
                 $this->addBicycle($sceneID);
                 
             }
@@ -80,26 +79,10 @@ class Bicycle extends Scene {
     }
     
     public function addBicycle($sceneID) {
-        $enc = new Encryption();
-        $bicycleOType = $this->paraObjAll->bicycleOType;
-        $bicycleNumPeople = $this->paraObjAll->bicycleNumPeople;
-        $eyewitnesses = $this->paraObjAll->eyewitnesses;
-        $bicycleHit = $this->paraObjAll->bicycleHit;
-        $bicycleType = $this->paraObjAll->bicycleType;
-        $weatherCondition = $this->paraObjAll->weatherCondition;
-        $weatherType = $this->paraObjAll->weatherType;
-        $wasBodyMoved = $this->paraObjAll->wasBodyMoved;
-        
-        $h_res = mysql_query("insert into bicycle values(0,$sceneID,'$bicycleOType','$bicycleNumPeople','$bicycleHit','$bicycleType','$weatherCondition','$weatherType','$eyewitnesses','$wasBodyMoved')");
-        
-        /*$error = array('status' => "Failed", "msg" => mysql_error());
-        $this->api->response($this->api->json($error), 400);*/
-        
-        if($h_res === FALSE){
+       
+        $h_res = mysql_query("insert into bicycle values(0,".$sceneID.",'$this->paraObjAll->bicycleOType',$this->paraObjAll->bicycleNumPeople','$this->paraObjAll->bicycleHit','$this->paraObjAll->bicycleType','$this->paraObjAll->weatherCondition','$this->paraObjAll->weatherType','$this->paraObjAll->eyewitnesses','$this->paraObjAll->wasBodyMoved')");
+        if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
-            $this->api->response($this->api->json($error), 400);
-        }else{
-            $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
             $this->api->response($this->api->json($error), 400);
         }
     }
@@ -120,8 +103,21 @@ class Bicycle extends Scene {
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from bicycle where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['bicycleID'] = $h_array['bicycleID'];
+            $h_array['sceneID'] = $h_array['sceneID'];
+            $h_array['bicycleNumPeople'] = $enc->decrypt_request($h_array['bicycleNumPeople']);
+            $h_array['bicycleHit'] = $enc->decrypt_request($h_array['bicycleHit']);
+            $h_array['bicycleType'] = $enc->decrypt_request($h_array['bicycleType']);
+            $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
+            $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
+            $h_array['eyewitnesses'] = $enc->decrypt_request($h_array['eyewitnesses']);
+            $h_array['wasBodyMoved'] = $enc->decrypt_request($h_array['wasBodyMoved']);
+            
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

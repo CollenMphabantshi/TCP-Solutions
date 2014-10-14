@@ -175,16 +175,43 @@ class Burn extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from burn where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from burninside where burnID=".$h_array['burnID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['burnInside'] = $hi_array;
                 }else{
-                    $h_array['burnInside'] = NULL;
+                    $h_array['burnInside'] = "null";
                 }
+                
+                $h_array['burnIOType'] = $enc->decrypt_request($h_array['burnIOType']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                $h_array['accelerantsAtScene'] = $enc->decrypt_request($h_array['accelerantsAtScene']);
+                $h_array['accelerantsUsed'] = $enc->decrypt_request($h_array['accelerantsUsed']);
+                $h_array['igniterAtScene'] = $enc->decrypt_request($h_array['igniterAtScene']);
+                $h_array['igniterUsed'] = $enc->decrypt_request($h_array['igniterUsed']);
+                $h_array['foulPlaySuspected'] = $enc->decrypt_request($h_array['foulPlaySuspected']);
+                $h_array['wasBodyHospitilized'] = $enc->decrypt_request($h_array['wasBodyHospitilized']);
+                $h_array['howBurnWoundsSustained'] = $enc->decrypt_request($h_array['howBurnWoundsSustained']);
+                $h_array['bodyCharred'] = $enc->decrypt_request($h_array['bodyCharred']);
+                $h_array['wierdSmell'] = $enc->decrypt_request($h_array['wierdSmell']);
+                $h_array['anyPotentialWeapons'] = $enc->decrypt_request($h_array['anyPotentialWeapons']);
+                $h_array['wasItCommunityAssault'] = $enc->decrypt_request($h_array['wasItCommunityAssault']);
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

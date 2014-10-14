@@ -22,7 +22,6 @@ class railwayParameters{
     public $driverSeeWhatHappened;
     public $weatherType;
     public $weatherCondition;
-    
     public  $railwayCases;
     public $caseObj;
     public $victimsObj;
@@ -53,7 +52,7 @@ class Railway extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Railway accident",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->railwayIOType = $formData['object'][$i]['railwayIOType'];
                 $this->paraObjAll->victimType = $formData['object'][$i]['victimType'];
@@ -84,6 +83,8 @@ class Railway extends Scene{
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
+		$error = array('status' => "Failed", "msg" => "Request to create scene was successful.");
+            $this->api->response($this->api->json($error), 400);
     }
     
     public function getAllRailwayCases() {
@@ -103,7 +104,18 @@ class Railway extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from railway where sceneID=".$sceneID);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['railwayIOType'] = $enc->decrypt_request($h_array['railwayIOType']);
+            $h_array['victimType'] = $enc->decrypt_request($h_array['victimType']);
+            $h_array['railwayType'] = $enc->decrypt_request($h_array['railwayType']);
+            $h_array['anyWitnesses'] = $enc->decrypt_request($h_array['anyWitnesses']);
+            $h_array['driverSeeWhatHappened'] = $enc->decrypt_request($h_array['driverSeeWhatHappened']);
+            $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
+            $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
+            
             return mysql_fetch_array($h_res);
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
@@ -123,6 +135,9 @@ class Railway extends Scene{
                         $this->paraObj->sceneOfInjury = $info['railwayIOType'];
                         $this->paraObj->victimType = $info['victimType'];
                         $this->paraObj->railwayType = $info['railwayType'];
+			$this->paraObj->anyWitnesses = $info['anyWitnesses'];
+			$this->paraObj->driverSeeWhatHappened = $info['driverSeeWhatHappened'];
+			$this->paraObj->weatherType = $info['weatherType'];
                         $this->paraObj->weatherCondition = $info['weatherCondition'];
                         
                         

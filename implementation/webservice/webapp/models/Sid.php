@@ -198,8 +198,38 @@ class Sid extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from sid where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['sidIOType'] = $enc->decrypt_request($h_array['sidIOType']);
+                $h_array['resuscitationAttemped'] = $enc->decrypt_request($h_array['resuscitationAttemped']);
+                $h_array['infantSickLately'] = $enc->decrypt_request($h_array['infantSickLately']);
+                $h_array['infantSickLatelyDescription'] = $enc->decrypt_request($h_array['infantSickLatelyDescription']);
+                $h_array['infantOnMedication'] = $enc->decrypt_request($h_array['infantOnMedication']);
+                $h_array['fallsOrInjuryExperience'] = $enc->decrypt_request($h_array['fallsOrInjuryExperience']);
+                $h_array['infantWearing'] = $enc->decrypt_request($h_array['infantWearing']);
+                $h_array['infantTightlyWrapped'] = $enc->decrypt_request($h_array['infantTightlyWrapped']);
+                $h_array['beddingOverInfant'] = $enc->decrypt_request($h_array['beddingOverInfant']);
+                $h_array['dateAndTimeLastPlaced'] = $enc->decrypt_request($h_array['dateAndTimeLastPlaced']);
+                $h_array['dateAndTimeDeathDiscovered'] = $enc->decrypt_request($h_array['dateAndTimeDeathDiscovered']);
+                $h_array['dateAndTimeLastSeenAlive'] = $enc->decrypt_request($h_array['dateAndTimeLastSeenAlive']);
+                $h_array['anySIDSdeeaths'] = $enc->decrypt_request($h_array['anySIDSdeeaths']);
+                $h_array['photoAfterBodyRemoved'] = $enc->decrypt_request($h_array['photoAfterBodyRemoved']);
+                $h_array['infantLastPlaced'] = $enc->decrypt_request($h_array['infantLastPlaced']);
+                $h_array['infantLastSeenAlive'] = $enc->decrypt_request($h_array['infantLastSeenAlive']);
+                $h_array['whereInfantFoundDead'] = $enc->decrypt_request($h_array['whereInfantFoundDead']);
+                $h_array['dieDuringSleep'] = $enc->decrypt_request($h_array['dieDuringSleep']);
+                $h_array['whatWasInfantDoing'] = $enc->decrypt_request($h_array['whatWasInfantDoing']);
+                $h_array['whatHappenedToInfant'] = $enc->decrypt_request($h_array['whatHappenedToInfant']);
+                $h_array['relationshiptoInfant'] = $enc->decrypt_request($h_array['relationshiptoInfant']);
+                $h_array['whoAttempedResuscitation'] = $enc->decrypt_request($h_array['whoAttempedResuscitation']);
+                $h_array['anyHeatingDevices'] = $enc->decrypt_request($h_array['anyHeatingDevices']);
+                $h_array['anyWeirdSmell'] = $enc->decrypt_request($h_array['anyWeirdSmell']);
+                $h_array['anySmokeSmell'] = $enc->decrypt_request($h_array['anySmokeSmell']);
+                $h_array['infantOneOfTwins'] = $enc->decrypt_request($h_array['infantOneOfTwins']);
+            
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

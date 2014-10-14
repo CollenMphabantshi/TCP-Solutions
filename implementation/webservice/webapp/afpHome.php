@@ -98,6 +98,11 @@
         <div class="row page" id="Page1">
             <div class="col-md-4">
                 <h2>Case information</h2>
+                <div>
+                    <label for="caseSearch">
+                        <input type="search" name="caseSearch" id="userSearch" placeholder="search case by sceneType or forensic officer"  />
+                    </label>
+                </div><br/>
                 <table class="zui-table zui-table-zebra zui-table-horizontal">
                     <thead>
                         <tr>

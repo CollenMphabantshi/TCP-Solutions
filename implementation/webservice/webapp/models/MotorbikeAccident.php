@@ -141,8 +141,26 @@ class MotorbikeAccident extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from mba where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['victimWearingProtectiveClothing'] = $enc->decrypt_request($h_array['victimWearingProtectiveClothing']);
+            $h_array['mbaOutsideType'] = $enc->decrypt_request($h_array['mbaOutsideType']);
+            $h_array['victimsOnMotorcycle'] = $enc->decrypt_request($h_array['victimsOnMotorcycle']);
+            $h_array['motorbikeHitFrom'] = $enc->decrypt_request($h_array['motorbikeHitFrom']);
+            $h_array['typeOfAccident'] = $enc->decrypt_request($h_array['typeOfAccident']);
+            $h_array['victimFlungRoad'] = $enc->decrypt_request($h_array['victimFlungRoad']);
+            $h_array['victimFlungBanister'] = $enc->decrypt_request($h_array['victimFlungBanister']);
+            $h_array['victimFlungCar'] = $enc->decrypt_request($h_array['victimFlungCar']);
+            $h_array['motorBikeFellOnVictim'] = $enc->decrypt_request($h_array['motorBikeFellOnVictim']);
+            $h_array['anyWitnesses'] = $enc->decrypt_request($h_array['anyWitnesses']);
+            $h_array['bodyMoved'] = $enc->decrypt_request($h_array['bodyMoved']);
+            $h_array['victimWearingHelmet'] = $enc->decrypt_request($h_array['victimWearingHelmet']);
+            $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
+            $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
+            
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

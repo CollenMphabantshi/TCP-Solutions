@@ -102,8 +102,17 @@ class Aviation extends Scene{
     }
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from aviation where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['aviationOType'] = $enc->decrypt_request($h_array['aviationOType']);
+            $h_array['aircraftType'] = $enc->decrypt_request($h_array['aircraftType']);
+            $h_array['aircraftNumPeople'] = $enc->decrypt_request($h_array['aircraftNumPeople']);
+            $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
+            $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
+                
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

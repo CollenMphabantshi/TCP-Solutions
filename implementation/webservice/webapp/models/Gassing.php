@@ -131,24 +131,37 @@ class Gassing extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from gassing where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from gassinginside where gassingID=".$h_array['gassingID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['gassingInside'] = $hi_array;
                 }else{
-                    $h_array['gassingInside'] = NULL;
+                    $h_array['gassingInside'] = "null";
                 }
-            $ho_res = mysql_query("select * from gassingoutside where gassingID=".$h_array['gassingID']);
-                if(mysql_num_rows($ho_res) > 0)
-                {
-                    $hi_array = mysql_fetch_array($ho_res);
-                    $h_array['gassingOutside'] = $ho_array;
-                }else{
-                    $h_array['gassingOutside'] = NULL;
-                }
+                
+                $h_array['gassingIOType'] = $enc->decrypt_request($h_array['gassingIOType']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                $h_array['foundInCar'] = $enc->decrypt_request($h_array['foundInCar']);
+                $h_array['wasCarRunning'] = $enc->decrypt_request($h_array['wasCarRunning']);
+                $h_array['carWindowClosed'] = $enc->decrypt_request($h_array['carWindowClosed']);
+                $h_array['pipeConnected'] = $enc->decrypt_request($h_array['pipeConnected']);
+                $h_array['medicationPoisonOnScene'] = $enc->decrypt_request($h_array['medicationPoisonOnScene']);
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

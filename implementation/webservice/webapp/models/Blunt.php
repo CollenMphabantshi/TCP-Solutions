@@ -179,7 +179,7 @@ class Blunt extends Scene{
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
-                    $hi_array = mysql_fetch_array($hi_res);
+                    
                     $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
                     $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
                     $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);

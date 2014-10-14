@@ -100,8 +100,14 @@ class FoetusabandonedBaby extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from foetusabandonedbaby where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            $h_array['foetusabandonedbabyIOType'] = $enc->decrypt_request($h_array['foetusabandonedbabyIOType']);
+            $h_array['howWasBodyDiscovered'] = $enc->decrypt_request($h_array['howWasBodyDiscovered']);
+            $h_array['wasBodyCovered'] = $enc->decrypt_request($h_array['wasBodyCovered']);
+            $h_array['coveredWith'] = $enc->decrypt_request($h_array['coveredWith']);
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

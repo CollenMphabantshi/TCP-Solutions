@@ -112,8 +112,24 @@ class section48 extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from sec48 where sceneID=".$sceneID);
-            return mysql_fetch_array($h_res);
+            $h_array = mysql_fetch_array($h_res);
+            
+            $h_array['victimHospitalized'] = $enc->decrypt_request($h_array['victimHospitalized']);
+            $h_array['medicalEquipmentInSitu'] = $enc->decrypt_request($h_array['medicalEquipmentInSitu']);
+            $h_array['gw7_24file'] = $enc->decrypt_request($h_array['gw7_24file']);
+            $h_array['DrNames'] = $enc->decrypt_request($h_array['DrNames']);
+            $h_array['DrCellNumber'] = $enc->decrypt_request($h_array['DrCellNumber']);
+            $h_array['NurseNames'] = $enc->decrypt_request($h_array['NurseNames']);
+            $h_array['NurseCellNumber'] = $enc->decrypt_request($h_array['NurseCellNumber']);
+            $h_array['hospitalName'] = $enc->decrypt_request($h_array['hospitalName']);
+            $h_array['whoRemovedEquipment'] = $enc->decrypt_request($h_array['whoRemovedEquipment']);
+            $h_array['gw7_24fileFullyComplete'] = $enc->decrypt_request($h_array['gw7_24fileFullyComplete']);
+            $h_array['medicalRecords'] = $enc->decrypt_request($h_array['medicalRecords']);
+            $h_array['importantInfoFromMedicalStuff'] = $enc->decrypt_request($h_array['importantInfoFromMedicalStuff']);
+                        
+            return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
             $this->api->response($this->api->json($error), 400);

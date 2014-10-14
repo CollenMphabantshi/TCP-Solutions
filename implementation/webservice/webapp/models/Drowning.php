@@ -154,16 +154,41 @@ class Drowning extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from drowning where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from drowninginside where drowningID=".$h_array['drowningID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['drowningInside'] = $hi_array;
                 }else{
-                    $h_array['drowningInside'] = NULL;
+                    $h_array['drowningInside'] = "null";
                 }
+                
+                $h_array['drowningIOType'] = $enc->decrypt_request($h_array['drowningIOType']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                $h_array['wasBodyInsideWater'] = $enc->decrypt_request($h_array['wasBodyInsideWater']);
+                $h_array['whoRemovedBody'] = $enc->decrypt_request($h_array['whoRemovedBody']);
+                $h_array['fencedOff'] = $enc->decrypt_request($h_array['fencedOff']);
+                $h_array['wasGateClosed'] = $enc->decrypt_request($h_array['wasGateClosed']);
+                $h_array['waterType'] = $enc->decrypt_request($h_array['waterType']);
+                $h_array['strangulationSuspected'] = $enc->decrypt_request($h_array['strangulationSuspected']);
+                $h_array['smotheringSuspected'] = $enc->decrypt_request($h_array['smotheringSuspected']);
+                $h_array['chockingSuspected'] = $enc->decrypt_request($h_array['chockingSuspected']);
+                
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
@@ -189,7 +214,7 @@ class Drowning extends Scene{
                 $h_array['sceneID'] = $array['sceneID'];
                 $h_array['caseData'] = $this->case->getCaseByScene($h_array['sceneID']);
                 $h_array['sceneData'] = $this->getSceneByID($h_array['sceneID']);
-                $h_array['drowningIO'] = $array['hangingIOType'];
+                $h_array['drowningIOType'] = $array['drowningIOType'];
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];

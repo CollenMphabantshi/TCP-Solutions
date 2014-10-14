@@ -763,7 +763,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Was it a"
+					android:text="Weather condition"
 					android:layout_row="4"
             	android:layout_column="0"
 					/>
@@ -783,7 +783,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Was it a"
+					android:text="Weather type"
 					android:layout_row="5"
             	android:layout_column="0"
 					/>
@@ -886,7 +886,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Victim General history?"
+					android:text="If yes specify"
 					android:layout_row="8"
             	android:layout_column="0"
 					/>

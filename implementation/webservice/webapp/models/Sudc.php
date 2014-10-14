@@ -194,16 +194,53 @@ class Sudc extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from sudc where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from sudcinside where sudcID=".$h_array['sudcID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['sudcInside'] = $hi_array;
                 }else{
-                    $h_array['sudcInside'] = NULL;
+                    $h_array['sudcInside'] = "null";
                 }
+                
+                $h_array['sudcIOType'] = $enc->decrypt_request($h_array['sudcIOType']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                $h_array['anyHeatingDevices'] = $enc->decrypt_request($h_array['anyHeatingDevices']);
+                $h_array['specifiedAppliences'] = $enc->decrypt_request($h_array['specifiedAppliences']);
+                $h_array['wierdSmellInAir'] = $enc->decrypt_request($h_array['wierdSmellInAir']);
+                $h_array['specifiedSmell'] = $enc->decrypt_request($h_array['specifiedSmell']);
+                $h_array['victimBusy'] = $enc->decrypt_request($h_array['victimBusy']);
+                $h_array['victimBusySpecified'] = $enc->decrypt_request($h_array['victimBusySpecified']);
+                $h_array['strangulationSuspected'] = $enc->decrypt_request($h_array['strangulationSuspected']);
+                $h_array['smotheringSuspected'] = $enc->decrypt_request($h_array['smotheringSuspected']);
+                $h_array['chockingSuspected'] = $enc->decrypt_request($h_array['chockingSuspected']);
+                $h_array['physicalExercise'] = $enc->decrypt_request($h_array['physicalExercise']);
+                $h_array['familyMedicalHistory'] = $enc->decrypt_request($h_array['familyMedicalHistory']);
+                $h_array['familyMembersSufferingFrom'] = $enc->decrypt_request($h_array['familyMembersSufferingFrom']);
+                $h_array['familyMembersSuffering'] = $enc->decrypt_request($h_array['familyMembersSuffering']);
+                $h_array['victimFell'] = $enc->decrypt_request($h_array['victimFell']);
+                $h_array['victimComplain'] = $enc->decrypt_request($h_array['victimComplain']);
+                $h_array['victimComplainSpecified'] = $enc->decrypt_request($h_array['victimComplainSpecified']);
+                $h_array['victimTakeMedication'] = $enc->decrypt_request($h_array['victimTakeMedication']);
+                $h_array['victimTakeMedicationSpecified'] = $enc->decrypt_request($h_array['victimTakeMedicationSpecified']);
+                $h_array['suspisionOfAssault'] = $enc->decrypt_request($h_array['suspisionOfAssault']);
+                $h_array['suspisionOfOverdose'] = $enc->decrypt_request($h_array['suspisionOfOverdose']);
+                
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -607,6 +607,7 @@ CREATE TABLE IF NOT EXISTS `mva` (
   `carWasHitFrom` text NOT NULL,
   `victimType` text NOT NULL,
   `carBurnt` text NOT NULL,
+   
    weatherType text null,
     weatherCondition text null,
     anyWitnesses text not null,

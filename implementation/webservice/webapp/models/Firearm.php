@@ -152,16 +152,41 @@ class Firearm extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from firearm where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from firearminside where firearmID=".$h_array['firearmID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['firearmInside'] = $hi_array;
                 }else{
-                    $h_array['firearmInside'] = NULL;
+                    $h_array['firearmInside'] = "null";
                 }
+                
+                $h_array['firearmIOType'] = $enc->decrypt_request($h_array['firearmIOType']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                $h_array['gunshotWounds'] = $enc->decrypt_request($h_array['gunshotWounds']);
+                $h_array['gunshotWoundsLocation'] = $enc->decrypt_request($h_array['gunshotWoundsLocation']);
+                $h_array['gunshotWoundsArea'] = $enc->decrypt_request($h_array['gunshotWoundsArea']);
+                $h_array['firearmOnScene'] = $enc->decrypt_request($h_array['firearmOnScene']);
+                $h_array['firearmCalibre'] = $enc->decrypt_request($h_array['firearmCalibre']);
+                $h_array['firedThroughObject'] = $enc->decrypt_request($h_array['firedThroughObject']);
+                $h_array['firearmUsed'] = $enc->decrypt_request($h_array['firearmUsed']);
+                $h_array['cartridgesFound'] = $enc->decrypt_request($h_array['cartridgesFound']);
+                $h_array['howManyCartridgesFound'] = $enc->decrypt_request($h_array['howManyCartridgesFound']);
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -56,6 +56,15 @@ $(document).ready(function(p){
         }
     });
     
+    $("#caseSearch").change(function(){
+        
+        var searchValue = $(this).val();
+        if(searchValue !== "" && searchValue !== undefined)
+        {
+            findCase(searchValue);
+        }
+    });
+    
     $("#auditSearch").change(function(){
         
         var searchValue = $(this).val();
@@ -666,778 +675,444 @@ function activateUser(link){
 
 function getSceneTypeData(type,sceneData){
     var data = "<tr><td colspan='2' class='table-header'>"+type+" Information</td></tr>";
+    var foetusDesc = ["Where did the scene take place?"];
+    var foetusValue = [sceneData.babyIOType];
+    
+    var aviationDesc = ["Where did the scene take place?","Aircraft type:","Number of people on aircraft:",
+    "Weather condition:","Weather type:"];
+    var aviationValue = [sceneData.aviationOutsideType,sceneData.aircraftType,sceneData.aircraftNumPeople,
+    sceneData.weatherCondition,sceneData.weatherType];
+    
+    var hangingDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Autoerotic Asphyxia?","Partial hanging type:","Complete hanging?","Was ligature around neck?",
+    "Who removed ligature:","Ligature type:","Was strangulation suspected?","Was smothering suspected?",
+    "Was chocking suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
+    "Was the victim alone?","Who was with the victim?"];
+    var hangingValue = [sceneData.hangingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.autoeroticAsphyxia,sceneData.partialHangingType,sceneData.completeHanging,
+        sceneData.ligatureAroundNeck,sceneData.whoRemovedLigature,sceneData.ligatureType,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var bicycleDesc = ["Where did the scene take place?","Bicycle type:","Number of people on bicycle:",
+    "Weather condition:","Bicycle hit:"];
+    var bicycleValue = [sceneData.bicycleOutputType,sceneData.bicycleType,sceneData.bicycleNumPeople,
+    sceneData.weatherCondition,sceneData.bicycleHit];
+
+    var bluntDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Blunt force object suspected:","Was the blunt force object still on scene?",
+    "Was it a community assult?","Was strangulation suspected?","Was smothering suspected?",
+    "Was chocking suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
+    "Was the victim alone?","Who was with the victim?"];
+    var bluntValue = [sceneData.bluntIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.bluntForceObjectSuspected,sceneData.bluntForceObjectStillOnScene,
+    sceneData.wasCommunityAssult,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var burnDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Accelerants at scene?","Accelerants used:","Igniter at scene?","Igniter used:",
+    "Foul play suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
+    "Was the victim alone?","Who was with the victim?"];
+    var burnValue = [sceneData.burnIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.accelerantsAtScene,sceneData.accelerantsUsed,sceneData.igniterAtScene,
+    sceneData.igniterUsed,sceneData.foulPlaySuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var crushDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was the body moved?","Crush between which objects?","Was there any witnesses?",
+    "What was the victim doing?","Was the door locked?","Was the windows closed?",
+    "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
+    var crushValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.wasBodyMoved,sceneData.betweenWhichObjects,sceneData.anyWitness,
+        sceneData.whatWasVictimDoing,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var drowningDesc = ["Where did the scene take place?","Drowning type:","Any signs of struggle?",
+    "Was an alcohol bottle around?","Drug Paraphernalia?","Was the door locked?","Was the windows closed?",
+    "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
+    var drowningValue = [sceneData.drowningIOType,sceneData.drowningType,sceneData.signsOfStruggle,
+        sceneData.alcoholBottleAround,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var lightningDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Any open wire?","Was the scene wet?","Debarking of trees?","Was the door locked?",
+    "Was the windows closed?","Was the windows broken?","Was the victim alone?","Who was with the victim?"];
+    var lightningValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.anyOpenWire,sceneData.sceneWet,sceneData.deBarkingOfTrees,
+        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var firearmDesc = ["Where did the scene take place?","Any gunshot wounds?","Where are the gunshot wounds located:",
+    "Where are the gunshot wounds area?","Was the firearm on scene?","Accelerants used:","Firearm calibre:",
+    "Was the door locked?","Was the windows closed?",
+    "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
+    var firearmValue = [sceneData.firearmIOType,sceneData.gunshotWounds,sceneData.gunshotWoundsLocation,
+        sceneData.gunshotWoundsArea,sceneData.firearmOnScene,sceneData.accelerantsUsed,sceneData.firearmCalibre,
+        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var heightDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Where did the victim fall from?","How high was the fall?","On what did the victim land?",
+    "Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
+    "Who was with the victim?"];
+    var heightValue = [sceneData.heightIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.fromWhat,sceneData.howHigh,sceneData.onWhatVictimLanded,
+        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var gassingDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
+    "Who was with the victim?","Any gassing appliances?","Gassing aplliances used:","Was there a gassing smell?",
+    "Was the victim inside a car?","Description of the scene inside the car:"];
+    var gassingValue = [sceneData.sceneData.gassingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,
+        inside.peopleWithVictim,inside.gassingAppliances,inside.gassingAppliancesUsed,inside.gassingSmell,
+        inside.gassingVictimInCar,inside.victimInCarDescription];
+    
+    var ingestionDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was the door locked?","Was the windows closed?",
+    "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
+    var ingestionValue = [sceneData.ingestionOverdosePoisoningIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
+        inside.victimAlone,inside.peopleWithVictim];
+    
+    var mvaDesc = ["Where did the scene take place?","Was the victim found in car?","Occupants:",
+        "Number of occupants:","Victim was:","Car was hit from:","Victim Type:","Was the car burnt?"];
+    var mvaValue = [sceneData.mvaOutsideType,sceneData.victimFoundInCar,sceneData.occupants,
+    sceneData.numberOfOccupants,sceneData.victimWas,sceneData.carWasHitFrom,sceneData.victimType,sceneData.carBurnt];
+    
+    var mbaDesc = ["Where did the scene take place?","Was the victim wearing protective clothing?",
+        "Victims on motorcycle?","Where was the motorbike hit from?","Type of accident:"];
+    var mbaValue = [sceneData.mbaOutsideType,sceneData.signsOfStruggle,sceneData.victimsOnMotorcycle,
+        sceneData.motorbikeHitFrom,sceneData.typeOfAccident];
+    
+    var pedestrianDesc = ["Where did the scene take place?","Was it a hit and run?","Pedestrian type:",
+        "Number of cars drove over the body:","Victim was:","Weather condition type:",
+        "Weather condition:"];
+    var pedestrianValue = [sceneData.perdestrianOutsideType,sceneData.hitAndRun,sceneData.pedestrianType,
+        sceneData.numberOfCarsDroveOverBody,sceneData.victimJumped,sceneData.weatherType,
+        sceneData.weatherCondition];
+    
+    var railwayDesc = ["Where did the scene take place?","Victim type:","Railway type:"];
+    var railwayValue = [sceneData.railwayIOType,sceneData.victimType,sceneData.railwayType];
+    
+    var sharpDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was the sharp object at scene?",
+    "What are the sharp force injuries of victim?","The injury:",
+    "Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
+    "Who was with the victim?"];
+    var sharpValue = [sceneData.sharpIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.sharpObjectAtScene,sceneData.sharpForceInjuries,sceneData.theInjury,
+        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var sudiDesc = ["Where did the scene take place?","Resuscitation attemped?","Was the infant sick lately?",
+        "Description of infant sickness:","Was the infant on medication?","Any falls or inury experience?",
+        "What was the infant wearing?","Was the infant tightly wrapped?","Bedding over infant?","Date and time last placed:",
+        "Date and time death discovered:","Date and time last seen alive:","Any SID deaths?",
+        "Photo after body removed:","Infant last placed:","Infant last seen alive:","Where was the infant found dead?"];
+    var sudiValue = [sceneData.sidIOType,sceneData.resuscitationAttemped,sceneData.infantSickLately
+        ,sceneData.infantSickLatelyDescription,sceneData.infantOnMedication,sceneData.fallsOrInjuryExperience,
+        sceneData.infantWearing,sceneData.infantTightlyWrapped,sceneData.beddingOverInfant,sceneData.dateAndTimeLastPlaced,
+        sceneData.dateAndTimeDeathDiscovered,sceneData.dateAndTimeLastSeenAlive,sceneData.anySIDSdeaths,
+        sceneData.photoAfterBodyRemoved,sceneData.infantLastPlaced,sceneData.infantLastSeenAlive,
+        sceneData.whereInfantFoundDead];
+    
+    var sudaDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
+    "Was chocking suspected?","Appliances?","Was there a weird smell in the air?"];
+    var sudaValue = [sceneData.sudaIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudaAppliances,sceneData.wierdSmellInAir,
+    inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var sudcDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
+    ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
+    "Was chocking suspected?","Appliances?","Was there a weird smell in the air?"];
+    var sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudcAppliances,sceneData.wierdSmellInAir,
+    inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    
+    var sec48Desc = ["Was the victim hospitalized?","Medical equipment in situ?","gw714file:",
+        "Names of doctors:","Doctor Cell Number:","Nurses Names:","Nurse Cell Number:","Hospital name:",
+        "Who removed equipment?","Is gw7_24 file fully complete?","Any medical records?",
+        "Importantinformation from medical staff:"];
+    var sec48Value = [sceneData.victimHospitalized,sceneData.medicalEquipmentInSitu,sceneData.gw7_24file,
+        sceneData.DrNames,sceneData.DrCellNumber,sceneData.NurseNames,sceneData.NurseCellNumber,sceneData.hospitalName,
+        sceneData.whoRemovedEquipment,sceneData.gw7_24fileFullyComplete,sceneData.medicalRecords,
+        sceneData.importantInfoFromMedicalStuff];
+    
     
     switch (type) {
                     case "Foetus / Abandoned baby":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.babyIOType+"</td>";
-                        data += "</tr>";
+                        for(var i = 0;i < foetusDesc.length;i++)
+                        {
+                            if(foetusValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+foetusDesc[i]+"</td><td>"+foetusValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Aviation accident":    
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.aviationOutsideType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Aircraft type:</td><td>"+sceneData.aircraftType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Number of people on aircraft:</td><td>"+sceneData.aircraftNumPeople+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Weather condition:</td><td>"+sceneData.weatherCondition+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Weather type:</td><td>"+sceneData.weatherType+"</td>";
-                        data += "</tr>";
+                        for(var i = 0;i < aviationDesc.length;i++)
+                        {
+                            if(aviationValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+aviationDesc[i]+"</td><td>"+aviationValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                      case "Hanging":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.hangingIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Autoerotic Asphyxia?</td><td>"+sceneData.autoeroticAsphyxia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Partial hanging type:</td><td>"+sceneData.partialHangingType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Complete hanging?</td><td>"+sceneData.completeHanging+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was ligature around neck?</td><td>"+sceneData.ligatureAroundNeck+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Who removed ligature:</td><td>"+sceneData.whoRemovedLigature+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Ligature type:</td><td>"+sceneData.ligatureType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was strangulation suspected?</td><td>"+sceneData.strangulationSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was smothering suspected?</td><td>"+sceneData.smotheringSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was chocking suspected?</td><td>"+sceneData.chockingSuspected+"</td>";
-                        data += "</tr>";
                         var inside = sceneData.hangingInside;
-                        if(inside !== null)
+                        for(var i = 0;i < hangingDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(hangingValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+hangingDesc[i]+"</td><td>"+hangingValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Bicycle accident":
-                         data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.bicycleOutputType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Bicycle type:</td><td>"+sceneData.bicycleType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Number of people on bicycle:</td><td>"+sceneData.bicycleNumPeople+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Weather condition:</td><td>"+sceneData.weatherCondition+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Bicycle hit:</td><td>"+sceneData.bicycleHit+"</td>";
-                        data += "</tr>";
+                       
+                        for(var i = 0;i < bicycleDesc.length;i++)
+                        {
+                            if(bicycleValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+bicycleDesc[i]+"</td><td>"+bicycleValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Blunt force injury/ assault":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.bluntIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Blunt force object suspected:</td><td>"+sceneData.bluntForceObjectSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the blunt force object still on scene?</td><td>"+sceneData.bluntForceObjectStillOnScene+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was it a community assult?</td><td>"+sceneData.wasCommunityAssult+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was strangulation suspected?</td><td>"+sceneData.strangulationSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was smothering suspected?</td><td>"+sceneData.smotheringSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was chocking suspected?</td><td>"+sceneData.chockingSuspected+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.bluntInside;
-                        if(inside !== null)
+                        for(var i = 0;i < bluntDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(bluntValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+bluntDesc[i]+"</td><td>"+bluntValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Burns":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.burnIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Accelerants at scene?</td><td>"+sceneData.accelerantsAtScene+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Accelerants used:</td><td>"+sceneData.accelerantsUsed+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Igniter at scene?</td><td>"+sceneData.igniterAtScene+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Igniter used:</td><td>"+sceneData.igniterUsed+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Foul play suspected?</td><td>"+sceneData.foulPlaySuspected+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.burnInside;
-                        if(inside !== null)
+                        for(var i = 0;i < burnDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(burnValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+burnDesc[i]+"</td><td>"+burnValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Crush injury":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.crushIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.crushinjuryInside;
-                        if(inside !== null)
+                        for(var i = 0;i < crushDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(crushValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+crushDesc[i]+"</td><td>"+crushValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "deathregister":     
                         break;
                     case "Drowning":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.drowningIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drowning type:</td><td>"+sceneData.drowningType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.drowningInside;
-                        if(inside !== null)
+                        for(var i = 0;i < drowningDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(drowningValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+drowningDesc[i]+"</td><td>"+drowningValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Lightning/ electrocution":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.electrocutionLightningIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any open wire?</td><td>"+sceneData.anyOpenWire+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the scene wet?</td><td>"+sceneData.sceneWet+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Debarking of trees?</td><td>"+sceneData.deBarkingOfTrees+"</td>";
-                        data += "</tr>";
+                       
                         var inside = sceneData.electrocutionlightningInside;
-                        if(inside !== null)
+                       for(var i = 0;i < lightningDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
-                        }
+                            if(lightningValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+lightningDesc[i]+"</td><td>"+lightningValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        } 
                         break;
                     case "Firearm discharge/  gunshot wound":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.firearmIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any gunshot wounds?</td><td>"+sceneData.gunshotWounds+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Where are the gunshot wounds located:</td><td>"+sceneData.gunshotWoundsLocation+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Where are the gunshot wounds area?</td><td>"+sceneData.gunshotWoundsArea+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the firearm on scene?</td><td>"+sceneData.firearmOnScene+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Accelerants used:</td><td>"+sceneData.accelerantsUsed+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Firearm calibre:</td><td>"+sceneData.firearmCalibre+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.firearmInside;
-                        if(inside !== null)
+                       for(var i = 0;i < firearmDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
-                        }
+                            if(firearmValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+firearmDesc[i]+"</td><td>"+firearmValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        } 
                         break;
                     case "Fall/push/jump from height":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.heightIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Where did the victim fall from?</td><td>"+sceneData.fromWhat+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>How high was the fall?</td><td>"+sceneData.howHigh+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>On what did the victim land?</td><td>"+sceneData.onWhatVictimLanded+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.heightInside;
-                        if(inside !== null)
+                        for(var i = 0;i < heightDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(heightValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+heightDesc[i]+"</td><td>"+heightValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Gassing":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.gassingIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.gassingInside;
-                        var outside = sceneData.gassingOutside;
-                        if(inside !== null)
+                        for(var i = 0;i < gassingDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Any gassing appliances?</td><td>"+inside.gassingAppliances+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Gassing aplliances used:</td><td>"+inside.gassingAppliancesUsed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was there a gassing smell?</td><td>"+inside.gassingSmell+"</td>";
-                            data += "</tr>";
-                        }else if(outside !== null){
-                            data += "<tr>";
-                            data += "<td>Was the victim inside a car?</td><td>"+inside.gassingVictimInCar+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Description of the scene inside the car:</td><td>"+inside.victimInCarDescription+"</td>";
-                            data += "</tr>";
+                            if(gassingValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+gassingDesc[i]+"</td><td>"+gassingValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
+                        
                         break;
                     case "Ingestion/overdose /poisoning":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.ingestionOverdosePoisoningIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
+                        
                         var inside = sceneData.ingestionOverdosePoisoningInside;
-                        if(inside !== null)
+                        for(var i = 0;i < ingestionDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(ingestionValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+ingestionDesc[i]+"</td><td>"+ingestionValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Motor vehicle accident":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.mvaOutsideType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the victim found in car?</td><td>"+sceneData.victimFoundInCar+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Occupants:</td><td>"+sceneData.occupants+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Number of occupants:</td><td>"+sceneData.numberOfOccupants+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Victim was:</td><td>"+sceneData.victimWas+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Car was hit from:</td><td>"+sceneData.carWasHitFrom+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Victim Type:</td><td>"+sceneData.victimType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the car burnt?</td><td>"+sceneData.carBurnt+"</td>";
-                        data += "</tr>"
+                        for(var i = 0;i < mvaDesc.length;i++)
+                        {
+                            if(mvaValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+mvaDesc[i]+"</td><td>"+mvaValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Motorbike accident":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.mbaOutsideType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the victim wearing protective clothing?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Victims on motorcycle?</td><td>"+sceneData.victimsOnMotorcycle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Where was the motorbike hit from?</td><td>"+sceneData.motorbikeHitFrom+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Type of accident:</td><td>"+sceneData.typeOfAccident+"</td>";
-                        data += "</tr>";
+                        for(var i = 0;i < mbaDesc.length;i++)
+                        {
+                            if(mvaValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+mbaDesc[i]+"</td><td>"+mbaValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Pedestrian vehicle accident":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.perdestrianOutsideType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was it a hit and run?</td><td>"+sceneData.hitAndRun+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Pedestrian type:</td><td>"+sceneData.pedestrianType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Number of cars drove over the body:</td><td>"+sceneData.numberOfCarsDroveOverBody+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Victim was:</td><td>"+sceneData.victimJumped+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Weather condition type:</td><td>"+sceneData.weatherType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Weather condition:</td><td>"+sceneData.weatherCondition+"</td>";
-                        data += "</tr>";
+                        for(var i = 0;i < pedestrianDesc.length;i++)
+                        {
+                            if(pedestrianValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+pedestrianDesc[i]+"</td><td>"+pedestrianValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Railway accident":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.railwayIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Victim type:</td><td>"+sceneData.victimType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Railway type:</td><td>"+sceneData.railwayType+"</td>";
-                        data += "</tr>";
+                       for(var i = 0;i < railwayDesc.length;i++)
+                        {
+                            if(railwayValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+railwayDesc[i]+"</td><td>"+railwayValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     case "Sharp force injury/ stab injury":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.sharpIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the sharp object at scene?</td><td>"+sceneData.sharpObjectAtScene+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>What are the sharp force injuries of victim?</td><td>"+sceneData.sharpForceInjuries+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>The injury:</td><td>"+sceneData.theInjury+"</td>";
-                        data += "</tr>";
-                        var inside = sceneData.sharpInside;
-                        if(inside !== null)
+                        for(var i = 0;i < sharpDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(sharpValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+sharpDesc[i]+"</td><td>"+sharpValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
+                        var inside = sceneData.sharpInside;
+                        
                         break;
                     case "Sudden unexpected death of an infant (SUDI)":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.sidIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Resuscitation attemped?</td><td>"+sceneData.resuscitationAttemped+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the infant sick lately?</td><td>"+sceneData.infantSickLately+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Description of infant sickness:</td><td>"+sceneData.infantSickLatelyDescription+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the infant on medication?</td><td>"+sceneData.infantOnMedication+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any falls or inury experience?</td><td>"+sceneData.fallsOrInjuryExperience+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>What was the infant wearing?</td><td>"+sceneData.infantWearing+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was the infant tightly wrapped?</td><td>"+sceneData.infantTightlyWrapped+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Bedding over infant?</td><td>"+sceneData.beddingOverInfant+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Date and time last placed:</td><td>"+sceneData.dateAndTimeLastPlaced+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Date and time death discovered:</td><td>"+sceneData.dateAndTimeDeathDiscovered+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Date and time last seen alive:</td><td>"+sceneData.dateAndTimeLastSeenAlive+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any SID deaths?</td><td>"+sceneData.anySIDSdeaths+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Photo after body removed:</td><td>"+sceneData.photoAfterBodyRemoved+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Infant last placed:</td><td>"+sceneData.infantLastPlaced+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Infant last seen alive:</td><td>"+sceneData.infantLastSeenAlive+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Where was the infant found dead?</td><td>"+sceneData.whereInfantFoundDead+"</td>";
-                        data += "</tr>";
-                        break;
-                    case "Sudden unexpected death of an adult/ found dead":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.sudaIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was strangulation suspected?</td><td>"+sceneData.strangulationSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was smothering suspected?</td><td>"+sceneData.smotheringSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was chocking suspected?</td><td>"+sceneData.chockingSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Appliances?</td><td>"+sceneData.sudaAppliances+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was there a weird smell in the air?</td><td>"+sceneData.wierdSmellInAir+"</td>";
-                        data += "</tr>";
-                        
-                        var inside = sceneData.sudaInside;
-                        if(inside !== null)
+                        for(var i = 0;i < sudiDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(sudiValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+sudiDesc[i]+"</td><td>"+sudiValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
+                    case "Sudden unexpected death of an adult/ found dead":
+                        var inside = sceneData.sudaInside;
+                        for(var i = 0;i < sudaDesc.length;i++)
+                        {
+                            if(sudaValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+sudaDesc[i]+"</td><td>"+sudaValue[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
+                        
+                        
+                        break;
                     case "Sudden unexpected death of a child  (1 – 18 years)":
-                        data += "<tr>";
-                        data += "<td>Where did the scene take place?</td><td>"+sceneData.sudcIOType+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Any signs of struggle?</td><td>"+sceneData.signsOfStruggle+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was an alcohol bottle around?</td><td>"+sceneData.alcoholBottleAround+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Drug Paraphernalia?</td><td>"+sceneData.drugParaphernalia+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was strangulation suspected?</td><td>"+sceneData.strangulationSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was smothering suspected?</td><td>"+sceneData.smotheringSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was chocking suspected?</td><td>"+sceneData.chockingSuspected+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Appliances?</td><td>"+sceneData.sudaAppliances+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Was there a weird smell in the air?</td><td>"+sceneData.wierdSmellInAir+"</td>";
-                        data += "</tr>";
                         
                         var inside = sceneData.sudcInside;
-                        if(inside !== null)
+                        for(var i = 0;i < sudcDesc.length;i++)
                         {
-                            data += "<tr>";
-                            data += "<td>Was the door locked?</td><td>"+inside.doorLocked+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows closed?</td><td>"+inside.windowsClosed+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the windows broken?</td><td>"+inside.windowsBroken+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Was the victim alone?</td><td>"+inside.victimAlone+"</td>";
-                            data += "</tr>";
-                            data += "<tr>";
-                            data += "<td>Who was with the victim?</td><td>"+inside.peopleWithVictim+"</td>";
-                            data += "</tr>";
+                            if(sudcValue[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+sudcDesc[i]+"</td><td>"+sudcValue[i]+"</td>";
+                                data += "</tr>";
+                            }
                         }
                         break;
                     case "Section 48  death –surgical case":
-                        data += "<tr>";
-                        data += "<td>Was the victim hospitalized?</td><td>"+sceneData.victimHospitalized+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Medical equipment in situ?</td><td>"+sceneData.medicalEquipmentInSitu+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>gw714file:</td><td>"+sceneData.gw714file+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Names of doctors:</td><td>"+sceneData.DrNames+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Doctor Cell Number:</td><td>"+sceneData.DrCellNumber+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Nurses Names:</td><td>"+sceneData.NurseNames+"</td>";
-                        data += "</tr>";
-                        data += "<tr>";
-                        data += "<td>Nurse Cell Number:</td><td>"+sceneData.NurseCellNumber+"</td>";
-                        data += "</tr>";
+                        for(var i = 0;i < sec48Desc.length;i++)
+                        {
+                            if(sec48Value[i] !== "null")
+                            {
+                                data += "<tr>";
+                                data += "<td>"+sec48Desc[i]+"</td><td>"+sec48Value[i]+"</td>";
+                                data += "</tr>";
+                            }
+                        }
                         break;
                     default:
                         break;

@@ -132,16 +132,38 @@ class SharpForceInjury extends Scene{
     
     public function getDataBySceneID($sceneID) {
         try{
+            $enc = new Encryption();
             $h_res = mysql_query("select * from sharp where sceneID=".$sceneID);
             $h_array = mysql_fetch_array($h_res);
             $hi_res = mysql_query("select * from sharpinside where sharpID=".$h_array['sharpID']);
                 if(mysql_num_rows($hi_res) > 0)
                 {
                     $hi_array = mysql_fetch_array($hi_res);
+                    $hi_array['doorLocked'] = $enc->decrypt_request($hi_array['doorLocked']);
+                    $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
+                    $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
+                    $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
+                    if($hi_array['peopleWithVictim'] !== NULL)
+                    {
+                        $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
+                    }else{
+                        $hi_array['peopleWithVictim'] = "none";
+                    }
                     $h_array['sharpInside'] = $hi_array;
                 }else{
-                    $h_array['sharpInside'] = NULL;
+                    $h_array['sharpInside'] = "null";
                 }
+                
+                $h_array['sharpIOType'] = $enc->decrypt_request($h_array['sharpIOType']);
+                $h_array['sharpObjectSuspected'] = $enc->decrypt_request($h_array['sharpObjectSuspected']);
+                $h_array['sharpObjectAtScene'] = $enc->decrypt_request($h_array['sharpObjectAtScene']);
+                $h_array['sharpForceInjuries'] = $enc->decrypt_request($h_array['sharpForceInjuries']);
+                $h_array['theInjuryConcentrated'] = $enc->decrypt_request($h_array['theInjuryConcentrated']);
+                $h_array['theInjuryMainlyOn'] = $enc->decrypt_request($h_array['theInjuryMainlyOn']);
+                $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
+                $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
+                $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
+                
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");
