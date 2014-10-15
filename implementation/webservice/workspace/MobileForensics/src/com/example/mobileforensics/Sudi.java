@@ -622,7 +622,7 @@ public void readAllFiles(){
 						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										
+										clearFilelds();
 										Toast.makeText(Sudi.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -979,7 +979,7 @@ public void readAllFiles(){
 			info.accumulate("whatWasInfantDoing", Encryption.bytesToHex(enc.encrypt(getInfantDoing())));
 			info.accumulate("whatHappenedToInfant", Encryption.bytesToHex(enc.encrypt((String)didInfant.getSelectedItem())));
 			//need to change
-			 info.accumulate("photoAfterBodyRemoved", Encryption.bytesToHex(enc.encrypt(whoFoundBody.getText().toString())));
+			 info.accumulate("whoFoundBody", Encryption.bytesToHex(enc.encrypt(whoFoundBody.getText().toString())));
 			 
 			 info.accumulate("relationshiptoInfant", Encryption.bytesToHex(enc.encrypt(relationshipToInfant.getText().toString())));
 			 
@@ -1027,7 +1027,7 @@ public void readAllFiles(){
 		        	info.accumulate("infantOnMedication", Encryption.bytesToHex(enc.encrypt("No")));
 		        }
 			 
-			 info.accumulate("", Encryption.bytesToHex(enc.encrypt(infantMedicationYes.getText().toString())));
+			 info.accumulate("infantMedicationYes", Encryption.bytesToHex(enc.encrypt(infantMedicationYes.getText().toString())));
 			
 			
 			//Scene of injury
@@ -1045,7 +1045,7 @@ public void readAllFiles(){
 		        }
 			 
 			  
-			 info.accumulate("", Encryption.bytesToHex(enc.encrypt(otherWasheaterOrOpenfire.getText().toString())));
+			 info.accumulate("otherWasheaterOrOpenfire", Encryption.bytesToHex(enc.encrypt(otherWasheaterOrOpenfire.getText().toString())));
 			 
 			 if(weiredSmell .isChecked())
 		        {
@@ -1054,7 +1054,7 @@ public void readAllFiles(){
 		        	info.accumulate("anyWeirdSmell", Encryption.bytesToHex(enc.encrypt("No")));
 		        }
 			 
-			 info.accumulate("", Encryption.bytesToHex(enc.encrypt(otherWeiredSmell.getText().toString())));
+			 info.accumulate("otherWeiredSmell", Encryption.bytesToHex(enc.encrypt(otherWeiredSmell.getText().toString())));
 			 
 			 if(smokeOfCigarette .isChecked())
 		        {
@@ -1328,7 +1328,7 @@ public void readAllFiles(){
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						clearFilelds();
+						
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
@@ -1345,7 +1345,31 @@ public void readAllFiles(){
 	
     }
     
- 
+    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			boolean status = false; 
+			try{
+			// TODO Auto-generated method stub
+			
+				if(params[0] != null){
+					
+					return true;
+				}
+			
+			}catch(Exception e){e.printStackTrace();}
+			return status;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+		}
+	
+    }
 
 	@Override
 	public void hidePage() {

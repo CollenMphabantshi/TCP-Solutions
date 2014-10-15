@@ -967,9 +967,9 @@ public void readAllFiles(){
 	        
 	        if(driverSeeWhatHappenedYes .isChecked())
 	        {
-	        	info.accumulate("victimFlungRoad", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("driverSeeWhatHappened", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("victimFlungRoad", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("driverSeeWhatHappened", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        if(EyewitnessesYes .isChecked())
@@ -979,13 +979,27 @@ public void readAllFiles(){
 	        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        info.accumulate("motorbikeHitFrom", Encryption.bytesToHex(enc.encrypt((String)wasVictim.getSelectedItem())));
-	        info.accumulate("motorbikeHitFrom", Encryption.bytesToHex(enc.encrypt((String)whereWasBodyFound.getSelectedItem())));
-	        info.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(otherSpecifyBodyFound.getText().toString())));
-	        info.accumulate("typeOfAccident", Encryption.bytesToHex(enc.encrypt((String)accidentType.getSelectedItem()))); 
-	        info.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(otherSpecifyAccidentType.getText().toString())));
+	        info.accumulate("victimType", Encryption.bytesToHex(enc.encrypt((String)wasVictim.getSelectedItem())));
+	        
+	        String otype = (String)whereWasBodyFound.getSelectedItem();
+	        
+			if(otype.toLowerCase().equals("other")){
+				otype = otherSpecifyBodyFound.getText().toString();
+			}
+			
+	        info.accumulate("railwayIOType", Encryption.bytesToHex(enc.encrypt(otype)));
+	        
+	        String atype = (String)accidentType.getSelectedItem();
+	        
+			if(atype.toLowerCase().equals("other")){
+				atype = otherSpecifyAccidentType.getText().toString();
+			}
+			
+	        info.accumulate("railwayType", Encryption.bytesToHex(enc.encrypt(atype))); 
+	        
 	        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt((String)weatherType.getSelectedItem())));
 	        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt((String)weatherCondition.getSelectedItem())));
+	        
 	        array.put(info);
 	        obj.accumulate("object", array);
 	        currentDataSaved = obj;
@@ -1156,13 +1170,24 @@ public void readAllFiles(){
         }
         
         info.accumulate("victimType", Encryption.bytesToHex(enc.encrypt((String)wasVictim.getSelectedItem())));
-        info.accumulate("railwayIOType", Encryption.bytesToHex(enc.encrypt((String)whereWasBodyFound.getSelectedItem())));
-        info.accumulate("railwayIOType", Encryption.bytesToHex(enc.encrypt(otherSpecifyBodyFound.getText().toString())));
-        info.accumulate("railwayType", Encryption.bytesToHex(enc.encrypt((String)accidentType.getSelectedItem()))); 
-        info.accumulate("railwayType", Encryption.bytesToHex(enc.encrypt(otherSpecifyAccidentType.getText().toString())));
+        String otype = (String)whereWasBodyFound.getSelectedItem();
+        
+		if(otype.toLowerCase().equals("other")){
+			otype = otherSpecifyBodyFound.getText().toString();
+		}
+		
+        info.accumulate("railwayIOType", Encryption.bytesToHex(enc.encrypt(otype)));
+        
+        String atype = (String)accidentType.getSelectedItem();
+        
+		if(atype.toLowerCase().equals("other")){
+			atype = otherSpecifyAccidentType.getText().toString();
+		}
+		
+        info.accumulate("railwayType", Encryption.bytesToHex(enc.encrypt(atype))); 
+        
         info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt((String)weatherType.getSelectedItem())));
         info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt((String)weatherCondition.getSelectedItem())));
-   
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;

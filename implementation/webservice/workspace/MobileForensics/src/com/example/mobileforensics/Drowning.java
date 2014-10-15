@@ -1095,7 +1095,7 @@ public class Drowning extends Activity implements GlobalMethods, OnMyLocationCha
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("drowning"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
@@ -1372,7 +1372,7 @@ public class Drowning extends Activity implements GlobalMethods, OnMyLocationCha
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));

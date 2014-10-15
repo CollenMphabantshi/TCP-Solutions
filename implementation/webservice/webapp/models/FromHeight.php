@@ -53,7 +53,7 @@ class FromHeight extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Fall/push/jump from height",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->heightIOType = $formData['object'][$i]['heightIOType'];
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -65,13 +65,16 @@ class FromHeight extends Scene{
                 $this->paraObjAll->anyWitnesses = $formData['object'][$i]['anyWitnesses']; 
                 //
                $sceneID = $this->createScene();
-                 if($sceneID == NULL){
+                 if($sceneID === NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.  $sceneID".$sceneID);
                      $this->api->response($this->api->json($error), 400);
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addHeight($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addHeight($sceneID,FALSE,null);
@@ -84,16 +87,30 @@ class FromHeight extends Scene{
     }
     
     public function addHeight($sceneID,$inside,$object) {
+        $heightIOType = $this->paraObjAll->heightIOType;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+        $fromWhat = $this->paraObjAll->fromWhat;
+        $howHigh = $this->paraObjAll->howHigh;
+        $onWhatVictimLanded = $this->paraObjAll->onWhatVictimLanded;
+        $anyWitnesses = $this->paraObjAll->anyWitnesses;
+        $h_res = mysql_query("insert into height values(0,$sceneID,"
+                . "'$heightIOType',"
+                . "'$signsOfStruggle',"
+                . "'$alcoholBottleAround',"
+                . "'$drugParaphernalia',"
+                . "'$fromWhat',"
+                . "'$howHigh',"
+                . "'$onWhatVictimLanded',"
+                . "'$anyWitnesses')");
         
-        $h_res1 = mysql_query("insert into height values(0,"
-        .$sceneID.",'$this->paraObjAll->heightIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->fromWhat','$this->paraObjAll->howHigh','$this->paraObjAll->onWhatVictimLanded','$this->paraObjAll->anyWitnesses')");
-        
-        if($h_res1 == FALSE){
-            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.1");
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
         
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select heightID from height where sceneID=".$sceneID);
             $heightID = mysql_result($h_res,0,'heightID');
             $dl = $object['doorLocked'];
@@ -101,7 +118,8 @@ class FromHeight extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into heightinside values(0,".$heightID.",'$dl','$wc','$wb','$va','$pv')");
             }else{

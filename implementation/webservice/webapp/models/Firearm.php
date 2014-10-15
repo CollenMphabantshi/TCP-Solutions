@@ -35,7 +35,7 @@ class Firearm extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Firearm",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Firearm discharge/  gunshot wound",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->firearmIOType = $formData['object'][$i]['firearmIOType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -58,8 +58,10 @@ class Firearm extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                echo "TEST: ".$formData['object'][$i]['victims']['victimInside'];
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addFirearm($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addFirearm($sceneID,FALSE,null);
@@ -72,7 +74,26 @@ class Firearm extends Scene{
     }
     
     private function addFirearm($sceneID,$inside,$object) {
-        $f_res = mysql_query("insert into firearm values(0,$sceneID,'$this->firearmIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->gunshotWounds','$this->gunshotWoundsLocation','$this->gunshotWoundsArea','$this->firearmOnScene','$this->firearmCalibre','$this->firedThroughObject','$this->firearmUsed','$this->cartridgesFound','$this->howManyCartridgesFound')");
+        $h_res = mysql_query("insert into firearm values(0,$sceneID,"
+                . "'$this->firearmIOType',"
+                . "'$this->signsOfStruggle',"
+                . "'$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia',"
+                . "'$this->gunshotWounds',"
+                . "'$this->gunshotWoundsLocation',"
+                . "'$this->gunshotWoundsArea',"
+                . "'$this->firearmOnScene',"
+                . "'$this->firearmCalibre',"
+                . "'$this->firedThroughObject',"
+                . "'$this->firearmUsed',"
+                . "'$this->cartridgesFound',"
+                . "'$this->howManyCartridgesFound')");
+        
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
         if($inside == TRUE){
             $h_res = mysql_query("select firearmID from firearm where sceneID=".$sceneID);
             $firearmID = mysql_result($h_res,0,'firearmID');
@@ -81,13 +102,17 @@ class Firearm extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into firearmInside values(0,".$firearmID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into firearmInside values(0,".$firearmID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
     }
     public function getAllFirearm() {
         try{

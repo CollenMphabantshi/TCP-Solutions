@@ -190,7 +190,7 @@
         <item>Dam</item>
         <item>River </item>
         <item>Bucket </item>
-        <item>Other </item>
+        <item>Other</item>
     </string-array>
     
     <string-array name="railwayActidentType">
@@ -199,7 +199,7 @@
         <item>person walking/jumping/push in front of train/ on tracks</item>
         <item>person lying on the tracks</item>
         <item>person pushed/jumped from train </item>
-        <item>other (specify)</item>
+        <item>other</item>
         
     </string-array>
 	
@@ -211,7 +211,7 @@
         <item>Sidewalk</item>
         <item>Grave road</item>
         <item>Dirt road</item>
-        <item>Other (specify)</item>
+        <item>Other</item>
     </string-array>
     
 	<string-array name="removedBy">

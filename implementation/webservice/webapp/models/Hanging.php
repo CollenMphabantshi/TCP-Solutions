@@ -85,19 +85,34 @@ class Hanging extends Scene{
     private function addHanging($sceneID,$inside,$object) {
          $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
          
-        if($this->whoRemovedLigature != NULL)
-        {
-            $h_res = mysql_query("insert into hanging values(0,"
-            .$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck','$this->whoRemovedLigature','$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->bodyCutDown','$this->whoCutDownBody','$this->suspensionPointUsed')")
+        //if($this->whoRemovedLigature != NULL)
+        //{
+            $h_res = mysql_query("insert into hanging values(0,$sceneID,"
+                    . "'$this->hangingIOType',"
+                    . "'$this->signsOfStruggle',"
+                    . "'$this->alcoholBottleAround',"
+                    . "'$this->drugParaphernalia',"
+                    . "'$this->autoeroticAsphyxia',"
+                    . "'$this->partialHangingType',"
+                    . "'$this->completeHanging',"
+                    . "'$this->ligatureAroundNeck',"
+                    . "'$this->whoRemovedLigature',"
+                    . "'$this->ligatureType',"
+                    . "'$this->strangulationSuspected',"
+                    . "'$this->smotheringSuspected',"
+                    . "'$this->chockingSuspected',"
+                    . "'$this->bodyCutDown',"
+                    . "'$this->whoCutDownBody',"
+                    . "'$this->suspensionPointUsed')")
                 or $this->api->response($this->api->json($error), 400);
-        }else{
+       /* }else{
             $h_res = mysql_query("insert into hanging values(0,"
             .$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->bodyCutDown','$this->whoCutDownBody','$this->suspensionPointUsed')")
               or  $this->api->response($this->api->json($error), 400);
-        }
+        }*/
         
         if($inside == TRUE){
-            $h_res = mysql_query("select hangingID from hanging where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400);
+            $h_res = mysql_query("select * from hanging where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400);
             $hangingID = mysql_result($h_res,0,'hangingID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
@@ -112,6 +127,8 @@ class Hanging extends Scene{
                 $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     public function getAllHangings() {
         $error = array('status' => "Failed", "msg" => "Request to get hanging scenea was denied.");

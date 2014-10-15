@@ -75,12 +75,13 @@ class Sudc extends Scene{
                 $this->suspisionOfOverdose = $formData['object'][$i]['suspisionOfOverdose'];
                     //
                 $sceneID = $this->createScene();
-                $error = array('status' => "Failed", "msg" => "sceneID=".$sceneID);
-                     $this->api->response($this->api->json($error), 400);
+                
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addSudc($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addSudc($sceneID,FALSE,null);
@@ -94,24 +95,48 @@ class Sudc extends Scene{
     
     private function addSudc($sceneID,$inside,$object) {
         $enc = new Encryption();
-        $h_res = mysql_query("insert into sudc values(0,$sceneID,'$this->sudcIOType','$this->signsOfStruggle','$this->alcoholBottleAround',"
-                . "'$this->drugParaphernalia','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected',"
-                . "'$this->anyHeatingDevices','$this->anyHeatingDevices','$this->wierdSmellInAir','$this->specifiedSmell','$this->victimBusy',"
-                . "'$this->victimBusySpecified','$this->physicalExercise','$this->familyMedicalHistory',"
-                . "'$this->familyMembersSufferingFrom','$this->familyMembersSuffering','$this->victimFell','$this->victimComplain',"
-                . "'$this->victimComplainSpecified','$this->victimTakeMedication','$this->victimTakeMedicationSpecified',"
-                . "'$this->suspisionOfAssault','$this->suspisionOfOverdose')");
+        $h_res = mysql_query("insert into sudc values(0,$sceneID,"
+                . "'$this->sudcIOType',"
+                . "'$this->signsOfStruggle',"
+                . "'$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia',"
+                . "'$this->strangulationSuspected',"
+                . "'$this->smotheringSuspected',"
+                . "'$this->chockingSuspected',"
+                . "'$this->anyHeatingDevices',"
+                . "'$this->anyHeatingDevices',"
+                . "'$this->wierdSmellInAir',"
+                . "'$this->specifiedSmell',"
+                . "'$this->victimBusy',"
+                . "'$this->victimBusySpecified',"
+                . "'$this->physicalExercise',"
+                . "'$this->familyMedicalHistory',"
+                . "'$this->familyMembersSufferingFrom',"
+                . "'$this->familyMembersSuffering',"
+                . "'$this->victimFell',"
+                . "'$this->victimComplain',"
+                . "'$this->victimComplainSpecified',"
+                . "'$this->victimTakeMedication',"
+                . "'$this->victimTakeMedicationSpecified',"
+                . "'$this->suspisionOfAssault',"
+                . "'$this->suspisionOfOverdose')");
         
-        if($inside == TRUE){
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
+        if($inside === TRUE){
             $h_res = mysql_query("select sudcID from sudc where sceneID=".$sceneID);
             $sudcID = mysql_result($h_res,0,'sudcID');
-            $enc = new Encryption();
+            
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
             
+            $enc = new Encryption();
             if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into sudcinside values(0,$sudcID,'$dl','$wc','$wb','$va','$pv')");
@@ -119,6 +144,9 @@ class Sudc extends Scene{
                 $hi_res = mysql_query("insert into sudcinside values(0,$sudcID,'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     public function getAllSudc() {
         try{

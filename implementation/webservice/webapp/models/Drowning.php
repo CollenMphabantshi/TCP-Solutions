@@ -39,7 +39,7 @@ class Drowning extends Scene{
                 parent::__construct($formData['object'][$i]['sceneTime'],"Drowning",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                
-                $this->drowningIO = $formData['object'][$i]['drowningIO'];
+                $this->drowningIOType = $formData['object'][$i]['drowningIOType'];
                 $this->drowningType = $formData['object'][$i]['drowningType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
@@ -47,7 +47,7 @@ class Drowning extends Scene{
                 $this->wasBodyInsideWater = $formData['object'][$i]['wasBodyInsideWater'];
                 $this->whoRemovedBody = $formData['object'][$i]['whoRemovedBody'];
                 $this->fencedOff = $formData['object'][$i]['fencedOff'];
-                $this->wasGateClosed = $formData['object'][$i]['dwasGateClosed'];
+                $this->wasGateClosed = $formData['object'][$i]['wasGateClosed'];
                 $this->waterType = $formData['object'][$i]['waterType'];
                 $this->strangulationSuspected = $formData['object'][$i]['strangulationSuspected'];
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
@@ -61,7 +61,9 @@ class Drowning extends Scene{
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addDrowning($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addDrowning($sceneID,FALSE,null);
@@ -75,8 +77,27 @@ class Drowning extends Scene{
     
     private function addDrowning($sceneID,$inside,$object) {
        $d_res = mysql_query("insert into drowning values(0,$sceneID,"
-        . "'$this->drowningIOType','$this->drowningType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasBodyInsideWater','$this->whoRemovedBody','$this->fencedOff','$this->wasGateClosed','$this->waterType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected')");
-        if($inside == TRUE){
+        . "'$this->drowningIOType',"
+        . "'$this->drowningType',"
+        . "'$this->signsOfStruggle',"
+        . "'$this->alcoholBottleAround',"
+        . "'$this->drugParaphernalia',"
+               . "'$this->wasBodyInsideWater',"
+               . "'$this->whoRemovedBody',"
+               . "'$this->fencedOff',"
+               . "'$this->wasGateClosed',"
+               . "'$this->waterType',"
+               . "'$this->strangulationSuspected',"
+               . "'$this->smotheringSuspected',"
+               . "'$this->chockingSuspected')");
+        
+       
+       if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
+       if($inside === TRUE){
             $h_res = mysql_query("select * from drowning where sceneID=".$sceneID);
             $drowningID = mysql_result($h_res,0,'drowningID');
             $dl = $object['doorLocked'];
@@ -84,13 +105,17 @@ class Drowning extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "Yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into drowninginside values(0,".$drowningID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into drowninginside values(0,".$drowningID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
     }
     public function getAllDrowning() {
         try{

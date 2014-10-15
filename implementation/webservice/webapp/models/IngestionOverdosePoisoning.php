@@ -46,7 +46,7 @@ class IngestionOverdosePoisoning extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Ingestion/overdose /poisoning",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->ingestionOverdosePoisoningIOType = $formData['object'][$i]['ingestionOverdosePoisoningIOType'];
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -63,7 +63,10 @@ class IngestionOverdosePoisoning extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addIngestionOverdosePoisoning($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addIngestionOverdosePoisoning($sceneID,FALSE,null);
@@ -76,17 +79,30 @@ class IngestionOverdosePoisoning extends Scene{
     }
     
     public function addIngestionOverdosePoisoning($sceneID,$inside,$object) {
+        $ingestionOverdosePoisoningIOType = $this->paraObjAll->ingestionOverdosePoisoningIOType;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $suspectedDrug = $this->paraObjAll->suspectedDrug;
+        $suspectedDrugOnScene = $this->paraObjAll->suspectedDrugOnScene;
+        $whyIngestionOverdoseSuspected = $this->paraObjAll->whyIngestionOverdoseSuspected;
         
-        $h_res = mysql_query("insert into ingestionoverdosepoisoning values(0,"
-        .$sceneID.",'$this->paraObjAll->ingestionOverdosePoisoningIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAlls->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->suspectedDrug','$this->paraObjAll->suspectedDrugOnScene','$this->paraObjAll->whyIngestionOverdoseSuspected')");
+        
+        $h_res = mysql_query("insert into ingestionoverdosepoisoning values(0,$sceneID,"
+                . "'$ingestionOverdosePoisoningIOType',"
+                . "'$signsOfStruggle',"
+                . "'$alcoholBottleAround',"
+                . "'$drugParaphernalia',"
+                . "'$suspectedDrug',"
+                . "'$suspectedDrugOnScene',"
+                . "'$whyIngestionOverdoseSuspected')");
         
         
-        if($h_res == FALSE){
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
         
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select ingestionOverdosePoisoningID from ingestionoverdosepoisoning where sceneID=".$sceneID);
             $ingestionOverdosePoisoningID = mysql_result($h_res,0,'ingestionOverdosePoisoningID');
             $dl = $object['doorLocked'];
@@ -95,13 +111,17 @@ class IngestionOverdosePoisoning extends Scene{
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
             
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into ingestionoverdosepoisoninginside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into ingestionoverdosepoisoninginside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
         
     }
     

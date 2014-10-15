@@ -517,7 +517,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		doneButton = (Button)findViewById(R.id.foetus_doneButton);
 		logoutButton = (Button)findViewById(R.id.foetus_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.foetus_BackToMenu);
+		
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -970,7 +970,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("foetus"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();

@@ -1092,7 +1092,7 @@ public void readAllFiles(){
 	        }else{
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        victims.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt(victimAloneSpecify.getText().toString())));
+	        info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt(victimAloneSpecify.getText().toString())));
 	        
 	        if(heaterOrOpenFireYes.isChecked())
 	        {
@@ -1100,7 +1100,7 @@ public void readAllFiles(){
 	        }else{
 	        	info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        victims.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt(heaterOrOpenFireYesSpecify.getText().toString())));
+	        info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt(heaterOrOpenFireYesSpecify.getText().toString())));
 	        
 	        if(weiredSmellYes .isChecked())
 	        {
@@ -1371,7 +1371,7 @@ public void readAllFiles(){
         }else{
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        victims.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt(victimAloneSpecify.getText().toString())));
+        info.accumulate("peopleWithVictim", Encryption.bytesToHex(enc.encrypt(victimAloneSpecify.getText().toString())));
         
         if(heaterOrOpenFireYes.isChecked())
         {
@@ -1379,7 +1379,7 @@ public void readAllFiles(){
         }else{
         	info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        victims.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt(heaterOrOpenFireYesSpecify.getText().toString())));
+        info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt(heaterOrOpenFireYesSpecify.getText().toString())));
         
         if(weiredSmellYes .isChecked())
         {

@@ -30,14 +30,14 @@
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-19</location>
 		</link>
 		<link>
-			<name>.link4</name>
-			<type>2</type>
-			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-20</location>
-		</link>
-		<link>
 			<name>.link5</name>
 			<type>2</type>
 			<location>C:/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/sources/android-14</location>
+		</link>
+		<link>
+			<name>.link6</name>
+			<type>2</type>
+			<location>C:/Users/Latitude/Documents/software/new/Android/adt-bundle-windows-x86-20140702/sdk</location>
 		</link>
 	</linkedResources>
 </projectDescription>

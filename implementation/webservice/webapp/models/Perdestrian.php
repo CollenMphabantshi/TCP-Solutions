@@ -57,7 +57,7 @@ class Perdestrian extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-				$this->addPedestrian($sceneID);
+		$this->addPedestrian($sceneID);
                 
             }
             
@@ -68,13 +68,26 @@ class Perdestrian extends Scene{
     
     private function addPedestrian($sceneID) {
         
-            $h_res = mysql_query("insert into pedestrian values(0,"
-            .$sceneID.",'$this->perdestrianOutsideType','$this->hitAndRun','$this->pedestrianType','$this->numberOfCarsDroveOverBody','$this->weatherType','$this->weatherCondition','$this->typeOfCar','$this->anyWitnesses','$this->bodyMoved','$this->victimJumped','$this->anyStrangeCircumstances')");
+            $h_res = mysql_query("insert into pedestrian values(0,$sceneID,"
+                    . "'$this->perdestrianOutsideType',"
+                    . "'$this->hitAndRun',"
+                    . "'$this->pedestrianType',"
+                    . "'$this->numberOfCarsDroveOverBody',"
+                    . "'$this->weatherType',"
+                    . "'$this->weatherCondition',"
+                    . "'$this->typeOfCar',"
+                    . "'$this->anyWitnesses',"
+                    . "'$this->bodyMoved',"
+                    . "'$this->victimJumped',"
+                    . "'$this->anyStrangeCircumstances')");
 			
-			 if($h_res == FALSE){
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     public function getAllPedestrian() {
         try{

@@ -53,7 +53,7 @@ class Gassing extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Gassing",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->gassingIOType = $formData['object'][$i]['gassingIOType'];
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -72,7 +72,10 @@ class Gassing extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addGassing($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addGassing($sceneID,FALSE,null);
@@ -85,9 +88,26 @@ class Gassing extends Scene{
     }
     
     public function addGassing($sceneID,$inside,$object) {
+        $gassingIOType = $this->paraObjAll->gassingIOType;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+        $foundInCar = $this->paraObjAll->foundInCar;
+        $wasCarRunning = $this->paraObjAll->wasCarRunning;
+        $carWindowClosed = $this->paraObjAll->carWindowClosed;
+        $pipeConnected = $this->paraObjAll->pipeConnected;
+        $medicationPoisonOnScene = $this->paraObjAll->medicationPoisonOnScene;
+        $h_res = mysql_query("insert into gassing values(0,$sceneID,"
+                . "'$gassingIOType',"
+                . "'$signsOfStruggle',"
+                . "'$alcoholBottleAround',"
+                . "'$drugParaphernalia',"
+                . "'$foundInCar',"
+                . "'$wasCarRunning',"
+                . "'$carWindowClosed',"
+                . "'$pipeConnected',"
+                . "'$medicationPoisonOnScene')");
         
-        $h_res = mysql_query("insert into gassing values(0,"
-        .$sceneID.",'$this->paraObjAll->gassingIOType','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->foundInCar','$this->paraObjAll->wasCarRunning','$this->paraObjAll->carWindowClosed','$this->paraObjAll->pipeConnected','$this->paraObjAll->medicationPoisonOnScene')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -104,13 +124,17 @@ class Gassing extends Scene{
             $ga = $object['gassingAppliances']; 
             $gau = $object['gassingAppliancesUsed'];
             $gs = $object['gassingSmell'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into gassinginside values(0,".$gassingID.",'$dl','$wc','$wb','$va','$pv','$ga','$gau','$gs')");
             }else{
                 $hi_res = mysql_query("insert into gassinginside values(0,".$gassingID.",'$dl','$wc','$wb','$va',null','$ga','$gau','$gs)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
         
     }
     

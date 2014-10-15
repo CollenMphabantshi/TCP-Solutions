@@ -27,7 +27,7 @@ class FoetusabandonedBaby extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"FoetusabandonedBaby",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Foetus / Abandoned baby",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->foetusabandonedbabyIOType = $formData['object'][$i]['foetusabandonedbabyIOType'];
                 $this->howWasBodyDiscovered = $formData['object'][$i]['howWasBodyDiscovered'];
@@ -42,18 +42,27 @@ class FoetusabandonedBaby extends Scene{
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
-                    $this->addFoetusabandonedBaby($sceneID,TRUE,$formData['object'][$i]);
-                }else{
-                    $this->addFoetusabandonedBaby($sceneID,FALSE,null);
-                }
+                $this->addFoetusabandonedBaby($sceneID,FALSE,$formData['object'][$i]);
+                
             }
             
             
         }
     }
     private function addFoetusabandonedBaby($sceneID) {
-            $h_res = mysql_query("insert into foetusabandonedbaby values(0,".$sceneID.",'$this->foetusabandonedbabyIOType','$this->howWasBodyDiscovered','$this->wasBodyCovered','$this->coveredWith')");    
+            $h_res = mysql_query("insert into foetusabandonedbaby values(0,$sceneID,"
+                    . "'$this->foetusabandonedbabyIOType',"
+                    . "'$this->howWasBodyDiscovered',"
+                    . "'$this->wasBodyCovered',"
+                    . "'$this->coveredWith')");
+            
+            if($h_res === FALSE){
+                $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                $this->api->response($this->api->json($error), 400);
+            }
+        
+            $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
+            $this->api->response($this->api->json($error), 400);
     }
     public function getAllFoetusabandonedBaby() {
         try{

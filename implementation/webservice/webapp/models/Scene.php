@@ -41,8 +41,7 @@ class Scene{
                     $this->date = $_date;
                     $this->location = $_location;
                     $this->temperature = $_temperature;
-                    $error = array('status' => "Failed", "msg" => "time=".$_time);
-            $this->api->response($this->api->json($error), 400);
+                    
                     $this->investigatingOfficerName = $_investigatingOfficerName;
                     $this->investigatingOfficerRank = $_investigatingOfficerRank;
                     $this->investigatingOfficerCellNo = $_investigatingOfficerCellNo;
@@ -53,6 +52,7 @@ class Scene{
                 $this->api = $api;
                 $this->case = new Cases(null,null,$this->api);
                 $this->sceneVictim = new SceneVictims(null,null, $this->api);
+                
     }
     
     public function createScene() {
@@ -65,14 +65,25 @@ class Scene{
         {
             
             $st_res = mysql_query("select * from sceneType where sceneTypeDescription='$this->sceneType'");
+            
             $st_array = mysql_fetch_array($st_res);
             
             $stype = $st_array['sceneTypeID'];
             
-            $query = "insert into scene values(0,$stype,'$this->time','$this->date','$this->location','$this->temperature','$this->investigatingOfficerName','$this->investigatingOfficerRank','$this->investigatingOfficerCellNo','$this->firstOfficerOnSceneName','$this->firstOfficerOnSceneRank')"; 
+            $query = "insert into scene values(0,$stype,"
+                    . "'$this->time',"
+                    . "'$this->date',"
+                    . "'$this->location',"
+                    . "'$this->temperature',"
+                    . "'$this->investigatingOfficerName',"
+                    . "'$this->investigatingOfficerRank',"
+                    . "'$this->investigatingOfficerCellNo',"
+                    . "'$this->firstOfficerOnSceneName',"
+                    . "'$this->firstOfficerOnSceneRank')"; 
             
             $scene_res = mysql_query($query);
-            
+            $error = array('status' => "Failed", "msg" => "st=".$this->sceneType);
+            //$this->api->response($this->api->json($error), 400);
              
             $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and sceneTime='$this->time' and sceneDate='$this->date'");
             $scene_array = mysql_fetch_array($scene_res);

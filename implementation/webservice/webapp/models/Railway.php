@@ -76,15 +76,29 @@ class Railway extends Scene{
         }
     }
      public function addRailway($sceneID) {
-       
-        $h_res = mysql_query("insert into railway values(0,"
-        .$sceneID.",'$this->paraObjAll->railwayIOType','$this->paraObjAll->victimType','$this->paraObjAll->railwayType','$this->paraObjAll->anyWitnesses','$this->paraObjAll->driverSeeWhatHappened','$this->paraObjAll->weatherType','$this->paraObjAll->weatherCondition')");
-        if($h_res == FALSE){
+       $railwayIOType = $this->paraObjAll->railwayIOType;
+       $victimType = $this->paraObjAll->victimType;
+       $railwayType = $this->paraObjAll->railwayType;
+       $anyWitnesses = $this->paraObjAll->anyWitnesses;
+       $driverSeeWhatHappened = $this->paraObjAll->driverSeeWhatHappened;
+       $weatherType = $this->paraObjAll->weatherType;
+       $weatherCondition = $this->paraObjAll->weatherCondition;
+        
+       $h_res = mysql_query("insert into railway values(0,$sceneID,"
+                . "'$railwayIOType',"
+                . "'$victimType',"
+                . "'$railwayType',"
+                . "'$anyWitnesses',"
+                . "'$driverSeeWhatHappened',"
+                . "'$weatherType',"
+                . "'$weatherCondition')");
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
-		$error = array('status' => "Failed", "msg" => "Request to create scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+	$error = array('status' => "Failed", "msg" => "Request to create scene was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     
     public function getAllRailwayCases() {

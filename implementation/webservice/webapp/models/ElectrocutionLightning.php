@@ -18,6 +18,7 @@ class ElectrocutionParameters{
     public $signsOfStruggle;
     public $alcoholBottleAround;
     public $drugParaphernalia;
+    public $struckByLight;
     public $anyOpenWire;
     public $sceneWet;
     public $deBarkingOfTrees;
@@ -59,6 +60,7 @@ class ElectrocutionLightning extends Scene{
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
                 $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+                $this->paraObjAll->struckByLight = $formData['object'][$i]['struckByLight'];
                 $this->paraObjAll->anyOpenWire = $formData['object'][$i]['anyOpenWire'];
                 $this->paraObjAll->sceneWet = $formData['object'][$i]['sceneWet'];
                 $this->paraObjAll->deBarkingOfTrees = $formData['object'][$i]['deBarkingOfTrees'];
@@ -76,7 +78,9 @@ class ElectrocutionLightning extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addElectrocutionLightning($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addElectrocutionLightning($sceneID,FALSE,null);
@@ -98,14 +102,28 @@ class ElectrocutionLightning extends Scene{
        $anyWitnesses = $this->paraObjAll->anyWitnesses;
        $deBarkingOfTrees = $this->paraObjAll->deBarkingOfTrees;
        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+       $struckByLight = $this->paraObjAll->struckByLight;
        $sceneWet = $this->paraObjAll->sceneWet;
        $victimFallFromHeight = $this->paraObjAll->victimFallFromHeight;
        $voltage = $this->paraObjAll->voltage;
        $whatWasVictimDoing = $this->paraObjAll->whatWasVictimDoing;
        $whenDidVictimDie = $this->paraObjAll->whenDidVictimDie;
        
-       $h_res = mysql_query("insert into electrocutionlightning values(0,"
-        .$sceneID.",'$electrocutionLightningIOType','signsOfStruggle','$alcoholBottleAround','$drugParaphernalia','$anyOpenWire','$sceneWet','$deBarkingOfTrees','$anyWitnesses','$whenDidVictimDie','$whatWasVictimDoing','$victimFallFromHeight','$voltage','$anyOtherEvidence')");
+       $h_res = mysql_query("insert into electrocutionlightning values(0,$sceneID,"
+               . "'$electrocutionLightningIOType',"
+               . "'$signsOfStruggle',"
+               . "'$alcoholBottleAround',"
+               . "'$drugParaphernalia',"
+               . "'$struckByLight',"
+               . "'$anyOpenWire',"
+               . "'$sceneWet',"
+               . "'$deBarkingOfTrees',"
+               . "'$anyWitnesses',"
+               . "'$whenDidVictimDie',"
+               . "'$whatWasVictimDoing',"
+               . "'$victimFallFromHeight',"
+               . "'$voltage',"
+               . "'$anyOtherEvidence')");
         
         if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -120,7 +138,8 @@ class ElectrocutionLightning extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into electrocutionlightninginside values(0,".$electrocutionLightningID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
@@ -128,6 +147,8 @@ class ElectrocutionLightning extends Scene{
             }
         }
         
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
     }
     
     public function getAllElectrocutionLightningCases() {

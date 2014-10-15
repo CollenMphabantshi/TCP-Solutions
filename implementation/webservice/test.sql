@@ -225,6 +225,8 @@ CREATE TABLE IF NOT EXISTS aviation (
   `aviationOType` text NOT NULL,
   `aircraftType` text NOT NULL,
   `aircraftNumPeople` text NOT NULL,
+   victimType text NOT NULL,
+    victimInfo text NOT NULL,
   `weatherCondition` text NOT NULL,
   `weatherType` text NOT NULL,
    FOREIGN KEY (sceneID) REFERENCES scene(sceneID)
@@ -377,6 +379,7 @@ CREATE TABLE IF NOT EXISTS `electrocutionLightning` (
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
+  `struckByLight` text NOT NULL,
   `anyOpenWire` text NOT NULL,
   `sceneWet` text NOT NULL,
   `deBarkingOfTrees` text NOT NULL,
@@ -607,7 +610,8 @@ CREATE TABLE IF NOT EXISTS `mva` (
   `carWasHitFrom` text NOT NULL,
   `victimType` text NOT NULL,
   `carBurnt` text NOT NULL,
-   
+    alcoholBottleAround text not null,
+    drugParaphernalia text not null,
    weatherType text null,
     weatherCondition text null,
     anyWitnesses text not null,

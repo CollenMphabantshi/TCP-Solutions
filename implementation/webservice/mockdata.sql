@@ -132,6 +132,7 @@ insert into bicycleType values(0,'Bicycle- train accident');
 
 select * from cases;
 select * from scene;
+select * from sceneType;
 select * from users;
 select * from forensicPractitioner;
 select * from administrator;

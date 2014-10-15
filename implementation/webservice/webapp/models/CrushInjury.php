@@ -30,7 +30,7 @@ class CrushInjury extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"CrushInjury",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Crush injury",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->crushIO = $formData['object'][$i]['crushIO'];
                  $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -47,8 +47,10 @@ class CrushInjury extends Scene{
                      $this->api->response($this->api->json($error), 400);
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
-                $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);    
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']); 
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addCrushInjury($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addCrushInjury($sceneID,FALSE,null);
@@ -61,8 +63,21 @@ class CrushInjury extends Scene{
     }
     
     private function addCrushInjury($sceneID,$inside,$object) {
-        $c_res = mysql_query("insert into crushinjury values(0,$sceneID"
-        . ",'$this->crushIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasBodyMoved','$this->betweenWhichObjects','$this->anyWitness','$this->whatWasVictimDoing')");
+        $c_res = mysql_query("insert into crushinjury values(0,$sceneID,"
+                . "'$this->crushIOType',"
+                . "'$this->signsOfStruggle',"
+                . "'$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia',"
+                . "'$this->wasBodyMoved',"
+                . "'$this->betweenWhichObjects',"
+                . "'$this->anyWitness',"
+                . "'$this->whatWasVictimDoing')");
+        
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
+        }
+        
         if($inside == TRUE){
             $h_res = mysql_query("select * from crushinjury where sceneID=".$sceneID);
             $crushinjuryID = mysql_result($h_res,0,'crushinjuryID');
@@ -71,13 +86,17 @@ class CrushInjury extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "Yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into crushinjuryinside values(0,".$crushinjuryID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into crushinjuryinside values(0,".$crushinjuryID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
     }
     public function getAllCrushInjury() {
         try{

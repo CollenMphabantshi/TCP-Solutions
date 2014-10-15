@@ -630,7 +630,7 @@ public void readAllFiles(){
 						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Mva.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -932,6 +932,7 @@ public void readAllFiles(){
 	        JSONObject victims = new JSONObject();
 	        
 	        
+	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
 	        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
@@ -1066,21 +1067,21 @@ public void readAllFiles(){
 	        info.accumulate("victimType", Encryption.bytesToHex(enc.encrypt((String)wasItA.getSelectedItem()))); 
 	        if(carBurntYes .isChecked())
 	        {
-	        	info.accumulate("carBurnt", Encryption.bytesToHex(enc.encrypt("Single")));
+	        	info.accumulate("carBurnt", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("carBurnt", Encryption.bytesToHex(enc.encrypt("Multiple")));
+	        	info.accumulate("carBurnt", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        if(alcoholBottleAroundYes .isChecked())
 	        {
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Single")));
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Multiple")));
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        if(drugParaphernaliaYes .isChecked())
 	        {
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Single")));
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Multiple")));
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt((String)weatherType.getSelectedItem())));
 	        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt((String)weatherCondition.getSelectedItem())));
@@ -1402,7 +1403,7 @@ public void readAllFiles(){
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						
+						clearFilelds();
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
@@ -1419,31 +1420,7 @@ public void readAllFiles(){
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
 
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
 
 	@Override
 	public void hidePage() {

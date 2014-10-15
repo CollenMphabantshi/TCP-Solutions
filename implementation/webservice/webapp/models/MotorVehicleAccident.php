@@ -50,8 +50,8 @@ class MotorVehicleAccident extends Scene{
                 $this->carWasHitFrom = $formData['object'][$i]['carWasHitFrom'];
                 $this->victimType = $formData['object'][$i]['victimType'];
                 $this->carBurnt = $formData['object'][$i]['carBurnt'];
-				$this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-				$this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
+		$this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
+		$this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
                 $this->weatherType = $formData['object'][$i]['weatherType'];
                 $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
                 $this->anyWitnesses = $formData['object'][$i]['anyWitnesses'];
@@ -68,7 +68,7 @@ class MotorVehicleAccident extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-				$this->addMotorVehicleAccident($sceneID);
+		$this->addMotorVehicleAccident($sceneID);
             }
             
             
@@ -78,13 +78,34 @@ class MotorVehicleAccident extends Scene{
     
     private function addMotorVehicleAccident($sceneID) {
      
-            $h_res = mysql_query("insert into mva values(0,"
-            .$sceneID.",'$this->victimFoundInCar','$this->mvaOutsideType','$this->occupants','$this->numberOfOccupants','$this->victimWas','$this->carWasHitFrom','$this->victimType','$this->carBurnt','$this->alcoholBottleAround','$this->drugParaphernalia','$this->weatherType','$this->weatherCondition','$this->anyWitnesses','$this->seatBeltOn','$this->airbagDiploid','$this->trappedInCar','$this->bodyHit','$this->numberOfHit')");
-     if($h_res == FALSE){
+            $h_res = mysql_query("insert into mva values(0,$sceneID,"
+                    . "'$this->victimFoundInCar',"
+                    . "'$this->mvaOutsideType',"
+                    . "'$this->occupants',"
+                    . "'$this->numberOfOccupants',"
+                    . "'$this->victimWas',"
+                    . "'$this->carWasHitFrom',"
+                    . "'$this->victimType',"
+                    . "'$this->carBurnt',"
+                    . "'$this->alcoholBottleAround',"
+                    . "'$this->drugParaphernalia',"
+                    . "'$this->weatherType',"
+                    . "'$this->weatherCondition',"
+                    . "'$this->anyWitnesses',"
+                    . "'$this->seatBeltOn',"
+                    . "'$this->airbagDiploid',"
+                    . "'$this->trappedInCar',"
+                    . "'$this->bodyHit',"
+                    . "'$this->numberOfHit')");
+             
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
-	}
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
+    }
     public function getAllMotorVehicleAccident() {
         try{
             
@@ -112,8 +133,8 @@ class MotorVehicleAccident extends Scene{
                 $h_array['carWasHitFrom'] = $array['carWasHitFrom'];
                 $h_array['victimType'] = $array['victimType'];
                 $h_array['carBurnt'] = $array['carBurnt'];
-				$h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
-				$h_array['drugParaphernalia'] = $array['drugParaphernalia'];
+		$h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
+		$h_array['drugParaphernalia'] = $array['drugParaphernalia'];
                 $h_array['weatherType'] = $array['weatherType'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];
                 $h_array['anyWitnesses'] = $array['anyWitnesses'];

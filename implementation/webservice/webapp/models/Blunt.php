@@ -80,25 +80,38 @@ class Blunt extends Scene{
     }
     
     private function addBlunt($sceneID,$inside,$object) {
-        $error = array('status' => "Failed", "msg" => "Request to add case was denied.");
+        $error = array('status' => "Failed", "msg" => "Request to add scene was denied.");
         
-        $h_res = mysql_query("insert into blunt values(0,".$sceneID.",'$this->bluntIOType','$this->bluntForceObjectSuspected','$this->bluntForceObjectStillOnScene','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->wasCommunityAssult','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->injuriesConcentratedOn','$this->injuriesMainlyOn')")
+        $h_res = mysql_query("insert into blunt values(0,$sceneID,"
+                . "'$this->bluntIOType',"
+                . "'$this->bluntForceObjectSuspected',"
+                . "'$this->bluntForceObjectStillOnScene',"
+                . "'$this->signsOfStruggle',"
+                . "'$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia',"
+                . "'$this->wasCommunityAssult',"
+                . "'$this->strangulationSuspected',"
+                . "'$this->smotheringSuspected',"
+                . "'$this->chockingSuspected',"
+                . "'$this->injuriesConcentratedOn',"
+                . "'$this->injuriesMainlyOn')")
                 or $this->api->response($this->api->json($error), 400);
         
         if($inside == TRUE){
             $h_res = mysql_query("select * from blunt where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400) ;
             $bluntID = mysql_result($h_res,0,'bluntID');
-            $enc = new Encryption();
+            
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
+            $enc = new Encryption();
             if($enc->decrypt_request($va) !== "Yes")
             {
-                $hi_res = mysql_query("insert into bluntInside values(0,".$bluntID.",'$dl','$wc','$wb','$va','$pv')") or $this->api->response($this->api->json($error), 400);
+                $hi_res = mysql_query("insert into bluntInside values(0,$bluntID,'$dl','$wc','$wb','$va','$pv')") or $this->api->response($this->api->json($error), 400);
             }else{
-                $hi_res = mysql_query("insert into bluntinside values(0,".$bluntID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
+                $hi_res = mysql_query("insert into bluntinside values(0,$bluntID,'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
         $sv_res = mysql_query("select * from sceneVictims where sceneID=".$sceneID);

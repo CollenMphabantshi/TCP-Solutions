@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -94,25 +95,14 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	TextView value;
 
 	private EditText ioName;
-	
-	private EditText ioSurname;
-	
-	private EditText ioRank;
-	
-	private EditText ioCellNo;
-	
-	private TextView tv_foosName;
+	private EditText ioSurname;	
+	private EditText ioRank;	
+	private EditText ioCellNo;	
 	private EditText foosName;
-	private TextView tv_foosSurname;
 	private EditText foosSurname;
-	private TextView tv_foosRank;
-	private EditText foosRank;
-	
-	private TextView tv_victimName;
+	private EditText foosRank;	
 	private EditText victimName;
-	private TextView tv_victimSurname;
 	private EditText victimSurname;
-	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
 	private EditText victimAge;
 	
@@ -128,82 +118,69 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	//the body
 	
+	
+	//the body
 	private RadioButton bodyDecomposedYes;
-	private RadioButton bodyDecomposedNo;	
+	private RadioButton bodyDecomposedNo;
 	private RadioButton medicalInterventionYes;
-	private RadioButton medicalInterventionNo;	
-	private EditText whoFoundVictimBody;	
-	private RadioButton foundInCarYes;
-	private RadioButton foundInCarNo;	
-	private RadioButton wasCarRunningYes;
-	private RadioButton wasCarRunningNo;	
-	private RadioButton carWindowClosedYes;
-	private RadioButton carWindowClosedNo;	
+	private RadioButton medicalInterventionNo;
+	private EditText whoFoundVictimBody;
+	private RadioButton victimInCarYes;
+	private RadioButton victimInCarNo;
+	private RadioButton carRunningYes;
+	private RadioButton carRunningNo;
+	private RadioButton windowsCarClosedYes;
+	private RadioButton windowsCarClosedNo;
 	private RadioButton pipeConnectedYes;
-	private RadioButton pipeConnectedNo;	
+	private RadioButton pipeConnectedNo;
 	private RadioButton suicideSuspectedYes;
-	private RadioButton suicideSuspectedNo;	
+	private RadioButton suicideSuspectedNo;
 	private RadioButton previousAttemptsYes;
 	private RadioButton previousAttemptsNo;
-	private TextView tv_howManyAttempts;
-	private EditText howManyAttempts;	
+	private EditText howManyAttempts;
 	
-	
-	//scene of injury
-	private TextView tv_sceneIOType;
-	private RadioButton sceneIOTypeInside;
-	private RadioButton sceneIOTypeOutside;
-	private TextView tv_whereInside;
+	//Scene of injury
+	private RadioButton SceneIOTypeInside;
+	private RadioButton SceneIOTypeOutside;
+	private Spinner whereInside;
 	private Spinner sceneIType;
-	private TextView tv_sceneITypeOther;
 	private EditText sceneITypeOther;
-	private TextView tv_doorLocked;
-	private RadioButton doorLockedYes;
-	private RadioButton doorLockedNo;
-	private TextView tv_windowsClosed;
-	private RadioButton windowsClosedYes;
-	private RadioButton windowsClosedNo;
-	private TextView tv_windowsBroken;
-	private RadioButton windowsBrokenYes;
-	private RadioButton windowsBrokenNo;
-	private TextView tv_victimAlone;
-	private RadioButton victimAloneYes;
-	private RadioButton victimAloneNo;
-	private TextView tv_peopleWithVictim;
+	private RadioButton DoorLockedYes;
+	private RadioButton DoorLockedNo;
+	private RadioButton WindowsClosedYes;
+	private RadioButton WindowsClosedNo;
+	private RadioButton WindowsBrokenYes;
+	private RadioButton WindowsBrokenNo;
+	private RadioButton VictimAloneYes;
+	private RadioButton VictimAloneNo;
 	private EditText peopleWithVictim;
-	private TextView tv_gassingAppliances;
-	private RadioButton gassingAppliancesYes;
-	private RadioButton gassingAppliancesNo;
-	private TextView tv_gassingSmell;
-	private RadioButton gassingSmellYes;
-	private RadioButton gassingSmellNo;
-	private TextView tv_sceneOType;
+	private RadioButton fireorgasYes;
+	private RadioButton fireorgasNo;
+	private RadioButton weiredSmellYes;
+	private RadioButton weiredSmellNo;
+	private EditText gasYesSpecify;
 	private Spinner sceneOType;
-	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
 	
-	//scene look
+	//The Scene look
+		private RadioButton signsOfStruggleYes;
+		private RadioButton signsOfStruggleNo;
+		private RadioButton alcoholBottleAroundYes;
+		private RadioButton alcoholBottleAroundNo;
+		private RadioButton medicationPoisonYes;
+		private RadioButton medicationPoisonNo;
+		private RadioButton drugParaphernaliaYes;
+		private RadioButton drugParaphernaliaNo;
 	
-	private RadioButton signsOfStruggleYes;
-	private RadioButton signsOfStruggleNo;	
-	private RadioButton alcoholBottleAroundYes;
-	private RadioButton alcoholBottleAroundNo;	
-	private RadioButton drugParaphernaliaYes;
-	private RadioButton drugParaphernaliaNo;	
-	private RadioButton medicationPoisonOnSceneYes;
-	private RadioButton medicationPoisonOnSceneNo;
-	
-	//scene look
-	private EditText generalHistory;
+	//The scene
+		private EditText generalHistory;
 	
 	private TextView response;
 
 	private Button doneButton;
 	private Button logoutButton;
-	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -239,8 +216,9 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -253,30 +231,38 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	//ImageView mImageView;
 	private static final String TAG = "upload";
 	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gassing);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
+		try{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.gassing);
+			
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		/*
-		initialize();
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();*/
-		
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 	
@@ -335,6 +321,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
@@ -408,9 +395,9 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
             
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
-			locate.accumulate("Bearing", loc.getBearing());
-			locate.accumulate("Altitude", loc.getAltitude());
-			locate.accumulate("Accuracy", loc.getAccuracy());
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
 			object.accumulate("Time", time);
@@ -473,28 +460,17 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.gassing_io_name);
-		
-		ioSurname = (EditText)findViewById(R.id.gassing_io_surname);
-		
-		ioRank = (EditText)findViewById(R.id.gassing_io_rank);
-		
+		ioName = (EditText)findViewById(R.id.gassing_io_name);		
+		ioSurname = (EditText)findViewById(R.id.gassing_io_surname);		
+		ioRank = (EditText)findViewById(R.id.gassing_io_rank);		
 		ioCellNo = (EditText)findViewById(R.id.gassing_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.gassing_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.gassing_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.gassing_tv_foos_surname);
+		foosName = (EditText)findViewById(R.id.gassing_foos_name);;
 		foosSurname = (EditText)findViewById(R.id.gassing_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.gassing_tv_foos_rank);
 		foosRank = (EditText)findViewById(R.id.gassing_foos_rank);
 		
-	
 		
-		tv_victimName = (TextView)findViewById(R.id.gassing_tv_victim_name);
 		victimName = (EditText)findViewById(R.id.gassing_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.gassing_tv_victim_surname);
 		victimSurname = (EditText)findViewById(R.id.gassing_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.gassing_tv_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.gassing_victim_id);
 		victimAge = (EditText)findViewById(R.id.gassing_victim_age);
 		
@@ -508,76 +484,63 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		rgbWhite = (RadioButton)findViewById(R.id.gassing_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.gassing_rgbUnknownRace);
 		
-		
+		medicalInterventionYes = (RadioButton)findViewById(R.id.gassing_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.gassing_medicalInterventionNo);
 		//the body
 		
 		bodyDecomposedYes = (RadioButton)findViewById(R.id.gassing_bodyDecomposedYes);
-		bodyDecomposedNo = (RadioButton)findViewById(R.id.gassing_bodyDecomposedNo);		
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.gassing_bodyDecomposedNo);
 		medicalInterventionYes = (RadioButton)findViewById(R.id.gassing_medicalInterventionYes);
-		medicalInterventionNo = (RadioButton)findViewById(R.id.gassing_medicalInterventionNo);		
-		whoFoundVictimBody = (EditText)findViewById(R.id.gassing_whoFoundVictimBody);		
-		foundInCarYes = (RadioButton)findViewById(R.id.gassing_victimInCarYes);
-		foundInCarNo = (RadioButton)findViewById(R.id.gassing_victimInCarNo);		
-		wasCarRunningYes = (RadioButton)findViewById(R.id.gassing_carRunningYes);
-		wasCarRunningNo = (RadioButton)findViewById(R.id.gassing_carRunningNo);		
-		carWindowClosedYes = (RadioButton)findViewById(R.id.gassing_windowsCarClosedYes);
-		carWindowClosedNo = (RadioButton)findViewById(R.id.gassing_windowsCarClosedNo);		
+		medicalInterventionNo = (RadioButton)findViewById(R.id.gassing_medicalInterventionNo);
+		whoFoundVictimBody = (EditText)findViewById(R.id.gassing_whoFoundVictimBody);
+		victimInCarYes = (RadioButton)findViewById(R.id.gassing_victimInCarYes);
+		victimInCarNo = (RadioButton)findViewById(R.id.gassing_victimInCarNo);
+		carRunningYes = (RadioButton)findViewById(R.id.gassing_carRunningYes);
+		carRunningNo = (RadioButton)findViewById(R.id.gassing_carRunningNo);
+		windowsCarClosedYes = (RadioButton)findViewById(R.id.gassing_windowsCarClosedYes);
+		windowsCarClosedNo = (RadioButton)findViewById(R.id.gassing_windowsCarClosedNo);
 		pipeConnectedYes = (RadioButton)findViewById(R.id.gassing_pipeConnectedYes);
-		pipeConnectedNo = (RadioButton)findViewById(R.id.gassing_pipeConnectedNo);		
+		pipeConnectedNo = (RadioButton)findViewById(R.id.gassing_pipeConnectedNo);
 		suicideSuspectedYes = (RadioButton)findViewById(R.id.gassing_suicideSuspicionYes);
-		suicideSuspectedNo = (RadioButton)findViewById(R.id.gassing_suicideSuspicionNo);		
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.gassing_suicideSuspicionNo);
 		previousAttemptsYes = (RadioButton)findViewById(R.id.gassing_previousAttemptsYes);
 		previousAttemptsNo = (RadioButton)findViewById(R.id.gassing_previousAttemptsNo);
-		tv_howManyAttempts = (TextView)findViewById(R.id.gassing_tv_howManyAttempts);
 		howManyAttempts = (EditText)findViewById(R.id.gassing_howManyAttempts);
 		
-		
-		//scene of injury
-		tv_sceneIOType = (TextView)findViewById(R.id.gassing_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.gassing_tv_whereInside);
+		//Scene of injury
+		SceneIOTypeInside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeInside);
+		SceneIOTypeOutside = (RadioButton)findViewById(R.id.gassing_SceneIOTypeOutside);
 		sceneIType = (Spinner)findViewById(R.id.gassing_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.gassing_tv_sceneITypeOther);
 		sceneITypeOther = (EditText)findViewById(R.id.gassing_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.gassing_tv_doorLocked);
-		doorLockedYes = (RadioButton)findViewById(R.id.gassing_DoorLockedYes);
-		doorLockedNo = (RadioButton)findViewById(R.id.gassing_DoorLockedNo);
-		tv_windowsClosed = (TextView)findViewById(R.id.gassing_tv_windowsClosed);
-		windowsClosedYes = (RadioButton)findViewById(R.id.gassing_WindowsClosedYes);
-		windowsClosedNo = (RadioButton)findViewById(R.id.gassing_WindowsClosedNo);
-		tv_windowsBroken = (TextView)findViewById(R.id.gassing_tv_windowsBroken);
-		windowsBrokenYes = (RadioButton)findViewById(R.id.gassing_WindowsBrokenYes);
-		windowsBrokenNo = (RadioButton)findViewById(R.id.gassing_WindowsBrokenNo);
-		tv_victimAlone = (TextView)findViewById(R.id.gassing_tv_victimAlone);
-		victimAloneYes = (RadioButton)findViewById(R.id.gassing_VictimAloneYes);
-		victimAloneNo = (RadioButton)findViewById(R.id.gassing_VictimAloneNo);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.gassing_tv_peopleWithVictim);
+		DoorLockedYes = (RadioButton)findViewById(R.id.gassing_DoorLockedYes);
+		DoorLockedNo = (RadioButton)findViewById(R.id.gassing_DoorLockedNo);
+		WindowsClosedYes = (RadioButton)findViewById(R.id.gassing_WindowsClosedYes);
+		WindowsClosedNo = (RadioButton)findViewById(R.id.gassing_WindowsClosedNo);
+		WindowsBrokenYes = (RadioButton)findViewById(R.id.gassing_WindowsBrokenYes);
+		WindowsBrokenNo = (RadioButton)findViewById(R.id.gassing_WindowsBrokenNo);
+		VictimAloneYes = (RadioButton)findViewById(R.id.gassing_VictimAloneYes);
+		VictimAloneNo = (RadioButton)findViewById(R.id.gassing_VictimAloneNo);
 		peopleWithVictim = (EditText)findViewById(R.id.gassing_peopleWithVictim);
-		tv_gassingAppliances = (TextView)findViewById(R.id.gassing_tv_fireorgas);
-		gassingAppliancesYes = (RadioButton)findViewById(R.id.gassing_fireorgasYes);
-		gassingAppliancesNo = (RadioButton)findViewById(R.id.gassing_fireorgasNo);
-		tv_gassingSmell = (TextView)findViewById(R.id.gassing_tv_weiredSmell);
-		gassingSmellYes = (RadioButton)findViewById(R.id.gassing_weiredSmellYes);
-		gassingSmellNo = (RadioButton)findViewById(R.id.gassing_weiredSmellNo);
-		tv_sceneOType = (TextView)findViewById(R.id.gassing_tv_sceneOType);
+		fireorgasYes = (RadioButton)findViewById(R.id.gassing_fireorgasYes);
+		fireorgasNo = (RadioButton)findViewById(R.id.gassing_fireorgasNo);
+		weiredSmellYes = (RadioButton)findViewById(R.id.gassing_weiredSmellYes);
+		weiredSmellNo = (RadioButton)findViewById(R.id.gassing_weiredSmellNo);
+		gasYesSpecify = (EditText)findViewById(R.id.gassing_gasYesSpecify);
 		sceneOType = (Spinner)findViewById(R.id.gassing_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.gassing_tv_sceneOTypeOther);
 		sceneOTypeOther = (EditText)findViewById(R.id.gassing_sceneOTypeOther);
 		
-		//scene look
-		
+		//The scene look
 		signsOfStruggleYes = (RadioButton)findViewById(R.id.gassing_SignsOfStruggleYes);
-		signsOfStruggleNo = (RadioButton)findViewById(R.id.gassing_SignsOfStruggleNo);		
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.gassing_SignsOfStruggleNo);
 		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.gassing_AlcoholBottleAroundYes);
-		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.gassing_AlcoholBottleAroundNo);		
-		medicationPoisonOnSceneYes = (RadioButton)findViewById(R.id.gassing_medicationPoisonYes);
-		medicationPoisonOnSceneNo = (RadioButton)findViewById(R.id.gassing_medicationPoisonNo);		
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.gassing_AlcoholBottleAroundNo);
+		medicationPoisonYes = (RadioButton)findViewById(R.id.gassing_medicationPoisonYes);
+		medicationPoisonNo = (RadioButton)findViewById(R.id.gassing_medicationPoisonNo);
 		drugParaphernaliaYes = (RadioButton)findViewById(R.id.gassing_DrugParaphernaliaYes);
 		drugParaphernaliaNo = (RadioButton)findViewById(R.id.gassing_DrugParaphernaliaNo);
 		
 		
-		//the scene
+		//The Scene
 		generalHistory = (EditText)findViewById(R.id.gassing_generalHistory);
 		
 		
@@ -586,7 +549,6 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		doneButton = (Button)findViewById(R.id.gassing_doneButton);
 		logoutButton = (Button)findViewById(R.id.gassing_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.gassing_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -604,16 +566,39 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.gassing_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.gassing_galleryLayout);
 	       // weather section
-	       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
-		
-		
+	       
 		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Gassing.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
 	
 	
 	
@@ -634,33 +619,35 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							//if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Gassing.this, "", "Uploading file...", true);
+										/*dialog = ProgressDialog.show(gassing.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
 						                             runOnUiThread(new Runnable() {
 						                                    public void run() {
 						                                        
-						                                        Toast.makeText(Gassing.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                        Toast.makeText(gassing.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
 						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
+						                             
+						                             for( int i=0;i < numberOfImages; i++){
+						                            	 Toast.makeText(gassing.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
+						                            	 uploadFile( uploadFileName.get(i) );
+						                            	 i++;
+						                             	}
+						                                               
 						                        }
-						                      }).start(); 
+						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
@@ -669,12 +656,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 										e.printStackTrace();
 									}
 										
-							//}
-							//else{
-								
-								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
-								
-							//}
+							
 						}else{
 							Toast.makeText(Gassing.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -730,6 +712,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	readAllFiles();
             	}
             	
             }
@@ -741,12 +724,17 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","blunt"));
+		        pairs.add(new BasicNameValuePair("category","gassing"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				try{
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
+				}catch(Exception e){e.printStackTrace();}
 			}
 		});
 		
@@ -756,163 +744,6 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		 * 	Spinner onclick event
 		 */
 		
-		previousAttemptsYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				tv_howManyAttempts.setVisibility(VISIBLE);
-				howManyAttempts.setVisibility(VISIBLE);
-			}
-		});
-		previousAttemptsNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				tv_howManyAttempts.setVisibility(GONE);
-				howManyAttempts.setVisibility(GONE);
-			}
-		});
-
-		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(VISIBLE);
-				sceneIType.setVisibility(VISIBLE);
-				tv_doorLocked.setVisibility(VISIBLE);
-				doorLockedYes.setVisibility(VISIBLE);
-				doorLockedNo.setVisibility(VISIBLE);
-				tv_windowsClosed.setVisibility(VISIBLE);
-				windowsClosedYes.setVisibility(VISIBLE);
-				windowsClosedNo.setVisibility(VISIBLE);
-				tv_windowsBroken.setVisibility(VISIBLE);
-				windowsBrokenYes.setVisibility(VISIBLE);
-				windowsBrokenNo.setVisibility(VISIBLE);
-				tv_victimAlone.setVisibility(VISIBLE);
-				victimAloneYes.setVisibility(VISIBLE);
-				victimAloneNo.setVisibility(VISIBLE);
-				
-				tv_sceneOType.setVisibility(GONE);
-				sceneOType.setVisibility(GONE);
-				tv_sceneOTypeOther.setVisibility(GONE);
-				sceneOTypeOther.setVisibility(GONE);
-			}
-		});
-		sceneIOTypeOutside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(GONE);
-				sceneIType.setVisibility(GONE);
-				tv_sceneITypeOther.setVisibility(GONE);
-				sceneITypeOther.setVisibility(GONE);
-				tv_doorLocked.setVisibility(GONE);
-				doorLockedYes.setVisibility(GONE);
-				doorLockedNo.setVisibility(GONE);
-				tv_windowsClosed.setVisibility(GONE);
-				windowsClosedYes.setVisibility(GONE);
-				windowsClosedNo.setVisibility(GONE);
-				tv_windowsBroken.setVisibility(GONE);
-				windowsBrokenYes.setVisibility(GONE);
-				windowsBrokenNo.setVisibility(GONE);
-				tv_victimAlone.setVisibility(GONE);
-				victimAloneYes.setVisibility(GONE);
-				victimAloneNo.setVisibility(GONE);
-				tv_peopleWithVictim.setVisibility(GONE);
-				peopleWithVictim.setVisibility(GONE);
-				
-				tv_sceneOType.setVisibility(VISIBLE);
-				sceneOType.setVisibility(VISIBLE);
-			}
-		});
-
-		
-		
-		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneITypeOther.setVisibility(VISIBLE);
-							sceneITypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		victimAloneYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_peopleWithVictim.setVisibility(GONE);
-				peopleWithVictim.setVisibility(GONE);
-			}
-		});
-		victimAloneNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_peopleWithVictim.setVisibility(VISIBLE);
-				peopleWithVictim.setVisibility(VISIBLE);
-			}
-		});
-
-
-		
-		
-		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneOTypeOther.setVisibility(VISIBLE);
-							sceneOTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 	}
 	
@@ -927,8 +758,8 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -1112,8 +943,8 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("gassing"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
@@ -1142,16 +973,18 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
 	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
 	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	       // victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("null")));
+	        
 	        if(bodyDecomposedYes.isChecked())
 	        {
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
 	        if(medicalInterventionYes.isChecked())
 	        {
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1159,19 +992,28 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        victims.accumulate("bodyBurned", "null");
-	        victims.accumulate("bodyIntact","null");
-	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-	        victims.accumulate("victimFoundCloseToWater", "null");
+	        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
 	        
-	        
+	        if(SceneIOTypeInside.isChecked())
+	        {
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	              }else{
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	              }
+	        victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
 	        if(suicideSuspectedYes.isChecked())
 	        {
-	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        victims.accumulate("victimSuicideNoteFound", "null");
+	        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+	       
+	        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
 	        
 	        if(previousAttemptsYes.isChecked())
 	        {
@@ -1179,76 +1021,110 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 	        }else{
 	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-	        victims.accumulate("rapeHomicideSuspected", "null");
-	        
-	        if(sceneIOTypeInside.isChecked())
-	        {
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
-	        }else{
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }
-	        
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(howManyAttempts.getText().toString())));
+  
 	       
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("bluntIOType",getIOType() );
-	        if(signsOfStruggleYes.isChecked())
+	       info.accumulate("gassingIOType",getIOType() );
+	       if(victimInCarYes .isChecked())
 	        {
-	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("foundInCar", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("foundInCar", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        if(alcoholBottleAroundYes.isChecked())
+	       if(carRunningYes .isChecked())
 	        {
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("wasCarRunning", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("wasCarRunning", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        if(drugParaphernaliaYes.isChecked())
+	       if(windowsCarClosedYes .isChecked())
 	        {
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("carWindowClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("carWindowClosed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        
-	        
-	        if(doorLockedYes.isChecked())
+	       if(pipeConnectedYes .isChecked())
+	        {
+	        	info.accumulate("pipeConnected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("pipeConnected", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	       
+	        if(DoorLockedYes .isChecked())
 	        {
 	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(windowsClosedYes.isChecked())
+	        if(WindowsClosedYes .isChecked())
 	        {
 	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        if(windowsBrokenYes.isChecked())
+	        
+	        if(WindowsBrokenYes .isChecked())
 	        {
 	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        if(victimAloneYes.isChecked())
+	        
+	        if(VictimAloneYes .isChecked())
 	        {
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        info.accumulate("peopleWithVictim", Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString())));
+	        if(fireorgasYes .isChecked())
+	        {
+	        	info.accumulate("gassingAppliances", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("gassingAppliances", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(weiredSmellYes .isChecked())
+	        {
+	        	info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt(gasYesSpecify.getText().toString())));
 	        
 	        
-	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+	        //the scene look  
+	        if(signsOfStruggleYes .isChecked())
+	        {
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
 	        
+	        if(alcoholBottleAroundYes .isChecked())
+	        {
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(medicationPoisonYes .isChecked())
+	        {
+	        	info.accumulate("medicationPoisonOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("medicationPoisonOnScene", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(drugParaphernaliaYes .isChecked())
+	        {
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
 	        
+	       
 	        array.put(info);
 	        obj.accumulate("object", array);
 	        currentDataSaved = obj;
@@ -1262,29 +1138,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		}
 	}
 	
-	public String getIOType(){
-		try{
-			String type = "";
-			
-			if(sceneIOTypeInside.isChecked())
-			{
-				type = (String)sceneIType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneITypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}else{
-				type = (String)sceneOType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneOTypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 	
 	public String getVictimGender(){
 		try{
@@ -1337,42 +1191,37 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public int getAttempts(){
+	public String getIOType(){
 		try{
+			String type = "";
 			
-			if(previousAttemptsYes.isChecked())
+			if(SceneIOTypeInside.isChecked())
 			{
-				int attempts = Integer.parseInt(howManyAttempts.getText().toString());
-				return attempts;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	
-	public String getPeopleWithVictim(){
-		try{
-			
-			
-			if(victimAloneNo.isChecked())
-			{
-				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
+				type = (String)sceneIType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneITypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}else{
-				
-				return null;
+				type = (String)sceneOType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneOTypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
 	public void saveDataOnAction() throws Exception{
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray();
@@ -1404,15 +1253,13 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
-        
-        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+      //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
         if(bodyDecomposedYes.isChecked())
         {
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
         if(medicalInterventionYes.isChecked())
         {
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1420,20 +1267,28 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("bodyBurned", "null");
-        victims.accumulate("bodyIntact", "null");
-        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-        victims.accumulate("victimFoundCloseToWater", "null");
+        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
         
-        
+        if(SceneIOTypeInside.isChecked())
+        {
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+              }else{
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+              }
+        victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
         if(suicideSuspectedYes.isChecked())
         {
-        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        victims.accumulate("victimSuicideNoteFound", "null");
-        
+        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+       
+        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
         
         if(previousAttemptsYes.isChecked())
         {
@@ -1441,79 +1296,109 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
         }else{
         	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        
-        
-        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-        
-        
-        if(sceneIOTypeInside.isChecked())
-        {
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
-        }else{
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }
-        
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(howManyAttempts.getText().toString())));
+
        
        
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("bluntIOType",getIOType() );
-        if(signsOfStruggleYes.isChecked())
+       info.accumulate("gassingIOType",getIOType() );
+       if(victimInCarYes .isChecked())
         {
-        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("foundInCar", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("foundInCar", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(alcoholBottleAroundYes.isChecked())
+       if(carRunningYes .isChecked())
         {
-        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("wasCarRunning", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("wasCarRunning", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(drugParaphernaliaYes.isChecked())
+       if(windowsCarClosedYes .isChecked())
         {
-        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("carWindowClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("carWindowClosed", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        
-        
-        if(doorLockedYes.isChecked())
+       if(pipeConnectedYes .isChecked())
+        {
+        	info.accumulate("pipeConnected", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("pipeConnected", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+       
+        if(DoorLockedYes .isChecked())
         {
         	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(windowsClosedYes.isChecked())
+        if(WindowsClosedYes .isChecked())
         {
         	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(windowsBrokenYes.isChecked())
+        
+        if(WindowsBrokenYes .isChecked())
         {
         	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(victimAloneYes.isChecked())
+        
+        if(VictimAloneYes .isChecked())
         {
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        info.accumulate("peopleWithVictim", Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString())));
+        if(fireorgasYes .isChecked())
+        {
+        	info.accumulate("gassingAppliances", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("gassingAppliances", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(weiredSmellYes .isChecked())
+        {
+        	info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        info.accumulate("gassingSmell", Encryption.bytesToHex(enc.encrypt(gasYesSpecify.getText().toString())));
         
         
-        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+        //the scene look  
+        if(signsOfStruggleYes .isChecked())
+        {
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+        }
         
-        
+        if(alcoholBottleAroundYes .isChecked())
+        {
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(medicationPoisonYes .isChecked())
+        {
+        	info.accumulate("medicationPoisonOnScene", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("medicationPoisonOnScene", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(drugParaphernaliaYes .isChecked())
+        {
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+       
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;
@@ -1591,11 +1476,20 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 					System.out.println("STATUS: "+status);
 					System.out.println("MESSAGE: "+message);
 					response.setVisibility(VISIBLE);
+					Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						
+						try{
+							message = message.split(".")[0];
+							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
+						
+		                
 						response.setText(message);
 					}
 				}
@@ -1686,22 +1580,22 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 					imgView.setImageBitmap(img);
 				}*/
 				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
-				weatherInfo.setText(WeatherInfo);
-				//cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
-				//condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-				//temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");
+				//weatherInfo.setText(WeatherInfo);
+				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
 				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
 				press.setText("" + weather.currentCondition.getPressure() + " hPa");
 				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 				windDeg.setText("" + weather.wind.getDeg() + "�");*/
-		
+					
 			}
 		}
 	
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
@@ -1768,32 +1662,6 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-			
-		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
-			whoFoundVictimBody.requestFocus();
-			whoFoundVictimBody.setError("sorry empty field");
-			return false;
-		}
-		
-		if(sceneIOTypeInside.isChecked()){
-			
-			doorLockedNo.setChecked(true);
-			
-			windowsClosedNo.setChecked(true);
-		
-			windowsBrokenNo.setChecked(true);
-		
-			victimAloneNo.setChecked(true);
-			
-			if(previousAttemptsYes.isChecked()){
-				if( howManyAttempts.getText().toString().length() == 0){
-					howManyAttempts.requestFocus();
-					howManyAttempts.setError("sorry empty field");
-					return false;
-				}
-			}
-		}
-		
 		
 		
 		if( generalHistory.getText().toString().length() == 0){
@@ -1811,43 +1679,7 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		victimSurname.setText("Unknown");
 		
 		victimIDNo.setText("Unknown");
-			
-		whoFoundVictimBody.setText("");
 		
-		if(sceneIOTypeInside.isChecked()){
-			sceneIOTypeInside.setChecked(false);
-			doorLockedNo.setChecked(false);
-			
-			windowsClosedNo.setChecked(false);
-		
-			windowsBrokenNo.setChecked(false);
-		
-			victimAloneNo.setChecked(false);
-			//outside selected by default
-			sceneIOTypeOutside.setChecked(true);
-			tv_whereInside.setVisibility(GONE);
-			sceneIType.setVisibility(GONE);
-			tv_sceneITypeOther.setVisibility(GONE);
-			sceneITypeOther.setVisibility(GONE);
-			tv_doorLocked.setVisibility(GONE);
-			doorLockedYes.setVisibility(GONE);
-			doorLockedNo.setVisibility(GONE);
-			tv_windowsClosed.setVisibility(GONE);
-			windowsClosedYes.setVisibility(GONE);
-			windowsClosedNo.setVisibility(GONE);
-			tv_windowsBroken.setVisibility(GONE);
-			windowsBrokenYes.setVisibility(GONE);
-			windowsBrokenNo.setVisibility(GONE);
-			tv_victimAlone.setVisibility(GONE);
-			victimAloneYes.setVisibility(GONE);
-			victimAloneNo.setVisibility(GONE);
-			tv_peopleWithVictim.setVisibility(GONE);
-			peopleWithVictim.setVisibility(GONE);
-		}
-		howManyAttempts.setText("");
-		
-		
-	
 		generalHistory.setText("");
 		
 		uploadFileName = null;
@@ -1884,53 +1716,9 @@ public class Gassing extends Activity implements GlobalMethods, OnMyLocationChan
 		rgbUnknownRace.setChecked(true);
 		
 		//outside selected by default
-		sceneIOTypeOutside.setChecked(true);
-		tv_whereInside.setVisibility(GONE);
-		sceneIType.setVisibility(GONE);
-		tv_sceneITypeOther.setVisibility(GONE);
-		sceneITypeOther.setVisibility(GONE);
-		tv_doorLocked.setVisibility(GONE);
-		doorLockedYes.setVisibility(GONE);
-		doorLockedNo.setVisibility(GONE);
-		tv_windowsClosed.setVisibility(GONE);
-		windowsClosedYes.setVisibility(GONE);
-		windowsClosedNo.setVisibility(GONE);
-		tv_windowsBroken.setVisibility(GONE);
-		windowsBrokenYes.setVisibility(GONE);
-		windowsBrokenNo.setVisibility(GONE);
-		tv_victimAlone.setVisibility(GONE);
-		victimAloneYes.setVisibility(GONE);
-		victimAloneNo.setVisibility(GONE);
-		tv_peopleWithVictim.setVisibility(GONE);
-		peopleWithVictim.setVisibility(GONE);
 		
-		tv_sceneOType.setVisibility(VISIBLE);
-		sceneOType.setVisibility(VISIBLE);
-		
-		/*suicideNoteFoundNo.setChecked(true);
-		
-		bodyDecomposedNo.setChecked(true);
-	
 		medicalInterventionNo.setChecked(true);
-	
-		closeToWaterNo.setChecked(true);
-		
-		rapeHomicideNo.setChecked(true);
-	*/
-		suicideSuspectedNo.setChecked(true);
-		
-		//previous attempts is none by default
-		previousAttemptsNo.setChecked(true);
-		tv_howManyAttempts.setVisibility(GONE);
-		howManyAttempts.setVisibility(GONE);
-	
-		signsOfStruggleNo.setChecked(true);
-		
-		alcoholBottleAroundNo.setChecked(true);
-	
-		drugParaphernaliaNo.setChecked(true);
-	
-		 
+	 
 	}
 	
 	private  boolean CellNoValidation(String cell) {

@@ -1105,7 +1105,7 @@ doneButton.setOnClickListener(new OnClickListener() {
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-	        pairs.add(new BasicNameValuePair("rquest","addCase"));
+	        pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("hanging"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();

@@ -132,8 +132,8 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 	
 	
 	//Scene of injury
-	private Spinner AccidentOccured;
-	private EditText otherLocation;
+	private Spinner sceneOType;
+	private EditText sceneOTypeOther;
 	
 	//The Scene
 	private RadioButton singleOrMultipleYes;
@@ -468,8 +468,8 @@ public class Bicycle extends Activity implements GlobalMethods, OnMyLocationChan
 		medicalInterventionNo = (RadioButton)findViewById(R.id.bicycle_medicalInterventionNo);
 		
 		//Scene of injury
-		AccidentOccured = (Spinner)findViewById(R.id.bicycle_sceneOType);
-		otherLocation = (EditText) findViewById(R.id.bicycle_sceneOTypeOther);
+		sceneOType = (Spinner)findViewById(R.id.bicycle_sceneOType);
+		sceneOTypeOther = (EditText) findViewById(R.id.bicycle_sceneOTypeOther);
 		
 		//The Scene
 		singleOrMultipleYes = (RadioButton)findViewById(R.id.bicycle_victimNumberMultitple);
@@ -590,7 +590,7 @@ public void readAllFiles(){
 						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Bicycle.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -892,6 +892,8 @@ public void readAllFiles(){
 	        JSONObject victims = new JSONObject();
 	        
 	        
+	        
+	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
 	        info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
@@ -947,7 +949,11 @@ public void readAllFiles(){
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("bicycleOType", Encryption.bytesToHex(enc.encrypt((String)AccidentOccured.getSelectedItem())));
+	        String otype = (String)sceneOType.getSelectedItem();
+			if(otype.toLowerCase().equals("other")){
+				otype = sceneOTypeOther.getText().toString();
+			}
+	        info.accumulate("bicycleOType", Encryption.bytesToHex(enc.encrypt(otype)));
 	        
 	        
 	        
@@ -1071,7 +1077,7 @@ public void readAllFiles(){
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1084,9 +1090,11 @@ public void readAllFiles(){
         victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
-      //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
-        victims.accumulate("bodyDecomposed", "null");
+        
+        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+        victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("null")));
         
         
         if(medicalInterventionYes.isChecked())
@@ -1095,59 +1103,63 @@ public void readAllFiles(){
         }else{
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
         
-        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
-        
-        victims.accumulate("bodyIntact","null");
-        
-        
+        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("victimInside",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("victimOutside",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("victimFoundCloseToWater",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("suicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt("null")));
         if(SuicideNoteFoundYes.isChecked())
         {
         	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
         }
-      
-        victims.accumulate("numberOfPreviousAttempts", "null");
+        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
         
-        
-        
-        
-       
-       
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-       
+        String otype = (String)sceneOType.getSelectedItem();
+		if(otype.toLowerCase().equals("other")){
+			otype = sceneOTypeOther.getText().toString();
+		}
+        info.accumulate("bicycleOType", Encryption.bytesToHex(enc.encrypt(otype)));
+        
+        
         
         if(EyewitnessesYes .isChecked())
         {
-        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("anyWitnesses", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("eyewitnesses", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
         
         if(movedSinceAccidentYes .isChecked())
         {
-        	info.accumulate("bodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("bodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        
         
         
         if(singleOrMultipleYes .isChecked())
         {
-        	info.accumulate("", Encryption.bytesToHex(enc.encrypt("Single")));
+        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Single")));
         }else{
-        	info.accumulate("", Encryption.bytesToHex(enc.encrypt("Multiple")));
+        	info.accumulate("bicycleNumPeople", Encryption.bytesToHex(enc.encrypt("Multiple")));
         }
         
-        info.accumulate("motorbikeHitFrom", Encryption.bytesToHex(enc.encrypt(hitFrom.getSelectedItem().toString())));
-        info.accumulate("typeOfAccident", Encryption.bytesToHex(enc.encrypt(accidentType.getSelectedItem().toString()))); 
-        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt(weatherType.getSelectedItem().toString())));
-        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt(weatherCondition.getSelectedItem().toString())));
-        
+        info.accumulate("bicycleHit", Encryption.bytesToHex(enc.encrypt((String)hitFrom.getSelectedItem())));
+        info.accumulate("bicycleType", Encryption.bytesToHex(enc.encrypt((String)accidentType.getSelectedItem()))); 
+        info.accumulate("weatherType", Encryption.bytesToHex(enc.encrypt((String)weatherType.getSelectedItem())));
+        info.accumulate("weatherCondition", Encryption.bytesToHex(enc.encrypt((String)weatherCondition.getSelectedItem())));
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;
@@ -1181,7 +1193,7 @@ public void readAllFiles(){
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-          
+            System.out.println(line);
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1232,7 +1244,7 @@ public void readAllFiles(){
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						
+						clearFilelds();
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
@@ -1249,31 +1261,7 @@ public void readAllFiles(){
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
 
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
 
 	@Override
 	public void hidePage() {

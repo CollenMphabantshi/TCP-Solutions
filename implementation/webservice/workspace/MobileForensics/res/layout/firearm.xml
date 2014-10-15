@@ -381,7 +381,7 @@
 					android:layout_width="100dp"
 					android:layout_height="wrap_content"
 					
-					android:text="ID Number"
+					android:text="Victim ID Number"
 					style="@style/tv_question"
 					android:layout_row="2"
             		android:layout_column="0"
@@ -394,7 +394,24 @@
 					android:layout_row="2"
             		android:layout_column="1"
 					/>
-								       
+					<TextView 
+					android:id="@+id/firearm_tv_victim_age"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					
+					android:text="Victim Estimated Age"
+					style="@style/tv_question"
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/firearm_victim_age"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>			       
 				</GridLayout>
 				</LinearLayout>
 				
@@ -1222,7 +1239,7 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="12"
+				android:rowCount="14"
         		android:columnCount="2"
 			    >
 				
@@ -1446,6 +1463,86 @@
 				    />
 				    
 				</RadioGroup>
+				<TextView
+				    android:id="@+id/firearm_tv_firearmUsed" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="What type of firearm was used?"
+					
+					android:layout_row="8"
+            	android:layout_column="0"
+					/>
+				<Spinner
+				    android:id="@+id/firearm_firearmUsed"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:entries="@array/outsideTypes"
+					android:prompt="@string/choose"
+					
+					android:layout_row="8"
+            	android:layout_column="1"
+				    />
+					<TextView
+				    android:id="@+id/firearm_tv_cartridges"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Ask the IO if cartridge \nwere cartage cases found on the scene"
+					android:layout_row="9"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/firearm_rgcartridges"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="9"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/firearm_cartridgesYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/firearm_cartridgesNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+					<TextView
+				    android:id="@+id/firearm_tv_cartridgesYesSpecify"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes specify"
+					android:layout_row="10"
+            	android:layout_column="0"
+					/>
+				<EditText
+				    android:id="@+id/firearm_cartridgesYesSpecify"
+				    android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					android:layout_row="10"
+            	android:layout_column="1"
+				    />
 				
 				<TextView
 				    android:id="@+id/firearm_tv_suicideNoteFound"
@@ -1455,7 +1552,7 @@
 					
 					style="@style/tv_question"
 					android:text="Is there a Suicide note on scene?"
-					android:layout_row="8"
+					android:layout_row="11"
             	android:layout_column="0"
 					/>
 			
@@ -1465,7 +1562,7 @@
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
-			    android:layout_row="8"
+			    android:layout_row="11"
             	android:layout_column="1"
 			    >
 				    <RadioButton
@@ -1496,14 +1593,14 @@
 					
 					style="@style/tv_question"
 					android:text="Victim General history?"
-					android:layout_row="10"
+					android:layout_row="12"
             	android:layout_column="0"
 					/>
 				<EditText
 				    android:id="@+id/firearm_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="10"
+					android:layout_row="12"
             	android:layout_column="1"
 				    />
 				</GridLayout>

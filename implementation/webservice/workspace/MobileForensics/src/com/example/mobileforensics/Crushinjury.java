@@ -1074,7 +1074,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair("rquest","addCase"));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("crush"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
@@ -1153,7 +1153,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("crushinjuryIOType",getIOType() );
+	        info.accumulate("crushIO",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
 	        {
 	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1173,6 +1173,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	        }else{
 	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        
 	        
 	        if(doorLockedYes.isChecked())
 	        {
@@ -1392,7 +1393,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("crushIOType",getIOType() );
+        info.accumulate("crushIO",getIOType() );
         if(signsOfStruggleYes.isChecked())
         {
         	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));

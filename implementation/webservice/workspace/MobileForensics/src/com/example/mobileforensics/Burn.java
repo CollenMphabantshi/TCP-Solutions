@@ -1165,7 +1165,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-			pairs.add(new BasicNameValuePair(Encryption.bytesToHex(enc.encrypt("rquest")),Encryption.bytesToHex(enc.encrypt("addCase"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("blunt"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();

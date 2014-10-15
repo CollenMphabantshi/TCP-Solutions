@@ -386,9 +386,9 @@ function loadSceneInfo(view){
             
             var obj = JSON.parse(request.responseText);
             currentCase = obj;
-            
-            var location = JSON.parse(obj.sceneLocation);
-            var locations = JSON.parse(location.Location);
+           // alert("ccc");
+            //var location = JSON.parse(obj.sceneLocation);
+            //var locations = JSON.parse(location.Location);
             
             data += "<tr>";
             data += "<td>Time of scene:</td><td>"+obj.sceneTime+"</td>";
@@ -397,7 +397,8 @@ function loadSceneInfo(view){
             data += "<td>Date of scene:</td><td>"+obj.sceneDate+"</td>";
             data += "</tr>";
             data += "<tr>";
-            data += "<td>Location of scene:</td><td>"+locations.Address+", Latitude:"+locations.Latitude+", Longitude:"+locations.Longitude+"</td>";
+            data += "<td>Location of scene:</td><td>"+obj.sceneLocation+"</td>";
+            //data += "<td>Location of scene:</td><td>"+locations.Address+", Latitude:"+locations.Latitude+", Longitude:"+locations.Longitude+"</td>";
             data += "</tr>";
             data += "<tr>";
             data += "<td>Temperature of scene:</td><td>"+obj.sceneTemparature+"</td>";
@@ -674,12 +675,14 @@ function activateUser(link){
 }
 
 function getSceneTypeData(type,sceneData){
+    
     var data = "<tr><td colspan='2' class='table-header'>"+type+" Information</td></tr>";
     var foetusDesc = ["Where did the scene take place?"];
     var foetusValue = [sceneData.babyIOType];
     
     var aviationDesc = ["Where did the scene take place?","Aircraft type:","Number of people on aircraft:",
     "Weather condition:","Weather type:"];
+
     var aviationValue = [sceneData.aviationOutsideType,sceneData.aircraftType,sceneData.aircraftNumPeople,
     sceneData.weatherCondition,sceneData.weatherType];
     
@@ -688,15 +691,29 @@ function getSceneTypeData(type,sceneData){
     "Who removed ligature:","Ligature type:","Was strangulation suspected?","Was smothering suspected?",
     "Was chocking suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
     "Was the victim alone?","Who was with the victim?"];
-    var hangingValue = [sceneData.hangingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
-        ,sceneData.drugParaphernalia,sceneData.autoeroticAsphyxia,sceneData.partialHangingType,sceneData.completeHanging,
+
+    var inside = sceneData.hangingInside;
+    var hangingValue = null;
+    
+    if(inside !== undefined)
+    {
+        hangingValue = [sceneData.hangingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround,
+        sceneData.drugParaphernalia,sceneData.autoeroticAsphyxia,sceneData.partialHangingType,sceneData.completeHanging,
         sceneData.ligatureAroundNeck,sceneData.whoRemovedLigature,sceneData.ligatureType,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
         inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        hangingValue = [sceneData.hangingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround,
+        sceneData.drugParaphernalia,sceneData.autoeroticAsphyxia,sceneData.partialHangingType,sceneData.completeHanging,
+        sceneData.ligatureAroundNeck,sceneData.whoRemovedLigature,sceneData.ligatureType,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected];
+    }
     
+    
+        
     var bicycleDesc = ["Where did the scene take place?","Bicycle type:","Number of people on bicycle:",
     "Weather condition:","Bicycle hit:"];
-    var bicycleValue = [sceneData.bicycleOutputType,sceneData.bicycleType,sceneData.bicycleNumPeople,
+    var bicycleValue = [sceneData.bicycleOType,sceneData.bicycleType,sceneData.bicycleNumPeople,
     sceneData.weatherCondition,sceneData.bicycleHit];
 
     var bluntDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
@@ -704,75 +721,164 @@ function getSceneTypeData(type,sceneData){
     "Was it a community assult?","Was strangulation suspected?","Was smothering suspected?",
     "Was chocking suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
     "Was the victim alone?","Who was with the victim?"];
-    var bluntValue = [sceneData.bluntIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.bluntInside;
+    
+    var bluntValue = null;
+    if(inside !== undefined)
+    {
+        
+        bluntValue = [sceneData.bluntIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.bluntForceObjectSuspected,sceneData.bluntForceObjectStillOnScene,
     sceneData.wasCommunityAssult,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
         inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        bluntValue = [sceneData.bluntIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.bluntForceObjectSuspected,sceneData.bluntForceObjectStillOnScene,
+    sceneData.wasCommunityAssult,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected];
+    }
+    
     
     var burnDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Accelerants at scene?","Accelerants used:","Igniter at scene?","Igniter used:",
     "Foul play suspected?","Was the door locked?","Was the windows closed?","Was the windows broken?",
-    "Was the victim alone?","Who was with the victim?"];
-    var burnValue = [sceneData.burnIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    "Was the victim alone?","Who was with the victim?","Was Building damaged?"];
+    inside = sceneData.burnInside;
+    var burnValue = null;
+    if(inside !== undefined)
+    {
+        burnValue = [sceneData.burnIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.accelerantsAtScene,sceneData.accelerantsUsed,sceneData.igniterAtScene,
     sceneData.igniterUsed,sceneData.foulPlaySuspected,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
-        inside.victimAlone,inside.peopleWithVictim];
+        inside.victimAlone,inside.peopleWithVictim,inside.buildingDamaged];
+    }else{
+        burnValue = [sceneData.burnIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.accelerantsAtScene,sceneData.accelerantsUsed,sceneData.igniterAtScene,
+    sceneData.igniterUsed,sceneData.foulPlaySuspected];
+    }
+    
     
     var crushDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was the body moved?","Crush between which objects?","Was there any witnesses?",
     "What was the victim doing?","Was the door locked?","Was the windows closed?",
     "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
-    var crushValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.crushinjuryInside;
+    var crushValue = null;
+    if(inside !== undefined)
+    {
+        crushValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.wasBodyMoved,sceneData.betweenWhichObjects,sceneData.anyWitness,
         sceneData.whatWasVictimDoing,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
         inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        crushValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.wasBodyMoved,sceneData.betweenWhichObjects,sceneData.anyWitness,
+        sceneData.whatWasVictimDoing];
+    }
+    
     
     var drowningDesc = ["Where did the scene take place?","Drowning type:","Any signs of struggle?",
     "Was an alcohol bottle around?","Drug Paraphernalia?","Was the door locked?","Was the windows closed?",
     "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
-    var drowningValue = [sceneData.drowningIOType,sceneData.drowningType,sceneData.signsOfStruggle,
+    inside = sceneData.drowningInside;
+    var drowningValue = null;
+    if(inside !== undefined)
+    {
+        drowningValue = [sceneData.drowningIOType,sceneData.drowningType,sceneData.signsOfStruggle,
         sceneData.alcoholBottleAround,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
         inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        drowningValue = [sceneData.drowningIOType,sceneData.drowningType,sceneData.signsOfStruggle,
+        sceneData.alcoholBottleAround,sceneData.drugParaphernalia];
+    }
+        
     
     var lightningDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Any open wire?","Was the scene wet?","Debarking of trees?","Was the door locked?",
     "Was the windows closed?","Was the windows broken?","Was the victim alone?","Who was with the victim?"];
-    var lightningValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.electrocutionlightningInside;
+    var lightningValue = null;
+    if(inside !== undefined)
+    {
+        lightningValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.anyOpenWire,sceneData.sceneWet,sceneData.deBarkingOfTrees,
         inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    }
+    else{
+        lightningValue = [sceneData.crushIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.anyOpenWire,sceneData.sceneWet,sceneData.deBarkingOfTrees];
+    }
+    
     
     var firearmDesc = ["Where did the scene take place?","Any gunshot wounds?","Where are the gunshot wounds located:",
     "Where are the gunshot wounds area?","Was the firearm on scene?","Accelerants used:","Firearm calibre:",
     "Was the door locked?","Was the windows closed?",
     "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
-    var firearmValue = [sceneData.firearmIOType,sceneData.gunshotWounds,sceneData.gunshotWoundsLocation,
+    inside = sceneData.firearmInside;
+    var firearmValue = null;
+    if(inside !== undefined)
+    {
+        firearmValue = [sceneData.firearmIOType,sceneData.gunshotWounds,sceneData.gunshotWoundsLocation,
         sceneData.gunshotWoundsArea,sceneData.firearmOnScene,sceneData.accelerantsUsed,sceneData.firearmCalibre,
         inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        firearmValue = [sceneData.firearmIOType,sceneData.gunshotWounds,sceneData.gunshotWoundsLocation,
+        sceneData.gunshotWoundsArea,sceneData.firearmOnScene,sceneData.accelerantsUsed,sceneData.firearmCalibre];
+    }
+    
     
     var heightDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Where did the victim fall from?","How high was the fall?","On what did the victim land?",
     "Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
     "Who was with the victim?"];
-    var heightValue = [sceneData.heightIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.heightInside;
+    var heightValue = null;
+    if(inside !== undefined)
+    {
+       heightValue = [sceneData.heightIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.fromWhat,sceneData.howHigh,sceneData.onWhatVictimLanded,
-        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+        inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim]; 
+    }else{
+        heightValue = [sceneData.heightIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.fromWhat,sceneData.howHigh,sceneData.onWhatVictimLanded];
+    }
+    
     
     var gassingDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
     "Who was with the victim?","Any gassing appliances?","Gassing aplliances used:","Was there a gassing smell?",
     "Was the victim inside a car?","Description of the scene inside the car:"];
-    var gassingValue = [sceneData.sceneData.gassingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.gassingInside;
+    var gassingValue = null;
+    
+    if(inside !== undefined)
+    {
+        gassingValue = [sceneData.sceneData.gassingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,
         inside.peopleWithVictim,inside.gassingAppliances,inside.gassingAppliancesUsed,inside.gassingSmell,
         inside.gassingVictimInCar,inside.victimInCarDescription];
+    }
+    else{
+        
+        gassingValue = [sceneData.gassingIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround,sceneData.drugParaphernalia];
+    }
     
     var ingestionDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was the door locked?","Was the windows closed?",
     "Was the windows broken?","Was the victim alone?","Who was with the victim?"];
-    var ingestionValue = [sceneData.ingestionOverdosePoisoningIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.ingestionOverdosePoisoningInside;
+    var ingestionValue = null;
+    if(inside !== undefined)
+    {
+        ingestionValue = [sceneData.ingestionOverdosePoisoningIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,inside.doorLocked,inside.windowsClosed,inside.windowsBroken,
         inside.victimAlone,inside.peopleWithVictim];
+    }else{
+        ingestionValue = [sceneData.ingestionOverdosePoisoningIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround,
+        sceneData.drugParaphernalia];
+    }
+    
     
     var mvaDesc = ["Where did the scene take place?","Was the victim found in car?","Occupants:",
         "Number of occupants:","Victim was:","Car was hit from:","Victim Type:","Was the car burnt?"];
@@ -795,13 +901,28 @@ function getSceneTypeData(type,sceneData){
     var railwayValue = [sceneData.railwayIOType,sceneData.victimType,sceneData.railwayType];
     
     var sharpDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
-    ,"Drug Paraphernalia?","Was the sharp object at scene?",
-    "What are the sharp force injuries of victim?","The injury:",
+    ,"Drug Paraphernalia?","Was the sharp object at scene?","What are the sharp force injuries of victim?",
+    "The injury concentrated on:","The injury mainly on:",
     "Was the door locked?","Was the windows closed?","Was the windows broken?","Was the victim alone?",
     "Who was with the victim?"];
-    var sharpValue = [sceneData.sharpIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
-        ,sceneData.drugParaphernalia,sceneData.sharpObjectAtScene,sceneData.sharpForceInjuries,sceneData.theInjury,
+    inside = sceneData.sharpInside;
+    
+    var sharpValue = null;
+    if(inside !== undefined)
+    {
+        
+        sharpValue = [sceneData.sharpIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.sharpObjectAtScene,sceneData.sharpForceInjuries,sceneData.theInjuryConcentrated,
+        sceneData.theInjuryMainlyOn,
         inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    }
+    else{
+        
+        sharpValue = [sceneData.sharpIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.sharpObjectAtScene,sceneData.sharpForceInjuries,sceneData.theInjury];
+    }
+    
+    
     
     var sudiDesc = ["Where did the scene take place?","Resuscitation attemped?","Was the infant sick lately?",
         "Description of infant sickness:","Was the infant on medication?","Any falls or inury experience?",
@@ -818,23 +939,47 @@ function getSceneTypeData(type,sceneData){
     var sudaDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
     "Was chocking suspected?","Appliances?","Was there a weird smell in the air?"];
-    var sudaValue = [sceneData.sudaIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.sudaInside;
+    var sudaValue = null;
+    if(inside !== undefined)
+    {
+        sudaValue = [sceneData.sudaIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudaAppliances,sceneData.wierdSmellInAir,
     inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    }
+    else{
+        sudaValue = [sceneData.sudaIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudaAppliances,sceneData.wierdSmellInAir];
+    }
+    
+    
     
     var sudcDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
     "Was chocking suspected?","Appliances?","Was there a weird smell in the air?"];
-    var sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+    inside = sceneData.sudcInside;
+    var sudcValue = null;
+    if(inside !== undefined)
+    {
+        sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudcAppliances,sceneData.wierdSmellInAir,
     inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
+    }
+    else{
+        sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
+        ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudcAppliances,sceneData.wierdSmellInAir];
+    }
+    
     
     var sec48Desc = ["Was the victim hospitalized?","Medical equipment in situ?","gw714file:",
         "Names of doctors:","Doctor Cell Number:","Nurses Names:","Nurse Cell Number:","Hospital name:",
         "Who removed equipment?","Is gw7_24 file fully complete?","Any medical records?",
         "Importantinformation from medical staff:"];
+    
     var sec48Value = [sceneData.victimHospitalized,sceneData.medicalEquipmentInSitu,sceneData.gw7_24file,
         sceneData.DrNames,sceneData.DrCellNumber,sceneData.NurseNames,sceneData.NurseCellNumber,sceneData.hospitalName,
         sceneData.whoRemovedEquipment,sceneData.gw7_24fileFullyComplete,sceneData.medicalRecords,
@@ -845,7 +990,7 @@ function getSceneTypeData(type,sceneData){
                     case "Foetus / Abandoned baby":
                         for(var i = 0;i < foetusDesc.length;i++)
                         {
-                            if(foetusValue[i] !== "null")
+                            if(foetusValue[i] !== "null" && foetusValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+foetusDesc[i]+"</td><td>"+foetusValue[i]+"</td>";
@@ -856,7 +1001,7 @@ function getSceneTypeData(type,sceneData){
                     case "Aviation accident":    
                         for(var i = 0;i < aviationDesc.length;i++)
                         {
-                            if(aviationValue[i] !== "null")
+                            if(aviationValue[i] !== "null" && aviationValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+aviationDesc[i]+"</td><td>"+aviationValue[i]+"</td>";
@@ -865,10 +1010,10 @@ function getSceneTypeData(type,sceneData){
                         }
                         break;
                      case "Hanging":
-                        var inside = sceneData.hangingInside;
+                        
                         for(var i = 0;i < hangingDesc.length;i++)
                         {
-                            if(hangingValue[i] !== "null")
+                            if(hangingValue[i] !== "null" && hangingValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+hangingDesc[i]+"</td><td>"+hangingValue[i]+"</td>";
@@ -880,7 +1025,7 @@ function getSceneTypeData(type,sceneData){
                        
                         for(var i = 0;i < bicycleDesc.length;i++)
                         {
-                            if(bicycleValue[i] !== "null")
+                            if(bicycleValue[i] !== "null" && bicycleValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+bicycleDesc[i]+"</td><td>"+bicycleValue[i]+"</td>";
@@ -890,7 +1035,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Blunt force injury/ assault":
                         
-                        var inside = sceneData.bluntInside;
+                        
                         for(var i = 0;i < bluntDesc.length;i++)
                         {
                             if(bluntValue[i] !== "null")
@@ -903,7 +1048,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Burns":
                         
-                        var inside = sceneData.burnInside;
+                        
                         for(var i = 0;i < burnDesc.length;i++)
                         {
                             if(burnValue[i] !== "null")
@@ -916,7 +1061,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Crush injury":
                         
-                        var inside = sceneData.crushinjuryInside;
+                        
                         for(var i = 0;i < crushDesc.length;i++)
                         {
                             if(crushValue[i] !== "null")
@@ -931,7 +1076,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Drowning":
                         
-                        var inside = sceneData.drowningInside;
+                        
                         for(var i = 0;i < drowningDesc.length;i++)
                         {
                             if(drowningValue[i] !== "null")
@@ -943,8 +1088,7 @@ function getSceneTypeData(type,sceneData){
                         }
                         break;
                     case "Lightning/ electrocution":
-                       
-                        var inside = sceneData.electrocutionlightningInside;
+                      
                        for(var i = 0;i < lightningDesc.length;i++)
                         {
                             if(lightningValue[i] !== "null")
@@ -983,7 +1127,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Gassing":
                         
-                        var inside = sceneData.gassingInside;
+                        
                         for(var i = 0;i < gassingDesc.length;i++)
                         {
                             if(gassingValue[i] !== "null")
@@ -997,7 +1141,6 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Ingestion/overdose /poisoning":
                         
-                        var inside = sceneData.ingestionOverdosePoisoningInside;
                         for(var i = 0;i < ingestionDesc.length;i++)
                         {
                             if(ingestionValue[i] !== "null")
@@ -1062,7 +1205,7 @@ function getSceneTypeData(type,sceneData){
                                 data += "</tr>";
                             }
                         }
-                        var inside = sceneData.sharpInside;
+                        
                         
                         break;
                     case "Sudden unexpected death of an infant (SUDI)":
@@ -1077,7 +1220,7 @@ function getSceneTypeData(type,sceneData){
                         }
                         break;
                     case "Sudden unexpected death of an adult/ found dead":
-                        var inside = sceneData.sudaInside;
+                        
                         for(var i = 0;i < sudaDesc.length;i++)
                         {
                             if(sudaValue[i] !== "null")
@@ -1092,7 +1235,7 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Sudden unexpected death of a child  (1 – 18 years)":
                         
-                        var inside = sceneData.sudcInside;
+                        
                         for(var i = 0;i < sudcDesc.length;i++)
                         {
                             if(sudcValue[i] !== "null")

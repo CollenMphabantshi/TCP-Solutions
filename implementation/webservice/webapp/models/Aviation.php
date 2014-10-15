@@ -16,6 +16,8 @@ class Aviation extends Scene{
     private $aviationOType;
     private $aircraftType;
     private $aircraftNumPeople;
+    private $victimType;
+    private $victimInfo;
     private $weatherCondition;
     private $weatherType;
     
@@ -27,11 +29,13 @@ class Aviation extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Aviation",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Aviation accident",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->aviationOType = $formData['object'][$i]['aviationOType'];
-                $this->aircraftType = $formData['object'][$i]['autoeroticAsphyxia'];
+                $this->aircraftType = $formData['object'][$i]['aircraftType'];
                 $this->aircraftNumPeople = $formData['object'][$i]['aircraftNumPeople'];
+                $this->victimType = $formData['object'][$i]['victimType'];
+                $this->victimInfo = $formData['object'][$i]['victimInfo'];
                 $this->weatherCondition = $formData['object'][$i]['weatherCondition'];
                 $this->weatherType = $formData['object'][$i]['weatherType'];
                     //
@@ -42,9 +46,8 @@ class Aviation extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-               
-                $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
-                $this->api->response($this->api->json($error), 400);
+                $this->addAviation($sceneID);
+                
             }
             
             
@@ -52,11 +55,26 @@ class Aviation extends Scene{
     }
     private function addAviation($sceneID) {
      
-            $h_res = mysql_query("insert into aviation values(0,".$sceneID.",'$this->aviationOType','$this->aircraftType','$this->aircraftNumPeople','$this->weatherCondition','$this->weatherType')");
+            $h_res = mysql_query("insert into aviation values(0,$sceneID,"
+                    . "'$this->aviationOType',"
+                    . "'$this->aircraftType',"
+                    . "'$this->aircraftNumPeople',"
+                    . "'$this->victimType',"
+                    . "'$this->victimInfo',"
+                    . "'$this->weatherCondition',"
+                    . "'$this->weatherType')");
         
-            $h_res = mysql_query("select * from aviation where sceneID=".$sceneID);
-            $aviationID = mysql_result($h_res,0,'aviationID');
+            if($h_res === FALSE){
+                $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                $this->api->response($this->api->json($error), 400);
+            }
         
+            $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
+            $this->api->response($this->api->json($error), 400);
+                
+            /*$h_res = mysql_query("select * from aviation where sceneID=".$sceneID);
+            $aviationID = mysql_result($h_res,0,'aviationID');*/
+            
         
     }
     public function getAllAviation() {
@@ -109,6 +127,8 @@ class Aviation extends Scene{
             $h_array['aviationOType'] = $enc->decrypt_request($h_array['aviationOType']);
             $h_array['aircraftType'] = $enc->decrypt_request($h_array['aircraftType']);
             $h_array['aircraftNumPeople'] = $enc->decrypt_request($h_array['aircraftNumPeople']);
+            $h_array['victimType'] = $enc->decrypt_request($h_array['victimType']);
+            $h_array['victimInfo'] = $enc->decrypt_request($h_array['victimInfo']);
             $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
             $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
                 
@@ -140,6 +160,8 @@ class Aviation extends Scene{
                 $h_array['aviationOType'] = $array['aviationOType'];
                 $h_array['aircraftType'] = $array['aircraftType'];
                 $h_array['aircraftNumPeople'] = $array['aircraftNumPeople'];
+                $h_array['victimType'] = $array['victimType'];
+                $h_array['victimInfo'] = $array['victimInfo'];
                 $h_array['weatherCondition'] = $array['weatherCondition'];
                 $h_array['weatherType'] = $array['weatherType'];
                 

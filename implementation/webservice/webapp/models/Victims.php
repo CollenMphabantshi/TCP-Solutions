@@ -95,7 +95,8 @@ class Victims {
        }else {
            $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }
-       if($v)
+       
+       if($v !== FALSE)
        {
         $v_res = mysql_query("select * from victims where victimIdentityNumber='$this->victimIdentityNumber'");
         $v_array = mysql_fetch_array($v_res);

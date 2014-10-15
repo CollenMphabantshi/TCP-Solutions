@@ -67,7 +67,10 @@ class SharpForceInjury extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($enc->decrypt_request($formData['object'][$i]['victims']['victimInside']) === "Yes"){
+                
+                
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addSharpForceInjury($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addSharpForceInjury($sceneID,FALSE,null);
@@ -90,14 +93,23 @@ class SharpForceInjury extends Scene{
         $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
         $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
         
-        $h_res = mysql_query("insert into sharp values(0,"
-        .$sceneID.",'$sharpIOType','$sharpObjectSuspected','$sharpObjectAtScene','$sharpForceInjuries','$theInjuryConcentrated','$theInjuryMainlyOn','$signsOfStruggle','$alcoholBottleAround','$drugParaphernalia')");
-        if($h_res == FALSE){
+        $h_res = mysql_query("insert into sharp values(0,$sceneID,"
+                . "'$sharpIOType',"
+                . "'$sharpObjectSuspected',"
+                . "'$sharpObjectAtScene',"
+                . "'$sharpForceInjuries',"
+                . "'$theInjuryConcentrated',"
+                . "'$theInjuryMainlyOn',"
+                . "'$signsOfStruggle',"
+                . "'$alcoholBottleAround',"
+                . "'$drugParaphernalia')");
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
         
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select sharpID from sharp where sceneID=".$sceneID);
             $sharpID= mysql_result($h_res,0,'sharpID');
             $dl = $object['doorLocked'];
@@ -105,13 +117,17 @@ class SharpForceInjury extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into sharpinside values(0,".$sharpID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into sharpinside values(0,".$sharpID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
         
     }
     
@@ -143,7 +159,7 @@ class SharpForceInjury extends Scene{
                     $hi_array['windowsClosed'] = $enc->decrypt_request($hi_array['windowsClosed']);
                     $hi_array['windowsBroken'] = $enc->decrypt_request($hi_array['windowsBroken']);
                     $hi_array['victimAlone'] = $enc->decrypt_request($hi_array['victimAlone']);
-                    if($hi_array['peopleWithVictim'] !== NULL)
+                    if($hi_array['peopleWithVictim'] !== NULL && $enc->decrypt_request($hi_array['peopleWithVictim']) !== "null")
                     {
                         $hi_array['peopleWithVictim'] = $enc->decrypt_request($hi_array['peopleWithVictim']);
                     }else{

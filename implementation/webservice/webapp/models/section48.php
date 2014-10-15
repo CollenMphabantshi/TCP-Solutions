@@ -21,6 +21,11 @@ class parameters {
     public $DrCellNumber;
     public $NurseNames;
     public $NurseCellNumber;
+    public $hospitalName;
+    public $whoRemovedEquipment;
+    public $gw7_24fileFullyComplete;
+    public $medicalRecords;
+    public $importantInfoFromMedicalStuff;
     
     public $caseObj;
     public $victimsObj;
@@ -54,7 +59,7 @@ class section48 extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Section 48  death –surgical case",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 
                 $this->paraObjAll->victimHospitalized = $formData['object'][$i]['victimHospitalized'];
@@ -71,7 +76,7 @@ class section48 extends Scene{
                 $this->paraObjAll->importantInfoFromMedicalStuff = $formData['object'][$i]['importantInfoFromMedicalStuff'];
                 
                $sceneID = $this->createScene();
-                 if($sceneID == NULL){
+                 if($sceneID === NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);
                  }
@@ -86,13 +91,38 @@ class section48 extends Scene{
     }
     
     public function addSection48($sceneID) {
+       $victimHospitalized = $this->paraObjAll->victimHospitalized;
+       $medicalEquipmentInSitu = $this->paraObjAll->medicalEquipmentInSitu;
+       $gw7_24file = $this->paraObjAll->gw7_24file;
+       $DrNames = $this->paraObjAll->DrNames;
+       $DrCellNumber = $this->paraObjAll->DrCellNumber;
+       $NurseNames = $this->paraObjAll->NurseNames;
+       $hospitalName = $this->paraObjAll->hospitalName;
+       $whoRemovedEquipment = $this->paraObjAll->whoRemovedEquipment;
+       $gw7_24fileFullyComplete = $this->paraObjAll->gw7_24fileFullyComplete;
+       $medicalRecords = $this->paraObjAll->medicalRecords;
+       $importantInfoFromMedicalStuff = $this->paraObjAll->importantInfoFromMedicalStuff;
        
-        $h_res = mysql_query("insert into sec48 values(0,"
-        .$sceneID.",'$this->paraObjAll->victimHospitalized','$this->paraObjAll->medicalEquipmentInSitu','$this->paraObjAll->gw7_24file','$this->paraObjAll->DrNames','$this->paraObjAll->DrCellNumber','$this->paraObjAll->NurseNames','$this->paraObjAll->NurseCellNumber','$this->paraObjAll->hospitalName','$this->paraObjAll->whoRemovedEquipment','$this->paraObjAll->gw7_24fileFullyComplete','$this->paraObjAll->medicalRecords','$this->paraObjAll->importantInfoFromMedicalStuff')");
+        $h_res = mysql_query("insert into sec48 values(0,$sceneID,"
+                . "'$victimHospitalized',"
+                . "'$medicalEquipmentInSitu',"
+                . "'$gw7_24file',"
+                . "'$DrNames',"
+                . "'$DrCellNumber',"
+                . "'$NurseNames',"
+                . "'$NurseCellNumber',"
+                . "'$hospitalName',"
+                . "'$whoRemovedEquipment',"
+                . "'$gw7_24fileFullyComplete',"
+                . "'$medicalRecords',"
+                . "'$importantInfoFromMedicalStuff')");
         if($h_res == FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 400);
         
     }
     

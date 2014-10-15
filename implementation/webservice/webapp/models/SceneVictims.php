@@ -25,7 +25,7 @@ class SceneVictims {
             
                 $v = new Victims($victims[0],$api);
                 $this->victimID = $v->addVictim();
-                if($this->victimID != null)
+                if($this->victimID !== null)
                 {
                     $this->addSceneVictim();
                 }else{
@@ -37,7 +37,7 @@ class SceneVictims {
     }
     
     private function addSceneVictim() {
-        $sv_res = mysql_query("insert into sceneVictims(id,sceneID,victimID) values(0,".$this->sceneID.",".$this->victimID.")");
+        $sv_res = mysql_query("insert into sceneVictims(id,sceneID,victimID) values(0,$this->sceneID,$this->victimID)");
     }
     
     public function getSceneVictims($sceneID) {

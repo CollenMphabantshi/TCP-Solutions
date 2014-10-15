@@ -16,7 +16,7 @@ class sudaParameters{
     public $sudaID;
     public $sceneID;
     public $sudaIOType;
-	public $remainSkeletonized;
+    public $remainSkeletonized;
     public $signsOfStruggle;
     public $alcoholBottleAround;
     public $drugParaphernalia;
@@ -26,6 +26,8 @@ class sudaParameters{
     public $anyHeatingDevices;
     public $wierdSmellInAir;
     public $victimHistory;
+    public $victimTakeMedication;
+    public $victimHadAnySymptoms;
     public $familyMedicalHistory;
     
     public  $sudaCases;
@@ -56,7 +58,7 @@ class Suda extends Scene{
                 parent::__construct($formData['object'][$i]['sceneTime'],"Sudden unexpected death of an adult/ found dead",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->paraObjAll->sudaIOType = $formData['object'][$i]['sudaIOType'];
-				$this->paraObjAll->remainSkeletonized = $formData['object'][$i]['remainSkeletonized'];
+		$this->paraObjAll->remainSkeletonized = $formData['object'][$i]['remainSkeletonized'];
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
                 $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
@@ -66,9 +68,10 @@ class Suda extends Scene{
                 $this->paraObjAll->anyHeatingDevices = $formData['object'][$i]['anyHeatingDevices'];
                 $this->paraObjAll->wierdSmellInAir = $formData['object'][$i]['wierdSmellInAir'];
                 $this->paraObjAll->victimHistory = $formData['object'][$i]['victimHistory'];
+                $this->paraObjAll->victimTakeMedication = $formData['object'][$i]['victimTakeMedication'];
+                $this->paraObjAll->victimHadAnySymptoms = $formData['object'][$i]['victimHadAnySymptoms'];
                 $this->paraObjAll->familyMedicalHistory = $formData['object'][$i]['familyMedicalHistory'];
-                $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
-            $this->api->response($this->api->json($error), 400);
+                
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -76,7 +79,10 @@ class Suda extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                if($formData['object'][$i]['victims']['victimInside'] == "yes"){
+                
+                $enc = new Encryption();
+                $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
+                if($vinside === "Yes"){
                     $this->addSuda($sceneID,TRUE,$formData['object'][$i]);
                 }else{
                     $this->addSuda($sceneID,FALSE,null);
@@ -88,14 +94,43 @@ class Suda extends Scene{
     }
     
     public function addSuda($sceneID,$inside,$object) {
+        $sudaIOType = $this->paraObjAll->sudaIOType;
+        $remainSkeletonized = $this->paraObjAll->remainSkeletonized;
+        $signsOfStruggle = $this->paraObjAll->signsOfStruggle;
+        $alcoholBottleAround = $this->paraObjAll->alcoholBottleAround;
+        $drugParaphernalia = $this->paraObjAll->drugParaphernalia;
+        $strangulationSuspected = $this->paraObjAll->strangulationSuspected;
+        $smotheringSuspected = $this->paraObjAll->smotheringSuspected;
+        $chockingSuspected = $this->paraObjAll->chockingSuspected;
+        $anyHeatingDevices = $this->paraObjAll->anyHeatingDevices;
+        $wierdSmellInAir = $this->paraObjAll->wierdSmellInAir;
+        $victimHistory = $this->paraObjAll->victimHistory;
+        $victimTakeMedication = $this->paraObjAll->victimTakeMedication;
+        $victimHadAnySymptoms = $this->paraObjAll->victimHadAnySymptoms;
+        $familyMedicalHistory = $this->paraObjAll->familyMedicalHistory;
         
-        $h_res = mysql_query("insert into suda values(0,".$sceneID.",'$this->paraObjAll->sudaIOType','$this->paraObjAll->remainSkeletonized','$this->paraObjAll->signsOfStruggle','$this->paraObjAll->alcoholBottleAround','$this->paraObjAll->drugParaphernalia','$this->paraObjAll->strangulationSuspected','$this->paraObjAll->smotheringSuspected','$this->paraObjAll->chockingSuspected','$this->paraObjAll->anyHeatingDevices','$this->paraObjAll->wierdSmellInAir','$this->paraObjAll->victimHistory','$this->paraObjAll->familyMedicalHistory')");
-        if($h_res == FALSE){
+        $h_res = mysql_query("insert into suda values(0,$sceneID,"
+                . "'$sudaIOType',"
+                . "'$remainSkeletonized',"
+                . "'$signsOfStruggle',"
+                . "'$alcoholBottleAround',"
+                . "'$drugParaphernalia',"
+                . "'$strangulationSuspected',"
+                . "'$smotheringSuspected',"
+                . "'$chockingSuspected',"
+                . "'$anyHeatingDevices',"
+                . "'$wierdSmellInAir',"
+                . "'$victimTakeMedication',"
+                . "'$victimHadAnySymptoms',"
+                . "'$victimHistory',"
+                . "'$familyMedicalHistory')");
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
         
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select sudaID from suda where sceneID=".$sceneID);
             $sudaID= mysql_result($h_res,0,'sudaID');
             $dl = $object['doorLocked'];
@@ -103,13 +138,18 @@ class Suda extends Scene{
             $wb = $object['windowsBroken'];
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
-            if($va != "yes")
+            
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into sudainside values(0,".$sudaID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
                 $hi_res = mysql_query("insert into sudainside values(0,".$sudaID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
         
     }
     

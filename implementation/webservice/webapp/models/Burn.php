@@ -37,7 +37,7 @@ class Burn extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Burn",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Burns",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 $this->burnIOType = $formData['object'][$i]['burnIOType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
@@ -62,7 +62,7 @@ class Burn extends Scene{
                  }
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                
+                $enc = new Encryption();
                 $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
                 if($vinside === "Yes"){
                         $this->addBurn($sceneID,TRUE,$formData['object'][$i]);
@@ -70,11 +70,6 @@ class Burn extends Scene{
                         $this->addBurn($sceneID,FALSE,null);
                 }
                 
-                /*if($formData['object'][$i]['victims']['victimInside'] == "yes"){
-                    $this->addBurn($sceneID,TRUE,$formData['object'][$i]);
-                }else{
-                    $this->addBurn($sceneID,FALSE,null);
-                }*/
             }
             
             
@@ -82,18 +77,51 @@ class Burn extends Scene{
         
     }
     private function addBurn($sceneID,$inside,$object) {
-        if($this->accelerantsUsed != NULL && $this->igniterAtScene != NULL)
-        {
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
-        }else if($this->accelerantsUsed == NULL && $this->igniterAtScene != NULL){
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
-        }  else if($this->accelerantsUsed != NULL && $this->igniterAtScene == NULL) {
-              $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene',null,'$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
-        }  else if($this->accelerantsUsed == NULL && $this->igniterAtScene == NULL) {
-            $h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene',null,'$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
+        //if($this->accelerantsUsed != NULL && $this->igniterAtScene != NULL)
+        //{
+        $h_res = mysql_query("insert into burn values(0,$sceneID,"
+                . "'$this->burnIOType',"
+                . "'$this->signsOfStruggle',"
+                . "'$this->alcoholBottleAround',"
+                . "'$this->drugParaphernalia',"
+                . "'$this->accelerantsAtScene',"
+                . "'$this->accelerantsUsed',"
+                . "'$this->igniterAtScene',"
+                . "'$this->igniterUsed',"
+                . "'$this->foulPlaySuspected',"
+                . "'$this->wasBodyHospitilized',"
+                . "'$this->howBurnWoundsSustained',"
+                . "'$this->bodyCharred',"
+                . "'$this->wierdSmell',"
+                . "'$this->anyPotentialWeapons',"
+                . "'$this->wasItCommunityAssault')");
+        //}else if($this->accelerantsUsed == NULL && $this->igniterAtScene != NULL){
+            //$h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene',null,'$this->igniterAtScene','$this->igniterUsed','$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
+        //}  else if($this->accelerantsUsed != NULL && $this->igniterAtScene == NULL) {
+              //$h_res = mysql_query("insert into burn values(0,".$sceneID.",'$this->burnIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->accelerantsAtScene','$this->accelerantsUsed','$this->igniterAtScene',null,'$this->foulPlaySuspected','$this->wasBodyHospitilized','$this->howBurnWoundsSustained','$this->bodyCharred','$this->wierdSmell','$this->anyPotentialWeapons','$this->wasItCommunityAssault')");
+        //}  else if($this->accelerantsUsed == NULL && $this->igniterAtScene == NULL) {
+            /*$h_res = mysql_query("insert into burn values(0,$sceneID,"
+                    . "'$this->burnIOType',"
+                    . "'$this->signsOfStruggle',"
+                    . "'$this->alcoholBottleAround',"
+                    . "'$this->drugParaphernalia',"
+                    . "'$this->accelerantsAtScene',"
+                    . "null,"
+                    . "'$this->igniterAtScene',"
+                    . "null,"
+                    . "'$this->foulPlaySuspected',"
+                    . "'$this->wasBodyHospitilized',"
+                    . "'$this->howBurnWoundsSustained',"
+                    . "'$this->bodyCharred',"
+                    . "'$this->wierdSmell',"
+                    . "'$this->anyPotentialWeapons',"
+                    . "'$this->wasItCommunityAssault')");*/
+        //}
+        if($h_res === FALSE){
+            $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);
         }
-        
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select * from burn where sceneID=".$sceneID);
             $burnID = mysql_result($h_res,0,'burnID');
             $dl = $object['doorLocked'];
@@ -102,13 +130,17 @@ class Burn extends Scene{
             $va = $object['victimAlone'];
             $pv = $object['peopleWithVictim'];
             $bd = $object['buildingDamaged'];
-            if($va != "yes")
+            $enc = new Encryption();
+            if($enc->decrypt_request($va) !== "Yes")
             {
                 $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va','$pv','$bd')");
             }else{
                 $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null,'$bd')");
             }
         }
+        
+        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 400);
     }
     public function getAllBurn() {
         try{
