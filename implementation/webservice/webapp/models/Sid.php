@@ -26,7 +26,7 @@ class Sid extends Scene{
     private $dateAndTimeLastPlaced;
     private $dateAndTimeDeathDiscovered;
     private $dateAndTimeLastSeenAlive;
-    private $anySIDSdeeaths;
+    private $anySIDSdeaths;
     private $photoAfterBodyRemoved;
     private $infantLastPlaced;
     private $infantLastSeenAlive;
@@ -67,7 +67,7 @@ class Sid extends Scene{
                 $this->dateAndTimeLastPlaced = $formData['object'][$i]['dateAndTimeLastPlaced'];
                 $this->dateAndTimeDeathDiscovered = $formData['object'][$i]['dateAndTimeDeathDiscovered'];
                 $this->dateAndTimeLastSeenAlive = $formData['object'][$i]['dateAndTimeLastSeenAlive'];
-                $this->anySIDSdeeaths = $formData['object'][$i]['anySIDSdeaths'];
+                $this->anySIDSdeaths = $formData['object'][$i]['anySIDSdeaths'];
                 $this->photoAfterBodyRemoved = $formData['object'][$i]['photoAfterBodyRemoved'];
                 $this->infantLastPlaced = $formData['object'][$i]['infantLastPlaced'];
                 $this->infantLastSeenAlive = $formData['object'][$i]['infantLastSeenAlive'];
@@ -109,11 +109,10 @@ class Sid extends Scene{
                     . "'$this->infantWearing',"
                     . "'$this->infantTightlyWrapped',"
                     . "'$this->beddingOverInfant',"
-                    . "'$this->whoFoundVictimBody',"
                     . "'$this->dateAndTimeLastPlaced',"
                     . "'$this->dateAndTimeDeathDiscovered',"
                     . "'$this->dateAndTimeLastSeenAlive',"
-                    . "'$this->anySIDSdeeaths',"
+                    . "'$this->anySIDSdeaths',"
                     . "'$this->photoAfterBodyRemoved',"
                     . "'$this->infantLastPlaced',"
                     . "'$this->infantLastSeenAlive',"
@@ -183,7 +182,7 @@ class Sid extends Scene{
                 $h_array['dateAndTimeLastPlaced'] = $array['dateAndTimeLastPlaced'];
                 $h_array['dateAndTimeDeathDiscovered'] = $array['dateAndTimeDeathDiscovered'];
                 $h_array['dateAndTimeLastSeenAlive'] = $array['dateAndTimeLastSeenAlive'];
-                $h_array['anySIDSdeeaths'] = $array['anySIDSdeeaths'];
+                $h_array['anySIDSdeaths'] = $array['anySIDSdeaths'];
                 $h_array['photoAfterBodyRemoved'] = $array['photoAfterBodyRemoved'];
                 $h_array['infantLastPlaced'] = $array['infantLastPlaced'];
                 $h_array['infantLastSeenAlive'] = $array['infantLastSeenAlive'];
@@ -235,7 +234,7 @@ class Sid extends Scene{
                 $h_array['dateAndTimeLastPlaced'] = $enc->decrypt_request($h_array['dateAndTimeLastPlaced']);
                 $h_array['dateAndTimeDeathDiscovered'] = $enc->decrypt_request($h_array['dateAndTimeDeathDiscovered']);
                 $h_array['dateAndTimeLastSeenAlive'] = $enc->decrypt_request($h_array['dateAndTimeLastSeenAlive']);
-                $h_array['anySIDSdeeaths'] = $enc->decrypt_request($h_array['anySIDSdeeaths']);
+                $h_array['anySIDSdeaths'] = $enc->decrypt_request($h_array['anySIDSdeaths']);
                 $h_array['photoAfterBodyRemoved'] = $enc->decrypt_request($h_array['photoAfterBodyRemoved']);
                 $h_array['infantLastPlaced'] = $enc->decrypt_request($h_array['infantLastPlaced']);
                 $h_array['infantLastSeenAlive'] = $enc->decrypt_request($h_array['infantLastSeenAlive']);

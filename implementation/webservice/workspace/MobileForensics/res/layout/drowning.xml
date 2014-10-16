@@ -392,6 +392,24 @@
 					android:layout_row="2"
             		android:layout_column="1"
 					/>
+					<TextView 
+					android:id="@+id/drowning_tv_victim_age"
+					android:layout_width="100dp"
+					android:layout_height="wrap_content"
+					
+					android:text="ID Number"
+					style="@style/tv_question"
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText 
+					android:id="@+id/drowning_victim_age"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>
 								       
 				</GridLayout>
 				</LinearLayout>
@@ -459,8 +477,112 @@
 				    />
 				    
 				</RadioGroup> 
+				<TextView 
+				    android:id="@+id/drowning_tv_bodyInsidewater"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the body inside the water?"
+					android:layout_row="1"
+            		android:layout_column="0"
+					
+					
+					/>
 				
+				<RadioGroup 
+			    android:id="@+id/drowning_rgbodyInsidewater"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="1"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/drowning_bodyInsidewaterYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
 				    
+				    <RadioButton
+				    android:id="@+id/drowning_bodyInsidewaterNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				    <TextView 
+				    android:id="@+id/drowning_tv_bodyRemoved"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Was the body removed from the water?"
+					android:layout_row="2"
+            		android:layout_column="0"
+					
+					
+					/>
+				
+				<RadioGroup 
+			    android:id="@+id/drowning_rgbodyRemoved"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    
+			    android:layout_row="2"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/drowning_bodyRemovedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/drowning_bodyRemovedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup> 
+				<TextView
+				    android:id="@+id/drowning_tv_bodyRemovedYesSpecify" 
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="if yes specify"
+					
+					android:layout_row="3"
+            		android:layout_column="0"
+					/>
+				<EditText
+					android:id="@+id/drowning_bodyRemovedYesSpecify"
+					android:layout_width="200dp"
+					android:layout_height="wrap_content"
+					
+					android:layout_row="3"
+            		android:layout_column="1"
+					/>
 				<TextView 
 				    android:id="@+id/drowning_tv_medicalIntervention"
 					android:layout_width="wrap_content"
@@ -470,7 +592,7 @@
 					style="@style/tv_question"
 					android:text="Is there any medical intervention?"
 					
-					android:layout_row="1"
+					android:layout_row="4"
             		android:layout_column="0"
 					/>
 				<RadioGroup 
@@ -480,7 +602,7 @@
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
 			    
-			    android:layout_row="1"
+			    android:layout_row="4"
             		android:layout_column="1"
 			    >
 				    <RadioButton
@@ -512,7 +634,7 @@
 					style="@style/tv_question"
 					android:text="Who found victim body?"
 					
-					android:layout_row="2"
+					android:layout_row="5"
             		android:layout_column="0"
 					/>
 				<EditText
@@ -520,7 +642,7 @@
 					android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					
-					android:layout_row="2"
+					android:layout_row="5"
             		android:layout_column="1"
 					/>
 				
@@ -1024,12 +1146,12 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="10dp"
 				android:paddingLeft="20dp"
-				android:rowCount="10"
+				android:rowCount="14"
         		android:columnCount="2"
 			    >
 				
 				 <TextView
-				    android:id="@+id/drowning_tv_water" 
+				    android:id="@+id/drowning_tv_deceasesDrownIn" 
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1041,7 +1163,7 @@
             	android:layout_column="0"
 					/>
 				<Spinner
-				    android:id="@+id/drowning_waterType"
+				    android:id="@+id/drowning_deceasesDrownIn"
 				    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:entries="@array/deceasedDrownIn"
@@ -1052,7 +1174,7 @@
 				    />	
 				
 				<TextView 
-				    android:id="@+id/drowning_tv_waterOther"
+				    android:id="@+id/drowning_tv_deceasesDrownInOther"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
@@ -1064,7 +1186,7 @@
 					
 					/>
 				<EditText
-				    android:id="@+id/drowning_waterOther"
+				    android:id="@+id/drowning_deceasesDrownInOther"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
 					android:layout_row="1"
@@ -1241,6 +1363,86 @@
 				    
 				</RadioGroup>
 				<TextView
+				    android:id="@+id/drowning_tv_poolFenced"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="Is the swimming pool/pond/jacuzzi fenced off?"
+					android:layout_row="6"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/drowning_rgpoolFenced"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="6"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/drowning_poolFencedYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/drowning_poolFencedNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+					<TextView
+				    android:id="@+id/drowning_tv_poolFencedIfYes"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="5dp"
+					
+					style="@style/tv_question"
+					android:text="If yes, was the gate of the fence closed"
+					android:layout_row="7"
+            	android:layout_column="0"
+					/>
+			
+				<RadioGroup 
+			    android:id="@+id/drowning_rgpoolFencedIfYes"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
+			    android:orientation="horizontal"
+			    android:layout_row="7"
+            	android:layout_column="1"
+			    >
+				    <RadioButton
+				    android:id="@+id/drowning_poolFencedIfYesYes"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="yes"
+					
+				    />
+				    
+				    <RadioButton
+				    android:id="@+id/drowning_poolFencedIfYesNo"
+				    android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:checked="false"
+			    	android:text="no"
+					
+				    />
+				    
+				</RadioGroup>
+				<TextView
 				    android:id="@+id/drowning_tv_suicideNoteFound"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -1248,7 +1450,7 @@
 					
 					style="@style/tv_question"
 					android:text="Is there a Suicide note on scene?"
-					android:layout_row="6"
+					android:layout_row="8"
             	android:layout_column="0"
 					/>
 			
@@ -1258,7 +1460,7 @@
 			    android:layout_height="wrap_content"
 			    android:layout_gravity="center_horizontal"
 			    android:orientation="horizontal"
-			    android:layout_row="6"
+			    android:layout_row="8"
             	android:layout_column="1"
 			    >
 				    <RadioButton
@@ -1289,14 +1491,14 @@
 					
 					style="@style/tv_question"
 					android:text="Victim General history?"
-					android:layout_row="7"
+					android:layout_row="9"
             	android:layout_column="0"
 					/>
 				<EditText
 				    android:id="@+id/drowning_generalHistory"
 				    android:layout_width="200dp"
 					android:layout_height="wrap_content"
-					android:layout_row="7"
+					android:layout_row="9"
             	android:layout_column="1"
 				    />
 				</GridLayout>

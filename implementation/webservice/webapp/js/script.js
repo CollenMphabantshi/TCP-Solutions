@@ -958,23 +958,30 @@ function getSceneTypeData(type,sceneData){
     
     var sudcDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
-    "Was chocking suspected?","Appliances?","Was there a weird smell in the air?"];
+    "Was chocking suspected?","Appliances?","Was there a weird smell in the air?","Was victim busy with physical exercise?",
+    "History of other family members of dying of sudden death in a young age:",
+    "History of other family members dying during sporting activities:","Family suffering from:",
+    "Did the victim fell/ sustain injury during the past week?","Did the victim take any medication?"];
     inside = sceneData.sudcInside;
     var sudcValue = null;
     if(inside !== undefined)
     {
         sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
-        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudcAppliances,sceneData.wierdSmellInAir,
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.anyHeatingDevices,sceneData.wierdSmellInAir,
+        sceneData.victimBusy,sceneData.familyMedicalHistory,sceneData.physicalExercise,sceneData.familyMembersSufferingFrom,
+        sceneData.victimFell,sceneData.victimTakeMedication,sceneData.suspisionOfAssault,sceneData.suspisionOfOverdose,
     inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
     }
     else{
         sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
-        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.sudcAppliances,sceneData.wierdSmellInAir];
+        sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.anyHeatingDevices,sceneData.wierdSmellInAir,
+        sceneData.victimBusy,sceneData.familyMedicalHistory,sceneData.physicalExercisesceneData.familyMembersSufferingFrom,
+        sceneData.victimFell,sceneData.victimTakeMedication,sceneData.suspisionOfAssault,sceneData.suspisionOfOverdose];
     }
     
-    
+    alert("Tompo");
     var sec48Desc = ["Was the victim hospitalized?","Medical equipment in situ?","gw714file:",
         "Names of doctors:","Doctor Cell Number:","Nurses Names:","Nurse Cell Number:","Hospital name:",
         "Who removed equipment?","Is gw7_24 file fully complete?","Any medical records?",
@@ -1035,10 +1042,9 @@ function getSceneTypeData(type,sceneData){
                         break;
                     case "Blunt force injury/ assault":
                         
-                        
                         for(var i = 0;i < bluntDesc.length;i++)
                         {
-                            if(bluntValue[i] !== "null")
+                            if(bluntValue[i] !== "null" && bluntValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+bluntDesc[i]+"</td><td>"+bluntValue[i]+"</td>";
@@ -1051,7 +1057,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < burnDesc.length;i++)
                         {
-                            if(burnValue[i] !== "null")
+                            if(burnValue[i] !== "null" && burnValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+burnDesc[i]+"</td><td>"+burnValue[i]+"</td>";
@@ -1064,7 +1070,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < crushDesc.length;i++)
                         {
-                            if(crushValue[i] !== "null")
+                            if(crushValue[i] !== "null" && crushValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+crushDesc[i]+"</td><td>"+crushValue[i]+"</td>";
@@ -1079,7 +1085,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < drowningDesc.length;i++)
                         {
-                            if(drowningValue[i] !== "null")
+                            if(drowningValue[i] !== "null" && drowningValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+drowningDesc[i]+"</td><td>"+drowningValue[i]+"</td>";
@@ -1091,7 +1097,7 @@ function getSceneTypeData(type,sceneData){
                       
                        for(var i = 0;i < lightningDesc.length;i++)
                         {
-                            if(lightningValue[i] !== "null")
+                            if(lightningValue[i] !== "null" && lightningValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+lightningDesc[i]+"</td><td>"+lightningValue[i]+"</td>";
@@ -1104,7 +1110,7 @@ function getSceneTypeData(type,sceneData){
                         var inside = sceneData.firearmInside;
                        for(var i = 0;i < firearmDesc.length;i++)
                         {
-                            if(firearmValue[i] !== "null")
+                            if(firearmValue[i] !== "null" && firearmValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+firearmDesc[i]+"</td><td>"+firearmValue[i]+"</td>";
@@ -1117,7 +1123,7 @@ function getSceneTypeData(type,sceneData){
                         var inside = sceneData.heightInside;
                         for(var i = 0;i < heightDesc.length;i++)
                         {
-                            if(heightValue[i] !== "null")
+                            if(heightValue[i] !== null && heightValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+heightDesc[i]+"</td><td>"+heightValue[i]+"</td>";
@@ -1130,7 +1136,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < gassingDesc.length;i++)
                         {
-                            if(gassingValue[i] !== "null")
+                            if(gassingValue[i] !== "null" && gassingValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+gassingDesc[i]+"</td><td>"+gassingValue[i]+"</td>";
@@ -1143,7 +1149,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < ingestionDesc.length;i++)
                         {
-                            if(ingestionValue[i] !== "null")
+                            if(ingestionValue[i] !== "null" && ingestionValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+ingestionDesc[i]+"</td><td>"+ingestionValue[i]+"</td>";
@@ -1154,7 +1160,7 @@ function getSceneTypeData(type,sceneData){
                     case "Motor vehicle accident":
                         for(var i = 0;i < mvaDesc.length;i++)
                         {
-                            if(mvaValue[i] !== "null")
+                            if(mvaValue[i] !== "null" && mvaValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+mvaDesc[i]+"</td><td>"+mvaValue[i]+"</td>";
@@ -1165,7 +1171,7 @@ function getSceneTypeData(type,sceneData){
                     case "Motorbike accident":
                         for(var i = 0;i < mbaDesc.length;i++)
                         {
-                            if(mvaValue[i] !== "null")
+                            if(mbaValue[i] !== "null" && mbaValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+mbaDesc[i]+"</td><td>"+mbaValue[i]+"</td>";
@@ -1176,7 +1182,7 @@ function getSceneTypeData(type,sceneData){
                     case "Pedestrian vehicle accident":
                         for(var i = 0;i < pedestrianDesc.length;i++)
                         {
-                            if(pedestrianValue[i] !== "null")
+                            if(pedestrianValue[i] !== "null" && pedestrianValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+pedestrianDesc[i]+"</td><td>"+pedestrianValue[i]+"</td>";
@@ -1187,7 +1193,7 @@ function getSceneTypeData(type,sceneData){
                     case "Railway accident":
                        for(var i = 0;i < railwayDesc.length;i++)
                         {
-                            if(railwayValue[i] !== "null")
+                            if(railwayValue[i] !== "null" && railwayValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+railwayDesc[i]+"</td><td>"+railwayValue[i]+"</td>";
@@ -1198,7 +1204,7 @@ function getSceneTypeData(type,sceneData){
                     case "Sharp force injury/ stab injury":
                         for(var i = 0;i < sharpDesc.length;i++)
                         {
-                            if(sharpValue[i] !== "null")
+                            if(sharpValue[i] !== "null" && sharpValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+sharpDesc[i]+"</td><td>"+sharpValue[i]+"</td>";
@@ -1211,7 +1217,7 @@ function getSceneTypeData(type,sceneData){
                     case "Sudden unexpected death of an infant (SUDI)":
                         for(var i = 0;i < sudiDesc.length;i++)
                         {
-                            if(sudiValue[i] !== "null")
+                            if(sudiValue[i] !== "null" && sudiValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+sudiDesc[i]+"</td><td>"+sudiValue[i]+"</td>";
@@ -1223,7 +1229,7 @@ function getSceneTypeData(type,sceneData){
                         
                         for(var i = 0;i < sudaDesc.length;i++)
                         {
-                            if(sudaValue[i] !== "null")
+                            if(sudaValue[i] !== "null" && sudaValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+sudaDesc[i]+"</td><td>"+sudaValue[i]+"</td>";
@@ -1233,12 +1239,12 @@ function getSceneTypeData(type,sceneData){
                         
                         
                         break;
-                    case "Sudden unexpected death of a child  (1 – 18 years)":
+                    case "SUDC":
                         
                         
                         for(var i = 0;i < sudcDesc.length;i++)
                         {
-                            if(sudcValue[i] !== "null")
+                            if(sudcValue[i] !== "null" && sudcValue[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+sudcDesc[i]+"</td><td>"+sudcValue[i]+"</td>";
@@ -1249,7 +1255,7 @@ function getSceneTypeData(type,sceneData){
                     case "Section 48  death –surgical case":
                         for(var i = 0;i < sec48Desc.length;i++)
                         {
-                            if(sec48Value[i] !== "null")
+                            if(sec48Value[i] !== "null" && sec48Value[i] !== null)
                             {
                                 data += "<tr>";
                                 data += "<td>"+sec48Desc[i]+"</td><td>"+sec48Value[i]+"</td>";

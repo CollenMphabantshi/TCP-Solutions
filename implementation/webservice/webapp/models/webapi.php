@@ -1385,7 +1385,7 @@ private function getSceneData() {
                         $obj = new Suda();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;
-                    case "Sudden unexpected death of a child  (1 – 18 years)":
+                    case "SUDC":
                         $obj = new Sudc();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;

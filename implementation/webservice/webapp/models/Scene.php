@@ -47,11 +47,13 @@ class Scene{
                     $this->investigatingOfficerCellNo = $_investigatingOfficerCellNo;
                     $this->firstOfficerOnSceneName = $_firstOfficerOnSceneName;
                     $this->firstOfficerOnSceneRank = $_firstOfficerOnSceneRank;
+                    
                 }
                 $this->enc = new Encryption();
                 $this->api = $api;
                 $this->case = new Cases(null,null,$this->api);
                 $this->sceneVictim = new SceneVictims(null,null, $this->api);
+                
                 
     }
     
@@ -82,8 +84,7 @@ class Scene{
                     . "'$this->firstOfficerOnSceneRank')"; 
             
             $scene_res = mysql_query($query);
-            $error = array('status' => "Failed", "msg" => "st=".$this->sceneType);
-            //$this->api->response($this->api->json($error), 400);
+            
              
             $scene_res = mysql_query("select * from scene where sceneLocation='$this->location' and sceneTime='$this->time' and sceneDate='$this->date'");
             $scene_array = mysql_fetch_array($scene_res);

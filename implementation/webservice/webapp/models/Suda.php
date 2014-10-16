@@ -120,9 +120,9 @@ class Suda extends Scene{
                 . "'$chockingSuspected',"
                 . "'$anyHeatingDevices',"
                 . "'$wierdSmellInAir',"
+                . "'$victimHistory',"
                 . "'$victimTakeMedication',"
                 . "'$victimHadAnySymptoms',"
-                . "'$victimHistory',"
                 . "'$familyMedicalHistory')");
         
         if($h_res === FALSE){
@@ -148,7 +148,7 @@ class Suda extends Scene{
             }
         }
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
         $this->api->response($this->api->json($error), 400);
         
     }

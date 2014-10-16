@@ -1,6 +1,7 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -200,6 +201,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	private TextView response;
 	private Button doneButton;
+	private Button finish;
 	private Button logoutButton;
 	
 	private LinearLayout Gallery;
@@ -234,12 +236,13 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
     ImageView imageView0,imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8;
     int serverResponseCode = 0;
     ProgressDialog dialog = null;
-    Uri currImageURI;
-    String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
+    //Uri currImageURI;
+   // String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
-    String filename ;
+    ArrayList<String> namesOfImages;
+    //String filename ;
     int numberOfImages = 0;
     
     //weather section
@@ -263,7 +266,8 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.sharp);
-			
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
 			try{
 				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -323,8 +327,45 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	    //image = resizeBitMapImage1(mCurrentPhotoPath,50,50);
+	    namesOfImages.add(imageFileName+".jpg");
+	    uploadFileName.add(mCurrentPhotoPath);
 	    return image;
 		
+	}
+	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
 	}
 	
 	private void dispatchTakePictureIntent(){
@@ -350,8 +391,8 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	private void setPic(ImageView mImageView){
 		// Get the dimensions of the View
-	    int targetW = 300;
-	    int targetH = 300;
+	    int targetW = 200;
+	    int targetH = 200;
 
 	    // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -380,6 +421,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    
 		
 	}
 	
@@ -591,7 +633,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		doneButton = (Button)findViewById(R.id.sharp_doneButton);
 		logoutButton = (Button)findViewById(R.id.sharp_logoutButton);
-		
+		finish = (Button)findViewById(R.id.sharp_Finish);
 		
 		
 		value = (TextView) findViewById(R.id.value);
@@ -618,31 +660,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 			e.printStackTrace();
 		}
 	}
-	
-public void readAllFiles(){
-		uploadFileName = new ArrayList<String>();
-    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
-    	Log.d("Files", "Path: " + path);
-    	File f = new File(path);        
-    	File files[] = f.listFiles();
-    	Log.d("Files", "Size: "+ files.length);
-    	for (int i=0; i < files.length; i++)
-    	{
-    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
-        	//{
-    		Toast.makeText(Sharp.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
-       	 
-        		uploadFileName.add(path+files[i].getName());
-    			Log.d("Files", "FileName:" + files[i].getName());
-        	//}
-    	    
-    	}
-    	
-    }
-   public String getExtesion(String filename){
-	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
-	   return extension;
-   }
+
 	
 	
 	
@@ -672,29 +690,11 @@ public void readAllFiles(){
 									try{
 										
 										new Read().execute(postdata);
+									
+										doneButton.setVisibility(VISIBLE);
+						                logoutButton.setVisibility(VISIBLE);
+						                clearFilelds();
 										
-										/*dialog = ProgressDialog.show(Sharp.this, "", "Uploading file...", true);
-						                 
-						                new Thread(new Runnable() {
-						                        public void run() {
-						                             runOnUiThread(new Runnable() {
-						                                    public void run() {
-						                                        
-						                                        Toast.makeText(Sharp.this, "uploading started.....", Toast.LENGTH_SHORT).show();
-						                                    }
-						                                });                      
-						                             
-						                             for( int i=0;i < numberOfImages; i++){
-						                            	 Toast.makeText(Sharp.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
-						                            	 uploadFile( uploadFileName.get(i) );
-						                            	 i++;
-						                             	}
-						                                               
-						                        }
-						                      }).start();*/
-						                doneButton.setVisibility(VISIBLE);
-										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
 										Toast.makeText(Sharp.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -756,7 +756,7 @@ public void readAllFiles(){
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
-	            	readAllFiles();
+	            	
             	}
             	
             }
@@ -781,6 +781,8 @@ public void readAllFiles(){
 				}catch(Exception e){e.printStackTrace();}
 			}
 		});
+		
+	
 		
 		
 		
@@ -949,7 +951,17 @@ public void readAllFiles(){
 	}
 	
 		
-	
+	private String convertImageToString(String path){
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		  // String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   //System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       return ""+byteArrayImage;
+	   }
 	
 	    
 	    @Override
@@ -998,146 +1010,7 @@ public void readAllFiles(){
 	   
 	   
 	 
-	    public int uploadFile(String sourceFileUri) {
-	           
-	           
-	          String fileName = sourceFileUri;
-	  
-	          HttpURLConnection conn = null;
-	          DataOutputStream dos = null;  
-	          String lineEnd = "\r\n";
-	          String twoHyphens = "--";
-	          String boundary = "*****";
-	          int bytesRead, bytesAvailable, bufferSize;
-	          byte[] buffer;
-	          int maxBufferSize = 1 * 1024 * 1024; 
-	          File sourceFile = new File(sourceFileUri); 
-	           
-	          if (!sourceFile.isFile()) {
-	               
-	               dialog.dismiss(); 
-	                
-	               Log.e("uploadFile", "Source File not exist :" + filename);
-	                
-	               runOnUiThread(new Runnable() {
-	                   public void run() {
-	                       messageText.setText("Source File not exist :"+ filename);
-	                   }
-	               }); 
-	                
-	               return 0;
-	            
-	          }
-	          else
-	          {
-	               try { 
-	                    
-	                     // open a URL connection to the Servlet
-	                   FileInputStream fileInputStream = new FileInputStream(sourceFile);
-	                   URL url = new URL(upLoadServerUri);
-	                    
-	                   // Open a HTTP  connection to  the URL
-	                   conn = (HttpURLConnection) url.openConnection(); 
-	                   conn.setDoInput(true); // Allow Inputs
-	                   conn.setDoOutput(true); // Allow Outputs
-	                   conn.setUseCaches(false); // Don't use a Cached Copy
-	                   conn.setRequestMethod("POST");
-	                   conn.setRequestProperty("Connection", "Keep-Alive");
-	                   conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-	                   conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-	                   conn.setRequestProperty("uploaded_file", fileName); 
-	                    
-	                   dos = new DataOutputStream(conn.getOutputStream());
-	          
-	                   dos.writeBytes(twoHyphens + boundary + lineEnd); 
-	                   dos.writeBytes("Content-Disposition: form-data; name= uploaded_file ;filename="+fileName+ lineEnd);
-	                    
-	                   dos.writeBytes(lineEnd);
-	          
-	                   // create a buffer of  maximum size
-	                   bytesAvailable = fileInputStream.available(); 
-	          
-	                   bufferSize = Math.min(bytesAvailable, maxBufferSize);
-	                   buffer = new byte[bufferSize];
-	          
-	                   // read file and write it into form...
-	                   bytesRead = fileInputStream.read(buffer, 0, bufferSize);  
-	                      
-	                   while (bytesRead > 0) {
-	                        
-	                     dos.write(buffer, 0, bufferSize);
-	                     bytesAvailable = fileInputStream.available();
-	                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
-	                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);   
-	                      
-	                    }
-	          
-	                   // send multipart form data necesssary after file data...
-	                   dos.writeBytes(lineEnd);
-	                   dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-	          
-	                   // Responses from the server (code and message)
-	                   serverResponseCode = conn.getResponseCode();
-	                   String serverResponseMessage = conn.getResponseMessage();
-	                     
-	                   Log.i("uploadFile", "HTTP Response is : "
-	                           + serverResponseMessage + ": " + serverResponseCode);
-	                    
-	                   if(serverResponseCode == 200){
-	                        
-	                       runOnUiThread(new Runnable() {
-	                            public void run() {
-	                                 
-	                                String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-	                                              +" http://forensicsapp.co.za/webapp/images/uploads/"
-	                                              +filename;
-	                                 
-	                                messageText.setText(msg);
-	                                Toast.makeText(Sharp.this, "File Upload Complete.", 
-	                                             Toast.LENGTH_SHORT).show();
-	                            }
-	                        });                
-	                   }    
-	                    
-	                   //close the streams //
-	                   fileInputStream.close();
-	                   dos.flush();
-	                   dos.close();
-	                     
-	              } catch (MalformedURLException ex) {
-	                   
-	                  dialog.dismiss();  
-	                  ex.printStackTrace();
-	                   
-	                  runOnUiThread(new Runnable() {
-	                      public void run() {
-	                          messageText.setText("MalformedURLException Exception : check script url.");
-	                          Toast.makeText(Sharp.this, "MalformedURLException", 
-	                                                              Toast.LENGTH_SHORT).show();
-	                      }
-	                  });
-	                   
-	                  Log.e("Upload file to server", "error: " + ex.getMessage(), ex);  
-	              } catch (Exception e) {
-	                   
-	                  dialog.dismiss();  
-	                  e.printStackTrace();
-	                   
-	                  runOnUiThread(new Runnable() {
-	                      public void run() {
-	                          messageText.setText("Got Exception : see logcat ");
-	                          Toast.makeText(Sharp.this, "Got Exception : see logcat ", 
-	                                  Toast.LENGTH_SHORT).show();
-	                      }
-	                  });
-	                  Log.e("Upload file to server Exception", "Exception : "
-	                                                   + e.getMessage(), e);  
-	              }
-	              dialog.dismiss();       
-	              return serverResponseCode; 
-	               
-	           } // End else block 
-	         }
+	    
 	
 	
 	public List<NameValuePair> getPostData(){
@@ -1151,6 +1024,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -1246,6 +1121,16 @@ public void readAllFiles(){
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	        //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	        info.accumulate("sharpIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
@@ -1319,6 +1204,9 @@ public void readAllFiles(){
 	        array.put(info);
 	        obj.accumulate("object", array);
 	        currentDataSaved = obj;
+	        
+	        
+	        
 	        
 	        pairs.add(new BasicNameValuePair("caseData",obj.toString()));
 	        
@@ -1478,16 +1366,16 @@ public void readAllFiles(){
         JSONObject victims = new JSONObject();
         
     
-        
         info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
         info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
         info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
         info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+        
         if(WeatherInfo != null && WeatherInfo.length() != 0 )
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1720,16 +1608,14 @@ public void readAllFiles(){
 					if(status.toLowerCase().equals("failed"))
 					{
 						
-						response.setText(message);
-						saveData(currentDataSaved);
+						response.setText(message+"it failed");
+					
 					}else{
-						
+						clearFilelds();
 						try{
 							message = message.split(".")[0];
-							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						currentVictimID =  Integer.parseInt(message.split(".")[1]);
 						}catch(Exception e){e.printStackTrace();}
-						
-		                
 						response.setText(message);
 					}
 				}
@@ -1740,31 +1626,7 @@ public void readAllFiles(){
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
 
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
 
 	@Override
 	public void hidePage() {
@@ -1984,9 +1846,7 @@ public void readAllFiles(){
 	
 		generalHistory.setText("");
 		
-		uploadFileName = null;
 		
-		uploadFileName = new ArrayList<String>();
 		
 	    imageView0.setImageBitmap(null);
 	    imageView1.setImageBitmap(null);

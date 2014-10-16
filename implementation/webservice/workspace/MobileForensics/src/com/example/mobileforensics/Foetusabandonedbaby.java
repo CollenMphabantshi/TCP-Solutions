@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -93,31 +94,17 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	
 	TextView value;
 
-	
-	
-
 	private EditText ioName;
-	
-	private EditText ioSurname;
-	
-	private EditText ioRank;
-	
-	private EditText ioCellNo;
-	
-	private TextView tv_foosName;
+	private EditText ioSurname;	
+	private EditText ioRank;	
+	private EditText ioCellNo;	
 	private EditText foosName;
-	private TextView tv_foosSurname;
 	private EditText foosSurname;
-	private TextView tv_foosRank;
-	private EditText foosRank;
-	
-	private TextView tv_victimName;
+	private EditText foosRank;	
 	private EditText victimName;
-	private TextView tv_victimSurname;
 	private EditText victimSurname;
-	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	
+	private EditText victimAge;
 	
 	
 	
@@ -131,46 +118,37 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	private TextView theBody;
-	private TextView tv_bodyDecomposed;
+	
+	
+	//the body
+	
 	private RadioButton bodyDecomposedYes;
 	private RadioButton bodyDecomposedNo;
-	private TextView tv_bodyDiscovered;
 	private EditText bodyDiscovered;
-	private TextView tv_whoFoundVictimBody;
 	private EditText whoFoundVictimBody;
-	private TextView tv_closeToWater;
 	private RadioButton closeToWaterYes;
 	private RadioButton closeToWaterNo;
-	private TextView tv_babyCovered;
 	private RadioButton babyCoveredYes;
 	private RadioButton babyCoveredNo;
+	private EditText babyCoveredYesSpecify;
 	
-	private TextView sceneOfInjury;
-	private TextView tv_sceneIOType;
-	private RadioButton sceneIOTypeInside;
-	private RadioButton sceneIOTypeOutside;
-	private TextView tv_whereInside;
+	
+	//Scene of injury
+	private RadioButton SceneIOTypeInside;
+	private RadioButton SceneIOTypeOutside;
 	private Spinner sceneIType;
-	private TextView tv_sceneITypeOther;
 	private EditText sceneITypeOther;
-	private TextView tv_sceneOType;
 	private Spinner sceneOType;
-	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
 	
-	private TextView sceneLook;
-	
-	private TextView theScene;
-	private TextView tv_generalHistory;
-	private EditText generalHistory;
+	//The scene
+		private EditText generalHistory;
 	
 	private TextView response;
 
 	private Button doneButton;
 	private Button logoutButton;
-	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -206,8 +184,9 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -220,31 +199,38 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	//ImageView mImageView;
 	private static final String TAG = "upload";
 	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.foetusabandoned);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
+		try{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.foetusabandoned);
+			
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		
-		initialize();
-		System.out.println("Start init");
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 	
@@ -267,7 +253,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 			}
 			return location;
 			
-		}
+	}
 	
 	private File createImageFile() throws IOException{
 		// Create an image file name
@@ -303,6 +289,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
@@ -376,9 +363,9 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
             
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
-			locate.accumulate("Bearing", loc.getBearing());
-			locate.accumulate("Altitude", loc.getAltitude());
-			locate.accumulate("Accuracy", loc.getAccuracy());
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
 			object.accumulate("Time", time);
@@ -441,29 +428,19 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		
 		
 	
-		ioName = (EditText)findViewById(R.id.foetus_io_name);
-		
-		ioSurname = (EditText)findViewById(R.id.foetus_io_surname);
-		
-		ioRank = (EditText)findViewById(R.id.foetus_io_rank);
-		
+		ioName = (EditText)findViewById(R.id.foetus_io_name);		
+		ioSurname = (EditText)findViewById(R.id.foetus_io_surname);		
+		ioRank = (EditText)findViewById(R.id.foetus_io_rank);		
 		ioCellNo = (EditText)findViewById(R.id.foetus_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.foetus_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.foetus_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.foetus_tv_foos_surname);
+		foosName = (EditText)findViewById(R.id.foetus_foos_name);;
 		foosSurname = (EditText)findViewById(R.id.foetus_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.foetus_tv_foos_rank);
 		foosRank = (EditText)findViewById(R.id.foetus_foos_rank);
 		
-	
 		
-		tv_victimName = (TextView)findViewById(R.id.foetus_tv_victim_name);
 		victimName = (EditText)findViewById(R.id.foetus_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.foetus_tv_victim_surname);
 		victimSurname = (EditText)findViewById(R.id.foetus_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.foetus_tv_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.foetus_victim_id);
+		victimAge = (EditText)findViewById(R.id.foetus_victim_age);
 		
 		rgbMale = (RadioButton)findViewById(R.id.foetus_rgbMale);
 		rgbFemale = (RadioButton)findViewById(R.id.foetus_rgbFemale);
@@ -475,40 +452,28 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		rgbWhite = (RadioButton)findViewById(R.id.foetus_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.foetus_rgbUnknownRace);
 		
+		//the body
 		
-		theBody = (TextView)findViewById(R.id.foetus_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.foetus_tv_bodyDecomposed);
 		bodyDecomposedYes = (RadioButton)findViewById(R.id.foetus_bodyDecomposedYes);
 		bodyDecomposedNo = (RadioButton)findViewById(R.id.foetus_bodyDecomposedNo);
-		tv_bodyDiscovered = (TextView)findViewById(R.id.foetus_tv_bodyDiscovered);
 		bodyDiscovered = (EditText)findViewById(R.id.foetus_bodyDiscovered);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.foetus_tv_whoFoundVictimBody);
 		whoFoundVictimBody = (EditText)findViewById(R.id.foetus_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.foetus_tv_closeToWater);
 		closeToWaterYes = (RadioButton)findViewById(R.id.foetus_closeToWaterYes);
 		closeToWaterNo = (RadioButton)findViewById(R.id.foetus_closeToWaterNo);
-		tv_babyCovered = (TextView)findViewById(R.id.foetus_tv_babyCovered);
 		babyCoveredYes = (RadioButton)findViewById(R.id.foetus_babyCoveredYes);
 		babyCoveredNo = (RadioButton)findViewById(R.id.foetus_babyCoveredNo);
+		babyCoveredYesSpecify = (EditText)findViewById(R.id.foetus_babyCoveredYesSpecify);
 		
 		
-		sceneOfInjury = (TextView)findViewById(R.id.foetus_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.foetus_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.foetus_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.foetus_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.foetus_tv_whereInside);
+		//Scene of injury
+		SceneIOTypeInside = (RadioButton)findViewById(R.id.foetus_SceneIOTypeInside);
+		SceneIOTypeOutside = (RadioButton)findViewById(R.id.foetus_SceneIOTypeOutside);
 		sceneIType = (Spinner)findViewById(R.id.foetus_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.foetus_tv_sceneITypeOther);
 		sceneITypeOther = (EditText)findViewById(R.id.foetus_sceneITypeOther);
-		tv_sceneOType = (TextView)findViewById(R.id.foetus_tv_sceneOType);
 		sceneOType = (Spinner)findViewById(R.id.foetus_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.foetus_tv_sceneOTypeOther);
 		sceneOTypeOther = (EditText)findViewById(R.id.foetus_sceneOTypeOther);
 		
-		System.out.println("after page 3");
-		
-		theScene = (TextView)findViewById(R.id.foetus_theScene);
-		tv_generalHistory = (TextView)findViewById(R.id.foetus_tv_generalHistory);
+		//The Scene
 		generalHistory = (EditText)findViewById(R.id.foetus_generalHistory);
 		
 		
@@ -516,7 +481,6 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		
 		doneButton = (Button)findViewById(R.id.foetus_doneButton);
 		logoutButton = (Button)findViewById(R.id.foetus_logoutButton);
-		
 		
 		
 		value = (TextView) findViewById(R.id.value);
@@ -535,14 +499,40 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.foetus_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.foetus_galleryLayout);
 	       // weather section
-	       weatherInfo = (TextView) findViewById(R.id.foetusWeatherInfo);
+	       
 		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Foetusabandonedbaby.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
+	
 	
 	
 	@Override
@@ -562,47 +552,44 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Foetusabandonedbaby.this, "", "Uploading file...", true);
+										/*dialog = ProgressDialog.show(foetus.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
 						                             runOnUiThread(new Runnable() {
 						                                    public void run() {
 						                                        
-						                                        Toast.makeText(Foetusabandonedbaby.this, "uploading started.....", Toast.LENGTH_SHORT).show();
+						                                        Toast.makeText(foetus.this, "uploading started.....", Toast.LENGTH_SHORT).show();
 						                                    }
 						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
+						                             
+						                             for( int i=0;i < numberOfImages; i++){
+						                            	 Toast.makeText(foetus.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
+						                            	 uploadFile( uploadFileName.get(i) );
+						                            	 i++;
+						                             	}
+						                                               
 						                        }
-						                      }).start(); 
+						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										clearFilelds();
-										Toast.makeText(Foetusabandonedbaby.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+										Toast.makeText(Foetusabandonedbaby.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
-								
-								Toast.makeText(Foetusabandonedbaby.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
-								
-							}
+							
 						}else{
 							Toast.makeText(Foetusabandonedbaby.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -658,6 +645,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	readAllFiles();
             	}
             	
             }
@@ -669,13 +657,17 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        //check 
 		        pairs.add(new BasicNameValuePair("category","foetus"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				try{
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
+				}catch(Exception e){e.printStackTrace();}
 			}
 		});
 		
@@ -684,100 +676,14 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		/**
 		 * 	Spinner onclick event
 		 */
-
-
-		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(VISIBLE);
-				sceneIType.setVisibility(VISIBLE);
-				
-				tv_sceneOType.setVisibility(GONE);
-				sceneOType.setVisibility(GONE);
-				tv_sceneOTypeOther.setVisibility(GONE);
-				sceneOTypeOther.setVisibility(GONE);
-			}
-		});
-		sceneIOTypeOutside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(GONE);
-				sceneIType.setVisibility(GONE);
-				tv_sceneITypeOther.setVisibility(GONE);
-				sceneITypeOther.setVisibility(GONE);
-				
-				tv_sceneOType.setVisibility(VISIBLE);
-				sceneOType.setVisibility(VISIBLE);
-			}
-		});
-
 		
-		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneITypeOther.setVisibility(VISIBLE);
-							sceneITypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-
-		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneOTypeOther.setVisibility(VISIBLE);
-							sceneOTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 	}
 	
+		
+	
+	
+	    
 	    @Override
 	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	        super.onActivityResult(requestCode, resultCode, data);
@@ -785,8 +691,8 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -987,7 +893,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	        {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
 	        }else{
-	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1000,47 +906,61 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
 	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
 	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	       // victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("null")));
+	        
 	        if(bodyDecomposedYes.isChecked())
 	        {
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyBurnt",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
 	        
-	        if(babyCoveredYes.isChecked())
+	        if(SceneIOTypeInside.isChecked())
 	        {
-	        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
-	        victims.accumulate("bodyBurned", "null");
-	        victims.accumulate("bodyIntact","null");
-	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-	        
-	        if(closeToWaterYes.isChecked())
-	        {
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
-	        if(sceneIOTypeInside.isChecked())
-	        {
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
-	        }else{
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }      
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	              }else{
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	              }
+	        victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
+	        info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+	       
+	        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
+
+	        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+  
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("foetusabandonedbabyIOType",getIOType() );
+	       info.accumulate("foetusabandonedbabyIOType",getIOType() );
+	       info.accumulate("howWasBodyDiscovered",Encryption.bytesToHex(enc.encrypt(bodyDiscovered.getText().toString())));
+	       
+	       if(closeToWaterYes.isChecked())
+	        {
+	        	info.accumulate("closeToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("closeToWater", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	       if(babyCoveredYes.isChecked())
+	        {
+	        	info.accumulate("wasBodyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("wasBodyCovered", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	       info.accumulate("coveredWith",Encryption.bytesToHex(enc.encrypt(babyCoveredYesSpecify.getText().toString())));
+	        
 	        
 	        array.put(info);
 	        obj.accumulate("object", array);
@@ -1055,29 +975,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		}
 	}
 	
-	public String getIOType(){
-		try{
-			String type = "";
-			
-			if(sceneIOTypeInside.isChecked())
-			{
-				type = (String)sceneIType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneITypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}else{
-				type = (String)sceneOType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneOTypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 	
 	public String getVictimGender(){
 		try{
@@ -1130,12 +1028,36 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
+	public String getIOType(){
+		try{
+			String type = "";
+			
+			if(SceneIOTypeInside.isChecked())
+			{
+				type = (String)sceneIType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneITypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
+			}else{
+				type = (String)sceneOType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneOTypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public void saveDataOnAction() throws Exception{
         JSONObject obj = new JSONObject();
@@ -1168,44 +1090,58 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
-        
-        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+      //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
         if(bodyDecomposedYes.isChecked())
         {
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("bodyBurnt",Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
         
-        if(babyCoveredYes.isChecked())
+        if(SceneIOTypeInside.isChecked())
         {
-        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("babyCovered", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
-        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-        
-        if(closeToWaterYes.isChecked())
-        {
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
-        if(sceneIOTypeInside.isChecked())
-        {
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
-        }else{
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }
-        
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+              }else{
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+              }
+        victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
+        info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+       
+        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
+
+        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+
+       
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
+       info.accumulate("foetusabandonedbabyIOType",getIOType() );
+       info.accumulate("howWasBodyDiscovered",Encryption.bytesToHex(enc.encrypt(bodyDiscovered.getText().toString())));
        
+       if(closeToWaterYes.isChecked())
+        {
+        	info.accumulate("closeToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("closeToWater", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+       if(babyCoveredYes.isChecked())
+        {
+        	info.accumulate("wasBodyCovered", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("wasBodyCovered", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+       info.accumulate("coveredWith",Encryption.bytesToHex(enc.encrypt(babyCoveredYesSpecify.getText().toString())));
+
+        
+        
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;
@@ -1283,11 +1219,20 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 					System.out.println("STATUS: "+status);
 					System.out.println("MESSAGE: "+message);
 					response.setVisibility(VISIBLE);
+					Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						
+						try{
+							message = message.split(".")[0];
+							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
+						
+		                
 						response.setText(message);
 					}
 				}
@@ -1393,7 +1338,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
@@ -1460,17 +1405,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-			
-		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
-			whoFoundVictimBody.requestFocus();
-			whoFoundVictimBody.setError("sorry empty field");
-			return false;
-		}
 		
-		if(sceneIOTypeInside.isChecked()){
-			
-			
-		}
 		
 		if( generalHistory.getText().toString().length() == 0){
 			generalHistory.requestFocus();
@@ -1487,19 +1422,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		victimSurname.setText("Unknown");
 		
 		victimIDNo.setText("Unknown");
-			
-		whoFoundVictimBody.setText("");
 		
-		if(sceneIOTypeInside.isChecked()){
-			sceneIOTypeInside.setChecked(false);
-			//outside selected by default
-			sceneIOTypeOutside.setChecked(true);
-			tv_whereInside.setVisibility(GONE);
-			sceneIType.setVisibility(GONE);
-			tv_sceneITypeOther.setVisibility(GONE);
-			sceneITypeOther.setVisibility(GONE);
-			
-		}
 		generalHistory.setText("");
 		
 		uploadFileName = null;
@@ -1536,22 +1459,9 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		rgbUnknownRace.setChecked(true);
 		
 		//outside selected by default
-		sceneIOTypeOutside.setChecked(true);
-		tv_whereInside.setVisibility(GONE);
-		sceneIType.setVisibility(GONE);
-		tv_sceneITypeOther.setVisibility(GONE);
-		sceneITypeOther.setVisibility(GONE);
 		
-		tv_sceneOType.setVisibility(VISIBLE);
-		sceneOType.setVisibility(VISIBLE);
-		
-		
-		bodyDecomposedNo.setChecked(true);
 	
-		babyCoveredNo.setChecked(true);
-	
-		closeToWaterNo.setChecked(true);
-		
+	 
 	}
 	
 	private  boolean CellNoValidation(String cell) {

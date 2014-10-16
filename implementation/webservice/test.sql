@@ -192,6 +192,7 @@ create table if not exists scenePhotos
     photoID int not null auto_increment,
     sceneID int not null,
     photoFilename text not null,
+    photoData text not null,
     FOREIGN KEY (sceneID) REFERENCES scene(sceneID),
     primary key(photoID)
 );
@@ -739,6 +740,7 @@ CREATE TABLE IF NOT EXISTS `suda` (
   `sudaID` int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    `sudaIOType` text NOT NULL,
+    remainSkeletonized text not null,
    `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,

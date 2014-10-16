@@ -896,9 +896,7 @@ public void readAllFiles(){
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
 	        
-	        time = new Random().nextLong()+"";
-	        date = new Random().nextLong()+"";
-	        location = new Random().nextLong()+"";
+	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));

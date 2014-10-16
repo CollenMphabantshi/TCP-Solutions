@@ -46,7 +46,7 @@ insert into sceneType values(0,"Railway accident");
 insert into sceneType values(0,"Section 48  death –surgical case");
 insert into sceneType values(0,"Sharp force injury/ stab injury");
 insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
-insert into sceneType values(0,"Sudden unexpected death of a child  (1 – 18 years)");
+insert into sceneType values(0,"SUDC");
 insert into sceneType values(0,"Sudden unexpected death of an adult/ found dead");
 
 insert into victimType values(0,"Pilot");

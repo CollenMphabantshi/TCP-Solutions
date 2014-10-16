@@ -696,7 +696,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Burn.this, "", "Uploading file...", true);
+									/*	dialog = ProgressDialog.show(Burn.this, "", "Uploading file...", true);
 						                 
 						                new Thread(new Runnable() {
 						                        public void run() {
@@ -713,10 +713,10 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 						                            	 
 						                             }                   
 						                        }
-						                      }).start(); 
+						                      }).start(); */
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Burn.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -1172,6 +1172,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
+	        
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -1780,6 +1781,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						clearFilelds();
 						response.setText(message);
 					}
 				}
@@ -1790,31 +1792,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
 
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
 
 	@Override
 	public void hidePage() {

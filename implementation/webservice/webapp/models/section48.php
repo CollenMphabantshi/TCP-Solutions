@@ -116,7 +116,11 @@ class section48 extends Scene{
                 . "'$gw7_24fileFullyComplete',"
                 . "'$medicalRecords',"
                 . "'$importantInfoFromMedicalStuff')");
-        if($h_res == FALSE){
+        
+        $error = array('status' => "Failed", "msg" => mysql_error());
+        $this->api->response($this->api->json($error), 400);
+        
+        if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }

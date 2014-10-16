@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once("ScenePhotos");
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -104,6 +105,7 @@ class SharpForceInjury extends Scene{
                 . "'$alcoholBottleAround',"
                 . "'$drugParaphernalia')");
         
+       
         if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
@@ -126,8 +128,14 @@ class SharpForceInjury extends Scene{
             }
         }
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+       /* $scenePhoto = new ScenePhotos($this->api);
+        $images = $object['images'];
+        for($i = 0; $i < count($images);$i++)
+        {
+            $scenePhoto->upload("axcd", $images['names'.$i], $sceneID);
+        }*/
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
         
     }
     

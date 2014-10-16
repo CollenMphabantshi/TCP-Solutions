@@ -1633,15 +1633,16 @@
 				         android:layout_gravity="center_horizontal"
 				         android:rowCount="1"
 				         android:visibility="visible">
-				<Button
-				    android:id="@+id/sharp_BackToMenu"
+				    <Button
+				    android:id="@+id/sharp_Finish"
 				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
+				    android:layout_height="wrap_content"	
 				    android:layout_column="0"
-				    android:layout_row="0"
-				    android:text="MENU"
+				    android:layout_row="0"			    
+				    android:text="FINISH UPLOAD"
 				    android:visibility="gone" 
 				    />
+				
 				
 				<Button
 				    android:id="@+id/sharp_doneButton"
@@ -1659,11 +1660,11 @@
 				    android:layout_column="2"
 				    android:layout_row="0"
 				    android:text="LOGOUT"
-				     android:visibility="visible"
+				     android:visibility="gone"
 				    />
 				</GridLayout>
 		</LinearLayout>
-		
+				
 	</ScrollView> 
 	
 </LinearLayout>
