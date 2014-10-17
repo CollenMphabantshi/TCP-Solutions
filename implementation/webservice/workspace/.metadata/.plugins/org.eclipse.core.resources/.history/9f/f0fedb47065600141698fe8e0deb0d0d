@@ -1351,7 +1351,7 @@ public void readAllFiles(){
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						clearFilelds();
+						
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
