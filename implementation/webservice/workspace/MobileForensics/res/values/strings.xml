@@ -258,7 +258,7 @@
         <item>Sheets</item>
         <item>Sheepskin</item>
          <item>Pillows</item>
-        <item>Other(Specify)</item>
+        <item>Other</item>
     </string-array>
       <string-array name="infantYes">
         <item>Cold or sniffles</item>
@@ -272,7 +272,7 @@
         <item>Crèche</item>
         <item>Day Mother</item>
         <item>Medical service area</item>
-        <item>Other (specify)</item>
+        <item>Other</item>
     </string-array>
     <string-array name="infantWherePlaced">
         <item>Bassinet/ Cradle / Crib</item>
@@ -286,12 +286,12 @@
         <item>Sofa/couch</item>
         <item>Stroller/carriage</item>
         <item>Swing/ feeding chair/ walking ring</item>
-        <item>Other (specify)</item>
+        <item>Other</item>
     </string-array>
       <string-array name="infantDoing">
         <item>Feeding</item>
         <item>Playing</item>
-        <item>Other (specify)</item>
+        <item>Other</item>
     </string-array>
       <string-array name="infant">
         <item>Choke</item>
@@ -315,7 +315,7 @@
         <item>Driver</item>
         <item>Front seat passenger</item>
         <item>Back seat passanger</item>
-        <item>Unknown(Specify)</item>
+        <item>Unknown</item>
     </string-array>
     
        <string-array name="hitType">

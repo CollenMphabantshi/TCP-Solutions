@@ -257,6 +257,7 @@ public class Blunt extends Activity implements GlobalMethods, OnMyLocationChange
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -954,9 +955,6 @@ public void readAllFiles(){
 			}
 		});
 
-
-		
-		
 		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -1192,7 +1190,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));

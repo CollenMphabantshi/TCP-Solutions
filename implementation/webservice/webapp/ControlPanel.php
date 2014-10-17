@@ -32,7 +32,26 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
      <!-- jQuery Version 1.11.0 -->
-     <script src="js/script.js"></script>
+     
+        
+	<script type="text/javascript" src="jspdf.js"></script>
+        <script type="text/javascript" src="libs/FileSaver.js"></script>
+	<script type="text/javascript" src="libs/BlobBuilder.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addhtml.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.autoprint.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.javascript.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.cell.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.total_pages.js"></script>
+        <script type="text/javascript" src="jspdf.PLUGINTEMPLATE.js"></script>
+        <script type="text/javascript" src="js/html2canvas.js"></script>
+        <script type="text/javascript" src="rasterizeHTML.js"></script>
+        <script type="text/javascript" src="js/jspdf.debug.js"></script>
+	<script type="text/javascript" src="js/basic.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
 </head>
 
 <body onload="runMe()">
@@ -49,7 +68,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img src="images/logo.png" alt="">
+                    <img src="images/logo-white.png" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -136,24 +155,30 @@
         </div>
         <!-- /.row -->
         <div class="row page" id="Page2">
-            <div class="col-lg-12">
+           <div class="col-lg-6">
                 <div>
                     <label for="auditSearch">
                         <input type="search" name="auditSearch" id="auditSearch" placeholder="search audit log"  />
                     </label>
                 </div><br/>
-            <table class="zui-table zui-table-zebra zui-table-horizontal">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Audit Date &amp; Time</th>
-                            <th>Audit Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="audit-table">
-                        
-                    </tbody>
-                </table>
+                <button id="printAudit" class="btn-lg">Create Print Out</button><br/><br/>
+                <div id="audits">
+                    <table class="zui-table zui-table-zebra zui-table-horizontal">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Audit Date &amp; Time</th>
+                                <th>Audit Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="audit-table">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <iframe id='auditPdf' width='100%' height='700px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>
             </div>
         </div>
         <!-- /.row -->

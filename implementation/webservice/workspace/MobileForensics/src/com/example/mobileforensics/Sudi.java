@@ -123,22 +123,26 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 	//the body
 	private RadioButton infantDieInSleep;
 	private Spinner infantDoing;
+	private TextView tv_infantDoingOther;
 	private EditText infantDoingOther;
 	private Spinner didInfant;
 	private EditText whoFoundBody;
 	private EditText relationshipToInfant;
-	private RadioButton resuscitationAttempted;
-	private EditText resuscitationAttemptedYes;
+	private RadioButton resuscitationAttemptedYes;
+	private RadioButton resuscitationAttemptedNo;
+	private TextView tv_resuscitationYes;
+	private EditText resuscitationYes;
 	private EditText infantWearing;
 	private RadioButton infantWrapped;
 	private Spinner infantBedding;
 	private EditText infantBeddingOther;
 	private RadioButton infantFall;
-	private RadioButton infantSick;
-	private Spinner infantSickYes;
-	private RadioButton infantMedication;
-	private EditText infantMedicationYes;
-	
+	private Spinner infantSick;
+	private RadioButton infantSickYes;
+	private RadioButton infantSickNo;
+	private EditText infantMedication;
+	private RadioButton infantMedicationYes;
+	private RadioButton infantMedicationNo;
 	
 	//Scene of injury
 	private Spinner LocationOfScene;
@@ -147,9 +151,11 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 	private EditText otherInfantLastPlaced;
 	private Spinner infantFoundDead;
 	private EditText otherInfantFoundDead;
-	private RadioButton washeaterOrOpenfire;
-	private EditText otherWasheaterOrOpenfire;
-	private RadioButton weiredSmell;
+	private RadioButton washeaterOrOpenfireYes;
+	private RadioButton washeaterOrOpenfireNo;
+	private EditText washeaterOrOpenfire;
+	private RadioButton weiredSmellYes;
+	private RadioButton weiredSmellNo;
 	private EditText otherWeiredSmell;
 	private RadioButton smokeOfCigarette;
 	
@@ -203,6 +209,7 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -227,7 +234,8 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		try{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.sid);
-			
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
 			try{
 				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -476,22 +484,25 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		//the body
 		infantDieInSleep = (RadioButton)findViewById(R.id.sid_infantDieYes);
 		infantDoing = (Spinner)findViewById(R.id.sid_infantDieSpecify);
+		tv_infantDoingOther = (TextView)findViewById(R.id.sid_tv_infantDieOther);
 		infantDoingOther = (EditText)findViewById(R.id.sid_infantDieOther);
 		 didInfant = (Spinner)findViewById(R.id.sid_infant);
 		 whoFoundBody = (EditText)findViewById(R.id.sid_whoFoundBody);
 		 relationshipToInfant = (EditText)findViewById(R.id.sid_relationshipInfant);
-		 resuscitationAttempted = (RadioButton)findViewById(R.id.sid_resuscitationAttemptedYes);
-		 resuscitationAttemptedYes =(EditText)findViewById(R.id.sid_resuscitationYes);
+		 resuscitationAttemptedYes = (RadioButton)findViewById(R.id.sid_resuscitationAttemptedYes);
+		 resuscitationAttemptedNo = (RadioButton)findViewById(R.id.sid_resuscitationAttemptedNo);
+		 resuscitationYes =(EditText)findViewById(R.id.sid_resuscitationYes);
 		 infantWearing = (EditText)findViewById(R.id.sid_InfantWearing);
 		 infantWrapped = (RadioButton)findViewById(R.id.sid_tightlyWrappedYes);
 		 infantBedding  = (Spinner)findViewById(R.id.sid_bedding);
 		 infantBeddingOther = (EditText)findViewById(R.id.sid_beddingSpecify);
 		 infantFall = (RadioButton)findViewById(R.id.sid_infantFallYes);
-		 infantSick = (RadioButton)findViewById(R.id.sid_infantSickYes);
-		 infantSickYes  = (Spinner)findViewById(R.id.sid_IfYes);
-		 infantMedication = (RadioButton)findViewById(R.id.sid_medicationYes);
-		 infantMedicationYes = (EditText)findViewById(R.id.sid_medicationSpecify);
-		
+		 infantSick = (Spinner)findViewById(R.id.sid_IfYes);
+		 infantSickYes  = (RadioButton)findViewById(R.id.sid_infantSickYes);
+		 infantSickNo  = (RadioButton)findViewById(R.id.sid_infantSickNo);
+		 infantMedication = (EditText)findViewById(R.id.sid_medicationSpecify);
+		 infantMedicationYes = (RadioButton)findViewById(R.id.sid_medicationYes);
+		 infantMedicationNo = (RadioButton)findViewById(R.id.sid_medicationNo);
 		
 		//Scene of injury
 		 LocationOfScene = (Spinner)findViewById(R.id.sid_where);
@@ -500,9 +511,11 @@ public class Sudi extends Activity implements GlobalMethods, OnMyLocationChangeL
 		 otherInfantLastPlaced = (EditText)findViewById(R.id.sid_wherePlacedSpecify);
 		 infantFoundDead = (Spinner)findViewById(R.id.sid_whereDead);
 		 otherInfantFoundDead = (EditText)findViewById(R.id.sid_whereDeadSpecify);
-		 washeaterOrOpenfire = (RadioButton)findViewById(R.id.sid_applianceYes);
-		 otherWasheaterOrOpenfire = (EditText)findViewById(R.id.sid_applianceYesSpecify);
-		 weiredSmell = (RadioButton)findViewById(R.id.sid_weirdSmellYes);
+		 washeaterOrOpenfireYes = (RadioButton)findViewById(R.id.sid_applianceYes);
+		 washeaterOrOpenfireNo = (RadioButton)findViewById(R.id.sid_applianceNo);
+		 washeaterOrOpenfire = (EditText)findViewById(R.id.sid_applianceYesSpecify);
+		 weiredSmellYes = (RadioButton)findViewById(R.id.sid_weirdSmellYes);
+		 weiredSmellNo = (RadioButton)findViewById(R.id.sid_weirdSmellNo);
 		 otherWeiredSmell = (EditText)findViewById(R.id.sid_weirdSmellYesSpecify);
 		 smokeOfCigarette = (RadioButton)findViewById(R.id.sid_smokeYes);
 		
@@ -710,12 +723,274 @@ public void readAllFiles(){
 			}
 		});
 		
+		infantDoing.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_infantDoingOther.setVisibility(VISIBLE);
+							infantDoingOther.setVisibility(VISIBLE);
+						}else{
+							tv_infantDoingOther.setVisibility(GONE);
+							infantDoingOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
+		resuscitationAttemptedYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_resuscitationYes);
+				tv.setVisibility(VISIBLE);
+				resuscitationYes.setVisibility(VISIBLE);
+			}
+		});
 		
-		/**
-		 * 	Spinner onclick event
-		 */
+		resuscitationAttemptedNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_resuscitationYes);
+				tv.setVisibility(GONE);
+				resuscitationYes.setVisibility(GONE);
+			}
+		});
 		
+		infantBedding.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv = (TextView)findViewById(R.id.sid_tv_beddingSpecify);
+						if(item.toLowerCase().equals("other"))
+						{
+							
+							tv.setVisibility(VISIBLE);
+							infantBeddingOther.setVisibility(VISIBLE);
+						}else{
+							tv.setVisibility(GONE);
+							infantBeddingOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		infantSickYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_IfYes);
+				tv.setVisibility(VISIBLE);
+				infantSick.setVisibility(VISIBLE);
+			}
+		});
+		
+		infantSickNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_IfYes);
+				tv.setVisibility(GONE);
+				infantSick.setVisibility(GONE);
+			}
+		});
+	
+		infantMedicationYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_medicationSpecify);
+				tv.setVisibility(VISIBLE);
+				infantMedication.setVisibility(VISIBLE);
+			}
+		});
+		
+		infantMedicationNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_medicationSpecify);
+				tv.setVisibility(GONE);
+				infantMedication.setVisibility(GONE);
+			}
+		});
+	
+		LocationOfScene.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv = (TextView)findViewById(R.id.sid_tv_whereSpecify);
+						if(item.toLowerCase().equals("other"))
+						{
+							
+							tv.setVisibility(VISIBLE);
+							otherLocationOfScene.setVisibility(VISIBLE);
+						}else{
+							tv.setVisibility(GONE);
+							otherLocationOfScene.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		infantLastPlaced.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv = (TextView)findViewById(R.id.sid_tv_wherePlacedSpecify);
+						if(item.toLowerCase().equals("other"))
+						{
+							
+							tv.setVisibility(VISIBLE);
+							otherInfantLastPlaced.setVisibility(VISIBLE);
+						}else{
+							tv.setVisibility(GONE);
+							otherInfantLastPlaced.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		infantFoundDead.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv = (TextView)findViewById(R.id.sid_tv_whereDeadSpecify);
+						if(item.toLowerCase().equals("other"))
+						{
+							
+							tv.setVisibility(VISIBLE);
+							otherInfantFoundDead.setVisibility(VISIBLE);
+						}else{
+							tv.setVisibility(GONE);
+							otherInfantFoundDead.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		washeaterOrOpenfireYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_applianceYesSpecify);
+				tv.setVisibility(VISIBLE);
+				washeaterOrOpenfire.setVisibility(VISIBLE);
+			}
+		});
+		
+		washeaterOrOpenfireNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_applianceYesSpecify);
+				tv.setVisibility(GONE);
+				washeaterOrOpenfire.setVisibility(GONE);
+			}
+		});
+		
+		weiredSmellYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_weirdSmellYesSpecify);
+				tv.setVisibility(VISIBLE);
+				otherWeiredSmell.setVisibility(VISIBLE);
+			}
+		});
+		
+		weiredSmellNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sid_tv_weirdSmellYesSpecify);
+				tv.setVisibility(GONE);
+				otherWeiredSmell.setVisibility(GONE);
+			}
+		});
+	
 		
 	}
 	
@@ -922,7 +1197,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
@@ -967,6 +1243,16 @@ public void readAllFiles(){
 	        
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	        info.accumulate("sidIOType", Encryption.bytesToHex(enc.encrypt(getlocOfScene())));
 	        
@@ -983,13 +1269,14 @@ public void readAllFiles(){
 			 
 			 info.accumulate("relationshiptoInfant", Encryption.bytesToHex(enc.encrypt(relationshipToInfant.getText().toString())));
 			 
-			 if(resuscitationAttempted.isChecked()){
-				 info.accumulate("resuscitationAttemped", Encryption.bytesToHex(enc.encrypt("Yes"))); 
+			 if(resuscitationAttemptedYes.isChecked()){
+				 info.accumulate("resuscitationAttemped", Encryption.bytesToHex(enc.encrypt("Yes")));
+				 info.accumulate("whoAttempedResuscitation", Encryption.bytesToHex(enc.encrypt(resuscitationYes.getText().toString())));
 			 }else{
 				 info.accumulate("resuscitationAttemped", Encryption.bytesToHex(enc.encrypt("No")));
 			 }
 			 
-			 info.accumulate("whoAttempedResuscitation", Encryption.bytesToHex(enc.encrypt(resuscitationAttemptedYes.getText().toString())));
+			 
 			 
 			 info.accumulate("infantWearing", Encryption.bytesToHex(enc.encrypt(infantWearing.getText().toString())));
 			 
@@ -1011,23 +1298,26 @@ public void readAllFiles(){
 		        }
 			 
 			 
-			 if(infantSick .isChecked())
+			 if(infantSickYes .isChecked())
 		        {
 		        	info.accumulate("infantSickLately", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        	info.accumulate("infantSickLatelyDescription", Encryption.bytesToHex(enc.encrypt((String)infantSick.getSelectedItem())));
 		        }else{
 		        	info.accumulate("infantSickLately", Encryption.bytesToHex(enc.encrypt("No")));
+		        	info.accumulate("infantSickLatelyDescription", Encryption.bytesToHex(enc.encrypt("null")));
 		        }
 			 
-			 info.accumulate("infantSickLatelyDescription", Encryption.bytesToHex(enc.encrypt((String)infantSickYes.getSelectedItem())));
+			 
 		      
-			 if(infantMedication .isChecked())
+			 if(infantMedicationYes .isChecked())
 		        {
 		        	info.accumulate("infantOnMedication", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        	info.accumulate("infantMedicationYes", Encryption.bytesToHex(enc.encrypt(infantMedicationYes.getText().toString())));
 		        }else{
 		        	info.accumulate("infantOnMedication", Encryption.bytesToHex(enc.encrypt("No")));
 		        }
 			 
-			 info.accumulate("infantMedicationYes", Encryption.bytesToHex(enc.encrypt(infantMedicationYes.getText().toString())));
+			 
 			
 			
 			//Scene of injury
@@ -1037,24 +1327,26 @@ public void readAllFiles(){
 		     
 			 info.accumulate("whereInfantFoundDead", Encryption.bytesToHex(enc.encrypt(getInfantFoundDead())));
 			 
-			 if(washeaterOrOpenfire .isChecked())
+			 if(washeaterOrOpenfireYes .isChecked())
 		        {
 		        	info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        	info.accumulate("otherWasheaterOrOpenfire", Encryption.bytesToHex(enc.encrypt(washeaterOrOpenfire.getText().toString())));
 		        }else{
 		        	info.accumulate("anyHeatingDevices", Encryption.bytesToHex(enc.encrypt("No")));
 		        }
 			 
 			  
-			 info.accumulate("otherWasheaterOrOpenfire", Encryption.bytesToHex(enc.encrypt(otherWasheaterOrOpenfire.getText().toString())));
 			 
-			 if(weiredSmell .isChecked())
+			 
+			 if(weiredSmellYes .isChecked())
 		        {
 		        	info.accumulate("anyWeirdSmell", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        	info.accumulate("otherWeiredSmell", Encryption.bytesToHex(enc.encrypt(otherWeiredSmell.getText().toString())));
 		        }else{
 		        	info.accumulate("anyWeirdSmell", Encryption.bytesToHex(enc.encrypt("No")));
 		        }
 			 
-			 info.accumulate("otherWeiredSmell", Encryption.bytesToHex(enc.encrypt(otherWeiredSmell.getText().toString())));
+			 
 			 
 			 if(smokeOfCigarette .isChecked())
 		        {

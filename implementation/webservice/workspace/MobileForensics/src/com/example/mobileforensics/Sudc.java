@@ -520,6 +520,7 @@ public class Sudc extends Activity implements GlobalMethods, OnMyLocationChangeL
 		
 		SceneIOTypeOutside = (RadioButton)findViewById(R.id.sudc_SceneIOTypeOutside);
 		SceneIOTypeInside = (RadioButton)findViewById(R.id.sudc_SceneIOTypeInside);
+		
 		sceneIType = (Spinner)findViewById(R.id.sudc_sceneIType);
 		sceneITypeOther = (EditText)findViewById(R.id.sudc_sceneITypeOther);
 		
@@ -788,11 +789,281 @@ public void readAllFiles(){
 		});
 		
 		
+		SceneIOTypeInside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.sudc_tv_whereInside);
+				TextView tv_doorLocked = (TextView)findViewById(R.id.sudc_tv_doorLocked);
+				TextView tv_windowsClosed = (TextView)findViewById(R.id.sudc_tv_windowsClosed);
+				TextView tv_windowsBroken = (TextView)findViewById(R.id.sudc_tv_windowsBroken);
+				TextView tv_victimAlone = (TextView)findViewById(R.id.sudc_tv_victimAlone);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.sudc_tv_sceneOType);
+				TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.sudc_tv_sceneOTypeOther);
+				
+				tv_whereInside.setVisibility(VISIBLE);
+				sceneIType.setVisibility(VISIBLE);
+				
+				tv_doorLocked.setVisibility(VISIBLE);
+				doorLockedYes.setVisibility(VISIBLE);
+				doorLockedNo.setVisibility(VISIBLE);
+				
+				tv_windowsClosed.setVisibility(VISIBLE);
+				windowsClosedYes.setVisibility(VISIBLE);
+				windowsClosedNo.setVisibility(VISIBLE);
+				
+				tv_windowsBroken.setVisibility(VISIBLE);
+				windowsBrokenYes.setVisibility(VISIBLE);
+				windowsBrokenNo.setVisibility(VISIBLE);
+				
+				tv_victimAlone.setVisibility(VISIBLE);
+				victimAloneYes.setVisibility(VISIBLE);
+				victimAloneNo.setVisibility(VISIBLE);
+				
+				
+				tv_sceneOType.setVisibility(GONE);
+				sceneOType.setVisibility(GONE);
+				
+				tv_sceneOTypeOther.setVisibility(GONE);
+				sceneOTypeOther.setVisibility(GONE);
+			}
+		});
+		SceneIOTypeOutside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.sudc_tv_whereInside);
+				TextView tv_doorLocked = (TextView)findViewById(R.id.sudc_tv_doorLocked);
+				TextView tv_windowsClosed = (TextView)findViewById(R.id.sudc_tv_windowsClosed);
+				TextView tv_windowsBroken = (TextView)findViewById(R.id.sudc_tv_windowsBroken);
+				TextView tv_victimAlone = (TextView)findViewById(R.id.sudc_tv_victimAlone);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.sudc_tv_sceneOType);
+				TextView tv_sceneITypeOther = (TextView)findViewById(R.id.sudc_tv_sceneITypeOther);
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.sudc_tv_peopleWithVictim);
+				
+				tv_whereInside.setVisibility(GONE);
+				sceneIType.setVisibility(GONE);
+				
+				tv_sceneITypeOther.setVisibility(GONE);
+				sceneITypeOther.setVisibility(GONE);
+				
+				tv_doorLocked.setVisibility(GONE);
+				doorLockedYes.setVisibility(GONE);
+				doorLockedNo.setVisibility(GONE);
+				tv_windowsClosed.setVisibility(GONE);
+				windowsClosedYes.setVisibility(GONE);
+				windowsClosedNo.setVisibility(GONE);
+				tv_windowsBroken.setVisibility(GONE);
+				windowsBrokenYes.setVisibility(GONE);
+				windowsBrokenNo.setVisibility(GONE);
+				tv_victimAlone.setVisibility(GONE);
+				victimAloneYes.setVisibility(GONE);
+				victimAloneNo.setVisibility(GONE);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+				
+				tv_sceneOType.setVisibility(VISIBLE);
+				sceneOType.setVisibility(VISIBLE);
+			}
+		});
+
 		
-		/**
-		 * 	Spinner onclick event
-		 */
 		
+		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneITypeOther = (TextView)findViewById(R.id.sudc_tv_sceneITypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneITypeOther.setVisibility(VISIBLE);
+							sceneITypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneITypeOther.setVisibility(GONE);
+							sceneITypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		victimAloneYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.sudc_tv_peopleWithVictim);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+			}
+		});
+		victimAloneNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.sudc_tv_peopleWithVictim);
+				tv_peopleWithVictim.setVisibility(VISIBLE);
+				peopleWithVictim.setVisibility(VISIBLE);
+			}
+		});
+
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText();
+						TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.sudc_tv_sceneOTypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		applianceYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_applianceYesSpecify);
+				tv.setVisibility(VISIBLE);
+				applianceYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		applianceNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_applianceYesSpecify);
+				tv.setVisibility(GONE);
+				applianceYesSpecify.setVisibility(GONE);
+			}
+		});
+		
+		weirdSmellYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_weirdSmellYesSpecify);
+				tv.setVisibility(VISIBLE);
+				weirdSmellYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		weirdSmellNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_weirdSmellYesSpecify);
+				tv.setVisibility(GONE);
+				weirdSmellYesSpecify.setVisibility(GONE);
+			}
+		});
+	
+		VictimBusyYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimBusyYesSpecify);
+				tv.setVisibility(VISIBLE);
+				victimBusyYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		VictimBusyNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimBusyYesSpecify);
+				tv.setVisibility(GONE);
+				victimBusyYesSpecify.setVisibility(GONE);
+			}
+		});
+		
+		VictimComplainYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimComplainYesSpecify);
+				tv.setVisibility(VISIBLE);
+				victimComplainYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		VictimComplainNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimComplainYesSpecify);
+				tv.setVisibility(GONE);
+				victimComplainYesSpecify.setVisibility(GONE);
+			}
+		});
+	
+		victimTakeMedicationYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimTakeMedicationYesSpecify);
+				tv.setVisibility(VISIBLE);
+				victimTakeMedicationYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		victimTakeMedicationNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sudc_tv_victimTakeMedicationYesSpecify);
+				tv.setVisibility(GONE);
+				victimTakeMedicationYesSpecify.setVisibility(GONE);
+			}
+		});
+	
 		
 	}
 	

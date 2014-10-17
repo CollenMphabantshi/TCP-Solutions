@@ -805,9 +805,6 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 		
 		
 		
-		/**
-		 * 	Spinner onclick event
-		 */
 		
 		previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
@@ -1185,6 +1182,7 @@ public class Burn extends Activity implements GlobalMethods, OnMyLocationChangeL
 	        }else{
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
+	        
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
 	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));

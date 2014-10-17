@@ -1205,7 +1205,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Are there any family members suffering \nfrom?"
+					android:text="Are there any family members suffering \nfrom(Diabetes,Heart Disease, \nor Genetics Defects/Syndromes)?"
 					
 					android:layout_row="18"
             	android:layout_column="0"

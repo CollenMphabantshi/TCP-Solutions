@@ -672,10 +672,135 @@ public void readAllFiles(){
 		});
 		
 		
+		SceneIOTypeInside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.foetus_tv_whereInside);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.foetus_tv_sceneOType);
+				TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.foetus_tv_sceneOTypeOther);
+				
+				tv_whereInside.setVisibility(VISIBLE);
+				sceneIType.setVisibility(VISIBLE);
+				
+				tv_sceneOType.setVisibility(GONE);
+				sceneOType.setVisibility(GONE);
+				
+				tv_sceneOTypeOther.setVisibility(GONE);
+				sceneOTypeOther.setVisibility(GONE);
+			}
+		});
+		SceneIOTypeOutside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.foetus_tv_whereInside);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.foetus_tv_sceneOType);
+				TextView tv_sceneITypeOther = (TextView)findViewById(R.id.foetus_tv_sceneITypeOther);
+				
+				
+				tv_whereInside.setVisibility(GONE);
+				sceneIType.setVisibility(GONE);
+				
+				tv_sceneITypeOther.setVisibility(GONE);
+				sceneITypeOther.setVisibility(GONE);
+				
+				
+				
+				tv_sceneOType.setVisibility(VISIBLE);
+				sceneOType.setVisibility(VISIBLE);
+			}
+		});
+
 		
-		/**
-		 * 	Spinner onclick event
-		 */
+		
+		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneITypeOther = (TextView)findViewById(R.id.foetus_tv_sceneITypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneITypeOther.setVisibility(VISIBLE);
+							sceneITypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneITypeOther.setVisibility(GONE);
+							sceneITypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+
+
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText();
+						TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.foetus_tv_sceneOTypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		babyCoveredYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.foetus_tv_babyCoveredYesSpecify);
+				tv.setVisibility(VISIBLE);
+				babyCoveredYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		babyCoveredNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.foetus_tv_babyCoveredYesSpecify);
+				tv.setVisibility(GONE);
+				babyCoveredYesSpecify.setVisibility(GONE);
+			}
+		});
 		
 		
 	}

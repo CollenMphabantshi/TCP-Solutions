@@ -685,10 +685,58 @@ public void readAllFiles(){
 		
 		
 		
-		/**
-		 * 	Spinner onclick event
-		 */
+		AccidentOccured.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneITypeOther = (TextView)findViewById(R.id.pedestrian_tv_whereSpecify);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneITypeOther.setVisibility(VISIBLE);
+							otherLocation.setVisibility(VISIBLE);
+						}else{
+							tv_sceneITypeOther.setVisibility(GONE);
+							otherLocation.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
+		strangeCircumstancesYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_strangeSpecify = (TextView)findViewById(R.id.pedestrian_tv_strangeSpecify);
+				tv_strangeSpecify.setVisibility(GONE);
+				strangeCircumstancesYesSpecify.setVisibility(GONE);
+			}
+		});
+		strangeCircumstancesNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_strangeSpecify = (TextView)findViewById(R.id.pedestrian_tv_strangeSpecify);
+				tv_strangeSpecify.setVisibility(VISIBLE);
+				strangeCircumstancesYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+
 		
 	}
 	

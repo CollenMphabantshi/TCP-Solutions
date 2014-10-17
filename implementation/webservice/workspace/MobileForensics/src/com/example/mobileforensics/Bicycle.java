@@ -678,11 +678,37 @@ public void readAllFiles(){
 			}
 		});
 		
-		
-		
-		/**
-		 * 	Spinner onclick event
-		 */
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.bicycle_tv_sceneOTypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
 		
 		
 	}

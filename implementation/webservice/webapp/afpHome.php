@@ -67,7 +67,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img src="images/logo.png" alt="">
+                    <img src="images/logo-white.png" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -100,7 +100,7 @@
                 <h2>Case information</h2>
                 <div>
                     <label for="caseSearch">
-                        <input type="search" name="caseSearch" id="userSearch" placeholder="search case by sceneType or forensic officer"  />
+                        <input type="search" name="caseSearch" id="caseSearch" placeholder="search case by sceneType or forensic officer"  />
                     </label>
                 </div><br/>
                 <table class="zui-table zui-table-zebra zui-table-horizontal">

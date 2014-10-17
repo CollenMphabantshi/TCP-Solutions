@@ -61,6 +61,7 @@ $(document).ready(function(p){
         var searchValue = $(this).val();
         if(searchValue !== "" && searchValue !== undefined)
         {
+            
             findCase(searchValue);
         }
     });
@@ -196,10 +197,12 @@ function login(){
         var request = new XMLHttpRequest();
         request.onreadystatechange = function(){if(request.readyState == 4)
          {
+             
              var obj = JSON.parse(request.responseText);
                 if(obj.status === "Success"){
                     document.location = "main.php";
                 }else{
+                    
                     alertResponse(obj.msg,"error");
                 }
          }};
@@ -387,8 +390,8 @@ function loadSceneInfo(view){
             var obj = JSON.parse(request.responseText);
             currentCase = obj;
            // alert("ccc");
-            //var location = JSON.parse(obj.sceneLocation);
-            //var locations = JSON.parse(location.Location);
+            var location = JSON.parse(obj.sceneLocation);
+            var locations = JSON.parse(location.Location);
             
             data += "<tr>";
             data += "<td>Time of scene:</td><td>"+obj.sceneTime+"</td>";
@@ -397,8 +400,8 @@ function loadSceneInfo(view){
             data += "<td>Date of scene:</td><td>"+obj.sceneDate+"</td>";
             data += "</tr>";
             data += "<tr>";
-            data += "<td>Location of scene:</td><td>"+obj.sceneLocation+"</td>";
-            //data += "<td>Location of scene:</td><td>"+locations.Address+", Latitude:"+locations.Latitude+", Longitude:"+locations.Longitude+"</td>";
+            //data += "<td>Location of scene:</td><td>"+obj.sceneLocation+"</td>";
+            data += "<td>Location of scene:</td><td>"+locations.Address+", Latitude:"+locations.Latitude+", Longitude:"+locations.Longitude+"</td>";
             data += "</tr>";
             data += "<tr>";
             data += "<td>Temperature of scene:</td><td>"+obj.sceneTemparature+"</td>";
@@ -955,7 +958,6 @@ function getSceneTypeData(type,sceneData){
     }
     
     
-    
     var sudcDesc = ["Where did the scene take place?","Any signs of struggle?","Was an alcohol bottle around?"
     ,"Drug Paraphernalia?","Was strangulation suspected?","Was smothering suspected?",
     "Was chocking suspected?","Appliances?","Was there a weird smell in the air?","Was victim busy with physical exercise?",
@@ -964,8 +966,10 @@ function getSceneTypeData(type,sceneData){
     "Did the victim fell/ sustain injury during the past week?","Did the victim take any medication?"];
     inside = sceneData.sudcInside;
     var sudcValue = null;
+    
     if(inside !== undefined)
     {
+        //alert("Tompo");
         sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.anyHeatingDevices,sceneData.wierdSmellInAir,
@@ -974,14 +978,15 @@ function getSceneTypeData(type,sceneData){
     inside.doorLocked,inside.windowsClosed,inside.windowsBroken,inside.victimAlone,inside.peopleWithVictim];
     }
     else{
+        //alert("Tompo2");
         sudcValue =[sceneData.sudcIOType,sceneData.signsOfStruggle,sceneData.alcoholBottleAround
         ,sceneData.drugParaphernalia,sceneData.strangulationSuspected,
         sceneData.smotheringSuspected,sceneData.chockingSuspected,sceneData.anyHeatingDevices,sceneData.wierdSmellInAir,
-        sceneData.victimBusy,sceneData.familyMedicalHistory,sceneData.physicalExercisesceneData.familyMembersSufferingFrom,
+        sceneData.victimBusy,sceneData.familyMedicalHistory,sceneData.physicalExercise,sceneData.familyMembersSufferingFrom,
         sceneData.victimFell,sceneData.victimTakeMedication,sceneData.suspisionOfAssault,sceneData.suspisionOfOverdose];
     }
     
-    alert("Tompo");
+    
     var sec48Desc = ["Was the victim hospitalized?","Medical equipment in situ?","gw714file:",
         "Names of doctors:","Doctor Cell Number:","Nurses Names:","Nurse Cell Number:","Hospital name:",
         "Who removed equipment?","Is gw7_24 file fully complete?","Any medical records?",

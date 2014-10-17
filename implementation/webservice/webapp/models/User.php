@@ -266,12 +266,12 @@ class User {
                         
                         //session_set_cookie_params(60);
                         $error = array('status' => "Success", "msg" => "Request to login was accepted.");
-                        $this->api->response($this->api->json($error), 400);
+                        $this->api->response($this->api->json($error), 200);
                     }else if($platform === "droid"){
                         // Generate session key for android session
                         
                         $error = array('status' => "Success", "msg" => "Request to login was accepted.", "key" => "sess_key:1");
-                        $this->api->response($this->api->json($error), 400);
+                        $this->api->response($this->api->json($error), 200);
                     }
                     
                 }else{

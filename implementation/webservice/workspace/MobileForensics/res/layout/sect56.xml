@@ -606,7 +606,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Is the GW 7/24 in the file. If no: GET IT"
+					android:text="Is the GW 7/24 in the file. (If no: GET IT)"
 					
 					android:layout_row="4"
             		android:layout_column="0"
@@ -648,7 +648,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="If yes:Is it fully completed? \nIf no:Obtain additional information"
+					android:text="If yes:Is it fully completed? \n(If no, Obtain additional information)"
 					
 					android:layout_row="5"
             		android:layout_column="0"
@@ -691,7 +691,7 @@
 					android:layout_margin="5dp"
 					
 					style="@style/tv_question"
-					android:text="Medical records. If no:inform SAPS officer to \nobtain information"
+					android:text="Medical records available? \n(If no,inform SAPS officer to obtain information)"
 					
 					android:layout_row="6"
             		android:layout_column="0"

@@ -1263,24 +1263,36 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			
 			String value = "";
+			
 			if(injuriesConcentratedHead .isChecked())
 			{
 				value +="Head, ";
-			}else if(injuriesConcentratedThorax .isChecked())
+			}
+			
+			if(injuriesConcentratedThorax .isChecked())
 			{
 				value +="Thorax, ";
-			}else if(injuriesConcentratedAbdomen .isChecked())
+			}
+			
+			if(injuriesConcentratedAbdomen .isChecked())
 			{
 				value +="Abdomen, ";
-			}else if(injuriesConcentratedArms .isChecked())
+			}
+			
+			if(injuriesConcentratedArms .isChecked())
 			{
 				value +="Arms, ";
-			}else if(injuriesConcentratedLegs .isChecked())
-			{
-				value +="Legs, ";
 			}
+			
+			if(injuriesConcentratedLegs .isChecked())
+			{
+				value +="Legs";
+			}
+			
 			if(!value.isEmpty())
+			{
 				return value;
+			}
 			
 		}catch(Exception e){
 			e.printStackTrace();

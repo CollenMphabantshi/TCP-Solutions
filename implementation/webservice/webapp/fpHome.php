@@ -30,7 +30,26 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
      <!-- jQuery Version 1.11.0 -->
-     <script src="js/script.js"></script>
+     
+        
+	<script type="text/javascript" src="jspdf.js"></script>
+        <script type="text/javascript" src="libs/FileSaver.js"></script>
+	<script type="text/javascript" src="libs/BlobBuilder.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.addhtml.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.autoprint.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.javascript.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.cell.js"></script>
+        <script type="text/javascript" src="jspdf.plugin.total_pages.js"></script>
+        <script type="text/javascript" src="jspdf.PLUGINTEMPLATE.js"></script>
+        <script type="text/javascript" src="js/html2canvas.js"></script>
+        <script type="text/javascript" src="rasterizeHTML.js"></script>
+        <script type="text/javascript" src="js/jspdf.debug.js"></script>
+	<script type="text/javascript" src="js/basic.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
 </head>
 
 <body onload="getCases()">
@@ -47,7 +66,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img src="images/logo.png" alt="">
+                    <img src="images/logo-white.png" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,6 +97,11 @@
         <div class="row page" id="Page1">
             <div class="col-md-4">
                 <h2>Case information</h2>
+                <div>
+                    <label for="caseSearch">
+                        <input type="search" name="caseSearch" id="caseSearch" placeholder="search case by sceneType or forensic officer"  />
+                    </label>
+                </div><br/>
                 <table class="zui-table zui-table-zebra zui-table-horizontal">
                     <thead>
                         <tr>
@@ -96,21 +120,33 @@
             
             <div class="col-md-8">
                 <h2>Scene Information</h2>
-                <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
-                <button id="assignDR" class="btn-lg">Assign Death register number</button>
-                <button id="print" class="btn-lg">Create Print Out</button>
-                            <br/><br/>
-                <table class="zui-table zui-table-vertical table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody class="sceneInfo-table">
+                <div class="sceneInfo">
+                    <div id="pdfView">
+                        <!-- <a href="#" id="close" class="btn-lg btn-block">Close</a> -->
+                        <br/>
+                    <iframe id='viewer' width='100%' height='600px' type='application/pdf' frameborder='0' style='position:relative;z-index:999;hight:auto'></iframe>
+                    </div>
+                    <div class="sceneView">
+                        <input type="text" name="deathreg" id="deathreg" class="deathreg" placeholder="death register number" />
+                        <button id="assignDR" class="btn-lg">Assign Death register number</button>
+                        <button id="print" class="btn-lg">Create Print Out</button>
+                        <br/><br/>
+                        <div id="tables">
+                            <table class="zui-table zui-table-vertical table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sceneInfo-table">
+
+                                </tbody>
+                            </table>
+                        </div>
                         
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
             <!-- /.col-md-4 -->
         </div>

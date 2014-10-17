@@ -739,12 +739,214 @@ public void readAllFiles(){
 		});
 		
 		
+		previousAttemptsYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				TextView tv_howManyAttempts = (TextView)findViewById(R.id.gassing_tv_howManyAttempts);
+				tv_howManyAttempts.setVisibility(VISIBLE);
+				howManyAttempts.setVisibility(VISIBLE);
+			}
+		});
+		previousAttemptsNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				TextView tv_howManyAttempts = (TextView)findViewById(R.id.gassing_tv_howManyAttempts);
+				tv_howManyAttempts.setVisibility(GONE);
+				howManyAttempts.setVisibility(GONE);
+			}
+		});
+
+		SceneIOTypeInside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.gassing_tv_whereInside);
+				TextView tv_doorLocked = (TextView)findViewById(R.id.gassing_tv_doorLocked);
+				TextView tv_windowsClosed = (TextView)findViewById(R.id.gassing_tv_windowsClosed);
+				TextView tv_windowsBroken = (TextView)findViewById(R.id.gassing_tv_windowsBroken);
+				TextView tv_victimAlone = (TextView)findViewById(R.id.gassing_tv_victimAlone);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.gassing_tv_sceneOType);
+				TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.gassing_tv_sceneOTypeOther);
+				
+				tv_whereInside.setVisibility(VISIBLE);
+				sceneIType.setVisibility(VISIBLE);
+				
+				tv_doorLocked.setVisibility(VISIBLE);
+				DoorLockedYes.setVisibility(VISIBLE);
+				DoorLockedNo.setVisibility(VISIBLE);
+				
+				tv_windowsClosed.setVisibility(VISIBLE);
+				WindowsClosedYes.setVisibility(VISIBLE);
+				WindowsClosedNo.setVisibility(VISIBLE);
+				
+				tv_windowsBroken.setVisibility(VISIBLE);
+				WindowsBrokenYes.setVisibility(VISIBLE);
+				WindowsBrokenNo.setVisibility(VISIBLE);
+				
+				tv_victimAlone.setVisibility(VISIBLE);
+				VictimAloneYes.setVisibility(VISIBLE);
+				VictimAloneNo.setVisibility(VISIBLE);
+				
+				
+				tv_sceneOType.setVisibility(GONE);
+				sceneOType.setVisibility(GONE);
+				
+				tv_sceneOTypeOther.setVisibility(GONE);
+				sceneOTypeOther.setVisibility(GONE);
+			}
+		});
+		SceneIOTypeOutside.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_whereInside = (TextView)findViewById(R.id.gassing_tv_whereInside);
+				TextView tv_doorLocked = (TextView)findViewById(R.id.gassing_tv_doorLocked);
+				TextView tv_windowsClosed = (TextView)findViewById(R.id.gassing_tv_windowsClosed);
+				TextView tv_windowsBroken = (TextView)findViewById(R.id.gassing_tv_windowsBroken);
+				TextView tv_victimAlone = (TextView)findViewById(R.id.gassing_tv_victimAlone);
+				TextView tv_sceneOType = (TextView)findViewById(R.id.gassing_tv_sceneOType);
+				TextView tv_sceneITypeOther = (TextView)findViewById(R.id.gassing_tv_sceneITypeOther);
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.gassing_tv_peopleWithVictim);
+				
+				tv_whereInside.setVisibility(GONE);
+				sceneIType.setVisibility(GONE);
+				
+				tv_sceneITypeOther.setVisibility(GONE);
+				sceneITypeOther.setVisibility(GONE);
+				
+				tv_doorLocked.setVisibility(GONE);
+				DoorLockedYes.setVisibility(GONE);
+				DoorLockedNo.setVisibility(GONE);
+				tv_windowsClosed.setVisibility(GONE);
+				WindowsClosedYes.setVisibility(GONE);
+				WindowsClosedNo.setVisibility(GONE);
+				tv_windowsBroken.setVisibility(GONE);
+				WindowsBrokenYes.setVisibility(GONE);
+				WindowsBrokenNo.setVisibility(GONE);
+				tv_victimAlone.setVisibility(GONE);
+				VictimAloneYes.setVisibility(GONE);
+				VictimAloneNo.setVisibility(GONE);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+				
+				tv_sceneOType.setVisibility(VISIBLE);
+				sceneOType.setVisibility(VISIBLE);
+			}
+		});
+
 		
-		/**
-		 * 	Spinner onclick event
-		 */
 		
+		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneITypeOther = (TextView)findViewById(R.id.gassing_tv_sceneITypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneITypeOther.setVisibility(VISIBLE);
+							sceneITypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneITypeOther.setVisibility(GONE);
+							sceneITypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
+		VictimAloneYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.gassing_tv_peopleWithVictim);
+				tv_peopleWithVictim.setVisibility(GONE);
+				peopleWithVictim.setVisibility(GONE);
+			}
+		});
+		VictimAloneNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv_peopleWithVictim = (TextView)findViewById(R.id.gassing_tv_peopleWithVictim);
+				tv_peopleWithVictim.setVisibility(VISIBLE);
+				peopleWithVictim.setVisibility(VISIBLE);
+			}
+		});
+
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText();
+						TextView tv_sceneOTypeOther = (TextView)findViewById(R.id.gassing_tv_sceneOTypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneOTypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneOTypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		weiredSmellYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.gassing_tv_gasYesSpecify);
+				tv.setVisibility(VISIBLE);
+				gasYesSpecify.setVisibility(VISIBLE);
+			}
+		});
+		
+		weiredSmellNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.gassing_tv_gasYesSpecify);
+				tv.setVisibility(GONE);
+				gasYesSpecify.setVisibility(GONE);
+			}
+		});
+	
 	}
 	
 		
@@ -1239,7 +1441,7 @@ public void readAllFiles(){
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));

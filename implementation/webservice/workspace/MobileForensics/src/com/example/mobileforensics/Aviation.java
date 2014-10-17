@@ -190,6 +190,7 @@ public class Aviation extends Activity implements GlobalMethods, OnMyLocationCha
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -683,11 +684,36 @@ public void readAllFiles(){
 			}
 		});
 		
-		
-		
-		/**
-		 * 	Spinner onclick event
-		 */
+		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> av, View view, int index,
+					long arg3) {
+				// TODO Auto-generated method stub
+				try{
+					TextView s = (TextView)view;
+					if(s != null)
+					{
+						String item = (String)s.getText().toString();
+						TextView tv_sceneITypeOther = (TextView)findViewById(R.id.aviation_tv_sceneOTypeOther);
+						if(item.toLowerCase().equals("other"))
+						{
+							tv_sceneITypeOther.setVisibility(VISIBLE);
+							sceneOTypeOther.setVisibility(VISIBLE);
+						}else{
+							tv_sceneITypeOther.setVisibility(GONE);
+							sceneOTypeOther.setVisibility(GONE);
+						}
+					}
+				}catch(Exception e){e.printStackTrace();}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		
 	}
@@ -895,7 +921,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -972,6 +999,16 @@ public void readAllFiles(){
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	        String otype = (String)sceneOType.getSelectedItem();
 			if(otype.toLowerCase().equals("other")){

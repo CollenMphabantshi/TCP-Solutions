@@ -124,10 +124,11 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	
 	//the body
-	;
+	
 	private EditText nameOfHospital;	
 	private EditText hospitalised;	
-	private RadioButton medicalEquipment;
+	private RadioButton medicalEquipmentYes;
+	private RadioButton medicalEquipmentNo;
 	private EditText whoRemoved;
 	private RadioButton GW;
 	private RadioButton GWCompleted;	
@@ -450,7 +451,8 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 		
 		nameOfHospital = (EditText)findViewById(R.id.sect48_Hospital);
 		hospitalised = (EditText)findViewById(R.id.sect48_hospitalized);
-		medicalEquipment= (RadioButton)findViewById(R.id.sect48_medicalEquipmentYes);
+		medicalEquipmentYes = (RadioButton)findViewById(R.id.sect48_medicalEquipmentYes);
+		medicalEquipmentNo = (RadioButton)findViewById(R.id.sect48_medicalEquipmentNo);
 		whoRemoved = (EditText)findViewById(R.id.sect48_whoRemoved);
 		GW = (RadioButton)findViewById(R.id.sect48_theGWYes);
 		GWCompleted = (RadioButton)findViewById(R.id.sect48_theGWYesYes);	
@@ -658,9 +660,27 @@ public void readAllFiles(){
 		
 		
 		
-		/**
-		 * 	Spinner onclick event
-		 */
+		medicalEquipmentYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sect48_tv_whoRemoved);
+				tv.setVisibility(GONE);
+				whoRemoved.setVisibility(GONE);
+			}
+		});
+		
+		medicalEquipmentNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView)findViewById(R.id.sect48_tv_whoRemoved);
+				tv.setVisibility(VISIBLE);
+				whoRemoved.setVisibility(VISIBLE);
+			}
+		});
 		
 		
 	}
@@ -868,7 +888,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -924,14 +945,17 @@ public void readAllFiles(){
 			
 			info.accumulate("hospitalName", Encryption.bytesToHex(enc.encrypt(nameOfHospital.getText().toString())));
 			info.accumulate("victimHospitalized", Encryption.bytesToHex(enc.encrypt(hospitalised.getText().toString())));
-			info.accumulate("whoRemovedEquipment", Encryption.bytesToHex(enc.encrypt(whoRemoved.getText().toString())));
+			
 			info.accumulate("importantInfoFromMedicalStuff", Encryption.bytesToHex(enc.encrypt(medicalStaffInfo.getText().toString())));
 	        
 	      //the body
-			 if(medicalEquipment.isChecked()){
-				 info.accumulate("medicalEquipmentInSitu", Encryption.bytesToHex(enc.encrypt("Yes"))); 
+			 if(medicalEquipmentYes.isChecked()){
+				 info.accumulate("medicalEquipmentInSitu", Encryption.bytesToHex(enc.encrypt("Yes")));
+				 info.accumulate("whoRemovedEquipment", Encryption.bytesToHex(enc.encrypt("null")));
+				 
 			 }else{
 				 info.accumulate("medicalEquipmentInSitu", Encryption.bytesToHex(enc.encrypt("No")));
+				 info.accumulate("whoRemovedEquipment", Encryption.bytesToHex(enc.encrypt(whoRemoved.getText().toString())));
 			 }
 			
 			 if(GW.isChecked()){

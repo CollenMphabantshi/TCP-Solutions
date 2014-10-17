@@ -69,7 +69,7 @@ public function processApi()
     }
     else
     {
-       $this->response(''.$s,404);   
+       $this->response('',404);   
     }
 // If the method not exist with in this class, response would be "Page not found".
 }

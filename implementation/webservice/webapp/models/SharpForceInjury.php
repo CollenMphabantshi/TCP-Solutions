@@ -1,6 +1,6 @@
 <?php
 require_once("Scene.php");
-require_once("ScenePhotos");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

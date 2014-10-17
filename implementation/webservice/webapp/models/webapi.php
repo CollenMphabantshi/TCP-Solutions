@@ -58,6 +58,7 @@ public function __construct()
 //This method dynmically call the method based on the query string
 public function processApi()
 {
+    
     $func = strtolower(trim(str_replace("/","",$_REQUEST['rquest'])));
     $enc = new Encryption();
     if($func === "login")
