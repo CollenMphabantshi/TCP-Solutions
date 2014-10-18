@@ -35,7 +35,7 @@ class SharpForceInjury extends Scene{
     //put your code here
     public $paraObj ;
     public $paraObjAll;
-    
+    public $images;
      public function __construct($formData,$api){
         $this->api = $api;
         $this->paraObj = new sharpParameters();
@@ -60,12 +60,16 @@ class SharpForceInjury extends Scene{
                 $this->paraObjAll->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->paraObjAll->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
                 $this->paraObjAll->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
+                /*
+                $error = array('status' => "Success", "msg" => "Len:dump=". count($this->images));
+                $this->api->response($this->api->json($error), 200);*/
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
                      $this->api->response($this->api->json($error), 400);
                  }
+                 
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
                 
@@ -128,12 +132,13 @@ class SharpForceInjury extends Scene{
             }
         }
         
-       /* $scenePhoto = new ScenePhotos($this->api);
-        $images = $object['images'];
-        for($i = 0; $i < count($images);$i++)
+       $scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
         {
-            $scenePhoto->upload("axcd", $images['names'.$i], $sceneID);
-        }*/
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
         $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
         $this->api->response($this->api->json($error), 200);
         
@@ -187,7 +192,14 @@ class SharpForceInjury extends Scene{
                 $h_array['signsOfStruggle'] = $enc->decrypt_request($h_array['signsOfStruggle']);
                 $h_array['alcoholBottleAround'] = $enc->decrypt_request($h_array['alcoholBottleAround']);
                 $h_array['drugParaphernalia'] = $enc->decrypt_request($h_array['drugParaphernalia']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

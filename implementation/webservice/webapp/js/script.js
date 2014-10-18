@@ -485,9 +485,13 @@ function loadSceneInfo(view){
             data += "<td>Victim general history:</td><td>"+obj.victim[victim_count].victimGeneralHistory+"</td>";
             data += "</tr>";
             currentSceneType = view.title;
-            data += getSceneTypeData(view.title,obj.sceneTypeData);
+                //alert();
+                
+                
+                data += getSceneTypeData(view.title,obj.sceneTypeData);
             
             $(".sceneInfo-table").html(data);
+            appendPhotos(obj.sceneTypeData.photos);
         }};
 
         request.open("POST",URL);
@@ -2307,7 +2311,34 @@ function pdfRender(){
     }).embed("pdfRenderer");*/
 }
 
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+  var bufView = new Uint16Array(buf);
+  for (var i=0, strLen=str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
 
+function appendPhotos(photos){
+    
+    
+    var data = "<div id='pics'>";
+    for(var i = 0;i <photos.length;i++)
+    {
+        if((i+1)%3 === 0 && i !== 0)
+        {
+            data += "<img width='200px' height='200px' src='data:image/jpg;base64,"+photos[i].photoData+"' title='"+photos[i].photoFilename+"'/><br/>";
+        }else{
+            data += "<img width='200px' height='200px' src='data:image/jpg;base64,"+photos[i].photoData+"' title='"+photos[i].photoFilename+"'/>";
+        }
+        //data += data += "<div class='col-md-4'><img width='200px' height='200px' src='data:image/jpg;base64,"+photos[i].photoData+"' title='"+photos[i].photoFilename+"'/></div>";
+    }
+    data += "</div>";
+    $("#pics").remove();
+    $(".sceneInfo-table").append(data);
+    //document.body.appendChild(image);
+}
 
 function tableToJson(table) {
             var data = [];

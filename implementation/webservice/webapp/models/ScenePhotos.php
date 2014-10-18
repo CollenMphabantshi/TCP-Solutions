@@ -21,5 +21,22 @@ class ScenePhotos{
             return false;
         }
     }
+    
+    public function getPhotos($sceneID) {
+        if($sceneID !== NULL){
+            
+            $h_res = mysql_query("select * from scenePhotos where sceneID=$sceneID");
+            if(mysql_num_rows($h_res) > 0)
+            {
+                $arr = array();
+                while ($row = mysql_fetch_array($h_res)) {
+                    $arr[] = $row;
+                }
+                return $arr;
+            }
+        }
+        
+        return NULL;
+    }
 }
 ?>

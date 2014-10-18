@@ -589,7 +589,7 @@ public void readAllFiles(){
 						                      }).start();*/
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Railway.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();

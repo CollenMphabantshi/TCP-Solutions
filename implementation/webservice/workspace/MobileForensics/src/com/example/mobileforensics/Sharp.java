@@ -5,8 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,6 +57,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.location.Address;
@@ -69,6 +72,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -312,8 +316,35 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 			return location;
 			
 	}
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
 	
 	private File createImageFile() throws IOException{
+		
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String imageFileName = "sharp_" + timeStamp + "_";
@@ -323,13 +354,14 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	    	dir.mkdir();
 	    
 	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
-
+	    
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
-	    //image = resizeBitMapImage1(mCurrentPhotoPath,50,50);
+	   
+	    
 	    namesOfImages.add(imageFileName+".jpg");
-	    uploadFileName.add(mCurrentPhotoPath);
+	    
 	    return image;
 		
 	}
@@ -421,7 +453,13 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
-	    
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"sharp_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -951,17 +989,6 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	}
 	
 		
-	private String convertImageToString(String path){
-		   Bitmap bm = BitmapFactory.decodeFile(path);
-		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		   bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
-		   byte[] byteArrayImage = baos.toByteArray(); 
-		   
-		  // String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-		   
-		   //System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
-	       return ""+byteArrayImage;
-	   }
 	
 	    
 	    @Override
@@ -1124,12 +1151,14 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	        //this is part where am getting all images
 	        for(int i=0; i < uploadFileName.size();i++){
 		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
 	        	images.accumulate("names"+i, namesOfImages.get(i));
 		    	images.accumulate("data"+i, uploadFileName.get(i));
 		    	
 		    }
 	        
 	        imagesArray.put(images);
+	        System.out.println("Len:"+images.getString("data0"));
 	        info.accumulate("images", imagesArray);
 	        
 	        info.accumulate("sharpIOType",getIOType() );
@@ -1882,6 +1911,8 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 			
 	   index_gallery = 0;
 	   count = 0;
+	   namesOfImages.clear();
+	   uploadFileName.clear();
 	}
 	
 	private void CheckRadioButtons(){

@@ -1299,7 +1299,7 @@ private function getSceneData() {
                     $vic = $this->json($arr['victim']);
                     $arr['scenePhotos'] = $scene->getScenePhotos($vic[0].victimID);
                 }catch(Exception $ex){
-                    echo 'someone like u!!!';
+                    
                 }
                 
                 $type= $this->_request['sceneType'];

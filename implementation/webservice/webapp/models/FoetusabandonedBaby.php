@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -61,8 +62,17 @@ class FoetusabandonedBaby extends Scene{
                 $this->api->response($this->api->json($error), 400);
             }
         
+            $scenePhoto = new ScenePhotos($this->api);
+            $images = $object['images'];
+            $error = array('status' => "Success", "msg" => "IMG=".var_dump($images));
+            $this->api->response($this->api->json($error), 200);
+            for($i = 0; $i < count($images);$i++)
+            {
+                $v = $scenePhoto->upload("axcd", $images[0]['names'.$i], $sceneID);
+            }
+            
             $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
-            $this->api->response($this->api->json($error), 400);
+            $this->api->response($this->api->json($error), 200);
     }
     public function getAllFoetusabandonedBaby() {
         try{

@@ -1,6 +1,7 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -185,6 +186,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -209,7 +211,8 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 		try{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.foetusabandoned);
-			
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
 			try{
 				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -269,6 +272,9 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	    namesOfImages.add(imageFileName+".jpg");
+	    System.out.println("My Path: >> : "+mCurrentPhotoPath);
+	    uploadFileName.add(convertImageToString(storageDir + "/" + imageFileName + ".jpg"));
 	    return image;
 		
 	}
@@ -326,6 +332,8 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    System.out.println("PATH BEFORE: "+mCurrentPhotoPath);
+	    
 		
 	}
 	
@@ -509,7 +517,7 @@ public class Foetusabandonedbaby extends Activity implements GlobalMethods, OnMy
 	}
 	
 public void readAllFiles(){
-		uploadFileName = new ArrayList<String>();
+		//uploadFileName = new ArrayList<String>();
     	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
     	Log.d("Files", "Path: " + path);
     	File f = new File(path);        
@@ -521,7 +529,7 @@ public void readAllFiles(){
         	//{
     		Toast.makeText(Foetusabandonedbaby.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
        	 
-        		uploadFileName.add(path+files[i].getName());
+        		///uploadFileName.add(path+files[i].getName());
     			Log.d("Files", "FileName:" + files[i].getName());
         	//}
     	    
@@ -806,7 +814,19 @@ public void readAllFiles(){
 	}
 	
 		
-	
+	private String convertImageToString(String path){
+			System.out.println("PATH: "+path);
+			Bitmap bm = BitmapFactory.decodeFile(path);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		   
+		   bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		  // String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   //System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       return ""+byteArrayImage;
+	   }
 	
 	    
 	    @Override
@@ -1008,7 +1028,8 @@ public void readAllFiles(){
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
@@ -1063,11 +1084,22 @@ public void readAllFiles(){
 	        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
 
 	        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
-	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
   
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	       info.accumulate("foetusabandonedbabyIOType",getIOType() );
 	       info.accumulate("howWasBodyDiscovered",Encryption.bytesToHex(enc.encrypt(bodyDiscovered.getText().toString())));
@@ -1300,7 +1332,7 @@ public void readAllFiles(){
             while(in.hasNextLine()){
             	line += in.nextLine();
             }
-          
+            System.out.println(">>> "+line);
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1528,7 +1560,7 @@ public void readAllFiles(){
 		
 		uploadFileName = null;
 		
-		uploadFileName = new ArrayList<String>();
+		//uploadFileName = new ArrayList<String>();
 		
 	    imageView0.setImageBitmap(null);
 	    imageView1.setImageBitmap(null);

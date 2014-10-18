@@ -8088,3 +8088,122 @@ org.eclipse.jdi.TimeoutException: Timeout occurred while waiting for packet 9832
 	at org.eclipse.debug.core.DebugPlugin$AsynchRunner.async(DebugPlugin.java:1051)
 	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:405)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.jdt.debug 4 125 2014-10-18 04:52:40.349
+!MESSAGE Internal error logged from JDI Debug: 
+!STACK 0
+com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+	at org.eclipse.jdi.internal.connect.PacketSendManager.sendPacket(PacketSendManager.java:89)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:186)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:226)
+	at org.eclipse.jdi.internal.request.EventRequestImpl.enable(EventRequestImpl.java:254)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadStartHandler.createRequest(JDIDebugTarget.java:1923)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadStartHandler.<init>(JDIDebugTarget.java:1911)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initializeRequests(JDIDebugTarget.java:506)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:446)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:315)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:183)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:187)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:135)
+	at org.eclipse.jdt.internal.launching.SocketAttachConnector.connect(SocketAttachConnector.java:143)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController.connectRemoteDebugger(AndroidLaunchController.java:1435)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController$4.run(AndroidLaunchController.java:1716)
+
+!ENTRY org.eclipse.jdt.debug 4 125 2014-10-18 04:52:40.412
+!MESSAGE Internal error logged from JDI Debug: 
+!STACK 0
+com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+	at org.eclipse.jdi.internal.connect.PacketSendManager.sendPacket(PacketSendManager.java:89)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:186)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:226)
+	at org.eclipse.jdi.internal.request.EventRequestImpl.enable(EventRequestImpl.java:254)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadDeathHandler.createRequest(JDIDebugTarget.java:2023)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadDeathHandler.<init>(JDIDebugTarget.java:2011)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initializeRequests(JDIDebugTarget.java:507)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:446)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:315)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:183)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:187)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:135)
+	at org.eclipse.jdt.internal.launching.SocketAttachConnector.connect(SocketAttachConnector.java:143)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController.connectRemoteDebugger(AndroidLaunchController.java:1435)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController$4.run(AndroidLaunchController.java:1716)
+
+!ENTRY org.eclipse.jdt.debug 4 125 2014-10-18 04:52:40.413
+!MESSAGE Internal error logged from JDI Debug: 
+!STACK 0
+com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+	at org.eclipse.jdi.internal.connect.PacketSendManager.sendPacket(PacketSendManager.java:89)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:186)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:267)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.allThreads(VirtualMachineImpl.java:420)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initializeState(JDIDebugTarget.java:485)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:447)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:315)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:183)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:187)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:135)
+	at org.eclipse.jdt.internal.launching.SocketAttachConnector.connect(SocketAttachConnector.java:143)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController.connectRemoteDebugger(AndroidLaunchController.java:1435)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController$4.run(AndroidLaunchController.java:1716)
+
+!ENTRY org.eclipse.debug.core 4 2 2014-10-18 04:52:40.414
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.debug.core".
+!STACK 0
+com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+	at org.eclipse.jdi.internal.connect.PacketSendManager.sendPacket(PacketSendManager.java:89)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:186)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:267)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.getCapabilities(VirtualMachineImpl.java:456)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.canRedefineClasses(VirtualMachineImpl.java:1277)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.supportsJDKHotCodeReplace(JDIDebugTarget.java:729)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.supportsHotCodeReplace(JDIDebugTarget.java:679)
+	at org.eclipse.jdt.internal.debug.core.hcr.JavaHotCodeReplaceManager.launchAdded(JavaHotCodeReplaceManager.java:1358)
+	at org.eclipse.jdt.internal.debug.core.hcr.JavaHotCodeReplaceManager.launchChanged(JavaHotCodeReplaceManager.java:1380)
+	at org.eclipse.debug.internal.core.LaunchManager$LaunchNotifier.run(LaunchManager.java:447)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.debug.internal.core.LaunchManager$LaunchNotifier.notify(LaunchManager.java:428)
+	at org.eclipse.debug.internal.core.LaunchManager.fireUpdate(LaunchManager.java:1017)
+	at org.eclipse.debug.core.Launch.fireChanged(Launch.java:388)
+	at org.eclipse.debug.core.Launch.addDebugTarget(Launch.java:327)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:449)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:315)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:183)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:187)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:135)
+	at org.eclipse.jdt.internal.launching.SocketAttachConnector.connect(SocketAttachConnector.java:143)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController.connectRemoteDebugger(AndroidLaunchController.java:1435)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController$4.run(AndroidLaunchController.java:1716)
+
+!ENTRY org.eclipse.debug.core 4 120 2014-10-18 04:52:40.416
+!MESSAGE An exception occurred during launch change notification.
+!STACK 0
+com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+	at org.eclipse.jdi.internal.connect.PacketSendManager.sendPacket(PacketSendManager.java:89)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:186)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:267)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.getCapabilities(VirtualMachineImpl.java:456)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.canRedefineClasses(VirtualMachineImpl.java:1277)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.supportsJDKHotCodeReplace(JDIDebugTarget.java:729)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.supportsHotCodeReplace(JDIDebugTarget.java:679)
+	at org.eclipse.jdt.internal.debug.core.hcr.JavaHotCodeReplaceManager.launchAdded(JavaHotCodeReplaceManager.java:1358)
+	at org.eclipse.jdt.internal.debug.core.hcr.JavaHotCodeReplaceManager.launchChanged(JavaHotCodeReplaceManager.java:1380)
+	at org.eclipse.debug.internal.core.LaunchManager$LaunchNotifier.run(LaunchManager.java:447)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.debug.internal.core.LaunchManager$LaunchNotifier.notify(LaunchManager.java:428)
+	at org.eclipse.debug.internal.core.LaunchManager.fireUpdate(LaunchManager.java:1017)
+	at org.eclipse.debug.core.Launch.fireChanged(Launch.java:388)
+	at org.eclipse.debug.core.Launch.addDebugTarget(Launch.java:327)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:449)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:315)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:183)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:187)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:135)
+	at org.eclipse.jdt.internal.launching.SocketAttachConnector.connect(SocketAttachConnector.java:143)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController.connectRemoteDebugger(AndroidLaunchController.java:1435)
+	at com.android.ide.eclipse.adt.internal.launch.AndroidLaunchController$4.run(AndroidLaunchController.java:1716)
