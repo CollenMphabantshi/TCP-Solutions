@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,7 +37,7 @@ class Railway extends Scene{
     //put your code here
     public $paraObj ;
     public $paraObjAll;
-    
+    public $images;
     
     
      public function __construct($formData,$api){
@@ -61,7 +62,7 @@ class Railway extends Scene{
                 $this->paraObjAll->driverSeeWhatHappened = $formData['object'][$i]['driverSeeWhatHappened'];
                 $this->paraObjAll->weatherType = $formData['object'][$i]['weatherType'];
                 $this->paraObjAll->weatherCondition = $formData['object'][$i]['weatherCondition'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -97,8 +98,15 @@ class Railway extends Scene{
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
-	$error = array('status' => "Failed", "msg" => "Request to create scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+		$scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+	$error = array('status' => "Success", "msg" => "Request to create scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     
     public function getAllRailwayCases() {
@@ -129,7 +137,14 @@ class Railway extends Scene{
             $h_array['driverSeeWhatHappened'] = $enc->decrypt_request($h_array['driverSeeWhatHappened']);
             $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
             $h_array['weatherCondition'] = $enc->decrypt_request($h_array['weatherCondition']);
-            
+            $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return mysql_fetch_array($h_res);
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

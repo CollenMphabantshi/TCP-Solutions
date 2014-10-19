@@ -1,9 +1,11 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,6 +34,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 
@@ -67,6 +70,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -93,31 +97,17 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	
 	TextView value;
 
-	
-	
-
 	private EditText ioName;
-	
-	private EditText ioSurname;
-	
-	private EditText ioRank;
-	
-	private EditText ioCellNo;
-	
-	private TextView tv_foosName;
+	private EditText ioSurname;	
+	private EditText ioRank;	
+	private EditText ioCellNo;	
 	private EditText foosName;
-	private TextView tv_foosSurname;
 	private EditText foosSurname;
-	private TextView tv_foosRank;
-	private EditText foosRank;
-	
-	private TextView tv_victimName;
+	private EditText foosRank;	
 	private EditText victimName;
-	private TextView tv_victimSurname;
 	private EditText victimSurname;
-	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	
+	private EditText victimAge;
 	
 	
 	
@@ -131,70 +121,60 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	private TextView theBody;
-	private TextView tv_bodyDecomposed;
+	
+	
+	//the body
+	
 	private RadioButton bodyDecomposedYes;
 	private RadioButton bodyDecomposedNo;
-	private TextView tv_medicalIntervention;
 	private RadioButton medicalInterventionYes;
 	private RadioButton medicalInterventionNo;
-	private TextView tv_whoFoundVictimBody;
 	private EditText whoFoundVictimBody;
-	private TextView tv_closeToWater;
 	private RadioButton closeToWaterYes;
 	private RadioButton closeToWaterNo;
-	private TextView tv_rapeHomicide;
 	private RadioButton rapeHomicideYes;
 	private RadioButton rapeHomicideNo;
+	private RadioButton bodyMovedSincePictureYes;
+	private RadioButton bodyMovedSincePictureNo;
+	private EditText objectsBodyCrush;
+	private RadioButton eyeWitnessesYes;
+	private RadioButton eyeWitnessesNo;
+	private EditText victimDoingDuringIncident;
 	
-	private TextView sceneOfInjury;
-	private TextView tv_sceneIOType;
-	private RadioButton sceneIOTypeInside;
-	private RadioButton sceneIOTypeOutside;
-	private TextView tv_whereInside;
+	
+	//Scene of injury
+	private RadioButton SceneIOTypeInside;
+	private RadioButton SceneIOTypeOutside;
 	private Spinner sceneIType;
-	private TextView tv_sceneITypeOther;
 	private EditText sceneITypeOther;
-	private TextView tv_doorLocked;
-	private RadioButton doorLockedYes;
-	private RadioButton doorLockedNo;
-	private TextView tv_windowsClosed;
-	private RadioButton windowsClosedYes;
-	private RadioButton windowsClosedNo;
-	private TextView tv_windowsBroken;
-	private RadioButton windowsBrokenYes;
-	private RadioButton windowsBrokenNo;
-	private TextView tv_victimAlone;
-	private RadioButton victimAloneYes;
-	private RadioButton victimAloneNo;
-	private TextView tv_peopleWithVictim;
+	private RadioButton DoorLockedYes;
+	private RadioButton DoorLockedNo;
+	private RadioButton WindowsClosedYes;
+	private RadioButton WindowsClosedNo;
+	private RadioButton WindowsBrokenYes;
+	private RadioButton WindowsBrokenNo;
+	private RadioButton VictimAloneYes;
+	private RadioButton VictimAloneNo;
 	private EditText peopleWithVictim;
-	private TextView tv_sceneOType;
 	private Spinner sceneOType;
-	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
 	
-	private TextView sceneLook;
-	private TextView tv_signsOfStruggle;
-	private RadioButton signsOfStruggleYes;
-	private RadioButton signsOfStruggleNo;
-	private TextView tv_alcoholBottleAround;
-	private RadioButton alcoholBottleAroundYes;
-	private RadioButton alcoholBottleAroundNo;
-	private TextView tv_drugParaphernalia;
-	private RadioButton drugParaphernaliaYes;
-	private RadioButton drugParaphernaliaNo;
+	//The Scene look
+		private RadioButton signsOfStruggleYes;
+		private RadioButton signsOfStruggleNo;
+		private RadioButton alcoholBottleAroundYes;
+		private RadioButton alcoholBottleAroundNo;
+		private RadioButton drugParaphernaliaYes;
+		private RadioButton drugParaphernaliaNo;
 	
-	private TextView theScene;
-	private TextView tv_generalHistory;
-	private EditText generalHistory;
+	//The scene
+		private EditText generalHistory;
 	
 	private TextView response;
 
 	private Button doneButton;
 	private Button logoutButton;
-	private Button BackToMenu;
-	private GridLayout Gallery;
+	private LinearLayout Gallery;
 	private JSONObject json;
 
 	
@@ -230,8 +210,10 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
     String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
-    ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -244,31 +226,39 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	//ImageView mImageView;
 	private static final String TAG = "upload";
 	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.crushinjury);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
-		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
+		try{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.crushinjury);
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			initialize();
+			variablesInitialization();
+			CheckRadioButtons();
+			setOnClickEvents();
 		
-		
-		initialize();
-		System.out.println("Start init");
-		variablesInitialization();
-		CheckRadioButtons();
-		setOnClickEvents();
-		
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	
 	}
 	
@@ -291,24 +281,90 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			}
 			return location;
 			
-		}
+	}
+	
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
 	
 	private File createImageFile() throws IOException{
+		
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "crush_" + timeStamp + "_";
+	    String imageFileName = "crushinjury_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
 	    	dir.mkdir();
 	    
 	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
-
+	    
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	   
+	    
+	    namesOfImages.add(imageFileName+".jpg");
+	    
 	    return image;
 		
+	}
+	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
 	}
 	
 	private void dispatchTakePictureIntent(){
@@ -327,14 +383,15 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
 	
 	private void setPic(ImageView mImageView){
 		// Get the dimensions of the View
-	    int targetW = 300;
-	    int targetH = 300;
+	    int targetW = 200;
+	    int targetH = 200;
 
 	    // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -363,6 +420,13 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"crushinjury_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -400,9 +464,9 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
             
 			locate.accumulate("Longitude", longitude);
 			locate.accumulate("Latitude", latitude);
-			locate.accumulate("Bearing", loc.getBearing());
-			locate.accumulate("Altitude", loc.getAltitude());
-			locate.accumulate("Accuracy", loc.getAccuracy());
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
 			locate.accumulate("Address", myAddress);
 			
 			object.accumulate("Time", time);
@@ -461,33 +525,21 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			e.printStackTrace();
 			
 		}
-		
-		
-		
+
 	
-		ioName = (EditText)findViewById(R.id.crush_io_name);
-		
-		ioSurname = (EditText)findViewById(R.id.crush_io_surname);
-		
-		ioRank = (EditText)findViewById(R.id.crush_io_rank);
-		
+		ioName = (EditText)findViewById(R.id.crush_io_name);		
+		ioSurname = (EditText)findViewById(R.id.crush_io_surname);		
+		ioRank = (EditText)findViewById(R.id.crush_io_rank);		
 		ioCellNo = (EditText)findViewById(R.id.crush_io_cell);
-		
-		tv_foosName = (TextView)findViewById(R.id.crush_tv_foos_name);
-		foosName = (EditText)findViewById(R.id.crush_foos_name);
-		tv_foosSurname = (TextView)findViewById(R.id.crush_tv_foos_surname);
+		foosName = (EditText)findViewById(R.id.crush_foos_name);;
 		foosSurname = (EditText)findViewById(R.id.crush_foos_surname);
-		tv_foosRank = (TextView)findViewById(R.id.crush_tv_foos_rank);
 		foosRank = (EditText)findViewById(R.id.crush_foos_rank);
 		
-	
 		
-		tv_victimName = (TextView)findViewById(R.id.crush_tv_victim_name);
 		victimName = (EditText)findViewById(R.id.crush_victim_name);
-		tv_victimSurname = (TextView)findViewById(R.id.crush_tv_victim_surname);
 		victimSurname = (EditText)findViewById(R.id.crush_victim_surname);
-		tv_victimIDNo = (TextView)findViewById(R.id.crush_tv_victim_id);
 		victimIDNo = (EditText)findViewById(R.id.crush_victim_id);
+		victimAge = (EditText)findViewById(R.id.crush_victim_age);
 		
 		rgbMale = (RadioButton)findViewById(R.id.crush_rgbMale);
 		rgbFemale = (RadioButton)findViewById(R.id.crush_rgbFemale);
@@ -499,66 +551,53 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		rgbWhite = (RadioButton)findViewById(R.id.crush_rgbWhite);
 		rgbUnknownRace = (RadioButton)findViewById(R.id.crush_rgbUnknownRace);
 		
-		
-		theBody = (TextView)findViewById(R.id.crush_tv_the_body);
-		tv_bodyDecomposed = (TextView)findViewById(R.id.crush_tv_bodyDecomposed);
-		bodyDecomposedYes = (RadioButton)findViewById(R.id.crush_bodyDecomposedYes);
-		bodyDecomposedNo = (RadioButton)findViewById(R.id.crush_bodyDecomposedNo);
-		tv_medicalIntervention = (TextView)findViewById(R.id.crush_tv_medicalIntervention);
 		medicalInterventionYes = (RadioButton)findViewById(R.id.crush_medicalInterventionYes);
 		medicalInterventionNo = (RadioButton)findViewById(R.id.crush_medicalInterventionNo);
-		tv_whoFoundVictimBody = (TextView)findViewById(R.id.crush_tv_whoFoundVictimBody);
+		//the body
+		
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.crush_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.crush_bodyDecomposedNo);
+		medicalInterventionYes = (RadioButton)findViewById(R.id.crush_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.crush_medicalInterventionNo);
 		whoFoundVictimBody = (EditText)findViewById(R.id.crush_whoFoundVictimBody);
-		tv_closeToWater = (TextView)findViewById(R.id.crush_tv_closeToWater);
 		closeToWaterYes = (RadioButton)findViewById(R.id.crush_closeToWaterYes);
 		closeToWaterNo = (RadioButton)findViewById(R.id.crush_closeToWaterNo);
-		tv_rapeHomicide = (TextView)findViewById(R.id.crush_tv_rapeHomicide);
 		rapeHomicideYes = (RadioButton)findViewById(R.id.crush_rapeHomicideYes);
 		rapeHomicideNo = (RadioButton)findViewById(R.id.crush_rapeHomicideNo);
+		bodyMovedSincePictureYes = (RadioButton)findViewById(R.id.crush_bodyMovedSincePictureYes);
+		bodyMovedSincePictureNo = (RadioButton)findViewById(R.id.crush_bodyMovedSincePictureNo);
+		objectsBodyCrush = (EditText)findViewById(R.id.crush_objectsBodyCrush);
+		eyeWitnessesYes = (RadioButton)findViewById(R.id.crush_eyeWitnessesYes);
+		eyeWitnessesNo = (RadioButton)findViewById(R.id.crush_eyeWitnessesNo);
+		victimDoingDuringIncident = (EditText)findViewById(R.id.crush_victimDoingDuringIncident);	
 		
-		
-		sceneOfInjury = (TextView)findViewById(R.id.crush_sceneOfInjury);
-		tv_sceneIOType = (TextView)findViewById(R.id.crush_tv_sceneIOType);
-		sceneIOTypeInside = (RadioButton)findViewById(R.id.crush_SceneIOTypeInside);
-		sceneIOTypeOutside = (RadioButton)findViewById(R.id.crush_SceneIOTypeOutside);
-		tv_whereInside = (TextView)findViewById(R.id.crush_tv_whereInside);
+		//Scene of injury
+		SceneIOTypeInside = (RadioButton)findViewById(R.id.crush_SceneIOTypeInside);
+		SceneIOTypeOutside = (RadioButton)findViewById(R.id.crush_SceneIOTypeOutside);
 		sceneIType = (Spinner)findViewById(R.id.crush_sceneIType);
-		tv_sceneITypeOther = (TextView)findViewById(R.id.crush_tv_sceneITypeOther);
 		sceneITypeOther = (EditText)findViewById(R.id.crush_sceneITypeOther);
-		tv_doorLocked = (TextView)findViewById(R.id.crush_tv_doorLocked);
-		doorLockedYes = (RadioButton)findViewById(R.id.crush_DoorLockedYes);
-		doorLockedNo = (RadioButton)findViewById(R.id.crush_DoorLockedNo);
-		tv_windowsClosed = (TextView)findViewById(R.id.crush_tv_windowsClosed);
-		windowsClosedYes = (RadioButton)findViewById(R.id.crush_WindowsClosedYes);
-		windowsClosedNo = (RadioButton)findViewById(R.id.crush_WindowsClosedNo);
-		tv_windowsBroken = (TextView)findViewById(R.id.crush_tv_windowsBroken);
-		windowsBrokenYes = (RadioButton)findViewById(R.id.crush_WindowsBrokenYes);
-		windowsBrokenNo = (RadioButton)findViewById(R.id.crush_WindowsBrokenNo);
-		tv_victimAlone = (TextView)findViewById(R.id.crush_tv_victimAlone);
-		victimAloneYes = (RadioButton)findViewById(R.id.crush_VictimAloneYes);
-		victimAloneNo = (RadioButton)findViewById(R.id.crush_VictimAloneNo);
-		tv_peopleWithVictim = (TextView)findViewById(R.id.crush_tv_peopleWithVictim);
+		DoorLockedYes = (RadioButton)findViewById(R.id.crush_DoorLockedYes);
+		DoorLockedNo = (RadioButton)findViewById(R.id.crush_DoorLockedNo);
+		WindowsClosedYes = (RadioButton)findViewById(R.id.crush_WindowsClosedYes);
+		WindowsClosedNo = (RadioButton)findViewById(R.id.crush_WindowsClosedNo);
+		WindowsBrokenYes = (RadioButton)findViewById(R.id.crush_WindowsBrokenYes);
+		WindowsBrokenNo = (RadioButton)findViewById(R.id.crush_WindowsBrokenNo);
+		VictimAloneYes = (RadioButton)findViewById(R.id.crush_VictimAloneYes);
+		VictimAloneNo = (RadioButton)findViewById(R.id.crush_VictimAloneNo);
 		peopleWithVictim = (EditText)findViewById(R.id.crush_peopleWithVictim);
-		tv_sceneOType = (TextView)findViewById(R.id.crush_tv_sceneOType);
 		sceneOType = (Spinner)findViewById(R.id.crush_sceneOType);
-		tv_sceneOTypeOther = (TextView)findViewById(R.id.crush_tv_sceneOTypeOther);
 		sceneOTypeOther = (EditText)findViewById(R.id.crush_sceneOTypeOther);
 		
-		System.out.println("after page 3");
-		sceneLook = (TextView)findViewById(R.id.crush_sceneLook);
-		tv_signsOfStruggle = (TextView)findViewById(R.id.crush_tv_signsOfStruggle);
+		//The scene look
 		signsOfStruggleYes = (RadioButton)findViewById(R.id.crush_SignsOfStruggleYes);
 		signsOfStruggleNo = (RadioButton)findViewById(R.id.crush_SignsOfStruggleNo);
-		tv_alcoholBottleAround = (TextView)findViewById(R.id.crush_tv_alcoholBottleAround);
 		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.crush_AlcoholBottleAroundYes);
 		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.crush_AlcoholBottleAroundNo);
-		tv_drugParaphernalia = (TextView)findViewById(R.id.crush_tv_drugParaphernalia);
 		drugParaphernaliaYes = (RadioButton)findViewById(R.id.crush_DrugParaphernaliaYes);
 		drugParaphernaliaNo = (RadioButton)findViewById(R.id.crush_DrugParaphernaliaNo);
 		
 		
-		theScene = (TextView)findViewById(R.id.crush_theScene);
-		tv_generalHistory = (TextView)findViewById(R.id.crush_tv_generalHistory);
+		//The Scene
 		generalHistory = (EditText)findViewById(R.id.crush_generalHistory);
 		
 		
@@ -567,7 +606,6 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		doneButton = (Button)findViewById(R.id.crush_doneButton);
 		logoutButton = (Button)findViewById(R.id.crush_logoutButton);
 		
-		BackToMenu = (Button)findViewById(R.id.crush_BackToMenu);
 		
 		value = (TextView) findViewById(R.id.value);
 		
@@ -585,16 +623,39 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	       imageView7 = (ImageView) findViewById(R.id.imgView7);
 	       imageView8 = (ImageView) findViewById(R.id.imgView8);
 	       
-	       Gallery = (GridLayout) findViewById(R.id.crush_galleryLayout);
+	       Gallery = (LinearLayout) findViewById(R.id.crush_galleryLayout);
 	       // weather section
-	       weatherInfo = (TextView) findViewById(R.id.crushWeatherInfo);
-		
-		
+	       
 		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	
+public void readAllFiles(){
+		uploadFileName = new ArrayList<String>();
+    	String path = Environment.getExternalStorageDirectory().toString()+"/picupload/";
+    	Log.d("Files", "Path: " + path);
+    	File f = new File(path);        
+    	File files[] = f.listFiles();
+    	Log.d("Files", "Size: "+ files.length);
+    	for (int i=0; i < files.length; i++)
+    	{
+    		//if(getExtesion(files[i].getName()).endsWith("JPG")||getExtesion(files[i].getName()).endsWith("jpg")||getExtesion(files[i].getName()).endsWith("PNG")||getExtesion(files[i].getName()).endsWith("png"))
+        	//{
+    		Toast.makeText(Crushinjury.this, "Image: "+path+files[i].getName(), Toast.LENGTH_SHORT).show();
+       	 
+        		uploadFileName.add(path+files[i].getName());
+    			Log.d("Files", "FileName:" + files[i].getName());
+        	//}
+    	    
+    	}
+    	
+    }
+   public String getExtesion(String filename){
+	   String extension = filename.replaceAll("^.*\\.([^.]+)$", "$1");
+	   return extension;
+   }
 	
 	
 	
@@ -615,47 +676,26 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										dialog = ProgressDialog.show(Crushinjury.this, "", "Uploading file...", true);
-						                 
-						                new Thread(new Runnable() {
-						                        public void run() {
-						                             runOnUiThread(new Runnable() {
-						                                    public void run() {
-						                                        
-						                                        Toast.makeText(Crushinjury.this, "uploading started.....", Toast.LENGTH_SHORT).show();
-						                                    }
-						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
-						                        }
-						                      }).start(); 
+										
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
-										Toast.makeText(Crushinjury.this, "form successfully filled", Toast.LENGTH_SHORT).show();
+										
+										Toast.makeText(Crushinjury.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
 									}
 										
-							}
-							else{
-								
-								Toast.makeText(Crushinjury.this, "Sorry no photos to upload", Toast.LENGTH_SHORT).show();
-								
-							}
+							
 						}else{
 							Toast.makeText(Crushinjury.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -711,6 +751,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
+	            	//readAllFiles();
             	}
             	
             }
@@ -722,12 +763,17 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","crushinjury"));
+		        pairs.add(new BasicNameValuePair("category","crush"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				try{
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
+				}catch(Exception e){e.printStackTrace();}
 			}
 		});
 		
@@ -736,145 +782,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		/**
 		 * 	Spinner onclick event
 		 */
-
-		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(VISIBLE);
-				sceneIType.setVisibility(VISIBLE);
-				tv_doorLocked.setVisibility(VISIBLE);
-				doorLockedYes.setVisibility(VISIBLE);
-				doorLockedNo.setVisibility(VISIBLE);
-				tv_windowsClosed.setVisibility(VISIBLE);
-				windowsClosedYes.setVisibility(VISIBLE);
-				windowsClosedNo.setVisibility(VISIBLE);
-				tv_windowsBroken.setVisibility(VISIBLE);
-				windowsBrokenYes.setVisibility(VISIBLE);
-				windowsBrokenNo.setVisibility(VISIBLE);
-				tv_victimAlone.setVisibility(VISIBLE);
-				victimAloneYes.setVisibility(VISIBLE);
-				victimAloneNo.setVisibility(VISIBLE);
-				
-				tv_sceneOType.setVisibility(GONE);
-				sceneOType.setVisibility(GONE);
-				tv_sceneOTypeOther.setVisibility(GONE);
-				sceneOTypeOther.setVisibility(GONE);
-			}
-		});
-		sceneIOTypeOutside.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whereInside.setVisibility(GONE);
-				sceneIType.setVisibility(GONE);
-				tv_sceneITypeOther.setVisibility(GONE);
-				sceneITypeOther.setVisibility(GONE);
-				tv_doorLocked.setVisibility(GONE);
-				doorLockedYes.setVisibility(GONE);
-				doorLockedNo.setVisibility(GONE);
-				tv_windowsClosed.setVisibility(GONE);
-				windowsClosedYes.setVisibility(GONE);
-				windowsClosedNo.setVisibility(GONE);
-				tv_windowsBroken.setVisibility(GONE);
-				windowsBrokenYes.setVisibility(GONE);
-				windowsBrokenNo.setVisibility(GONE);
-				tv_victimAlone.setVisibility(GONE);
-				victimAloneYes.setVisibility(GONE);
-				victimAloneNo.setVisibility(GONE);
-				tv_peopleWithVictim.setVisibility(GONE);
-				peopleWithVictim.setVisibility(GONE);
-				
-				tv_sceneOType.setVisibility(VISIBLE);
-				sceneOType.setVisibility(VISIBLE);
-			}
-		});
-
 		
-		
-		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneITypeOther.setVisibility(VISIBLE);
-							sceneITypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneITypeOther.setVisibility(GONE);
-							sceneITypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		victimAloneYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_peopleWithVictim.setVisibility(GONE);
-				peopleWithVictim.setVisibility(GONE);
-			}
-		});
-		victimAloneNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_peopleWithVictim.setVisibility(VISIBLE);
-				peopleWithVictim.setVisibility(VISIBLE);
-			}
-		});
-
-
-		
-		
-		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View view,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_sceneOTypeOther.setVisibility(VISIBLE);
-							sceneOTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_sceneOTypeOther.setVisibility(GONE);
-							sceneOTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){e.printStackTrace();}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 	}
 	
@@ -889,8 +797,8 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	        Log.i(TAG, "onActivityResult: " + this);
 			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
 	        	
-	            uploadFileName.add(mCurrentPhotoPath);
-	            System.out.println("******************   "+mCurrentPhotoPath);
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
 	           
 	            if(count == 0){
 	            	setPic(imageView0);
@@ -1075,13 +983,14 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
 			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
-	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("crush"))));
+	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("crushinjury"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
@@ -1091,7 +1000,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	        {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
 	        }else{
-	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1104,105 +1013,142 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
 	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
 	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	       // victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("null")));
+	        
 	        if(bodyDecomposedYes.isChecked())
 	        {
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        if(medicalInterventionYes.isChecked())
+	        if(rapeHomicideYes.isChecked())
 	        {
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        victims.accumulate("bodyBurned", "null");
-	        victims.accumulate("bodyIntact","null");
-	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-	        
-	        if(closeToWaterYes.isChecked())
-	        {
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
+	        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyBurnt",Encryption.bytesToHex(enc.encrypt("null")));
+	        //victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
 	        if(rapeHomicideYes.isChecked())
 	        {
 	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        if(sceneIOTypeInside.isChecked())
+	        if(SceneIOTypeInside.isChecked())
 	        {
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	              }else{
+	              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+	      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	              }
+	        //victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
+	        if(closeToWaterYes.isChecked())
+	        {
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
+	        info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	       
+	        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
+	        
+	        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
+  
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
-	        info.accumulate("crushIO",getIOType() );
-	        if(signsOfStruggleYes.isChecked())
-	        {
-	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        if(alcoholBottleAroundYes.isChecked())
-	        {
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
+	        //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
 	        
-	        if(drugParaphernaliaYes.isChecked())
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
+	        
+	       info.accumulate("crushIOType",getIOType() );
+	       if(bodyMovedSincePictureYes .isChecked())
 	        {
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        
-	        if(doorLockedYes.isChecked())
+	       
+	       info.accumulate("betweenWhichObjects", Encryption.bytesToHex(enc.encrypt(objectsBodyCrush.getText().toString())));
+
+	       if(eyeWitnessesYes .isChecked())
+	        {
+	        	info.accumulate("anyWitness", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("anyWitness", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	       info.accumulate("whatWasVictimDoing", Encryption.bytesToHex(enc.encrypt(victimDoingDuringIncident.getText().toString())));
+
+	       if(DoorLockedYes .isChecked())
 	        {
 	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        if(windowsClosedYes.isChecked())
+	        if(WindowsClosedYes .isChecked())
 	        {
 	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        if(windowsBrokenYes.isChecked())
+	        
+	        if(WindowsBrokenYes .isChecked())
 	        {
 	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        if(victimAloneYes.isChecked())
+	        
+	        if(VictimAloneYes .isChecked())
 	        {
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
+	        info.accumulate("peopleWithVictim", Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString())));
 	        
 	        
-	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
+	        //the scene look  
+	        if(signsOfStruggleYes .isChecked())
+	        {
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(alcoholBottleAroundYes .isChecked())
+	        {
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(drugParaphernaliaYes .isChecked())
+	        {
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
 	        
 	        array.put(info);
 	        obj.accumulate("object", array);
@@ -1217,29 +1163,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		}
 	}
 	
-	public String getIOType(){
-		try{
-			String type = "";
-			
-			if(sceneIOTypeInside.isChecked())
-			{
-				type = (String)sceneIType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneITypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}else{
-				type = (String)sceneOType.getSelectedItem();
-				if(type.toLowerCase().equals("other")){
-					type = sceneOTypeOther.getText().toString();
-				}
-				return Encryption.bytesToHex(enc.encrypt(type));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 	
 	public String getVictimGender(){
 		try{
@@ -1292,28 +1216,37 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public String getPeopleWithVictim(){
+	public String getIOType(){
 		try{
+			String type = "";
 			
-			
-			if(victimAloneNo.isChecked())
+			if(SceneIOTypeInside.isChecked())
 			{
-				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
+				type = (String)sceneIType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneITypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}else{
-				
-				return null;
+				type = (String)sceneOType.getSelectedItem();
+				if(type.toLowerCase().equals("other")){
+					type = sceneOTypeOther.getText().toString();
+				}
+				return Encryption.bytesToHex(enc.encrypt(type));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
 	public void saveDataOnAction() throws Exception{
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray();
@@ -1345,104 +1278,125 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
-        
-        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+      //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
         if(bodyDecomposedYes.isChecked())
         {
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(medicalInterventionYes.isChecked())
+        if(rapeHomicideYes.isChecked())
         {
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        victims.accumulate("bodyBurned", "null");
-        victims.accumulate("bodyIntact", "null");
-        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
-        
-        if(closeToWaterYes.isChecked())
-        {
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
+        victims.accumulate("bodyIntact", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("bodyBurnt",Encryption.bytesToHex(enc.encrypt("null")));
+        //victims.accumulate("rapeHomicideSuspected",Encryption.bytesToHex(enc.encrypt("null")));
         if(rapeHomicideYes.isChecked())
         {
         	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(sceneIOTypeInside.isChecked())
+        if(SceneIOTypeInside.isChecked())
         {
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+              }else{
+              	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+      	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+              }
+        //victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("null")));
+        if(closeToWaterYes.isChecked())
+        {
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
-	        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
+        info.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("whoFoundVictimBody",Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
        
+        victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("null")));
+        
+        victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("null")));
+
        
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
         
-        info.accumulate("crushIO",getIOType() );
-        if(signsOfStruggleYes.isChecked())
+       info.accumulate("crushIOType",getIOType() );
+       if(bodyMovedSincePictureYes .isChecked())
         {
-        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("wasBodyMoved", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(alcoholBottleAroundYes.isChecked())
+       
+       info.accumulate("betweenWhichObjects", Encryption.bytesToHex(enc.encrypt(objectsBodyCrush.getText().toString())));
+
+       if(eyeWitnessesYes .isChecked())
         {
-        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("anyWitness", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("anyWitness", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(drugParaphernaliaYes.isChecked())
-        {
-        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
-        if(doorLockedYes.isChecked())
+       info.accumulate("whatWasVictimDoing", Encryption.bytesToHex(enc.encrypt(victimDoingDuringIncident.getText().toString())));
+
+       if(DoorLockedYes .isChecked())
         {
         	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        if(windowsClosedYes.isChecked())
+        if(WindowsClosedYes .isChecked())
         {
         	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("windowsClosed", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(windowsBrokenYes.isChecked())
+        
+        if(WindowsBrokenYes .isChecked())
         {
         	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("windowsBroken", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        if(victimAloneYes.isChecked())
+        
+        if(VictimAloneYes .isChecked())
         {
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
         }
+        info.accumulate("peopleWithVictim", Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString())));
         
         
-        info.accumulate("peopleWithVictim", getPeopleWithVictim());
-      
+        //the scene look  
+        if(signsOfStruggleYes .isChecked())
+        {
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("signsOfStruggle", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        
+        if(alcoholBottleAroundYes .isChecked())
+        {
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("alcoholBottleAround", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(drugParaphernaliaYes .isChecked())
+        {
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;
@@ -1520,11 +1474,20 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 					System.out.println("STATUS: "+status);
 					System.out.println("MESSAGE: "+message);
 					response.setVisibility(VISIBLE);
+					Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
+						clearFilelds();
+						try{
+							message = message.split(".")[0];
+							currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
+						
+		                
 						response.setText(message);
 					}
 				}
@@ -1535,31 +1498,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
-
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
+    
 
 	@Override
 	public void hidePage() {
@@ -1630,7 +1569,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 
 	
 	private boolean ValidateFields(){
-		System.out.println("**********    ****************    "+uploadFileName);
+		//System.out.println("**********    ****************    "+uploadFileName);
 		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
@@ -1697,24 +1636,7 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-			
-		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
-			whoFoundVictimBody.requestFocus();
-			whoFoundVictimBody.setError("sorry empty field");
-			return false;
-		}
 		
-		if(sceneIOTypeInside.isChecked()){
-			
-			doorLockedNo.setChecked(true);
-			
-			windowsClosedNo.setChecked(true);
-		
-			windowsBrokenNo.setChecked(true);
-		
-			victimAloneNo.setChecked(true);
-			
-		}
 		
 		if( generalHistory.getText().toString().length() == 0){
 			generalHistory.requestFocus();
@@ -1731,39 +1653,6 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		victimSurname.setText("Unknown");
 		
 		victimIDNo.setText("Unknown");
-			
-		whoFoundVictimBody.setText("");
-		
-		if(sceneIOTypeInside.isChecked()){
-			sceneIOTypeInside.setChecked(false);
-			doorLockedNo.setChecked(false);
-			
-			windowsClosedNo.setChecked(false);
-		
-			windowsBrokenNo.setChecked(false);
-		
-			victimAloneNo.setChecked(false);
-			//outside selected by default
-			sceneIOTypeOutside.setChecked(true);
-			tv_whereInside.setVisibility(GONE);
-			sceneIType.setVisibility(GONE);
-			tv_sceneITypeOther.setVisibility(GONE);
-			sceneITypeOther.setVisibility(GONE);
-			tv_doorLocked.setVisibility(GONE);
-			doorLockedYes.setVisibility(GONE);
-			doorLockedNo.setVisibility(GONE);
-			tv_windowsClosed.setVisibility(GONE);
-			windowsClosedYes.setVisibility(GONE);
-			windowsClosedNo.setVisibility(GONE);
-			tv_windowsBroken.setVisibility(GONE);
-			windowsBrokenYes.setVisibility(GONE);
-			windowsBrokenNo.setVisibility(GONE);
-			tv_victimAlone.setVisibility(GONE);
-			victimAloneYes.setVisibility(GONE);
-			victimAloneNo.setVisibility(GONE);
-			tv_peopleWithVictim.setVisibility(GONE);
-			peopleWithVictim.setVisibility(GONE);
-		}
 		
 		generalHistory.setText("");
 		
@@ -1793,6 +1682,8 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 			
 	   index_gallery = 0;
 	   count = 0;
+	   uploadFileName.clear();
+	   namesOfImages.clear();
 	}
 	
 	private void CheckRadioButtons(){
@@ -1801,43 +1692,9 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 		rgbUnknownRace.setChecked(true);
 		
 		//outside selected by default
-		sceneIOTypeOutside.setChecked(true);
-		tv_whereInside.setVisibility(GONE);
-		sceneIType.setVisibility(GONE);
-		tv_sceneITypeOther.setVisibility(GONE);
-		sceneITypeOther.setVisibility(GONE);
-		tv_doorLocked.setVisibility(GONE);
-		doorLockedYes.setVisibility(GONE);
-		doorLockedNo.setVisibility(GONE);
-		tv_windowsClosed.setVisibility(GONE);
-		windowsClosedYes.setVisibility(GONE);
-		windowsClosedNo.setVisibility(GONE);
-		tv_windowsBroken.setVisibility(GONE);
-		windowsBrokenYes.setVisibility(GONE);
-		windowsBrokenNo.setVisibility(GONE);
-		tv_victimAlone.setVisibility(GONE);
-		victimAloneYes.setVisibility(GONE);
-		victimAloneNo.setVisibility(GONE);
-		tv_peopleWithVictim.setVisibility(GONE);
-		peopleWithVictim.setVisibility(GONE);
 		
-		tv_sceneOType.setVisibility(VISIBLE);
-		sceneOType.setVisibility(VISIBLE);
-		
-		bodyDecomposedNo.setChecked(true);
-	
 		medicalInterventionNo.setChecked(true);
-	
-		closeToWaterNo.setChecked(true);
-		
-		rapeHomicideNo.setChecked(true);
-	
-		signsOfStruggleNo.setChecked(true);
-		
-		alcoholBottleAroundNo.setChecked(true);
-	
-		drugParaphernaliaNo.setChecked(true);
-		 
+	 
 	}
 	
 	private  boolean CellNoValidation(String cell) {
@@ -1848,4 +1705,3 @@ public class Crushinjury extends Activity implements GlobalMethods, OnMyLocation
 	
 	
 }
-

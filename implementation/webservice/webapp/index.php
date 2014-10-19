@@ -46,7 +46,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#">Signin</a>
                     </li>
                 </ul>
             </div>
@@ -60,7 +60,7 @@
 
         <!-- Heading Row -->
         <div class="row">
-            <h1 id="page-heading">Welcome to mForensics</h1>
+            <h1 id="page-heading">Welcome to M-Forensics</h1>
         </div>
         <!-- /.row -->
 

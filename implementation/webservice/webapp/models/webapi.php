@@ -151,7 +151,7 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             
-            $user = new User($this, $un, $up, $uf, $us, 6, 1);
+            $user = new User($this, $un, $up, $uf, $us, 1, 1);
             $admin = new Administrator($this);
             if($admin->addUser($un, $user->getUserID())){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
@@ -166,7 +166,7 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             $cell = $this->_request['cellphoneNumber'];
-            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $user = new User($this, $un, $up, $uf, $us, 3, 1);
             $admin = new ForensicOfficer($this);
             
             if($admin->addUser($un, $user->getUserID(),$cell)){
@@ -182,7 +182,7 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             $cell = $this->_request['cellphoneNumber'];
-            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $user = new User($this, $un, $up, $uf, $us, 2, 1);
             $admin = new ForensicPractitioner($this);
             if($admin->addUser($un, $user->getUserID(),$cell)){
                 $error = array('status' => "Success", "msg" => "Request to add user was successful.");
@@ -197,7 +197,7 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             $cell = $this->_request['cellphoneNumber'];
-            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $user = new User($this, $un, $up, $uf, $us, 4, 1);
             $admin = new Student($this);
             
             if($admin->addUser($un, $user->getUserID(),$cell)){
@@ -213,7 +213,7 @@ private function addUser()
             $uf = $this->_request['userFirstname'];
             $us = $this->_request['userSurname'];
             $cell = $this->_request['cellphoneNumber'];
-            $user = new User($this, $un, $up, $uf, $us, 1, 1);
+            $user = new User($this, $un, $up, $uf, $us, 6, 1);
             $admin = new Administrator($this);
             $fp = new ForensicPractitioner($this);
             
@@ -1390,7 +1390,7 @@ private function getSceneData() {
                         $obj = new Sudc();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;
-                    case "Section 48  death –surgical case":
+                    case "Section 56 death(surgical case)":
                         $obj = new section48();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;

@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,7 +29,7 @@ class Burn extends Scene{
     private $wierdSmell;
     private $anyPotentialWeapons;
     private $wasItCommunityAssault;
-    
+    public $images;
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -54,7 +55,8 @@ class Burn extends Scene{
                 $this->wierdSmell = $formData['object'][$i]['wierdSmell'];
                 $this->anyPotentialWeapons = $formData['object'][$i]['anyPotentialWeapons'];
                 $this->wasItCommunityAssault = $formData['object'][$i]['wasItCommunityAssault'];
-                    //
+                
+				$this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -138,7 +140,13 @@ class Burn extends Scene{
                 $hi_res = mysql_query("insert into burninside values(0,".$burnID.",'$dl','$wc','$wb','$va',null,'$bd')");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
         $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
         $this->api->response($this->api->json($error), 400);
     }
@@ -244,6 +252,14 @@ class Burn extends Scene{
                 $h_array['wierdSmell'] = $enc->decrypt_request($h_array['wierdSmell']);
                 $h_array['anyPotentialWeapons'] = $enc->decrypt_request($h_array['anyPotentialWeapons']);
                 $h_array['wasItCommunityAssault'] = $enc->decrypt_request($h_array['wasItCommunityAssault']);
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

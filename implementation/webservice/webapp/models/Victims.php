@@ -95,6 +95,8 @@ class Victims {
        }else {
            $v = mysql_query("insert into victims values(0,'$this->victimIdentityNumber','$this->victimGender','$this->victimRace','$this->victimName','$this->victimSurname','$this->whoFoundVictimBody','$this->bodyDecompose','$this->medicalIntervention',null,null,'$this->victimInside','$this->victimOutside','$this->victimFoundCloseToWater','$this->victimSuicideNoteFound','$this->victimGeneralHistory','$this->rapeHomicideSuspected','$this->suicideSuspected','$this->previousAttempts',".$this->numberOfPreviousAttempts.",'$this->victimAge')");
        }
+       /*$error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+            $this->api->response($this->api->json($error), 400);*/
        
        if($v !== FALSE)
        {

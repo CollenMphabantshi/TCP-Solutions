@@ -262,7 +262,8 @@ class User {
                         $_SESSION[$this->enc->md5_encrypt('s_ac')] = $this->enc->md5_encrypt("".$u_array['userTypeID']);
                         
                         $m_res = $u_array;
-                        Audit::audit_log($this->enc->decrypt_request($_SESSION[$this->enc->md5_encrypt('s_nomor')]), "Logged On.");
+                        Audit::audit_log($this->enc->decrypt_request($_SESSION[$this->enc->md5_encrypt('s_nomor')]),
+                                "Logged On.");
                         
                         //session_set_cookie_params(60);
                         $error = array('status' => "Success", "msg" => "Request to login was accepted.");

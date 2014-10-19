@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,7 +33,7 @@ class IngestionOverdosePoisoning extends Scene{
     //put your code here
     public $paraObj ;
     public $paraObjAll;
-    
+    public $images;
      public function __construct($formData,$api){
         $this->api = $api;
         $this->paraObj = new ingestionParameters();
@@ -55,7 +56,7 @@ class IngestionOverdosePoisoning extends Scene{
                 $this->paraObjAll->suspectedDrug = $formData['object'][$i]['suspectedDrug'];
                 $this->paraObjAll->suspectedDrugOnScene = $formData['object'][$i]['suspectedDrugOnScene'];
                 $this->paraObjAll->whyIngestionOverdoseSuspected = $formData['object'][$i]['whyIngestionOverdoseSuspected'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -87,7 +88,7 @@ class IngestionOverdosePoisoning extends Scene{
         $whyIngestionOverdoseSuspected = $this->paraObjAll->whyIngestionOverdoseSuspected;
         
         
-        $h_res = mysql_query("insert into ingestionoverdosepoisoning values(0,$sceneID,"
+        $h_res = mysql_query("insert into ingestionOverdosePoisoning values(0,$sceneID,"
                 . "'$ingestionOverdosePoisoningIOType',"
                 . "'$signsOfStruggle',"
                 . "'$alcoholBottleAround',"
@@ -103,7 +104,7 @@ class IngestionOverdosePoisoning extends Scene{
         }
         
         if($inside === TRUE){
-            $h_res = mysql_query("select ingestionOverdosePoisoningID from ingestionoverdosepoisoning where sceneID=".$sceneID);
+            $h_res = mysql_query("select ingestionOverdosePoisoningID from ingestionOverdosePoisoning where sceneID=".$sceneID);
             $ingestionOverdosePoisoningID = mysql_result($h_res,0,'ingestionOverdosePoisoningID');
             $dl = $object['doorLocked'];
             $wc = $object['windowsClosed'];
@@ -114,14 +115,20 @@ class IngestionOverdosePoisoning extends Scene{
             $enc = new Encryption();
             if($enc->decrypt_request($va) !== "Yes")
             {
-                $hi_res = mysql_query("insert into ingestionoverdosepoisoninginside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va','$pv')");
+                $hi_res = mysql_query("insert into ingestionOverdosePoisoningInside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va','$pv')");
             }else{
-                $hi_res = mysql_query("insert into ingestionoverdosepoisoninginside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va',null)");
+                $hi_res = mysql_query("insert into ingestionOverdosePoisoningInside values(0,".$ingestionOverdosePoisoningID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 200);
         
     }
     
@@ -168,7 +175,14 @@ class IngestionOverdosePoisoning extends Scene{
                 $h_array['suspectedDrug'] = $enc->decrypt_request($h_array['suspectedDrug']);
                 $h_array['suspectedDrugOnScene'] = $enc->decrypt_request($h_array['suspectedDrugOnScene']);
                 $h_array['whyIngestionOverdoseSuspected'] = $enc->decrypt_request($h_array['whyIngestionOverdoseSuspected']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

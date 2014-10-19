@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -37,7 +38,8 @@ class Sudc extends Scene{
     private $victimTakeMedicationSpecified;
     private $suspisionOfAssault;
     private $suspisionOfOverdose;
-    
+    public $images;
+	
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -78,7 +80,7 @@ class Sudc extends Scene{
                 
                 $this->setVictim($sceneID,$formData['object'][$i]['victims']);
                 $this->setCase($sceneID, $formData['object'][$i]['FOPersonelNumber']);
-                
+                $this->images = $formData['object'][$i]['images'][0];
                 $enc = new Encryption();
                 $vinside = $enc->decrypt_request($formData['object'][$i]['victims'][0]['victimInside']);
                 if($vinside === "Yes"){
@@ -145,8 +147,15 @@ class Sudc extends Scene{
             }
         }
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+		$scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllSudc() {
         try{
@@ -268,7 +277,14 @@ class Sudc extends Scene{
                 $h_array['victimTakeMedicationSpecified'] = $enc->decrypt_request($h_array['victimTakeMedicationSpecified']);
                 $h_array['suspisionOfAssault'] = $enc->decrypt_request($h_array['suspisionOfAssault']);
                 $h_array['suspisionOfOverdose'] = $enc->decrypt_request($h_array['suspisionOfOverdose']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -1,9 +1,11 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -68,6 +70,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -210,6 +213,7 @@ public class Ingestionoverdosepoisoning extends Activity implements GlobalMethod
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -234,7 +238,8 @@ public class Ingestionoverdosepoisoning extends Activity implements GlobalMethod
 		try{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.ingestionoverdosepoisoning);
-			
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
 			try{
 				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -280,22 +285,88 @@ public class Ingestionoverdosepoisoning extends Activity implements GlobalMethod
 			
 	}
 	
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
+	
 	private File createImageFile() throws IOException{
+		
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "ingestionovdosepois_" + timeStamp + "_";
+	    String imageFileName = "ingestionoverdosepoisoning_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
 	    	dir.mkdir();
 	    
 	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
-
+	    
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	   
+	    
+	    namesOfImages.add(imageFileName+".jpg");
+	    
 	    return image;
 		
+	}
+	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
 	}
 	
 	private void dispatchTakePictureIntent(){
@@ -321,8 +392,8 @@ public class Ingestionoverdosepoisoning extends Activity implements GlobalMethod
 	
 	private void setPic(ImageView mImageView){
 		// Get the dimensions of the View
-	    int targetW = 300;
-	    int targetH = 300;
+	    int targetW = 200;
+	    int targetH = 200;
 
 	    // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -351,6 +422,13 @@ public class Ingestionoverdosepoisoning extends Activity implements GlobalMethod
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"ingestionoverdosepoisoning_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -615,28 +693,10 @@ public void readAllFiles(){
 										
 										new Read().execute(postdata);
 										
-										/*dialog = ProgressDialog.show(ingestionovdosepois.this, "", "Uploading file...", true);
-						                 
-						                new Thread(new Runnable() {
-						                        public void run() {
-						                             runOnUiThread(new Runnable() {
-						                                    public void run() {
-						                                        
-						                                        Toast.makeText(ingestionovdosepois.this, "uploading started.....", Toast.LENGTH_SHORT).show();
-						                                    }
-						                                });                      
-						                             
-						                             for( int i=0;i < numberOfImages; i++){
-						                            	 Toast.makeText(ingestionovdosepois.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
-						                            	 uploadFile( uploadFileName.get(i) );
-						                            	 i++;
-						                             	}
-						                                               
-						                        }
-						                      }).start();*/
+										
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Ingestionoverdosepoisoning.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -698,7 +758,7 @@ public void readAllFiles(){
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
-	            	readAllFiles();
+	            	//readAllFiles();
             	}
             	
             }
@@ -1141,7 +1201,8 @@ SceneIOTypeInside.setOnClickListener(new OnClickListener() {
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
-	        
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
@@ -1154,6 +1215,83 @@ SceneIOTypeInside.setOnClickListener(new OnClickListener() {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
+	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
+	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
+	        info.accumulate("firstOfficerOnSceneRank", Encryption.bytesToHex(enc.encrypt(foosRank.getText().toString())));
+	        knownVictim();
+	        victims.accumulate("victimIdentityNumber", Encryption.bytesToHex(enc.encrypt(victimIDNo.getText().toString())));
+	        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
+	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
+	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
+	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
+	        
+	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
+	        if(bodyDecomposedYes.isChecked())
+	        {
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("bodyDecomposed", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(medicalInterventionYes.isChecked())
+	        {
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
+	        
+	        if(closeToWaterYes.isChecked())
+	        {
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("victimFoundCloseToWater", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(suicideSuspectedYes.isChecked())
+	        {
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("suicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(SuicideNoteFoundYes.isChecked())
+	        {
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	victims.accumulate("victimSuicideNoteFound", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        
+	        if(previousAttemptsYes.isChecked())
+	        {
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(howManyAttempts.getText().toString())));
+	        }else{
+	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
+	        	victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
+	        }
+	        
+	        
+	        
+	        
+	        
+	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("null")));
+	        
+	        
+	        if(SceneIOTypeInside.isChecked())
+	        {
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("No")));
+	        }else{
+	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("No")));
+		        victims.accumulate("victimOutside", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }
+	        /*info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
 	        info.accumulate("investigatingOfficerCellNo", Encryption.bytesToHex(enc.encrypt(ioCellNo.getText().toString())));
 	        info.accumulate("firstOfficerOnSceneName", Encryption.bytesToHex(enc.encrypt(foosName.getText().toString())));
@@ -1218,15 +1356,30 @@ SceneIOTypeInside.setOnClickListener(new OnClickListener() {
 	        if(previousAttemptsYes.isChecked())
 	        {
 	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(howManyAttempts.getText().toString())));
 	        }else{
 	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
+	        	victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt("0")));
 	        }
-	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(howManyAttempts.getText().toString())));
+	        
   
+	        */
 	       
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	        
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	       info.accumulate("ingestionOverdosePoisoningIOType",getIOType() );
 	        
@@ -1627,7 +1780,7 @@ SceneIOTypeInside.setOnClickListener(new OnClickListener() {
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						
+						clearFilelds();
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
@@ -1852,6 +2005,8 @@ SceneIOTypeInside.setOnClickListener(new OnClickListener() {
 			
 	   index_gallery = 0;
 	   count = 0;
+	   uploadFileName.clear();
+	   namesOfImages.clear();
 	}
 	
 	private void CheckRadioButtons(){

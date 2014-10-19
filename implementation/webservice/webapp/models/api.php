@@ -1312,7 +1312,7 @@ private function getSceneData() {
                         $obj = new Sudc();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;
-                    case "Section 48  death –surgical case":
+                    case "Section 56 death(surgical case)":
                         $obj = new section48();
                          $arr['sceneTypeData'] = $obj->getDataBySceneID($cn);
                         break;

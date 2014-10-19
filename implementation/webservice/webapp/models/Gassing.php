@@ -1,6 +1,6 @@
 <?php
 require_once("Scene.php");
-
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,7 +39,7 @@ class Gassing extends Scene{
     
     public $paraObj ;
     public $paraObjAll;
-    
+    public $images;
      public function __construct($formData,$api){
         $this->api = $api;
         $this->paraObj = new gassingParameters();
@@ -65,6 +65,7 @@ class Gassing extends Scene{
                 $this->paraObjAll->pipeConnected = $formData['object'][$i]['pipeConnected'];
                 $this->paraObjAll->medicationPoisonOnScene = $formData['object'][$i]['medicationPoisonOnScene'];
                 
+				$this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -132,9 +133,15 @@ class Gassing extends Scene{
                 $hi_res = mysql_query("insert into gassinginside values(0,".$gassingID.",'$dl','$wc','$wb','$va',null','$ga','$gau','$gs)");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 200);
         
     }
     
@@ -186,6 +193,14 @@ class Gassing extends Scene{
                 $h_array['carWindowClosed'] = $enc->decrypt_request($h_array['carWindowClosed']);
                 $h_array['pipeConnected'] = $enc->decrypt_request($h_array['pipeConnected']);
                 $h_array['medicationPoisonOnScene'] = $enc->decrypt_request($h_array['medicationPoisonOnScene']);
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -1,9 +1,11 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -68,6 +70,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -177,6 +180,7 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
     String filename ;
     int numberOfImages = 0;
     
@@ -201,7 +205,8 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 		try{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.sect56);
-			
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
 			try{
 				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -247,24 +252,90 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 			
 	}
 	
+	
+	
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
+	
 	private File createImageFile() throws IOException{
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "sect48_" + timeStamp + "_";
+	    String imageFileName = "sec56_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
 	    	dir.mkdir();
 	    
 	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
-
+	    
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	   
+	    
+	    namesOfImages.add(imageFileName+".jpg");
+	    
 	    return image;
 		
 	}
 	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
+	}
 	private void dispatchTakePictureIntent(){
 		
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -288,8 +359,8 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 	
 	private void setPic(ImageView mImageView){
 		// Get the dimensions of the View
-	    int targetW = 300;
-	    int targetH = 300;
+	    int targetW = 200;
+	    int targetH = 200;
 
 	    // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -318,6 +389,13 @@ public class Sec56 extends Activity implements GlobalMethods, OnMyLocationChange
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"sec56_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -549,28 +627,10 @@ public void readAllFiles(){
 										
 										new Read().execute(postdata);
 										
-										/*dialog = ProgressDialog.show(Mba.this, "", "Uploading file...", true);
-						                 
-						                new Thread(new Runnable() {
-						                        public void run() {
-						                             runOnUiThread(new Runnable() {
-						                                    public void run() {
-						                                        
-						                                        Toast.makeText(Mba.this, "uploading started.....", Toast.LENGTH_SHORT).show();
-						                                    }
-						                                });                      
-						                             
-						                             for( int i=0;i < numberOfImages; i++){
-						                            	 Toast.makeText(Mba.this, uploadFileName.get(i), Toast.LENGTH_SHORT).show();
-						                            	 uploadFile( uploadFileName.get(i) );
-						                            	 i++;
-						                             	}
-						                                               
-						                        }
-						                      }).start();*/
+										
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
-										clearFilelds();
+										
 										Toast.makeText(Sec56.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
 										e.printStackTrace();
@@ -632,7 +692,7 @@ public void readAllFiles(){
 	            		dispatchTakePictureIntent();
 	            		index_gallery++;
 	            	}
-	            	readAllFiles();
+	            	//readAllFiles();
             	}
             	
             }
@@ -936,6 +996,18 @@ public void readAllFiles(){
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
 	        
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
+	        
 			info.accumulate("DrNames", Encryption.bytesToHex(enc.encrypt(drName.getText().toString()+ " "+drSurname.getText().toString())));			
 			info.accumulate("DrCellNumber", Encryption.bytesToHex(enc.encrypt(drCell.getText().toString())));
 			info.accumulate("NurseNames", Encryption.bytesToHex(enc.encrypt(nurseName.getText().toString()+" "+nurseSurname.getText().toString())));
@@ -1171,7 +1243,7 @@ public void readAllFiles(){
 						response.setText(message);
 						saveData(currentDataSaved);
 					}else{
-						
+						clearFilelds();
 						try{
 							message = message.split(".")[0];
 							currentVictimID =  Integer.parseInt(message.split(".")[1]);
@@ -1188,31 +1260,7 @@ public void readAllFiles(){
 	
     }
     
-    public class LoadMethods extends AsyncTask<String, Integer,Boolean>{
-
-		@Override
-		protected Boolean doInBackground(String... params) {
-			boolean status = false; 
-			try{
-			// TODO Auto-generated method stub
-			
-				if(params[0] != null){
-					
-					return true;
-				}
-			
-			}catch(Exception e){e.printStackTrace();}
-			return status;
-		}
-		
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-	
-    }
+    
 
 	@Override
 	public void hidePage() {
@@ -1396,6 +1444,8 @@ public void readAllFiles(){
 			
 	   index_gallery = 0;
 	   count = 0;
+	   namesOfImages.clear();
+	   uploadFileName.clear();
 	}
 	
 	private void CheckRadioButtons(){

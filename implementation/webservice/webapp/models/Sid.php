@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -40,7 +41,8 @@ class Sid extends Scene{
     private $anyWeirdSmell;
     private $anySmokeSmell;
     private $infantOneOfTwins;
-    
+    public $images;
+	
      public function __construct($formData,$api){
          $this->api = $api;
 	 if($formData == NULL)
@@ -81,7 +83,7 @@ class Sid extends Scene{
                 $this->anyWeirdSmell = $formData['object'][$i]['anyWeirdSmell'];
                 $this->anySmokeSmell = $formData['object'][$i]['anySmokeSmell'];
                 $this->infantOneOfTwins = $formData['object'][$i]['infantOneOfTwins'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -149,8 +151,15 @@ class Sid extends Scene{
             $this->api->response($this->api->json($error), 400);
         }
 
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+		$scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllSid() {
         try{
@@ -248,7 +257,14 @@ class Sid extends Scene{
                 $h_array['anyWeirdSmell'] = $enc->decrypt_request($h_array['anyWeirdSmell']);
                 $h_array['anySmokeSmell'] = $enc->decrypt_request($h_array['anySmokeSmell']);
                 $h_array['infantOneOfTwins'] = $enc->decrypt_request($h_array['infantOneOfTwins']);
-            
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,7 +22,7 @@ class CrushInjury extends Scene{
     private $betweenWhichObjects;
     private $anyWitness;
     private $whatWasVictimDoing;
-    
+    public $images;
     public function __construct($formData,$api){
         $this->api = $api;
         if($formData == NULL)
@@ -40,7 +41,8 @@ class CrushInjury extends Scene{
                 $this->betweenWhichObjects = $formData['object'][$i]['betweenWhichObjects'];
                 $this->anyWitness = $formData['object'][$i]['anyWitness'];
                 $this->whatWasVictimDoing = $formData['object'][$i]['whatWasVictimDoing'];
-                    //
+                
+		$this->images = $formData['object'][$i]['images'][0];
                 $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -94,9 +96,15 @@ class CrushInjury extends Scene{
                 $hi_res = mysql_query("insert into crushinjuryinside values(0,".$crushinjuryID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllCrushInjury() {
         try{
@@ -186,7 +194,14 @@ class CrushInjury extends Scene{
                 $h_array['betweenWhichObjects'] = $enc->decrypt_request($h_array['betweenWhichObjects']);
                 $h_array['anyWitness'] = $enc->decrypt_request($h_array['anyWitness']);
                 $h_array['whatWasVictimDoing'] = $enc->decrypt_request($h_array['whatWasVictimDoing']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

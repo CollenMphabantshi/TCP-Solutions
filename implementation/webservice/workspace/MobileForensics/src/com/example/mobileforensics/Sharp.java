@@ -246,7 +246,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
     int count = 0;
     ArrayList<String> uploadFileName;
     ArrayList<String> namesOfImages;
-    //String filename ;
+    String filename ;
     int numberOfImages = 0;
     
     //weather section
@@ -731,7 +731,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 									
 										doneButton.setVisibility(VISIBLE);
 						                logoutButton.setVisibility(VISIBLE);
-						                clearFilelds();
+						                
 										
 										Toast.makeText(Sharp.this, "form successfully filled", Toast.LENGTH_LONG).show();
 									}catch(Exception e){
@@ -1093,8 +1093,8 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 	        	victims.accumulate("medicalIntervention", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        victims.accumulate("bodyBurned", "null");
-	        victims.accumulate("bodyIntact","null");
+	        victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("null")));
+	        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
 	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	        
 	        if(closeToWaterYes.isChecked())
@@ -1158,7 +1158,6 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 		    }
 	        
 	        imagesArray.put(images);
-	        System.out.println("Len:"+images.getString("data0"));
 	        info.accumulate("images", imagesArray);
 	        
 	        info.accumulate("sharpIOType",getIOType() );

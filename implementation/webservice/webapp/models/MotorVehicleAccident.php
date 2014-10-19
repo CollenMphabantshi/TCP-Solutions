@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,7 +32,7 @@ class MotorVehicleAccident extends Scene{
     private $trappedInCar;
     private $bodyHit;
     private $numberOfHit;
-    
+    public $images;
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -60,7 +61,7 @@ class MotorVehicleAccident extends Scene{
                 $this->trappedInCar = $formData['object'][$i]['trappedInCar'];
                 $this->bodyHit = $formData['object'][$i]['bodyHit'];
                 $this->numberOfHit = $formData['object'][$i]['numberOfHit'];
-                    //
+                $this->images = $formData['object'][$i]['images'][0];
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -102,9 +103,15 @@ class MotorVehicleAccident extends Scene{
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 200);
     }
     public function getAllMotorVehicleAccident() {
         try{
@@ -185,7 +192,14 @@ class MotorVehicleAccident extends Scene{
             $h_array['trappedInCar'] = $enc->decrypt_request($h_array['trappedInCar']);
             $h_array['bodyHit'] = $enc->decrypt_request($h_array['bodyHit']);
             $h_array['numberOfHit'] = $enc->decrypt_request($h_array['numberOfHit']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

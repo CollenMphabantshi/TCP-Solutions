@@ -1,6 +1,7 @@
 <?php
 require_once("Scene.php");
 require_once './ScenePhotos.php';
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +21,7 @@ class FoetusabandonedBaby extends Scene{
      private $howWasBodyDiscovered;
      private $wasBodyCovered;
      private $coveredWith;
+	 public $images;
      public function __construct($formData,$api){
          $this->api = $api;
 	if($formData == NULL)
@@ -34,7 +36,7 @@ class FoetusabandonedBaby extends Scene{
                 $this->howWasBodyDiscovered = $formData['object'][$i]['howWasBodyDiscovered'];
                 $this->wasBodyCovered = $formData['object'][$i]['wasBodyCovered'];
                 $this->coveredWith = $formData['object'][$i]['coveredWith'];
-                    //
+                   $this->images = $formData['object'][$i]['images'][0];
                 $sceneID = $this->createScene();
                 if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -63,14 +65,14 @@ class FoetusabandonedBaby extends Scene{
             }
         
             $scenePhoto = new ScenePhotos($this->api);
-            $images = $object['images'];
-            $error = array('status' => "Success", "msg" => "IMG=".var_dump($images));
-            $this->api->response($this->api->json($error), 200);
-            for($i = 0; $i < count($images);$i++)
-            {
-                $v = $scenePhoto->upload("axcd", $images[0]['names'.$i], $sceneID);
-            }
+        
+        
+			for($i = 0; $i < count($this->images);$i++)
+			{
+				$scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+			}
             
+			
             $error = array('status' => "Success", "msg" => "Request to create a scene was accepted.");
             $this->api->response($this->api->json($error), 200);
     }
@@ -126,6 +128,14 @@ class FoetusabandonedBaby extends Scene{
             $h_array['howWasBodyDiscovered'] = $enc->decrypt_request($h_array['howWasBodyDiscovered']);
             $h_array['wasBodyCovered'] = $enc->decrypt_request($h_array['wasBodyCovered']);
             $h_array['coveredWith'] = $enc->decrypt_request($h_array['coveredWith']);
+            $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

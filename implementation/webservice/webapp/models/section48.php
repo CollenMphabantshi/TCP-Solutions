@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -42,15 +43,16 @@ class section48 extends Scene{
     
    public $paraObj;
    public $paraObjAll;
+   public $images;
     //put your code here
         
     public function __construct($formData,$api){
      $this->api = $api;
-     $paraObj = new parameters();
+     $this->paraObj = new parameters();
      
-     $paraObjAll =new parameters();
+     $this->paraObjAll =new parameters();
      
-     $secCases = array();
+     $this->paraObjAll->secCases = array();
      
      
         if($formData == NULL)
@@ -59,7 +61,7 @@ class section48 extends Scene{
         }else {
             for($i = 0; $i < count($formData['object']);$i++)
             {
-                parent::__construct($formData['object'][$i]['sceneTime'],"Section 48  death –surgical case",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
+                parent::__construct($formData['object'][$i]['sceneTime'],"Section 56 death(surgical case)",$formData['object'][$i]['sceneDate'],$formData['object'][$i]['sceneLocation'],$formData['object'][$i]['sceneTemparature']
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                 
                 $this->paraObjAll->victimHospitalized = $formData['object'][$i]['victimHospitalized'];
@@ -74,7 +76,7 @@ class section48 extends Scene{
                 $this->paraObjAll->gw7_24fileFullyComplete = $formData['object'][$i]['gw7_24fileFullyComplete'];
                 $this->paraObjAll->medicalRecords = $formData['object'][$i]['medicalRecords'];
                 $this->paraObjAll->importantInfoFromMedicalStuff = $formData['object'][$i]['importantInfoFromMedicalStuff'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID === NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -117,16 +119,22 @@ class section48 extends Scene{
                 . "'$medicalRecords',"
                 . "'$importantInfoFromMedicalStuff')");
         
-        $error = array('status' => "Failed", "msg" => mysql_error());
-        $this->api->response($this->api->json($error), 400);
+        
         
         if($h_res === FALSE){
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
         
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-            $this->api->response($this->api->json($error), 400);
+        $scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+            $this->api->response($this->api->json($error), 200);
         
     }
     
@@ -162,7 +170,14 @@ class section48 extends Scene{
             $h_array['gw7_24fileFullyComplete'] = $enc->decrypt_request($h_array['gw7_24fileFullyComplete']);
             $h_array['medicalRecords'] = $enc->decrypt_request($h_array['medicalRecords']);
             $h_array['importantInfoFromMedicalStuff'] = $enc->decrypt_request($h_array['importantInfoFromMedicalStuff']);
-                        
+             $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

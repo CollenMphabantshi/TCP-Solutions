@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -38,6 +39,7 @@ class Bicycle extends Scene {
     
     public $paraObj;
     public $paraObjAll;
+	public $images;
     //put your code here
      public function __construct($formData,$api){
         $this->api = $api;
@@ -61,8 +63,8 @@ class Bicycle extends Scene {
                 $this->paraObjAll->weatherType = $formData['object'][$i]['weatherType'];
                 $this->paraObjAll->eyewitnesses = $formData['object'][$i]['eyewitnesses'];
                 $this->paraObjAll->wasBodyMoved = $formData['object'][$i]['wasBodyMoved'];
-                    //
-                
+                    
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                
                  if($sceneID === NULL){
@@ -105,8 +107,16 @@ class Bicycle extends Scene {
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+        
+        $scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllBicycleCases() {
         
@@ -139,7 +149,14 @@ class Bicycle extends Scene {
             $h_array['weatherType'] = $enc->decrypt_request($h_array['weatherType']);
             $h_array['eyewitnesses'] = $enc->decrypt_request($h_array['eyewitnesses']);
             $h_array['wasBodyMoved'] = $enc->decrypt_request($h_array['wasBodyMoved']);
-            
+            $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="victimInfo" key="selection"/>
+		<item value="createImageFile" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="createImageFile"/>
+			<item value="uploadFileName"/>
+			<item value="setPic("/>
+			<item value="imageView6"/>
+			<item value="convertImageToString"/>
+			<item value="convertI"/>
+			<item value="covertI"/>
 			<item value="victimInfo"/>
-			<item value="smothering"/>
-			<item value="sudi_"/>
-			<item value="mba_"/>
-			<item value="electrocutionLightning_"/>
-			<item value="electrocution"/>
-			<item value="blunt_"/>
-			<item value="Mba"/>
 		</list>
 		<list key="replacehistory">
 			<item value="sid_"/>

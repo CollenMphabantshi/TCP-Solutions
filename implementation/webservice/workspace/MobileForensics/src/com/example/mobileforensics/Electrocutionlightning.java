@@ -1,9 +1,11 @@
 package com.example.mobileforensics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -67,6 +69,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -243,7 +246,9 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
     private static int RESULT_LOAD_IMAGE = 1;
     int count = 0;
     ArrayList<String> uploadFileName = new ArrayList<String>();
+    ArrayList<String> namesOfImages;
     String filename ;
+    int numberOfImages = 0;
     
     //weather section
     private String WeatherInfo="";
@@ -261,15 +266,23 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		// TODO Auto-generated method stub
 		//String city = "lat=-25.7547642&lon=28.2146178";
 		String city = "";
+		try{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.electocutionlightning);
-		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-		boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if (!enabled) {
-			  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
-			  startActivity(intent);
-			} 
+		uploadFileName = new ArrayList<String>();
+		namesOfImages = new ArrayList<String>();
+		try{
+			LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+			boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			if (!enabled) {
+				  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+				  startActivity(intent);
+				}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 		
 		
@@ -279,7 +292,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 		CheckRadioButtons();
 		setOnClickEvents();
 		
-		
+		}catch(Exception e){e.printStackTrace();}
 	
 	}
 	
@@ -305,22 +318,88 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 			
 	}
 	
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
+	
 	private File createImageFile() throws IOException{
+		
 		// Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "electrocution_" + timeStamp + "_";
+	    String imageFileName = "electrocutionlightning_" + timeStamp + "_";
 	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
 	    File dir = new File(storageDir);
 	    if (!dir.exists())
 	    	dir.mkdir();
 	    
 	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
-
+	    
 	    // Save a file: path for use with ACTION_VIEW intents
 	    mCurrentPhotoPath = image.getAbsolutePath();
 	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	   
+	    
+	    namesOfImages.add(imageFileName+".jpg");
+	    
 	    return image;
 		
+	}
+	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
 	}
 	
 	private void dispatchTakePictureIntent(){
@@ -339,14 +418,15 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 			if(photoFile != null){
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
 			}
 		}
 	}
 	
 	private void setPic(ImageView mImageView){
 		// Get the dimensions of the View
-	    int targetW = 300;
-	    int targetH = 300;
+	    int targetW = 200;
+	    int targetH = 200;
 
 	    // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -375,6 +455,13 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	    
 	    mImageView.setImageBitmap(rotatedBMP);
 	    galleryAddPic(mCurrentPhotoPath);
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"electrocutionlightning_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -1115,10 +1202,9 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
-	        time = new Random().nextLong()+"";
-	        date = new Random().nextLong()+"";
-	        location = new Random().nextLong()+"";
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
 	        info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
@@ -1166,7 +1252,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	        	victims.accumulate("bodyBurned", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	       
-	        victims.accumulate("bodyIntact","null");
+	        victims.accumulate("bodyIntact",Encryption.bytesToHex(enc.encrypt("null")));
 	        victims.accumulate("whoFoundVictimBody", Encryption.bytesToHex(enc.encrypt(whoFoundVictimBody.getText().toString())));
 	        
 	        if(closeToWaterYes.isChecked())
@@ -1202,6 +1288,17 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	        
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	      //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	        
 	        
@@ -1428,7 +1525,8 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
         JSONObject info = new JSONObject();
         JSONArray vicArray = new JSONArray();
         JSONObject victims = new JSONObject();
-        
+        JSONArray imagesArray = new JSONArray();
+        JSONObject images = new JSONObject();
     
         
         info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -1500,6 +1598,18 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
        
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
+      //this is part where am getting all images
+        for(int i=0; i < uploadFileName.size();i++){
+	    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+        	
+        	images.accumulate("names"+i, namesOfImages.get(i));
+	    	images.accumulate("data"+i, uploadFileName.get(i));
+	    	
+	    }
+        
+        imagesArray.put(images);
+        info.accumulate("images", imagesArray);
+        
         
         info.accumulate("electrocutionlightningIOType",getIOType() );
         if(signsOfStruggleYes.isChecked())
@@ -1690,12 +1800,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 					}else{
 						
 						clearFilelds();
-						try{
-							//message = message.split(".")[0];
-							//currentVictimID =  Integer.parseInt(message.split(".")[1]);
-						}catch(Exception e){e.printStackTrace();}
 						
-		                
 						response.setText(message);
 					}
 				}
@@ -1943,6 +2048,8 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 			
 	   index_gallery = 0;
 	   count = 0;
+	   uploadFileName.clear();
+	   namesOfImages.clear();
 	}
 	
 	private void CheckRadioButtons(){

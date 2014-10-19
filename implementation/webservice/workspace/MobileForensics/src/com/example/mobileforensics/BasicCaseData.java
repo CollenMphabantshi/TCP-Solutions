@@ -1,5 +1,7 @@
 package com.example.mobileforensics;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +41,12 @@ public class BasicCaseData extends Activity {
 			ioName.setText(getIntent().getExtras().getString("ioName"));
 			foosName.setText(getIntent().getExtras().getString("foosName"));
 			sceneTime.setText(getIntent().getExtras().getString("SceneDate")+" "+getIntent().getExtras().getString("SceneTime"));
-			sceneLocation.setText(getIntent().getExtras().getString("SceneLocation"));
+			JSONObject job = new JSONObject(getIntent().getExtras().getString("SceneLocation"));
+			JSONObject location = new JSONObject(job.getString("Location")); 
+			String lat = location.getString("Latitude");
+			String lon = location.getString("Longitude");
+			String addr = location.getString("Address");
+			sceneLocation.setText(addr+", Latitude:"+lat+", Longitude="+lon);
 			sceneTemperature.setText(getIntent().getExtras().getString("SceneTemperature"));
 		}catch(Exception e){e.printStackTrace();}
 	}

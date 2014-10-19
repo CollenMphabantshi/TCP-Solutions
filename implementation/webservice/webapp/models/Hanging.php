@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -29,7 +30,7 @@ class Hanging extends Scene{
     private $bodyCutDown;
     private $whoCutDownBody;
     private $suspensionPointUsed;
-    
+    public $images;
     public function __construct($formData,$api){
         $this->api = $api;
         if($formData == NULL)
@@ -57,7 +58,7 @@ class Hanging extends Scene{
                 $this->bodyCutDown = $formData['object'][$i]['bodyCutDown'];
                 $this->whoCutDownBody = $formData['object'][$i]['whoCutDownBody'];
                 $this->suspensionPointUsed = $formData['object'][$i]['suspensionPointUsed'];
-                    //
+                $this->images = $formData['object'][$i]['images'][0];
                 $sceneID = $this->createScene();
                 
                  if($sceneID == NULL){
@@ -127,8 +128,15 @@ class Hanging extends Scene{
                 $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
-        $error = array('status' => "Failed", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+		$scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
+        $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllHangings() {
         $error = array('status' => "Failed", "msg" => "Request to get hanging scenea was denied.");
@@ -235,6 +243,15 @@ class Hanging extends Scene{
                 $h_array['bodyCutDown'] = $enc->decrypt_request($h_array['bodyCutDown']);
                 $h_array['whoCutDownBody'] = $enc->decrypt_request($h_array['whoCutDownBody']);
                 $h_array['suspensionPointUsed'] = $enc->decrypt_request($h_array['suspensionPointUsed']);
+                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

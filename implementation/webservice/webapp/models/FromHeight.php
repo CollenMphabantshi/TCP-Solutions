@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,7 +40,7 @@ class FromHeight extends Scene{
     public $paraObj ;
     public $paraObjAll;
     public $paraHeight;
-    
+    public $images;
     public function __construct($formData,$api){
         $this->api = $api;
         $this->paraObj = new heightParameters();
@@ -63,7 +64,7 @@ class FromHeight extends Scene{
                 $this->paraObjAll->howHigh = $formData['object'][$i]['howHigh'];
                 $this->paraObjAll->onWhatSurface = $formData['object'][$i]['onWhatSurface'];
                 $this->paraObjAll->anyWitnesses = $formData['object'][$i]['anyWitnesses']; 
-                //
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID === NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.  $sceneID".$sceneID);
@@ -126,7 +127,13 @@ class FromHeight extends Scene{
                 $hi_res = mysql_query("insert into heightinside values(0,".$heightID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
          $error = array('status' => "Success", "msg" => "Request to add case was successful.");
         $this->api->response($this->api->json($error), 200);
         
@@ -180,6 +187,14 @@ class FromHeight extends Scene{
                 $h_array['howHigh'] = $enc->decrypt_request($h_array['howHigh']);
                 $h_array['onWhatSurface'] = $enc->decrypt_request($h_array['onWhatSurface']);
                 $h_array['anyWitnesses'] = $enc->decrypt_request($h_array['anyWitnesses']);
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

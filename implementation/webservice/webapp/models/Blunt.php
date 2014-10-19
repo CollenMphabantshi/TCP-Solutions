@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,7 +25,7 @@ class Blunt extends Scene{
     private $chockingSuspected;
     private $injuriesConcentratedOn;
     private $injuriesMainlyOn;
-    
+    public $images;
     public function __construct($formData,$api){
         
         if($formData == NULL)
@@ -49,7 +50,7 @@ class Blunt extends Scene{
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
                 $this->injuriesConcentratedOn = $formData['object'][$i]['injuriesConcentratedOn'];
                 $this->injuriesMainlyOn = $formData['object'][$i]['injuriesMainlyOn'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                 if(count($formData['object'][$i]['victims']) >= 1)
                 {
                     $sceneID = $this->createScene();
@@ -114,14 +115,16 @@ class Blunt extends Scene{
                 $hi_res = mysql_query("insert into bluntinside values(0,$bluntID,'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
-        $sv_res = mysql_query("select * from sceneVictims where sceneID=".$sceneID);
-        $tmp = "";
-        if(mysql_num_rows($sv_res) > 0)
+       
+        $scenePhoto = new ScenePhotos($this->api);
+        
+        
+        for($i = 0; $i < count($this->images);$i++)
         {
-            $vid = mysql_result($sv_res, 0,'victimID');
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
         }
         $error = array('status' => "Success", "msg" => "Request to add case was successful.");
-        $this->api->response($this->api->json($error), 400);
+        $this->api->response($this->api->json($error), 200);
     }
     public function getAllBlunts() {
         try{
@@ -205,7 +208,7 @@ class Blunt extends Scene{
                     }
                     $h_array['bluntInside'] = $hi_array;
                 }else{
-                    $h_array['bluntInside'] = NULL;
+                    $h_array['bluntInside'] = "null";
                 }
                 $h_array['bluntIOType'] = $enc->decrypt_request($h_array['bluntIOType']);
                 $h_array['bluntForceObjectSuspected'] = $enc->decrypt_request($h_array['bluntForceObjectSuspected']);
@@ -219,6 +222,14 @@ class Blunt extends Scene{
                 $h_array['chockingSuspected'] = $enc->decrypt_request($h_array['chockingSuspected']);
                 $h_array['injuriesConcentratedOn'] = $enc->decrypt_request($h_array['injuriesConcentratedOn']);
                 $h_array['injuriesMainlyOn'] = $enc->decrypt_request($h_array['injuriesMainlyOn']);
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

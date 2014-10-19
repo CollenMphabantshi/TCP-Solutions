@@ -1,5 +1,6 @@
 <?php
 require_once("Scene.php");
+require_once './ScenePhotos.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,7 +40,7 @@ class Suda extends Scene{
     
     public $paraObj ;
     public $paraObjAll;
-   
+   public $images;
 
     //put your code here
      public function __construct($formData,$api){
@@ -71,7 +72,7 @@ class Suda extends Scene{
                 $this->paraObjAll->victimTakeMedication = $formData['object'][$i]['victimTakeMedication'];
                 $this->paraObjAll->victimHadAnySymptoms = $formData['object'][$i]['victimHadAnySymptoms'];
                 $this->paraObjAll->familyMedicalHistory = $formData['object'][$i]['familyMedicalHistory'];
-                
+                $this->images = $formData['object'][$i]['images'][0];
                $sceneID = $this->createScene();
                  if($sceneID == NULL){
                      $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
@@ -147,9 +148,15 @@ class Suda extends Scene{
                 $hi_res = mysql_query("insert into sudainside values(0,".$sudaID.",'$dl','$wc','$wb','$va',null)");
             }
         }
+        $scenePhoto = new ScenePhotos($this->api);
         
+        
+        for($i = 0; $i < count($this->images);$i++)
+        {
+            $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);
+        }
         $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
-        $this->api->response($this->api->json($error), 400);
+        $this->api->response($this->api->json($error), 200);
         
     }
     
@@ -204,7 +211,14 @@ class Suda extends Scene{
                 $h_array['wierdSmellInAir'] = $enc->decrypt_request($h_array['wierdSmellInAir']);
                 $h_array['victimHistory'] = $enc->decrypt_request($h_array['victimHistory']);
                 $h_array['familyMedicalHistory'] = $enc->decrypt_request($h_array['familyMedicalHistory']);
-                
+                $sp = new ScenePhotos($this->api);
+                $files = $sp->getPhotos($sceneID);
+                if($files !== NULL)
+                {
+                    $h_array['photos'] = $files;
+                }else{
+                    $h_array['photos'] = "unavailable";
+                }
             return $h_array;
         } catch (Exception $ex) {
             $error = array('status' => "Failed", "msg" => "No data found.");

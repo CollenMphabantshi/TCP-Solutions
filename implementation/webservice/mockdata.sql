@@ -43,7 +43,7 @@ insert into sceneType values(0,"Motorbike accident");
 insert into sceneType values(0,"Motor vehicle accident");
 insert into sceneType values(0,"Pedestrian vehicle accident");
 insert into sceneType values(0,"Railway accident");
-insert into sceneType values(0,"Section 48  death –surgical case");
+insert into sceneType values(0,"Section 56 death(surgical case)");
 insert into sceneType values(0,"Sharp force injury/ stab injury");
 insert into sceneType values(0,"Sudden unexpected death of an infant (SUDI)");
 insert into sceneType values(0,"SUDC");

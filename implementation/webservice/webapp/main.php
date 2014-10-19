@@ -24,6 +24,6 @@
             header("Location: /webapp/errorPage.php");
         }
     }else{
-    	//header("Location: /webapp/errorPage.php");
+    	header("Location: /webapp/errorPage.php");
     }
 ?>
