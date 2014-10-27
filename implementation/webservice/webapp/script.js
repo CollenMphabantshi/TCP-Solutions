@@ -2191,32 +2191,7 @@ function login(username,pass){
     query.append("username",username);
     query.append("password",pass);
     query.append("platform","webapp");
-    /*
-    $.ajax({
-     url: URL,
-     type: "POST",
-     data: query,
-     processData: false,  // tell jQuery not to process the data
-     contentType: false,   // tell jQuery not to set contentType
-     success:function(result){
-         //alert(result.responseText);
-         var obj = JSON.parse(result.responseText);
-           if(obj.status === "Success"){
-               document.location = "main.php";
-           }else{
-               $("#login-form").before("<div class='response error'>"+obj.msg+"<br/><br/></div>")
-           }
-     },
-     error:function(result){
-         //alert(result.responseText);
-         var obj = JSON.parse(result.responseText);
-           if(obj.status === "Success"){
-               document.location = "main.php";
-           }else{
-               $("#login-form").before("<div class='response error'>"+obj.msg+"<br/><br/></div>")
-           }
-     }
-   });*/
+    
    var request = new XMLHttpRequest();
    request.onreadystatechange = function(){if(request.readyState == 4)
     {

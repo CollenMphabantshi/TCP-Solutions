@@ -18,7 +18,8 @@ class Hanging extends Scene{
     private $signsOfStruggle;
     private $alcoholBottleAround;
     private $drugParaphernalia;
-    private $autoeroticAsphyxia;
+    private $pornographicMaterial;
+    private $partialHanging;
     private $partialHangingType;
     private $completeHanging;
     private $ligatureAroundNeck;
@@ -43,13 +44,14 @@ class Hanging extends Scene{
                         ,$formData['object'][$i]['investigatingOfficerName'],$formData['object'][$i]['investigatingOfficerRank'],$formData['object'][$i]['investigatingOfficerCellNo'],$formData['object'][$i]['firstOfficerOnSceneName'],$formData['object'][$i]['firstOfficerOnSceneRank'],$api);
                
                 $this->alcoholBottleAround = $formData['object'][$i]['alcoholBottleAround'];
-                $this->autoeroticAsphyxia = $formData['object'][$i]['autoeroticAsphyxia'];
+                $this->pornographicMaterial = $formData['object'][$i]['pornographicMaterial'];
                 $this->chockingSuspected = $formData['object'][$i]['chockingSuspected'];
                 $this->completeHanging = $formData['object'][$i]['completeHanging'];
                 $this->drugParaphernalia = $formData['object'][$i]['drugParaphernalia'];
                 $this->hangingIOType = $formData['object'][$i]['hangingIOType'];
                 $this->ligatureAroundNeck = $formData['object'][$i]['ligatureAroundNeck'];
                 $this->ligatureType = $formData['object'][$i]['ligatureType'];
+                $this->partialHanging = $formData['object'][$i]['partialHanging'];
                 $this->partialHangingType = $formData['object'][$i]['partialHangingType'];
                 $this->signsOfStruggle = $formData['object'][$i]['signsOfStruggle'];
                 $this->smotheringSuspected = $formData['object'][$i]['smotheringSuspected'];
@@ -86,14 +88,13 @@ class Hanging extends Scene{
     private function addHanging($sceneID,$inside,$object) {
          $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
          
-        //if($this->whoRemovedLigature != NULL)
-        //{
             $h_res = mysql_query("insert into hanging values(0,$sceneID,"
                     . "'$this->hangingIOType',"
                     . "'$this->signsOfStruggle',"
                     . "'$this->alcoholBottleAround',"
                     . "'$this->drugParaphernalia',"
-                    . "'$this->autoeroticAsphyxia',"
+                    . "'$this->pornographicMaterial',"
+                    . "'$this->partialHanging',"
                     . "'$this->partialHangingType',"
                     . "'$this->completeHanging',"
                     . "'$this->ligatureAroundNeck',"
@@ -106,13 +107,13 @@ class Hanging extends Scene{
                     . "'$this->whoCutDownBody',"
                     . "'$this->suspensionPointUsed')")
                 or $this->api->response($this->api->json($error), 400);
-       /* }else{
-            $h_res = mysql_query("insert into hanging values(0,"
-            .$sceneID.",'$this->hangingIOType','$this->signsOfStruggle','$this->alcoholBottleAround','$this->drugParaphernalia','$this->autoeroticAsphyxia','$this->partialHangingType','$this->completeHanging','$this->ligatureAroundNeck',null,'$this->ligatureType','$this->strangulationSuspected','$this->smotheringSuspected','$this->chockingSuspected','$this->bodyCutDown','$this->whoCutDownBody','$this->suspensionPointUsed')")
-              or  $this->api->response($this->api->json($error), 400);
-        }*/
+       
+            if($h_res === FALSE){
+                $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
+                $this->api->response($this->api->json($error), 400);
+            }
         
-        if($inside == TRUE){
+        if($inside === TRUE){
             $h_res = mysql_query("select * from hanging where sceneID=".$sceneID) or $this->api->response($this->api->json($error), 400);
             $hangingID = mysql_result($h_res,0,'hangingID');
             $dl = $object['doorLocked'];
@@ -128,8 +129,8 @@ class Hanging extends Scene{
                 $hi_res = mysql_query("insert into hanginginside values(0,".$hangingID.",'$dl','$wc','$wb','$va',null)") or $this->api->response($this->api->json($error), 400);
             }
         }
-		$scenePhoto = new ScenePhotos($this->api);
         
+	$scenePhoto = new ScenePhotos($this->api);
         
         for($i = 0; $i < count($this->images);$i++)
         {
@@ -138,6 +139,7 @@ class Hanging extends Scene{
         $error = array('status' => "Success", "msg" => "Request to create a scene was successful.");
         $this->api->response($this->api->json($error), 200);
     }
+    
     public function getAllHangings() {
         $error = array('status' => "Failed", "msg" => "Request to get hanging scenea was denied.");
         try{
@@ -162,7 +164,8 @@ class Hanging extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
-                $h_array['autoeroticAsphyxia'] = $array['autoeroticAsphyxia'];
+                $h_array['pornographicMaterial'] = $array['pornographicMaterial'];
+                $h_array['partialHanging'] = $array['partialHanging'];
                 $h_array['partialHangingType'] = $array['partialHangingType'];
                 $h_array['completeHanging'] = $array['completeHanging'];
                 $h_array['ligatureAroundNeck'] = $array['ligatureAroundNeck'];
@@ -228,7 +231,8 @@ class Hanging extends Scene{
                 }
                 
                 $h_array['hangingIOType'] = $enc->decrypt_request($h_array['hangingIOType']);
-                $h_array['autoeroticAsphyxia'] = $enc->decrypt_request($h_array['autoeroticAsphyxia']);
+                $h_array['pornographicMaterial'] = $enc->decrypt_request($h_array['pornographicMaterial']);
+                $h_array['partialHanging'] = $enc->decrypt_request($h_array['partialHanging']);
                 $h_array['partialHangingType'] = $enc->decrypt_request($h_array['partialHangingType']);
                 $h_array['completeHanging'] = $enc->decrypt_request($h_array['completeHanging']);
                 $h_array['ligatureAroundNeck'] = $enc->decrypt_request($h_array['ligatureAroundNeck']);
@@ -282,7 +286,8 @@ class Hanging extends Scene{
                 $h_array['signsOfStruggle'] = $array['signsOfStruggle'];
                 $h_array['alcoholBottleAround'] = $array['alcoholBottleAround'];
                 $h_array['drugParaphernalia'] = $array['drugParaphernalia'];
-                $h_array['autoeroticAsphyxia'] = $array['autoeroticAsphyxia'];
+                $h_array['pornographicMaterial'] = $array['pornographicMaterial'];
+                $h_array['partialHanging'] = $array['partialHanging'];
                 $h_array['partialHangingType'] = $array['partialHangingType'];
                 $h_array['completeHanging'] = $array['completeHanging'];
                 $h_array['ligatureAroundNeck'] = $array['ligatureAroundNeck'];

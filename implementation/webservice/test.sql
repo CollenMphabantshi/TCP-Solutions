@@ -494,13 +494,14 @@ CREATE TABLE IF NOT EXISTS ligatureType (
 );
 
 CREATE TABLE IF NOT EXISTS `hanging` (
-  `hangingID` int NOT NULL AUTO_INCREMENT,
+   hangingID int NOT NULL AUTO_INCREMENT,
    sceneID int not null,
    hangingIOType text NOT NULL,
   `signsOfStruggle` text NOT NULL,
   `alcoholBottleAround` text NOT NULL,
   `drugParaphernalia` text NOT NULL,
   `pornographicMaterial` text NOT NULL,
+  `partialHanging` text NULL,
   `partialHangingType` text NULL,
   `completeHanging` text NOT NULL,
   `ligatureAroundNeck` text NOT NULL,
@@ -579,7 +580,7 @@ CREATE TABLE IF NOT EXISTS `ingestionOverdosePoisoningInside` (
 );
 
 CREATE TABLE IF NOT EXISTS `mba` (
-  `mbaID` int NOT NULL,
+  `mbaID` int NOT NULL auto_increment primary key,
    sceneID int not null,
   `victimWearingProtectiveClothing` text NOT NULL,
   `mbaOutsideType` text NOT NULL,
@@ -601,7 +602,7 @@ CREATE TABLE IF NOT EXISTS `mba` (
 );
 
 CREATE TABLE IF NOT EXISTS `mva` (
-  `mvaID` int NOT NULL,
+  `mvaID` int NOT NULL auto_increment primary key,
    sceneID int not null,
   `victimFoundInCar` text NOT NULL,
   `mvaOutsideType` text NOT NULL,
@@ -625,7 +626,7 @@ CREATE TABLE IF NOT EXISTS `mva` (
 );
 
 CREATE TABLE IF NOT EXISTS `pedestrian` (
-  `perdestrianID` int NOT NULL,
+  `perdestrianID` int NOT NULL auto_increment primary key,
    sceneID int not null,  
   `perdestrianOutsideType` text NOT NULL,
   `hitAndRun` text NOT NULL,
@@ -643,7 +644,7 @@ CREATE TABLE IF NOT EXISTS `pedestrian` (
 
 
 CREATE TABLE IF NOT EXISTS `railway` (
-  `railwayID` int NOT NULL,
+  `railwayID` int NOT NULL auto_increment primary key,
    sceneID int not null,
   `railwayIOType` text NOT NULL,
   `victimType` text NOT NULL,

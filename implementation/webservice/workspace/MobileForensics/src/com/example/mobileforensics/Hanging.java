@@ -1,16 +1,24 @@
 package com.example.mobileforensics;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Calendar;
+
 import java.util.Date;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -29,8 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import com.example.mobileforensics.Blunt.Read;
-import com.example.mobileforensics.models.Weather;
+
+
+import com.example.mobileforensics.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,46 +47,65 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
 
+import com.example.mobileforensics.JSONWeatherParser;
+import com.example.mobileforensics.WeatherHttpClient;
+import com.example.mobileforensics.models.Weather;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.NavUtils;
 import android.text.format.Time;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.Space;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 
-public class Hanging extends Activity implements OnMyLocationChangeListener{
+public class Hanging extends Activity implements GlobalMethods, OnMyLocationChangeListener{
+	
+	
+	
+	TextView value;
 
-	private LinearLayout infoLayout;
-	private TextView tv_ioName;
 	private EditText ioName;
-	private TextView tv_ioSurname;
+	
 	private EditText ioSurname;
-	private TextView tv_ioRank;
+	
 	private EditText ioRank;
-	private TextView tv_ioCellNo;
+	
 	private EditText ioCellNo;
 	
 	private TextView tv_foosName;
@@ -87,21 +115,14 @@ public class Hanging extends Activity implements OnMyLocationChangeListener{
 	private TextView tv_foosRank;
 	private EditText foosRank;
 	
-	private LinearLayout demographicsLayout;
 	private TextView tv_victimName;
 	private EditText victimName;
 	private TextView tv_victimSurname;
 	private EditText victimSurname;
 	private TextView tv_victimIDNo;
 	private EditText victimIDNo;
-	private TextView tv_victimAge;
 	private EditText victimAge;
 	
-	private TextView tv_victimInfo;
-	private TextView tv_victimRace;
-	private TextView tv_victimGender;
-	private TextView tv_foos;
-	private TextView tv_io;
 	
 	
 	private RadioButton rgbMale;
@@ -114,34 +135,22 @@ public class Hanging extends Activity implements OnMyLocationChangeListener{
 	private RadioButton rgbWhite;
 	private RadioButton rgbUnknownRace;
 
-	private GridLayout theBodyLayout;
-	private TextView theBody;
-	private TextView tv_bodyDecomposed;
+	//the body
 	private RadioButton bodyDecomposedYes;
-	private RadioButton bodyDecomposedNo;
-	private TextView tv_medicalIntervention;
+	private RadioButton bodyDecomposedNo;	
 	private RadioButton medicalInterventionYes;
-	private RadioButton medicalInterventionNo;
-	private TextView tv_whoFoundVictimBody;
-	private EditText whoFoundVictimBody;
-	private TextView tv_closeToWater;
+	private RadioButton medicalInterventionNo;	
+	private EditText whoFoundVictimBody;	
 	private RadioButton closeToWaterYes;
-	private RadioButton closeToWaterNo;
-	private TextView tv_rapeHomicide;
-	private RadioButton rapeHomicideYes;
-	private RadioButton rapeHomicideNo;
-	private TextView tv_suicideSuspected;
+	private RadioButton closeToWaterNo;		
 	private RadioButton suicideSuspectedYes;
-	private RadioButton suicideSuspectedNo;
-	private TextView tv_previousAttempts;
+	private RadioButton suicideSuspectedNo;	
 	private RadioButton previousAttemptsYes;
 	private RadioButton previousAttemptsNo;
 	private TextView tv_howManyAttempts;
 	private EditText howManyAttempts;
 	
-	private GridLayout theSceneOfInjuryLayout;
-	private TextView sceneOfInjury;
-	private TextView tv_sceneIOType;
+	//scene of injury
 	private RadioButton sceneIOTypeInside;
 	private RadioButton sceneIOTypeOutside;
 	private TextView tv_whereInside;
@@ -167,76 +176,65 @@ public class Hanging extends Activity implements OnMyLocationChangeListener{
 	private TextView tv_sceneOTypeOther;
 	private EditText sceneOTypeOther;
 	
-	private GridLayout theSceneLookLayout;
-	private TextView sceneLook;
-	private TextView tv_signsOfStruggle;
+	//how do the scene look
 	private RadioButton signsOfStruggleYes;
-	private RadioButton signsOfStruggleNo;
-	private TextView tv_alcoholBottleAround;
+	private RadioButton signsOfStruggleNo;	
 	private RadioButton alcoholBottleAroundYes;
-	private RadioButton alcoholBottleAroundNo;
-	private TextView tv_drugParaphernalia;
+	private RadioButton alcoholBottleAroundNo;	
 	private RadioButton drugParaphernaliaYes;
 	private RadioButton drugParaphernaliaNo;
+	private RadioButton pornographicMaterialYes;
+	private RadioButton pornographicMaterialNo;
 	
-	private GridLayout theSceneLayout;
-	private TextView theScene;
-	private TextView tv_autoeroticAsphyxia;
-	private RadioButton autoeroticAsphyxiaYes;
-	private RadioButton autoeroticAsphyxiaNo;
-	private TextView tv_partialHanging;
+	//the scene
+	
 	private RadioButton partialHangingYes;
-	private RadioButton partialHangingNo;
-	private TextView tv_partialHangingType;
+	private RadioButton partialHangingNo;	
 	private Spinner partialHanging;
-	private TextView tv_partialHangingOther;
-	private EditText partialHangingOther;
-	private TextView tv_completeHanging;
-	private RadioButton completeHangingFG;
-	private RadioButton completeHangingFS;
-	private TextView tv_ligatureAroundNeck;
+	private EditText partialHangingOther;	
+	private RadioButton completeHangingYes;
+	private RadioButton completeHangingNo;	
+	private RadioButton bodyCutDownYes;
+	private RadioButton bodyCutDownNo;
+	private EditText byWhom;
 	private RadioButton ligatureAroundNeckYes;
 	private RadioButton ligatureAroundNeckNo;
-	private TextView tv_whoRemovedligature;
 	private EditText whoRemovedligature;
-	private TextView tv_ligatureType;
 	private Spinner ligatureType;
-	private TextView tv_ligatureTypeOther;
 	private EditText ligatureTypeOther;
-	private TextView tv_strangulationSuspected;
-	private RadioButton strangulationSuspectedYes;
-	private RadioButton strangulationSuspectedNo;
-	private TextView tv_smotheringSuspected;
-	private RadioButton smotheringSuspectedYes;
-	private RadioButton smotheringSuspectedNo;
-	private TextView tv_chockingSuspected;
-	private RadioButton chockingSuspectedYes;
-	private RadioButton chockingSuspectedNo;
-	private TextView tv_suicideNoteFound;
+	private EditText suspensionPoint;
+	private RadioButton StrangulationSuspectedYes;
+	private RadioButton StrangulationSuspectedNo;
+	private RadioButton SmotheringSuspectedYes;
+	private RadioButton SmotheringSuspectedNo;
+	private RadioButton ChockingSuspectedYes;
+	private RadioButton ChockingSuspectedNo;
 	private RadioButton suicideNoteFoundYes;
-	private RadioButton suicideNoteFoundNo;
-	private TextView tv_generalHistory;
+	private RadioButton suicideNoteFoundNo;	
 	private EditText generalHistory;
 	
-	private LinearLayout galleryLayout;
 	
 	private TextView response;
-	private Button nextButton;
 	private Button doneButton;
+	private Button finish;
 	private Button logoutButton;
 	
+	private LinearLayout Gallery;
 	private JSONObject json;
+
 	
+	private final static int PAGES = 6;
+
 	private final static int VISIBLE = View.VISIBLE;
 	private final static int INVISIBLE = View.INVISIBLE;
 	private final static int GONE = View.GONE;
-	private int pageCount;
+	
 	
 	private String username;
 	private String time;
 	private String date;
 	private String location;
-	private String temperature;
+	
 	private JSONObject currentDataSaved;
 	
 	GoogleMap map;
@@ -245,325 +243,496 @@ public class Hanging extends Activity implements OnMyLocationChangeListener{
 	private double latitude;
 	private int status;
 	private String myAddress;
-	private String Text;
-	private TextView value;
 	
 	
 	//upload image parameters still to be arranged
-		TextView messageText;
-	    Button uploadButton,selectImages,buttonLoadImage;
-	    ImageView imageView0,imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8;
-	    int serverResponseCode = 0;
-	    ProgressDialog dialog = null;
-	    Uri currImageURI;
-	    String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
-	    private static int RESULT_LOAD_IMAGE = 1;
-	    int count = 0;
-	    ArrayList<String> uploadFileName = new ArrayList<String>();
-	    String filename ;
-	    
-	    //weather section
-	    private String WeatherInfo="";
-	    private TextView weatherInfo;
-	    private Encryption enc;
-		
-	    
+	TextView messageText;
+    Button uploadButton,selectImages,buttonLoadImage;
+    ImageView imageView0,imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8;
+    int serverResponseCode = 0;
+    ProgressDialog dialog = null;
+    //Uri currImageURI;
+   // String  upLoadServerUri = "http://forensicsapp.co.za/webapp/images/images.php";
+    private static int RESULT_LOAD_IMAGE = 1;
+    int count = 0;
+    ArrayList<String> uploadFileName;
+    ArrayList<String> namesOfImages;
+    String filename ;
+    int numberOfImages = 0;
+    
+    //weather section
+    private String WeatherInfo="";
+    private TextView weatherInfo;
+	private Encryption enc;
+	private int index_gallery= 0;
+	
+	private String mCurrentPhotoPath;
+	static final int REQUEST_TAKE_PHOTO = 1;
+	//ImageView mImageView;
+	private static final String TAG = "upload";
+	
+	private int currentVictimID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+		//String city = "lat=-25.7547642&lon=28.2146178";
+		String city = "";
 		
 		try{
+			super.onCreate(savedInstanceState);
 			setContentView(R.layout.hanging);
-			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+			uploadFileName = new ArrayList<String>();
+			namesOfImages = new ArrayList<String>();
+			try{
+				LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+				boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+				if (!enabled) {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  Toast.makeText(this, "Enabled :" + enabled, Toast.LENGTH_SHORT).show();
+					  startActivity(intent);
+					}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			
-			initializeVariables();
+			status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 			initialize();
+			variablesInitialization();
 			CheckRadioButtons();
 			setOnClickEvents();
-			showHideButtons();
+		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	
 	}
 	
-	public void initialize(){
-		try{
+	public String initialize(){
+			
 			if( status != ConnectionResult.SUCCESS){
 				int requestCode = 10;
 				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
 				dialog.show();
 			}else{
+				
 				map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragId)).getMap();
 				map.setMyLocationEnabled(true);
 				map.setOnMyLocationChangeListener(this);
 				
+				String city = "lat="+latitude+"&lon="+longitude;
+				JSONWeatherTask task = new JSONWeatherTask();
+				task.execute(new String[]{city});
+				location +="\n"+WeatherInfo;
 			}
-		}catch(Exception e){
+			return location;
+			
+	}
+	private String convertImageToString(String path,String filename) throws IOException{
+		
+		   Bitmap bm = BitmapFactory.decodeFile(path);
+		  // bm = Bitmap.createBitmap(200, 200, Config.ARGB_8888);
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		   bm.compress(Bitmap.CompressFormat.JPEG, 5, baos); //bm is the bitmap object 
+		   File f = new File(Environment.getExternalStorageDirectory() + "/picupload"+"/"+filename);
+		   f.createNewFile();
+		   FileOutputStream fo = new FileOutputStream(f);
+		   
+		   byte[] byteArrayImage = baos.toByteArray(); 
+		   
+		   fo.write(byteArrayImage);
+		   fo.close();
+		   
+		   
+		  String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		   
+		   System.out.println("satrt here:::::::::::::::: "+encodedImage.substring(0, 20));
+	       //return ""+byteArrayImage;
+		  return encodedImage;
+	       
+			
+		
+		
+	   }
+	
+	private File createImageFile() throws IOException{
+		
+		// Create an image file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String imageFileName = "hanging_" + timeStamp + "_";
+	    String storageDir = Environment.getExternalStorageDirectory() + "/picupload";
+	    File dir = new File(storageDir);
+	    if (!dir.exists())
+	    	dir.mkdir();
+	    
+	    File image = new File(storageDir + "/" + imageFileName + ".jpg");
+	    
+	    // Save a file: path for use with ACTION_VIEW intents
+	    mCurrentPhotoPath = image.getAbsolutePath();
+	    Log.i(TAG, "photo path = " + mCurrentPhotoPath);
+	   
+	    
+	    namesOfImages.add(imageFileName+".jpg");
+	    
+	    return image;
+		
+	}
+	
+	private  Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+	    Bitmap bitMapImage = null;
+	    try {
+	    	BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(filePath, options);
+	        double sampleSize = 0;
+	        Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+	                - targetWidth);
+	        if (options.outHeight * options.outWidth * 2 >= 1638) {
+	            sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+	            sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+	        }
+	        options.inJustDecodeBounds = false;
+	        options.inTempStorage = new byte[128];
+	        while (true) {
+	            try {
+	                options.inSampleSize = (int) sampleSize;
+	                bitMapImage = BitmapFactory.decodeFile(filePath, options);
+	                break;
+	            } catch (Exception ex) {
+	                try {
+	                    sampleSize = sampleSize * 2;
+	                } catch (Exception ex1) {
+
+	                }
+	            }
+	        }
+	    } catch (Exception ex) {
+
+	    }
+	    return bitMapImage;
+	}
+	
+	private void dispatchTakePictureIntent(){
+		
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+			
+			File photoFile = null;
+			try{
+				photoFile = createImageFile();
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			if(photoFile != null){
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+				numberOfImages ++;
+			}
+		}
+	}
+	
+	private void setPic(ImageView mImageView){
+		// Get the dimensions of the View
+	    int targetW = 200;
+	    int targetH = 200;
+
+	    // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+
+	    // Determine how much to scale down the image
+	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+	    // Decode the image file into a Bitmap sized to fill the View
+	    bmOptions.inJustDecodeBounds = false;
+	    bmOptions.inSampleSize = scaleFactor << 1;
+	    bmOptions.inPurgeable = true;
+
+	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+	    
+	    Matrix mtx = new Matrix();
+	    mtx.postRotate(90);
+	    // Rotating Bitmap
+	    Bitmap rotatedBMP = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mtx, true);
+
+	    if (rotatedBMP != bitmap)
+	    	bitmap.recycle();
+	    
+	    mImageView.setImageBitmap(rotatedBMP);
+	    galleryAddPic(mCurrentPhotoPath);
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    try {
+			uploadFileName.add(convertImageToString(mCurrentPhotoPath,"hanging_" + timeStamp+".jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-
-@Override
-public void onMyLocationChange(Location loc) {
-	// TODO Auto-generated method stub
 	
-	
-    
-    try {
-    	locate = new JSONObject();
-		JSONObject object = new JSONObject();
-		//get geolactions, time and date
-		longitude = loc.getLongitude();
-		latitude = loc.getLatitude();
-		Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
-        time = formattedDate.substring(11);
-        date = formattedDate.substring(0, formattedDate.length()-9);
-        getAddress(longitude,latitude);
-		locate.accumulate("Longitude", longitude);
-		locate.accumulate("Latitude", latitude);
-		locate.accumulate("Bearing", loc.getBearing());
-		locate.accumulate("Altitude", loc.getAltitude());
-		locate.accumulate("Accuracy", loc.getAccuracy());
-		locate.accumulate("Address", myAddress);
+	private void galleryAddPic(String locat){
 		
-		object.accumulate("Time", time);
-		object.accumulate("Date", date);
-		object.accumulate("Location", locate.toString());
+		Intent mediaScanerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 		
-		location = object.toString();
-		//value.setText(location);
-
+		File f = new File(locat);
 		
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		Uri counterUri = Uri.fromFile(f);
+		
+		mediaScanerIntent.setData(counterUri);
+		
+		this.sendBroadcast(mediaScanerIntent);
 	}
 	
-}
+	@Override
+	public void onMyLocationChange(Location loc) {
+		// TODO Auto-generated method stub
+		
+		
+        try {
+        	locate = new JSONObject();
+    		JSONObject object = new JSONObject();
+    		//get geolactions, time and date
+    		longitude = loc.getLongitude();
+    		latitude = loc.getLatitude();
+    		Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = df.format(c.getTime());
+            time = formattedDate.substring(11);
+            date = formattedDate.substring(0, formattedDate.length()-9);
+         
+            getAddress(longitude,latitude);
+            
+			locate.accumulate("Longitude", longitude);
+			locate.accumulate("Latitude", latitude);
+			//locate.accumulate("Bearing", loc.getBearing());
+			//locate.accumulate("Altitude", loc.getAltitude());
+			//locate.accumulate("Accuracy", loc.getAccuracy());
+			locate.accumulate("Address", myAddress);
+			
+			object.accumulate("Time", time);
+			object.accumulate("Date", date);
+			object.accumulate("Location", locate.toString());
+			
+			location = object.toString();
 
-public void getAddress(double longi, double lati){
+			//value.setText(location);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
-	 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+	public void getAddress(double longi, double lati){
+		
+		 Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 
-       try {
-  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
- 
-  if(addresses != null) {
-   Address returnedAddress = addresses.get(0);
-   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
-   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
-    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-   }
-   myAddress = strReturnedAddress.toString();
-  }
-  else{
-   myAddress = "No Address returned!";
-  }
- } catch (IOException e) {
-  // TODO Auto-generated catch block
-  e.printStackTrace();
-  myAddress = "Canont get Address!";
- }
-}
+	       try {
+	  List<Address> addresses = geocoder.getFromLocation(lati, longi, 1);
+	 
+	  if(addresses != null) {
+	   Address returnedAddress = addresses.get(0);
+	   StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+	   for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+	    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+	   }
+	   myAddress = strReturnedAddress.toString();
+	  }
+	  else{
+	   myAddress = "No Address returned!";
+	  }
+	 } catch (IOException e) {
+		  // TODO Auto-generated catch block
+		  e.printStackTrace();
+		  myAddress = "Cannot get Address!";
+	 }
+	}
 
-public void initializeVariables(){
-	
-	
-	try{
+	private void variablesInitialization(){
+		try{
 		enc = new Encryption();
-		username = getIntent().getExtras().getString("USERNAME");
-	}catch(Exception e){e.printStackTrace();}
+		try{
+			username = getIntent().getExtras().getString("USERNAME");
+		}catch(Exception e){e.printStackTrace();}
+		
+		try{
+			//time = new Time().format("%H:%M:%S");
+			System.out.println("TIME: "+time);
+		    //date = new Time().format("%Y-%m-%d");
+		    System.out.println("TIME: "+date);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		
+		
 	
-	try{
-	infoLayout = (LinearLayout)findViewById(R.id.hanging_infoLayout);
-	tv_ioName = (TextView)findViewById(R.id.hanging_tv_io_name);
-	ioName = (EditText)findViewById(R.id.hanging_io_name);
-	tv_ioSurname = (TextView)findViewById(R.id.hanging_tv_io_surname);
-	ioSurname = (EditText)findViewById(R.id.hanging_io_surname);
-	tv_ioRank = (TextView)findViewById(R.id.hanging_tv_io_rank);
-	ioRank = (EditText)findViewById(R.id.hanging_io_rank);
-	tv_ioCellNo = (TextView)findViewById(R.id.hanging_tv_io_cell);
-	ioCellNo = (EditText)findViewById(R.id.hanging_io_cell);
+		ioName = (EditText)findViewById(R.id.hanging_io_name);
+		
+		ioSurname = (EditText)findViewById(R.id.hanging_io_surname);
+		
+		ioRank = (EditText)findViewById(R.id.hanging_io_rank);
+		
+		ioCellNo = (EditText)findViewById(R.id.hanging_io_cell);
+		
+		tv_foosName = (TextView)findViewById(R.id.hanging_tv_foos_name);
+		foosName = (EditText)findViewById(R.id.hanging_foos_name);
+		tv_foosSurname = (TextView)findViewById(R.id.hanging_tv_foos_surname);
+		foosSurname = (EditText)findViewById(R.id.hanging_foos_surname);
+		tv_foosRank = (TextView)findViewById(R.id.hanging_tv_foos_rank);
+		foosRank = (EditText)findViewById(R.id.hanging_foos_rank);
+		
 	
-	tv_foosName = (TextView)findViewById(R.id.hanging_tv_foos_name);
-	foosName = (EditText)findViewById(R.id.hanging_foos_name);
-	tv_foosSurname = (TextView)findViewById(R.id.hanging_tv_foos_surname);
-	foosSurname = (EditText)findViewById(R.id.hanging_foos_surname);
-	tv_foosRank = (TextView)findViewById(R.id.hanging_tv_foos_rank);
-	foosRank = (EditText)findViewById(R.id.hanging_foos_rank);
+		
+		tv_victimName = (TextView)findViewById(R.id.hanging_tv_victim_name);
+		victimName = (EditText)findViewById(R.id.hanging_victim_name);
+		tv_victimSurname = (TextView)findViewById(R.id.hanging_tv_victim_surname);
+		victimSurname = (EditText)findViewById(R.id.hanging_victim_surname);
+		tv_victimIDNo = (TextView)findViewById(R.id.hanging_tv_victim_id);
+		victimIDNo = (EditText)findViewById(R.id.hanging_victim_id);
+		victimAge = (EditText)findViewById(R.id.hanging_victim_age);
+		
+		rgbMale = (RadioButton)findViewById(R.id.hanging_rgbMale);
+		rgbFemale = (RadioButton)findViewById(R.id.hanging_rgbFemale);
+		rgbUnknownGender = (RadioButton)findViewById(R.id.hanging_rgbUnknownGender);
+		
+		rgbAsian = (RadioButton)findViewById(R.id.hanging_rgbAsian);
+		rgbBlack = (RadioButton)findViewById(R.id.hanging_rgbBlack);
+		rgbColoured = (RadioButton)findViewById(R.id.hanging_rgbColoured);
+		rgbWhite = (RadioButton)findViewById(R.id.hanging_rgbWhite);
+		rgbUnknownRace = (RadioButton)findViewById(R.id.hanging_rgbUnknownRace);
+		
+		
+		//the body
+		bodyDecomposedYes = (RadioButton)findViewById(R.id.hanging_bodyDecomposedYes);
+		bodyDecomposedNo = (RadioButton)findViewById(R.id.hanging_bodyDecomposedNo);		
+		medicalInterventionYes = (RadioButton)findViewById(R.id.hanging_medicalInterventionYes);
+		medicalInterventionNo = (RadioButton)findViewById(R.id.hanging_medicalInterventionNo);		
+		whoFoundVictimBody = (EditText)findViewById(R.id.hanging_whoFoundVictimBody);		
+		closeToWaterYes = (RadioButton)findViewById(R.id.hanging_closeToWaterYes);
+		closeToWaterNo = (RadioButton)findViewById(R.id.hanging_closeToWaterNo);		
+		suicideSuspectedYes = (RadioButton)findViewById(R.id.hanging_suicideSuspectedYes);
+		suicideSuspectedNo = (RadioButton)findViewById(R.id.hanging_suicideSuspectedNo);		
+		previousAttemptsYes = (RadioButton)findViewById(R.id.hanging_previousAttemptsYes);
+		previousAttemptsNo = (RadioButton)findViewById(R.id.hanging_previousAttemptsNo);
+		tv_howManyAttempts = (TextView)findViewById(R.id.hanging_tv_howManyAttempts);
+		howManyAttempts = (EditText)findViewById(R.id.hanging_howManyAttempts);
+		
+		//scene of injury
+		sceneIOTypeInside = (RadioButton)findViewById(R.id.hanging_SceneIOTypeInside);
+		sceneIOTypeOutside = (RadioButton)findViewById(R.id.hanging_SceneIOTypeOutside);
+		tv_whereInside = (TextView)findViewById(R.id.hanging_tv_whereInside);
+		sceneIType = (Spinner)findViewById(R.id.hanging_sceneIType);
+		tv_sceneITypeOther = (TextView)findViewById(R.id.hanging_tv_sceneITypeOther);
+		sceneITypeOther = (EditText)findViewById(R.id.hanging_sceneITypeOther);
+		tv_doorLocked = (TextView)findViewById(R.id.hanging_tv_doorLocked);
+		doorLockedYes = (RadioButton)findViewById(R.id.hanging_DoorLockedYes);
+		doorLockedNo = (RadioButton)findViewById(R.id.hanging_DoorLockedNo);
+		tv_windowsClosed = (TextView)findViewById(R.id.hanging_tv_windowsClosed);
+		windowsClosedYes = (RadioButton)findViewById(R.id.hanging_WindowsClosedYes);
+		windowsClosedNo = (RadioButton)findViewById(R.id.hanging_WindowsClosedNo);
+		tv_windowsBroken = (TextView)findViewById(R.id.hanging_tv_windowsBroken);
+		windowsBrokenYes = (RadioButton)findViewById(R.id.hanging_WindowsBrokenYes);
+		windowsBrokenNo = (RadioButton)findViewById(R.id.hanging_WindowsBrokenNo);
+		tv_victimAlone = (TextView)findViewById(R.id.hanging_tv_victimAlone);
+		victimAloneYes = (RadioButton)findViewById(R.id.hanging_VictimAloneYes);
+		victimAloneNo = (RadioButton)findViewById(R.id.hanging_VictimAloneNo);
+		tv_peopleWithVictim = (TextView)findViewById(R.id.hanging_tv_peopleWithVictim);
+		peopleWithVictim = (EditText)findViewById(R.id.hanging_peopleWithVictim);
+		tv_sceneOType = (TextView)findViewById(R.id.hanging_tv_sceneOType);
+		sceneOType = (Spinner)findViewById(R.id.hanging_sceneOType);
+		tv_sceneOTypeOther = (TextView)findViewById(R.id.hanging_tv_sceneOTypeOther);
+		sceneOTypeOther = (EditText)findViewById(R.id.hanging_sceneOTypeOther);
+		
+		//scene look
+		signsOfStruggleYes = (RadioButton)findViewById(R.id.hanging_SignsOfStruggleYes);
+		signsOfStruggleNo = (RadioButton)findViewById(R.id.hanging_SignsOfStruggleNo);		
+		alcoholBottleAroundYes = (RadioButton)findViewById(R.id.hanging_AlcoholBottleAroundYes);
+		alcoholBottleAroundNo = (RadioButton)findViewById(R.id.hanging_AlcoholBottleAroundNo);		
+		drugParaphernaliaYes = (RadioButton)findViewById(R.id.hanging_DrugParaphernaliaYes);
+		drugParaphernaliaNo = (RadioButton)findViewById(R.id.hanging_DrugParaphernaliaNo);
+		pornographicMaterialYes = (RadioButton)findViewById(R.id.hanging_pornographicMaterialYes);
+		pornographicMaterialNo = (RadioButton)findViewById(R.id.hanging_pornographicMaterialNo);
 	
-	tv_io = (TextView)findViewById(R.id.hanging_tv_io);
-	tv_foos = (TextView)findViewById(R.id.hanging_tv_foos);
-	
-	
-	demographicsLayout = (LinearLayout)findViewById(R.id.hanging_demographicLayout);
-	tv_victimInfo = (TextView)findViewById(R.id.hanging_tv_victimInfo);
-	tv_victimRace = (TextView)findViewById(R.id.hanging_tv_victimRace);
-	tv_victimGender = (TextView)findViewById(R.id.hanging_tv_victimGender);
-	tv_victimName = (TextView)findViewById(R.id.hanging_tv_victim_name);
-	victimName = (EditText)findViewById(R.id.hanging_victim_name);
-	tv_victimSurname = (TextView)findViewById(R.id.hanging_tv_victim_surname);
-	victimSurname = (EditText)findViewById(R.id.hanging_victim_surname);
-	tv_victimIDNo = (TextView)findViewById(R.id.hanging_tv_victim_id);
-	victimIDNo = (EditText)findViewById(R.id.hanging_victim_id);
-	victimAge = (EditText)findViewById(R.id.hanging_victim_age);
-	
-	rgbMale = (RadioButton)findViewById(R.id.hanging_rgbMale);
-	rgbFemale = (RadioButton)findViewById(R.id.hanging_rgbFemale);
-	rgbUnknownGender = (RadioButton)findViewById(R.id.hanging_rgbUnknownGender);
-	
-	rgbAsian = (RadioButton)findViewById(R.id.hanging_rgbAsian);
-	rgbBlack = (RadioButton)findViewById(R.id.hanging_rgbBlack);
-	rgbColoured = (RadioButton)findViewById(R.id.hanging_rgbColoured);
-	rgbWhite = (RadioButton)findViewById(R.id.hanging_rgbWhite);
-	rgbUnknownRace = (RadioButton)findViewById(R.id.hanging_rgbUnknownRace);
-	
-	theBodyLayout = (GridLayout)findViewById(R.id.hanging_theBodyLayout);
-	theBody = (TextView)findViewById(R.id.hanging_tv_the_body);
-	tv_bodyDecomposed = (TextView)findViewById(R.id.hanging_tv_bodyDecomposed);
-	bodyDecomposedYes = (RadioButton)findViewById(R.id.hanging_bodyDecomposedYes);
-	bodyDecomposedNo = (RadioButton)findViewById(R.id.hanging_bodyDecomposedNo);
-	tv_medicalIntervention = (TextView)findViewById(R.id.hanging_tv_medicalIntervention);
-	medicalInterventionYes = (RadioButton)findViewById(R.id.hanging_medicalInterventionYes);
-	medicalInterventionNo = (RadioButton)findViewById(R.id.hanging_medicalInterventionNo);
-	tv_whoFoundVictimBody = (TextView)findViewById(R.id.hanging_tv_whoFoundVictimBody);
-	whoFoundVictimBody = (EditText)findViewById(R.id.hanging_whoFoundVictimBody);
-	tv_closeToWater = (TextView)findViewById(R.id.hanging_tv_closeToWater);
-	closeToWaterYes = (RadioButton)findViewById(R.id.hanging_closeToWaterYes);
-	closeToWaterNo = (RadioButton)findViewById(R.id.hanging_closeToWaterNo);
-	tv_rapeHomicide = (TextView)findViewById(R.id.hanging_tv_rapeHomicide);
-	rapeHomicideYes = (RadioButton)findViewById(R.id.hanging_rapeHomicideYes);
-	rapeHomicideNo = (RadioButton)findViewById(R.id.hanging_rapeHomicideNo);
-	tv_suicideSuspected = (TextView)findViewById(R.id.hanging_tv_suicideSuspected);
-	suicideSuspectedYes = (RadioButton)findViewById(R.id.hanging_suicideSuspectedYes);
-	suicideSuspectedNo = (RadioButton)findViewById(R.id.hanging_suicideSuspectedNo);
-	tv_previousAttempts = (TextView)findViewById(R.id.hanging_tv_previousAttempts);
-	previousAttemptsYes = (RadioButton)findViewById(R.id.hanging_previousAttemptsYes);
-	previousAttemptsNo = (RadioButton)findViewById(R.id.hanging_previousAttemptsNo);
-	tv_howManyAttempts = (TextView)findViewById(R.id.hanging_tv_howManyAttempts);
-	howManyAttempts = (EditText)findViewById(R.id.hanging_howManyAttempts);
-	
-	theSceneOfInjuryLayout = (GridLayout)findViewById(R.id.hanging_sceneOfInjuryLayout);
-	sceneOfInjury = (TextView)findViewById(R.id.hanging_sceneOfInjury);
-	tv_sceneIOType = (TextView)findViewById(R.id.hanging_tv_sceneIOType);
-	sceneIOTypeInside = (RadioButton)findViewById(R.id.hanging_SceneIOTypeInside);
-	sceneIOTypeOutside = (RadioButton)findViewById(R.id.hanging_SceneIOTypeOutside);
-	tv_whereInside = (TextView)findViewById(R.id.hanging_tv_whereInside);
-	sceneIType = (Spinner)findViewById(R.id.hanging_sceneIType);
-	tv_sceneITypeOther = (TextView)findViewById(R.id.hanging_tv_sceneITypeOther);
-	sceneITypeOther = (EditText)findViewById(R.id.hanging_sceneITypeOther);
-	tv_doorLocked = (TextView)findViewById(R.id.hanging_tv_doorLocked);
-	doorLockedYes = (RadioButton)findViewById(R.id.hanging_DoorLockedYes);
-	doorLockedNo = (RadioButton)findViewById(R.id.hanging_DoorLockedNo);
-	tv_windowsClosed = (TextView)findViewById(R.id.hanging_tv_windowsClosed);
-	windowsClosedYes = (RadioButton)findViewById(R.id.hanging_WindowsClosedYes);
-	windowsClosedNo = (RadioButton)findViewById(R.id.hanging_WindowsClosedNo);
-	tv_windowsBroken = (TextView)findViewById(R.id.hanging_tv_windowsBroken);
-	windowsBrokenYes = (RadioButton)findViewById(R.id.hanging_WindowsBrokenYes);
-	windowsBrokenNo = (RadioButton)findViewById(R.id.hanging_WindowsBrokenNo);
-	tv_victimAlone = (TextView)findViewById(R.id.hanging_tv_victimAlone);
-	victimAloneYes = (RadioButton)findViewById(R.id.hanging_VictimAloneYes);
-	victimAloneNo = (RadioButton)findViewById(R.id.hanging_VictimAloneNo);
-	tv_peopleWithVictim = (TextView)findViewById(R.id.hanging_tv_peopleWithVictim);
-	peopleWithVictim = (EditText)findViewById(R.id.hanging_peopleWithVictim);
-	tv_sceneOType = (TextView)findViewById(R.id.hanging_tv_sceneOType);
-	sceneOType = (Spinner)findViewById(R.id.hanging_sceneOType);
-	tv_sceneOTypeOther = (TextView)findViewById(R.id.hanging_tv_sceneOTypeOther);
-	sceneOTypeOther = (EditText)findViewById(R.id.hanging_sceneOTypeOther);
-	
-	theSceneLookLayout = (GridLayout)findViewById(R.id.hanging_sceneLookLayout);
-	sceneLook = (TextView)findViewById(R.id.hanging_sceneLook);
-	tv_signsOfStruggle = (TextView)findViewById(R.id.hanging_tv_signsOfStruggle);
-	signsOfStruggleYes = (RadioButton)findViewById(R.id.hanging_SignsOfStruggleYes);
-	signsOfStruggleNo = (RadioButton)findViewById(R.id.hanging_SignsOfStruggleNo);
-	tv_alcoholBottleAround = (TextView)findViewById(R.id.hanging_tv_alcoholBottleAround);
-	alcoholBottleAroundYes = (RadioButton)findViewById(R.id.hanging_AlcoholBottleAroundYes);
-	alcoholBottleAroundNo = (RadioButton)findViewById(R.id.hanging_AlcoholBottleAroundNo);
-	tv_drugParaphernalia = (TextView)findViewById(R.id.hanging_tv_drugParaphernalia);
-	drugParaphernaliaYes = (RadioButton)findViewById(R.id.hanging_DrugParaphernaliaYes);
-	drugParaphernaliaNo = (RadioButton)findViewById(R.id.hanging_DrugParaphernaliaNo);
-	
-	theSceneLayout = (GridLayout)findViewById(R.id.hanging_theSceneLayout);
-	theScene = (TextView)findViewById(R.id.hanging_theScene);
-	tv_autoeroticAsphyxia = (TextView)findViewById(R.id.hanging_tv_autoeroticAsphyxia);
-	autoeroticAsphyxiaYes = (RadioButton)findViewById(R.id.hanging_autoeroticAsphyxiaYes);
-	autoeroticAsphyxiaNo = (RadioButton)findViewById(R.id.hanging_autoeroticAsphyxiaNo);
-	tv_partialHanging = (TextView)findViewById(R.id.hanging_tv_partialHanging);
-	partialHangingYes = (RadioButton)findViewById(R.id.hanging_partialHangingYes);
-	partialHangingNo = (RadioButton)findViewById(R.id.hanging_partialHangingNo);
-	tv_partialHangingType = (TextView)findViewById(R.id.hanging_tv_partialHangingType);
-	partialHanging = (Spinner)findViewById(R.id.hanging_partialHanging);
-	tv_partialHangingOther = (TextView)findViewById(R.id.hanging_tv_partialHangingOther);
-	partialHangingOther = (EditText)findViewById(R.id.hanging_partialHangingOther);
-	tv_completeHanging = (TextView)findViewById(R.id.hanging_tv_completeHanging);
-	completeHangingFG = (RadioButton)findViewById(R.id.hanging_completeHangingFG);
-	completeHangingFS = (RadioButton)findViewById(R.id.hanging_completeHangingFS);
-	tv_ligatureAroundNeck = (TextView)findViewById(R.id.hanging_tv_ligatureAroundNeck);
-	ligatureAroundNeckYes = (RadioButton)findViewById(R.id.hanging_ligatureAroundNeckYes);
-	ligatureAroundNeckNo = (RadioButton)findViewById(R.id.hanging_ligatureAroundNeckNo);
-	tv_whoRemovedligature = (TextView)findViewById(R.id.hanging_tv_whoRemovedligature);
-	whoRemovedligature = (EditText)findViewById(R.id.hanging_whoRemovedligature);
-	tv_ligatureType = (TextView)findViewById(R.id.hanging_tv_ligatureType);
-	ligatureType = (Spinner)findViewById(R.id.hanging_ligatureType);
-	tv_ligatureTypeOther = (TextView)findViewById(R.id.hanging_tv_ligatureTypeOther);
-	ligatureTypeOther = (EditText)findViewById(R.id.hanging_ligatureTypeOther);
-	tv_strangulationSuspected = (TextView)findViewById(R.id.hanging_tv_strangulationSuspected);
-	strangulationSuspectedYes = (RadioButton)findViewById(R.id.hanging_StrangulationSuspectedYes);
-	strangulationSuspectedNo = (RadioButton)findViewById(R.id.hanging_StrangulationSuspectedNo);
-	tv_smotheringSuspected = (TextView)findViewById(R.id.hanging_tv_smotheringSuspected);
-	smotheringSuspectedYes = (RadioButton)findViewById(R.id.hanging_SmotheringSuspectedYes);
-	smotheringSuspectedNo = (RadioButton)findViewById(R.id.hanging_SmotheringSuspectedNo);
-	tv_chockingSuspected = (TextView)findViewById(R.id.hanging_tv_chockingSuspected);
-	chockingSuspectedYes = (RadioButton)findViewById(R.id.hanging_ChockingSuspectedYes);
-	chockingSuspectedNo = (RadioButton)findViewById(R.id.hanging_ChockingSuspectedNo);
-	tv_suicideNoteFound = (TextView)findViewById(R.id.hanging_tv_suicideNoteFound);
-	suicideNoteFoundYes = (RadioButton)findViewById(R.id.hanging_SuicideNoteFoundYes);
-	tv_generalHistory = (TextView)findViewById(R.id.hanging_tv_generalHistory);
-	generalHistory = (EditText)findViewById(R.id.hanging_generalHistory);
-	
-	galleryLayout = (LinearLayout)findViewById(R.id.hanging_galleryLayout);
-	response = (TextView)findViewById(R.id.hanging_tv_response);
-	
-	doneButton = (Button)findViewById(R.id.hanging_doneButton);
-	logoutButton = (Button)findViewById(R.id.hanging_logoutButton);
-	
-	//next = (Button) findViewById(R.id.nextButton);
-	value = (TextView) findViewById(R.id.value);
-	
-	//upload pictures part
-		//uploadButton = (Button)findViewById(R.id.uploadButton);
-       messageText  = (TextView)findViewById(R.id.messageText);
-       buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
-       imageView0 = (ImageView) findViewById(R.id.imgView0);
-       imageView1 = (ImageView) findViewById(R.id.imgView1);
-       imageView2 = (ImageView) findViewById(R.id.imgView2);
-       imageView3 = (ImageView) findViewById(R.id.imgView3);
-       imageView4 = (ImageView) findViewById(R.id.imgView4);
-       imageView5 = (ImageView) findViewById(R.id.imgView5);
-       imageView6 = (ImageView) findViewById(R.id.imgView6);
-       imageView7 = (ImageView) findViewById(R.id.imgView7);
-       imageView8 = (ImageView) findViewById(R.id.imgView8);
-       
-       
-       // weather section
-       weatherInfo = (TextView) findViewById(R.id.bluntWeatherInfo);
-	}catch(Exception e){
-		e.printStackTrace();
+		//the scene
+		partialHangingYes = (RadioButton)findViewById(R.id.hanging_partialHangingYes);
+		partialHangingNo = (RadioButton)findViewById(R.id.hanging_partialHangingNo);
+		partialHanging = (Spinner)findViewById(R.id.hanging_partialHanging);				
+		partialHangingOther = (EditText)findViewById(R.id.hanging_partialHangingOther);
+		completeHangingYes = (RadioButton)findViewById(R.id.hanging_completeHangingYes);
+		completeHangingNo = (RadioButton)findViewById(R.id.hanging_completeHangingNo);
+		bodyCutDownYes = (RadioButton)findViewById(R.id.hanging_bodyCutDownYes);
+		bodyCutDownNo = (RadioButton)findViewById(R.id.hanging_bodyCutDownNo);
+		byWhom = (EditText)findViewById(R.id.hanging_byWhom);
+		ligatureAroundNeckYes = (RadioButton)findViewById(R.id.hanging_ligatureAroundNeckYes);
+		ligatureAroundNeckNo = (RadioButton)findViewById(R.id.hanging_ligatureAroundNeckNo);
+		whoRemovedligature = (EditText)findViewById(R.id.hanging_whoRemovedligature);
+		ligatureType = (Spinner)findViewById(R.id.hanging_ligatureType);				
+		ligatureTypeOther = (EditText)findViewById(R.id.hanging_ligatureTypeOther);
+		suspensionPoint = (EditText)findViewById(R.id.hanging_suspensionPoint);
+		StrangulationSuspectedYes = (RadioButton)findViewById(R.id.hanging_StrangulationSuspectedYes);
+		StrangulationSuspectedNo = (RadioButton)findViewById(R.id.hanging_StrangulationSuspectedNo);
+		SmotheringSuspectedYes = (RadioButton)findViewById(R.id.hanging_SmotheringSuspectedYes);
+		SmotheringSuspectedNo = (RadioButton)findViewById(R.id.hanging_SmotheringSuspectedNo);
+		ChockingSuspectedYes = (RadioButton)findViewById(R.id.hanging_ChockingSuspectedYes);
+		ChockingSuspectedNo = (RadioButton)findViewById(R.id.hanging_ChockingSuspectedNo);
+		
+		suicideNoteFoundYes = (RadioButton)findViewById(R.id.hanging_SuicideNoteFoundYes);
+		suicideNoteFoundNo = (RadioButton)findViewById(R.id.hanging_SuicideNoteFoundNo);		
+		generalHistory = (EditText)findViewById(R.id.hanging_generalHistory);
+		
+		
+		response = (TextView)findViewById(R.id.hanging_tv_response);
+		
+		doneButton = (Button)findViewById(R.id.hanging_doneButton);
+		logoutButton = (Button)findViewById(R.id.hanging_logoutButton);
+		finish = (Button)findViewById(R.id.hanging_Finish);
+		
+		
+		value = (TextView) findViewById(R.id.value);
+		
+		//upload pictures part
+			//uploadButton = (Button)findViewById(R.id.uploadButton);
+	       messageText  = (TextView)findViewById(R.id.messageText);
+	       buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
+	       imageView0 = (ImageView) findViewById(R.id.imgView0);
+	       imageView1 = (ImageView) findViewById(R.id.imgView1);
+	       imageView2 = (ImageView) findViewById(R.id.imgView2);
+	       imageView3 = (ImageView) findViewById(R.id.imgView3);
+	       imageView4 = (ImageView) findViewById(R.id.imgView4);
+	       imageView5 = (ImageView) findViewById(R.id.imgView5);
+	       imageView6 = (ImageView) findViewById(R.id.imgView6);
+	       imageView7 = (ImageView) findViewById(R.id.imgView7);
+	       imageView8 = (ImageView) findViewById(R.id.imgView8);
+	       
+	       Gallery = (LinearLayout) findViewById(R.id.hanging_galleryLayout);
+	       // weather section
+	       
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
-}
+
+	
+	
 	
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 	}
-	private void setOnClickEvents(){
+	
+	public void setOnClickEvents(){
 		
-doneButton.setOnClickListener(new OnClickListener() {
+		
+		doneButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
@@ -571,42 +740,31 @@ doneButton.setOnClickListener(new OnClickListener() {
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
-						try{
+						if(ValidateFields()){
 							
-							if(ValidateFields())
-							{
-								new Read().execute(postdata);
 								
-								dialog = ProgressDialog.show(Hanging.this, "", "Uploading file...", true);
-				                 
-				                new Thread(new Runnable() {
-				                        public void run() {
-				                             runOnUiThread(new Runnable() {
-				                                    public void run() {
-				                                        messageText.setText("uploading started.....");
-				                                    }
-				                                });                      
-				                             for(int i=0; i < uploadFileName.size(); i++){
-				                            	 filename = uploadFileName.get(i);
-				                            	 uploadFile( filename );
-				                            	 
-				                             }                   
-				                        }
-				                      }).start(); 
-				                doneButton.setVisibility(GONE);
-								logoutButton.setVisibility(VISIBLE);
-								Toast.makeText(Hanging.this, "form successfully filled", Toast.LENGTH_LONG).show();
-							}else{
-								
-							}
-						}catch(Exception e){
-							e.printStackTrace();
+									try{
+										
+										new Read().execute(postdata);
+									
+										doneButton.setVisibility(VISIBLE);
+						                logoutButton.setVisibility(VISIBLE);
+						                
+										
+										Toast.makeText(Hanging.this, "form successfully filled", Toast.LENGTH_LONG).show();
+									}catch(Exception e){
+										e.printStackTrace();
+									}
+										
+							
+						}else{
+							Toast.makeText(Hanging.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
-						
 					
 					//nextButton.setVisibility(GONE);
 					
@@ -618,28 +776,78 @@ doneButton.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View arg0) {
-                 
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            	if(index_gallery < 9){
+            	
+	            	if(index_gallery == 0){
+	            		imageView0.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 1){
+	            		imageView1.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 2){
+	            		imageView2.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 3){
+	            		imageView3.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 4){
+	            		imageView4.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 5){
+	            		imageView5.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 6){
+	            		imageView6.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 7){
+	            		imageView7.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}else if(index_gallery == 8){
+	            		imageView8.setVisibility(VISIBLE);
+	            		dispatchTakePictureIntent();
+	            		index_gallery++;
+	            	}
+	            	
+            	}
+            	
             }
         });
+	
 		
 		logoutButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
+				/*List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 				
 		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","hanging"));
+		        pairs.add(new BasicNameValuePair("category","blunt"));
 		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+		        new Read().execute(pairs);*/
+				try{
+				Intent open = new Intent("com.example.mobileforensics.LOGIN");
+				
+				startActivity(open);
+				}catch(Exception e){e.printStackTrace();}
 			}
 		});
+		
+	
+		
+		
+		
+		/**
+		 * 	Spinner onclick event
+		 */
 		
 		previousAttemptsYes.setOnClickListener(new OnClickListener() {
 			
@@ -659,7 +867,7 @@ doneButton.setOnClickListener(new OnClickListener() {
 				howManyAttempts.setVisibility(GONE);
 			}
 		});
-		
+
 		sceneIOTypeInside.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -714,6 +922,8 @@ doneButton.setOnClickListener(new OnClickListener() {
 				sceneOType.setVisibility(VISIBLE);
 			}
 		});
+
+		
 		
 		sceneIType.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
@@ -763,6 +973,8 @@ doneButton.setOnClickListener(new OnClickListener() {
 				peopleWithVictim.setVisibility(VISIBLE);
 			}
 		});
+
+
 		
 		
 		sceneOType.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -795,323 +1007,73 @@ doneButton.setOnClickListener(new OnClickListener() {
 			}
 		});
 		
-		ligatureType.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_ligatureTypeOther.setVisibility(VISIBLE);
-							ligatureTypeOther.setVisibility(VISIBLE);
-						}else{
-							tv_ligatureTypeOther.setVisibility(GONE);
-							ligatureTypeOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-
-		ligatureAroundNeckYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whoRemovedligature.setVisibility(GONE);
-				whoRemovedligature.setVisibility(GONE);
-			}
-		});
-		ligatureAroundNeckNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_whoRemovedligature.setVisibility(VISIBLE);
-				whoRemovedligature.setVisibility(VISIBLE);
-			}
-		});
-		
-		partialHangingYes.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				// TODO Auto-generated method stub
-				tv_partialHangingType.setVisibility(VISIBLE);
-				partialHanging.setVisibility(VISIBLE);
-			}
-		});
-		partialHangingNo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tv_partialHangingType.setVisibility(GONE);
-				partialHanging.setVisibility(GONE);
-			}
-		});
-		
-		partialHanging.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> av, View view, int index,
-					long arg3) {
-				// TODO Auto-generated method stub
-				try{
-					TextView s = (TextView)view;
-					if(s != null)
-					{
-						String item = (String)s.getText().toString();
-						if(item.toLowerCase().equals("other"))
-						{
-							tv_partialHangingOther.setVisibility(VISIBLE);
-							partialHangingOther.setVisibility(VISIBLE);
-						}else{
-							tv_partialHangingOther.setVisibility(GONE);
-							partialHangingOther.setVisibility(GONE);
-						}
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
 	}
 	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-         
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
- 
-            Cursor cursor = getContentResolver().query(selectedImage,
-            filePathColumn, null, null, null);
-            cursor.moveToFirst();
- 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-           
-            uploadFileName.add(picturePath);
-           // messageText.setText("Path : "+uploadFileName);
-            
-            if(count == 0){
-            	imageView0.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 1){
-            	imageView1.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 2){
-            	imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 3){
-            	imageView3.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 4){
-            	imageView4.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 5){
-            	imageView5.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 6){
-            	imageView6.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 7){
-            	imageView7.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }else if(count == 8){
-            	imageView8.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            }
-            count++;
-        }
-     
-     
-    }
-   
-   
- 
-    public int uploadFile(String sourceFileUri) {
-           
-           
-          String fileName = sourceFileUri;
-  
-          HttpURLConnection conn = null;
-          DataOutputStream dos = null;  
-          String lineEnd = "\r\n";
-          String twoHyphens = "--";
-          String boundary = "*****";
-          int bytesRead, bytesAvailable, bufferSize;
-          byte[] buffer;
-          int maxBufferSize = 1 * 1024 * 1024; 
-          File sourceFile = new File(sourceFileUri); 
-           
-          if (!sourceFile.isFile()) {
-               
-               dialog.dismiss(); 
-                
-               Log.e("uploadFile", "Source File not exist :" + filename);
-                
-               runOnUiThread(new Runnable() {
-                   public void run() {
-                       messageText.setText("Source File not exist :"+ filename);
-                   }
-               }); 
-                
-               return 0;
-            
-          }
-          else
-          {
-               try { 
-                    
-                     // open a URL connection to the Servlet
-                   FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                   URL url = new URL(upLoadServerUri);
-                    
-                   // Open a HTTP  connection to  the URL
-                   conn = (HttpURLConnection) url.openConnection(); 
-                   conn.setDoInput(true); // Allow Inputs
-                   conn.setDoOutput(true); // Allow Outputs
-                   conn.setUseCaches(false); // Don't use a Cached Copy
-                   conn.setRequestMethod("POST");
-                   conn.setRequestProperty("Connection", "Keep-Alive");
-                   conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                   conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                   conn.setRequestProperty("uploaded_file", fileName); 
-                    
-                   dos = new DataOutputStream(conn.getOutputStream());
-          
-                   dos.writeBytes(twoHyphens + boundary + lineEnd); 
-                   dos.writeBytes("Content-Disposition: form-data; name= uploaded_file ;filename="+fileName+ lineEnd);
-                    
-                   dos.writeBytes(lineEnd);
-          
-                   // create a buffer of  maximum size
-                   bytesAvailable = fileInputStream.available(); 
-          
-                   bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                   buffer = new byte[bufferSize];
-          
-                   // read file and write it into form...
-                   bytesRead = fileInputStream.read(buffer, 0, bufferSize);  
-                      
-                   while (bytesRead > 0) {
-                        
-                     dos.write(buffer, 0, bufferSize);
-                     bytesAvailable = fileInputStream.available();
-                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);   
-                      
-                    }
-          
-                   // send multipart form data necesssary after file data...
-                   dos.writeBytes(lineEnd);
-                   dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-          
-                   // Responses from the server (code and message)
-                   serverResponseCode = conn.getResponseCode();
-                   String serverResponseMessage = conn.getResponseMessage();
-                     
-                   Log.i("uploadFile", "HTTP Response is : "
-                           + serverResponseMessage + ": " + serverResponseCode);
-                    
-                   if(serverResponseCode == 200){
-                        
-                       runOnUiThread(new Runnable() {
-                            public void run() {
-                                 
-                                String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                              +" http://forensicsapp.co.za/webapp/images/uploads/"
-                                              +filename;
-                                 
-                                messageText.setText(msg);
-                                Toast.makeText(Hanging.this, "File Upload Complete.", 
-                                             Toast.LENGTH_SHORT).show();
-                            }
-                        });                
-                   }    
-                    
-                   //close the streams //
-                   fileInputStream.close();
-                   dos.flush();
-                   dos.close();
-                     
-              } catch (MalformedURLException ex) {
-                   
-                  dialog.dismiss();  
-                  ex.printStackTrace();
-                   
-                  runOnUiThread(new Runnable() {
-                      public void run() {
-                          messageText.setText("MalformedURLException Exception : check script url.");
-                          Toast.makeText(Hanging.this, "MalformedURLException", 
-                                                              Toast.LENGTH_SHORT).show();
-                      }
-                  });
-                   
-                  Log.e("Upload file to server", "error: " + ex.getMessage(), ex);  
-              } catch (Exception e) {
-                   
-                  dialog.dismiss();  
-                  e.printStackTrace();
-                   
-                  runOnUiThread(new Runnable() {
-                      public void run() {
-                          messageText.setText("Got Exception : see logcat ");
-                          Toast.makeText(Hanging.this, "Got Exception : see logcat ", 
-                                  Toast.LENGTH_SHORT).show();
-                      }
-                  });
-                  Log.e("Upload file to server Exception", "Exception : "
-                                                   + e.getMessage(), e);  
-              }
-              dialog.dismiss();       
-              return serverResponseCode; 
-               
-           } // End else block 
-         }
-    
-	private void showHideButtons(){
 		
-			response.setVisibility(GONE);
-			doneButton.setVisibility(VISIBLE);
-			logoutButton.setVisibility(GONE);
-		
-	}
-		
-
+	
+	    
+	    @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	        super.onActivityResult(requestCode, resultCode, data);
+	         
+	        Log.i(TAG, "onActivityResult: " + this);
+			if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+	        	
+	            //uploadFileName.add(mCurrentPhotoPath);
+	            //System.out.println("******************   "+mCurrentPhotoPath);
+	           
+	            if(count == 0){
+	            	setPic(imageView0);
+	            	
+	            }else if(count == 1){
+	            	setPic(imageView1);
+	            	
+	            }else if(count == 2){
+	            	setPic(imageView2);
+	            	
+	            }else if(count == 3){
+	            	setPic(imageView3);
+	            	
+	            }else if(count == 4){
+	            	setPic(imageView4);
+	            	
+	            }else if(count == 5){
+	            	setPic(imageView5);
+	            	
+	            }else if(count == 6){
+	            	setPic(imageView6);
+	            	
+	            }else if(count == 7){
+	            	setPic(imageView7);
+	            	
+	            }else if(count == 8){
+	            	setPic(imageView8);
+	            	
+	            }
+	            count++;
+	        }
+	     
+	     
+	    }
+	   
+	   
+	 
+	    
 	
 	
-	private List<NameValuePair> getPostData(){
+	public List<NameValuePair> getPostData(){
 		try{
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
 	
-	        pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
+			pairs.add(new BasicNameValuePair("rquest",Encryption.bytesToHex(enc.encrypt("addCase"))));
 	        pairs.add(new BasicNameValuePair("category",Encryption.bytesToHex(enc.encrypt("hanging"))));
 	        JSONObject obj = new JSONObject();
 	        JSONArray array = new JSONArray();
 	        JSONObject info = new JSONObject();
 	        JSONArray vicArray = new JSONArray();
 	        JSONObject victims = new JSONObject();
+	        JSONArray imagesArray = new JSONArray();
+	        JSONObject images = new JSONObject();
 	        
 	        
 	        info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
@@ -1122,7 +1084,7 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        {
 	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
 	        }else{
-	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+	        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
 	        }
 	        info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
 	        info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1134,8 +1096,7 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        victims.accumulate("victimGender", Encryption.bytesToHex(enc.encrypt(getVictimGender())));
 	        victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
 	        victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
-	        victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
-	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(""+getVictimAge())));
+	        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(victimAge.getText().toString())));
 	        victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
 	        
 	        //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
@@ -1184,17 +1145,9 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        }else{
 	        	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        
-	        
+
 	        victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-	        if(rapeHomicideYes.isChecked())
-	        {
-	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
+	       
 	        if(sceneIOTypeInside.isChecked())
 	        {
 	        	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1208,6 +1161,17 @@ doneButton.setOnClickListener(new OnClickListener() {
 	       
 	        vicArray.put(victims);
 	        info.accumulate("victims", vicArray);
+	        //this is part where am getting all images
+	        for(int i=0; i < uploadFileName.size();i++){
+		    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+	        	
+	        	images.accumulate("names"+i, namesOfImages.get(i));
+		    	images.accumulate("data"+i, uploadFileName.get(i));
+		    	
+		    }
+	        
+	        imagesArray.put(images);
+	        info.accumulate("images", imagesArray);
 	        
 	        info.accumulate("hangingIOType",getIOType() );
 	        if(signsOfStruggleYes.isChecked())
@@ -1229,28 +1193,13 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        }else{
 	        	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        if(strangulationSuspectedYes.isChecked())
+	        if(pornographicMaterialYes.isChecked())
 	        {
-	        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("pornographicMaterial", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("pornographicMaterial", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        if(smotheringSuspectedYes.isChecked())
-	        {
-	        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
-	        if(chockingSuspectedYes.isChecked())
-	        {
-	        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-	        }else{
-	        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
+	
 	        if(doorLockedYes.isChecked())
 	        {
 	        	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1276,37 +1225,59 @@ doneButton.setOnClickListener(new OnClickListener() {
 	        }else{
 	        	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
-	        
+
 	        info.accumulate("peopleWithVictim", getPeopleWithVictim());
-	        if(autoeroticAsphyxiaYes.isChecked())
+	        
+	        if(partialHangingYes.isChecked())
 	        {
-	        	info.accumulate("autoeroticAsphyxia", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        	info.accumulate("partialHanging", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("autoeroticAsphyxia", Encryption.bytesToHex(enc.encrypt("No")));
+	        	info.accumulate("partialHanging", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
-	        info.accumulate("partialHangingType", getPartialHangingType());
-	        if(completeHangingFG.isChecked())
+	        info.accumulate("partialHangingType", Encryption.bytesToHex(enc.encrypt((String)partialHanging.getSelectedItem())));
+	        info.accumulate("partialHangingType", Encryption.bytesToHex(enc.encrypt(partialHangingOther.getText().toString())));
+	        if(completeHangingYes.isChecked())
 	        {
 	        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
-	        
+	        if(bodyCutDownYes.isChecked())
+	        {
+	        	info.accumulate("bodyCutDown", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("bodyCutDown", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        info.accumulate("whoCutDownBody", Encryption.bytesToHex(enc.encrypt(byWhom.getText().toString())));
 	        if(ligatureAroundNeckYes.isChecked())
 	        {
 	        	info.accumulate("ligatureAroundNeck", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
 	        	info.accumulate("ligatureAroundNeck", Encryption.bytesToHex(enc.encrypt("No")));
-	        }
-	        
-	        info.accumulate("ligatureType", getLigatureType());
-	        if(whoRemovedligature.getText().toString() != "" && whoRemovedligature.getText().toString() != null)
+	        } 
+	        info.accumulate("ligatureType", Encryption.bytesToHex(enc.encrypt((String)ligatureType.getSelectedItem())));
+	        info.accumulate("whoRemovedLigature", Encryption.bytesToHex(enc.encrypt(whoRemovedligature.getText().toString())));
+	        info.accumulate("whoCutDownBody", Encryption.bytesToHex(enc.encrypt(byWhom.getText().toString())));
+	        info.accumulate("ligatureTypeOther", Encryption.bytesToHex(enc.encrypt(ligatureTypeOther.getText().toString())));
+	        info.accumulate("suspensionPoint", Encryption.bytesToHex(enc.encrypt(suspensionPoint.getText().toString())));
+	        if(StrangulationSuspectedYes.isChecked())
 	        {
-	        	info.accumulate("whoRemovedLigature", Encryption.bytesToHex(enc.encrypt(whoRemovedligature.getText().toString())));
+	        	info.accumulate("StrangulationSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
 	        }else{
-	        	info.accumulate("whoRemovedLigature", null);
+	        	info.accumulate("StrangulationSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(SmotheringSuspectedYes.isChecked())
+	        {
+	        	info.accumulate("SmotheringSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("SmotheringSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
+	        }
+	        if(ChockingSuspectedYes.isChecked())
+	        {
+	        	info.accumulate("ChockingSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
+	        }else{
+	        	info.accumulate("ChockingSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
 	        }
 	        
 	        array.put(info);
@@ -1346,11 +1317,8 @@ doneButton.setOnClickListener(new OnClickListener() {
 		return null;
 	}
 	
-	
-	private String getVictimGender(){
+	public String getVictimGender(){
 		try{
-			
-			
 			if(rgbMale.isChecked())
 			{
 				return "Male";
@@ -1366,8 +1334,8 @@ doneButton.setOnClickListener(new OnClickListener() {
 		}
 		return "Unknown";
 	}
-	
-	private String getVictimRace(){
+
+	public String getVictimRace(){
 		try{
 			
 			
@@ -1393,13 +1361,14 @@ doneButton.setOnClickListener(new OnClickListener() {
 		return "Unknown";
 	}
 	
-	private void knownVictim(){
+	public void knownVictim(){
 		try{
 			if(victimName.getText().toString().equals(""))
 			{
 				victimName.setText("Unknown");
 				victimSurname.setText("Unknown");
 				victimIDNo.setText("Unknown");
+				victimAge.setText("Unknown");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1415,46 +1384,47 @@ doneButton.setOnClickListener(new OnClickListener() {
 				return attempts;
 			}
 		}catch(Exception e){
-			howManyAttempts.requestFocus();
-			howManyAttempts.setError("A number is required.");
 			e.printStackTrace();
 		}
 		return 0;
 	}
 	
-	public int getVictimAge(){
+	public String getPeopleWithVictim(){
 		try{
 			
-			if(victimAge.getText().toString().length() != 0)
+			
+			if(victimAloneNo.isChecked())
 			{
-				int attempts = Integer.parseInt(victimAge.getText().toString());
-				return attempts;
+				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
+			}else{
+				
+				return null;
 			}
 		}catch(Exception e){
-			victimAge.requestFocus();
-			victimAge.setError("A number is required.");
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
-	
-	private void saveDataOnAction() throws Exception{
+	public void saveDataOnAction() throws Exception{
         JSONObject obj = new JSONObject();
         JSONArray array = new JSONArray();
         JSONObject info = new JSONObject();
         JSONArray vicArray = new JSONArray();
         JSONObject victims = new JSONObject();
+        JSONArray imagesArray = new JSONArray();
+        JSONObject images = new JSONObject();
         
-        
+    
         info.accumulate("FOPersonelNumber", Encryption.bytesToHex(enc.encrypt(username)));
         info.accumulate("sceneTime", Encryption.bytesToHex(enc.encrypt(time)));
         info.accumulate("sceneDate", Encryption.bytesToHex(enc.encrypt(date)));
         info.accumulate("sceneLocation", Encryption.bytesToHex(enc.encrypt(location)));
+        
         if(WeatherInfo != null && WeatherInfo.length() != 0 )
         {
         	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt(WeatherInfo)));
         }else{
-        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("23C")));
+        	info.accumulate("sceneTemparature", Encryption.bytesToHex(enc.encrypt("unknown")));
         }
         info.accumulate("investigatingOfficerName", Encryption.bytesToHex(enc.encrypt(ioName.getText().toString())));
         info.accumulate("investigatingOfficerRank", Encryption.bytesToHex(enc.encrypt(ioRank.getText().toString())));
@@ -1467,7 +1437,6 @@ doneButton.setOnClickListener(new OnClickListener() {
         victims.accumulate("victimRace", Encryption.bytesToHex(enc.encrypt(getVictimRace())));
         victims.accumulate("victimName", Encryption.bytesToHex(enc.encrypt(victimName.getText().toString())));
         victims.accumulate("victimSurname", Encryption.bytesToHex(enc.encrypt(victimSurname.getText().toString())));
-        victims.accumulate("victimAge", Encryption.bytesToHex(enc.encrypt(""+getVictimAge())));
         victims.accumulate("victimGeneralHistory", Encryption.bytesToHex(enc.encrypt(generalHistory.getText().toString())));
         
         //Toast.makeText(getApplicationContext(), bodyDecomposedYes.isChecked()+" checked", Toast.LENGTH_LONG);
@@ -1516,17 +1485,9 @@ doneButton.setOnClickListener(new OnClickListener() {
         }else{
         	victims.accumulate("previousAttempts", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        
-        
+
         victims.accumulate("numberOfPreviousAttempts", Encryption.bytesToHex(enc.encrypt(getAttempts()+"")));
-        if(rapeHomicideYes.isChecked())
-        {
-        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	victims.accumulate("rapeHomicideSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
+       
         if(sceneIOTypeInside.isChecked())
         {
         	victims.accumulate("victimInside", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1540,6 +1501,17 @@ doneButton.setOnClickListener(new OnClickListener() {
        
         vicArray.put(victims);
         info.accumulate("victims", vicArray);
+        //this is part where am getting all images
+        for(int i=0; i < uploadFileName.size();i++){
+	    	//System.out.println(namesOfImages.get(i)+" >> "+ convertImageToString(uploadFileName.get(i)));
+        	
+        	images.accumulate("names"+i, namesOfImages.get(i));
+	    	images.accumulate("data"+i, uploadFileName.get(i));
+	    	
+	    }
+        
+        imagesArray.put(images);
+        info.accumulate("images", imagesArray);
         
         info.accumulate("hangingIOType",getIOType() );
         if(signsOfStruggleYes.isChecked())
@@ -1561,28 +1533,13 @@ doneButton.setOnClickListener(new OnClickListener() {
         }else{
         	info.accumulate("drugParaphernalia", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(strangulationSuspectedYes.isChecked())
+        if(pornographicMaterialYes.isChecked())
         {
-        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("pornographicMaterial", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("strangulationSuspected", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("pornographicMaterial", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        if(smotheringSuspectedYes.isChecked())
-        {
-        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	info.accumulate("smotheringSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
-        if(chockingSuspectedYes.isChecked())
-        {
-        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("Yes")));
-        }else{
-        	info.accumulate("chockingSuspected", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
+
         if(doorLockedYes.isChecked())
         {
         	info.accumulate("doorLocked", Encryption.bytesToHex(enc.encrypt("Yes")));
@@ -1608,107 +1565,74 @@ doneButton.setOnClickListener(new OnClickListener() {
         }else{
         	info.accumulate("victimAlone", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
-        
+
         info.accumulate("peopleWithVictim", getPeopleWithVictim());
-        if(autoeroticAsphyxiaYes.isChecked())
+        
+        if(partialHangingYes.isChecked())
         {
-        	info.accumulate("autoeroticAsphyxia", Encryption.bytesToHex(enc.encrypt("Yes")));
+        	info.accumulate("partialHanging", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("autoeroticAsphyxia", Encryption.bytesToHex(enc.encrypt("No")));
+        	info.accumulate("partialHanging", Encryption.bytesToHex(enc.encrypt("No")));
         }
         
-        info.accumulate("partialHangingType", getPartialHangingType());
-        if(completeHangingFG.isChecked())
+        info.accumulate("partialHangingType", Encryption.bytesToHex(enc.encrypt((String)partialHanging.getSelectedItem())));
+        info.accumulate("partialHangingType", Encryption.bytesToHex(enc.encrypt(partialHangingOther.getText().toString())));
+        if(completeHangingYes.isChecked())
         {
-        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("feet of ground")));
+        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("fully suspended")));
+        	info.accumulate("completeHanging", Encryption.bytesToHex(enc.encrypt("No")));
         }
-        
+        if(bodyCutDownYes.isChecked())
+        {
+        	info.accumulate("bodyCutDown", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("bodyCutDown", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        info.accumulate("whoCutDownBody", Encryption.bytesToHex(enc.encrypt(byWhom.getText().toString())));
         if(ligatureAroundNeckYes.isChecked())
         {
         	info.accumulate("ligatureAroundNeck", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
         	info.accumulate("ligatureAroundNeck", Encryption.bytesToHex(enc.encrypt("No")));
-        }
-        
-        info.accumulate("ligatureType", getLigatureType());
-        if(whoRemovedligature.getText().toString() != "" && whoRemovedligature.getText().toString() != null)
+        } 
+        info.accumulate("ligatureType", Encryption.bytesToHex(enc.encrypt((String)ligatureType.getSelectedItem())));
+        info.accumulate("whoRemovedLigature", Encryption.bytesToHex(enc.encrypt(whoRemovedligature.getText().toString())));
+        info.accumulate("whoCutDownBody", Encryption.bytesToHex(enc.encrypt(byWhom.getText().toString())));
+        info.accumulate("ligatureTypeOther", Encryption.bytesToHex(enc.encrypt(ligatureTypeOther.getText().toString())));
+        info.accumulate("suspensionPoint", Encryption.bytesToHex(enc.encrypt(suspensionPoint.getText().toString())));
+        if(StrangulationSuspectedYes.isChecked())
         {
-        	info.accumulate("whoRemovedLigature", Encryption.bytesToHex(enc.encrypt(whoRemovedligature.getText().toString())));
+        	info.accumulate("StrangulationSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
         }else{
-        	info.accumulate("whoRemovedLigature", null);
+        	info.accumulate("StrangulationSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
         }
-                
+        if(SmotheringSuspectedYes.isChecked())
+        {
+        	info.accumulate("SmotheringSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("SmotheringSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
+        }
+        if(ChockingSuspectedYes.isChecked())
+        {
+        	info.accumulate("ChockingSuspectedYes", Encryption.bytesToHex(enc.encrypt("Yes")));
+        }else{
+        	info.accumulate("ChockingSuspectedYes", Encryption.bytesToHex(enc.encrypt("No")));
+        }
         
         array.put(info);
         obj.accumulate("object", array);
         currentDataSaved = obj;
         
 	}
-	
-	
-	private void saveData(JSONObject data) throws Exception{
+	public void saveData(JSONObject data) throws Exception{
 		
 		System.out.println("SAVED: "+data.toString());
 		
 	}
 	
-	private void resendData() throws Exception{
+	public void resendData() throws Exception{
 		
-	}
-	
-	private String getLigatureType(){
-		try{
-			
-			String item = (String)ligatureType.getSelectedItem();
-			if(item.toLowerCase().equals("other"))
-			{
-				return Encryption.bytesToHex(enc.encrypt(ligatureTypeOther.getText().toString()));
-			}else{
-				
-				return Encryption.bytesToHex(enc.encrypt(item));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return "";
-	}
-	public String getPeopleWithVictim(){
-		try{
-			
-			
-			if(victimAloneNo.isChecked())
-			{
-				return Encryption.bytesToHex(enc.encrypt(peopleWithVictim.getText().toString()));
-			}else{
-				
-				return null;
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	private String getPartialHangingType(){
-		try{
-			if(partialHangingYes.isChecked())
-			{
-				String item = (String)partialHanging.getSelectedItem();
-				if(item.toLowerCase().equals("other"))
-				{
-					return Encryption.bytesToHex(enc.encrypt(partialHangingOther.getText().toString()));
-				}else{
-					
-					return Encryption.bytesToHex(enc.encrypt(item));
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return "No";
 	}
 	
 	public JSONObject request(String url, List<NameValuePair> request)
@@ -1728,9 +1652,8 @@ doneButton.setOnClickListener(new OnClickListener() {
             
             while(in.hasNextLine()){
             	line += in.nextLine();
-            	System.out.println(line);
             }
-            
+          
             JSONObject tmp = new JSONObject(line);
             in.close();
             return tmp;
@@ -1771,133 +1694,173 @@ doneButton.setOnClickListener(new OnClickListener() {
 				{
 					String status = result.getString("status");
 					String message = result.getString("msg");
-					
+					System.out.println("STATUS: "+status);
+					System.out.println("MESSAGE: "+message);
 					response.setVisibility(VISIBLE);
 					if(status.toLowerCase().equals("failed"))
 					{
+						
 						response.setText(message);
-						saveData(currentDataSaved);
+					
 					}else{
+						clearFilelds();
+						try{
+							message = message.split(".")[0];
+						currentVictimID =  Integer.parseInt(message.split(".")[1]);
+						}catch(Exception e){e.printStackTrace();}
 						response.setText(message);
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				
 			}
 		}
 	
     }
     
-    
-    
-private boolean ValidateFields(){
+
+
+	@Override
+	public void hidePage() {
+		// TODO Auto-generated method stub
 		
-		if(ioName.getText().toString().length() == 0){
+	}
+
+	@Override
+	public void showPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean validateNextPage() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void showHideButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+			
+			@Override
+			protected Weather doInBackground(String... params) {
+				Weather weather = new Weather();
+				String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+	
+				try {
+					weather = JSONWeatherParser.getWeather(data);
+					
+					// Let's retrieve the icon
+					//weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+					
+				} catch (JSONException e) {				
+					e.printStackTrace();
+				}
+				return weather;
+			
+		}
+			
+			
+			@Override
+			protected void onPostExecute(Weather weather) {			
+				super.onPostExecute(weather);
+				
+				/*if (weather.iconData != null && weather.iconData.length > 0) {
+					Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
+					imgView.setImageBitmap(img);
+				}*/
+				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
+				//weatherInfo.setText(WeatherInfo);
+				/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+				condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
+				/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
+				/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
+				press.setText("" + weather.currentCondition.getPressure() + " hPa");
+				windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+				windDeg.setText("" + weather.wind.getDeg() + "�");*/
+					
+			}
+		}
+	
+
+	
+	private boolean ValidateFields(){
+		//System.out.println("**********    ****************    "+uploadFileName);
+		if(ioName.getText().toString().trim().length() == 0){
 			ioName.requestFocus();
 			ioName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( ioSurname.getText().toString().length() == 0){
+		if( ioSurname.getText().toString().trim().length() == 0){
 			ioSurname.requestFocus();
 			ioSurname.setError("sorry empty field");
 			return false;
 		}
 		
 		
-		if( ioRank.getText().toString().length() == 0){
+		if( ioRank.getText().toString().trim().length() == 0){
 			ioRank.requestFocus();
 			ioRank.setError("sorry empty field");
 			return false;
 		}
 
 		
-		if( ioCellNo.getText().toString().length() == 0){
+		if( ioCellNo.getText().toString().trim().length() == 0){
 			ioCellNo.requestFocus();
 			ioCellNo.setError("sorry empty field");
 			return false;
 		}
-		if(!CellNoValidation(ioCellNo.getText().toString()) || ioCellNo.getText().toString().length() != 10){
+		if(!CellNoValidation(ioCellNo.getText().toString().trim()) || ioCellNo.getText().toString().trim().length() != 10){
 			ioCellNo.requestFocus();
 			ioCellNo.setError("sorry invalid cell no");
 			return false;
 		}
 		
-		if( foosName.getText().toString().length() == 0){
+		if( foosName.getText().toString().trim().length() == 0){
 			foosName.requestFocus();
 			foosName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( foosSurname.getText().toString().length() == 0){
+		if( foosSurname.getText().toString().trim().length() == 0){
 			foosSurname.requestFocus();
 			foosSurname.setError("sorry empty field");
 			return false;
 		}
 		
-		if( foosRank.getText().toString().length() == 0){
+		if( foosRank.getText().toString().trim().length() == 0){
 			foosRank.requestFocus();
 			foosRank.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimName.getText().toString().length() == 0){
+		if( victimName.getText().toString().trim().length() == 0){
 			victimName.requestFocus();
 			victimName.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimSurname.getText().toString().length() == 0){
+		if( victimSurname.getText().toString().trim().length() == 0){
 			victimSurname.requestFocus();
 			victimSurname.setError("sorry empty field");
 			return false;
 		}
 		
-		if( victimIDNo.getText().toString().length() == 0){
+		if( victimIDNo.getText().toString().trim().length() == 0){
 			victimIDNo.requestFocus();
 			victimIDNo.setError("sorry empty field");
 			return false;
 		}
-		
-		
 			
-		if( whoFoundVictimBody.getText().toString().length() == 0){
+		if( whoFoundVictimBody.getText().toString().trim().length() == 0){
 			whoFoundVictimBody.requestFocus();
 			whoFoundVictimBody.setError("sorry empty field");
 			return false;
-		}
-		
-		
-		if(ligatureAroundNeckNo.isChecked())
-		{
-			if( whoRemovedligature.getText().toString().length() == 0){
-				whoRemovedligature.requestFocus();
-				whoRemovedligature.setError("sorry empty field");
-				return false;
-			}
-		}
-		
-		if(partialHangingYes.isChecked())
-		{
-			String selectedItem = (String)partialHanging.getSelectedItem();
-			if(selectedItem.toLowerCase().equals("other"))
-			{
-				if( partialHangingOther.getText().toString().length() == 0){
-					partialHangingOther.requestFocus();
-					partialHangingOther.setError("sorry empty field");
-					return false;
-				}
-			}
-		}
-		
-		String selectedItem = (String)ligatureType.getSelectedItem();
-		if(selectedItem.toLowerCase().equals("other"))
-		{
-			if( ligatureTypeOther.getText().toString().length() == 0){
-				ligatureTypeOther.requestFocus();
-				ligatureTypeOther.setError("sorry empty field");
-				return false;
-			}
 		}
 		
 		if(sceneIOTypeInside.isChecked()){
@@ -1917,12 +1880,8 @@ private boolean ValidateFields(){
 					return false;
 				}
 			}
-			
-			
-			
-				
-				
 		}
+		
 		
 		
 		if( generalHistory.getText().toString().length() == 0){
@@ -1933,9 +1892,82 @@ private boolean ValidateFields(){
 		return true;
 	}
 	
+	public void clearFilelds(){
+		
+		victimName.setText("Unknown");
+		
+		victimSurname.setText("Unknown");
+		
+		victimIDNo.setText("Unknown");
+			
+		whoFoundVictimBody.setText("");
+		
+		if(sceneIOTypeInside.isChecked()){
+			sceneIOTypeInside.setChecked(false);
+			doorLockedNo.setChecked(false);
+			
+			windowsClosedNo.setChecked(false);
+		
+			windowsBrokenNo.setChecked(false);
+		
+			victimAloneNo.setChecked(false);
+			//outside selected by default
+			sceneIOTypeOutside.setChecked(true);
+			tv_whereInside.setVisibility(GONE);
+			sceneIType.setVisibility(GONE);
+			tv_sceneITypeOther.setVisibility(GONE);
+			sceneITypeOther.setVisibility(GONE);
+			tv_doorLocked.setVisibility(GONE);
+			doorLockedYes.setVisibility(GONE);
+			doorLockedNo.setVisibility(GONE);
+			tv_windowsClosed.setVisibility(GONE);
+			windowsClosedYes.setVisibility(GONE);
+			windowsClosedNo.setVisibility(GONE);
+			tv_windowsBroken.setVisibility(GONE);
+			windowsBrokenYes.setVisibility(GONE);
+			windowsBrokenNo.setVisibility(GONE);
+			tv_victimAlone.setVisibility(GONE);
+			victimAloneYes.setVisibility(GONE);
+			victimAloneNo.setVisibility(GONE);
+			tv_peopleWithVictim.setVisibility(GONE);
+			peopleWithVictim.setVisibility(GONE);
+		}
+		howManyAttempts.setText("");
+		
+		
+	
+		generalHistory.setText("");
+		
+		
+		
+	    imageView0.setImageBitmap(null);
+	    imageView1.setImageBitmap(null);
+	    imageView2.setImageBitmap(null);
+	    imageView3.setImageBitmap(null);
+	    imageView4.setImageBitmap(null);
+	    imageView5.setImageBitmap(null);
+	    imageView6.setImageBitmap(null);
+	    imageView7.setImageBitmap(null);
+	    imageView8.setImageBitmap(null);
+	    
+	    imageView0.setVisibility(GONE);
+	    imageView1.setVisibility(GONE);
+	    imageView2.setVisibility(GONE);
+	    imageView3.setVisibility(GONE);
+	    imageView4.setVisibility(GONE);
+	    imageView5.setVisibility(GONE);
+	    imageView6.setVisibility(GONE);
+	    imageView7.setVisibility(GONE);
+	    imageView8.setVisibility(GONE);
+			
+	   index_gallery = 0;
+	   count = 0;
+	   namesOfImages.clear();
+	   uploadFileName.clear();
+	}
+	
 	private void CheckRadioButtons(){
 		
-		try{
 		rgbUnknownGender.setChecked(true);
 		rgbUnknownRace.setChecked(true);
 		
@@ -1971,7 +2003,7 @@ private boolean ValidateFields(){
 	
 		closeToWaterNo.setChecked(true);
 		
-		rapeHomicideNo.setChecked(true);
+		
 	
 		suicideSuspectedNo.setChecked(true);
 		
@@ -1986,68 +2018,16 @@ private boolean ValidateFields(){
 	
 		drugParaphernaliaNo.setChecked(true);
 	
-		autoeroticAsphyxiaNo.setChecked(true);
-	
-		partialHangingNo.setChecked(true);
-		completeHangingFG.setChecked(true);
-		ligatureAroundNeckNo.setChecked(true);
 		
-		strangulationSuspectedNo.setChecked(true);
 	
-		smotheringSuspectedNo.setChecked(true);
-		
-		chockingSuspectedNo.setChecked(true);
-	
-		}catch(Exception e){e.printStackTrace();} 
+		 
 	}
 	
 	private  boolean CellNoValidation(String cell) {
 		  return cell.matches("[-+]?\\d+(\\.\\d+)?");
-	}
-	
-	private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
-		
-		@Override
-		protected Weather doInBackground(String... params) {
-			Weather weather = new Weather();
-			String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
-
-			try {
-				weather = JSONWeatherParser.getWeather(data);
-				
-				// Let's retrieve the icon
-				//weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
-				
-			} catch (JSONException e) {				
-				e.printStackTrace();
-			}
-			return weather;
-		
-	}
-		
-		
-		@Override
-		protected void onPostExecute(Weather weather) {			
-			super.onPostExecute(weather);
-			
-			/*if (weather.iconData != null && weather.iconData.length > 0) {
-				Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
-				imgView.setImageBitmap(img);
-			}*/
-			try{
-				WeatherInfo = ""+Math.round((weather.temperature.getTemp() - 273.15))+" Degree Celcius";
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			//weatherInfo.setText(WeatherInfo);
-			/*cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
-			condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");*/
-			/*temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");*/
-			/*hum.setText("" + weather.currentCondition.getHumidity() + "%");
-			press.setText("" + weather.currentCondition.getPressure() + " hPa");
-			windSpeed.setText("" + weather.wind.getSpeed() + " mps");
-			windDeg.setText("" + weather.wind.getDeg() + "�");*/
-				
 		}
-	}
+	
+	
+	
+	
 }

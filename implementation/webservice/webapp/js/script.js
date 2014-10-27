@@ -10,7 +10,7 @@ var currentSceneType = null;
 $(document).ready(function(p){
     showPage(1);
     $("#pdfView").hide();
-          $(".sceneView").show();
+    $(".sceneView").show();
     var specialElementHandlers = {
         '#editor': function (element, renderer) {
             return true;
@@ -129,7 +129,9 @@ $(document).ready(function(p){
          
     });
     
-    
+     $("#assignDR").click(function(){ 
+        assignDeathRegister($("#deathreg").val());
+     });
     
     $('#print').click(function () {
         
@@ -1420,6 +1422,20 @@ function resetAllFields(){
         request.onreadystatechange = function(){if(request.readyState == 4)
         {
                 //alert(request.responseText);
+                var obj = JSON.parse(request.responseText);
+                
+                if(obj.status === "Success")
+                {
+                    $(".dregister").remove();
+                    
+                    $(".sceneInfo-table").prepend("<tr class='dregister'><td>Death Register Number:</td><td>"+dr+"</td></tr>");
+                }else{
+                    $(".res").remove();
+                    $("#deathreg").before("<span class='res error'> "+obj.msg+" <br/></span>");
+                    $("#deathreg").focus(function(){
+                        $(".res").remove();
+                    });
+                }
 
         }};
 

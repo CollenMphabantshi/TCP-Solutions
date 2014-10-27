@@ -47,6 +47,7 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 
 import com.example.mobileforensics.JSONWeatherParser;
 import com.example.mobileforensics.WeatherHttpClient;
+import com.example.mobileforensics.Railway.Read;
 import com.example.mobileforensics.models.Weather;
 
 import android.app.Activity;
@@ -730,7 +731,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 	public void setOnClickEvents(){
 		
 		
-		doneButton.setOnClickListener(new OnClickListener() {
+doneButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View view) {
@@ -738,33 +739,17 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 				try{
 					//submit data to the server
 					List<NameValuePair> postdata = getPostData();
+					
 					if(postdata != null)
 					{
 						if(ValidateFields()){
-							//if(uploadFileName.size() > 0){
+							
 								
 									try{
 										
 										new Read().execute(postdata);
 										
-										/*dialog = ProgressDialog.show(Electrocutionlightning.this, "", "Uploading file...", true);
-						                 
-						                new Thread(new Runnable() {
-						                        public void run() {
-						                             runOnUiThread(new Runnable() {
-						                                    public void run() {
-						                                        
-						                                        Toast.makeText(Electrocutionlightning.this, "uploading started.....", Toast.LENGTH_SHORT).show();
-						                                    }
-						                                });                      
-						                             for(int i=0; i < uploadFileName.size(); i++){
-						                            	 filename = uploadFileName.get(i);
-						                            	 System.out.println("/////////         "+uploadFileName.get(i)+"    \\\\\\\\\\\\\\\\\\\\");
-						                            	 uploadFile( filename );
-						                            	 
-						                             }                   
-						                        }
-						                      }).start(); */
+										
 						                doneButton.setVisibility(VISIBLE);
 										logoutButton.setVisibility(VISIBLE);
 										
@@ -773,12 +758,7 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 										e.printStackTrace();
 									}
 										
-							//}
-							//else{
-								
-								//Toast.makeText(Blunt.this, "Sorry no photos to upload", Toast.LENGTH_LONG).show();
-								
-							//}
+							
 						}else{
 							Toast.makeText(Electrocutionlightning.this, "Sorry fields must be filled", Toast.LENGTH_SHORT).show();
 						}
@@ -844,13 +824,11 @@ public class Electrocutionlightning extends Activity implements GlobalMethods, O
 			
 			@Override
 			public void onClick(View view) {
-				// TODO Auto-generated method stub
-				List<NameValuePair> pairs = new ArrayList<NameValuePair>();  
-				
-		        pairs.add(new BasicNameValuePair("rquest","addCase"));
-		        pairs.add(new BasicNameValuePair("category","blunt"));
-		        pairs.add(new BasicNameValuePair("caseData",currentDataSaved.toString()));
-		        new Read().execute(pairs);
+				try{
+					Intent open = new Intent("com.example.mobileforensics.LOGIN");
+					
+					startActivity(open);
+					}catch(Exception e){e.printStackTrace();}
 			}
 		});
 		

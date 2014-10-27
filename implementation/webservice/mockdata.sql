@@ -10,21 +10,9 @@ insert into userType values(0,"Guest");
 insert into userType values(0,"Forensic Practitioner/Administrator");
 
 
-insert into users values(0,"p11111111","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",1,1);
-insert into administrator values("p11111111",1);
-
-insert into users values(0,"p22222222","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",2,1);
-insert into forensicPractitioner values("p22222222",2,"12345");
-
-insert into users values(0,"p33333333","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",3,1);
-insert into forensicOfficer values("p33333333",3,"12345");
-
-insert into users values(0,"p44444444","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",4,1);
-insert into student values("p44444444",4,"12345");
-
-insert into users values(0,"talie","b19b5bbc5f086219ad8b22cd3faf12e2","myname","mysurname",6,1);
-insert into forensicPractitioner values("talie",5,"1234");
-insert into administrator values("talie",5);
+insert into users values(0,"cornelia","f663f813f3518c0acbfe5aa31613096e","cornelia","Engelbrecht",1,1);
+insert into administrator values("cornelia",1);
+ 
 
 insert into sceneType values(0,"Aviation accident");
 insert into sceneType values(0,"Bicycle accident");
@@ -130,18 +118,5 @@ insert into bicycleType values(0,'Bicycle- still standing object accident');
 insert into bicycleType values(0,'Bicycle- train accident');
 
 
-select * from cases;
-select * from scene;
-select * from sceneType;
-select * from users;
-select * from forensicPractitioner;
-select * from administrator;
-select * from audit_log;
 
-/*
-select * from victims;
-select * from sceneVictims;
-select * from hanging;
-select * from hanginginside;
-select * from blunt;
-select * from bluntInside;*/
+

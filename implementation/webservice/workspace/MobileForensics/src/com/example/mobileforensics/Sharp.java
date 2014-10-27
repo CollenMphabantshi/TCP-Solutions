@@ -1648,7 +1648,7 @@ public class Sharp extends Activity implements GlobalMethods, OnMyLocationChange
 					if(status.toLowerCase().equals("failed"))
 					{
 						
-						response.setText(message+"it failed");
+						response.setText(message);
 					
 					}else{
 						clearFilelds();

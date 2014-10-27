@@ -98,9 +98,8 @@ class Railway extends Scene{
             $error = array('status' => "Failed", "msg" => "Request to create a scene was denied.");
             $this->api->response($this->api->json($error), 400);
         }
-		$scenePhoto = new ScenePhotos($this->api);
-        
-        
+	
+        $scenePhoto = new ScenePhotos($this->api);
         for($i = 0; $i < count($this->images);$i++)
         {
             $scenePhoto->upload($this->images['names'.$i], $this->images['data'.$i], $sceneID);

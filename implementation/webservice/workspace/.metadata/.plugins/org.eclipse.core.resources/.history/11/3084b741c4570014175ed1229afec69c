@@ -1,0 +1,28 @@
+package com.example.mobileforensics.test;
+
+import com.example.mobileforensics.Sharp;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.test.ActivityUnitTestCase;
+
+public class SharpTestCase extends ActivityUnitTestCase<Activity>{
+
+	public SharpTestCase(Class<Activity> activityClass) {
+		super(activityClass);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		try{
+			Intent open = new Intent(getInstrumentation().getContext(),Sharp.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+}
