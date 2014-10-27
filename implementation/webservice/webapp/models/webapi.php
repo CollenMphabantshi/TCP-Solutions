@@ -1,8 +1,6 @@
 
 <?php
-/* File : Rest.inc.php
-    * Credit to : Arun Kumar Sekar
-*/
+
 error_reporting(E_ERROR | E_PARSE);
 require_once("Rest.inc.php");
 require_once("Audit.php");

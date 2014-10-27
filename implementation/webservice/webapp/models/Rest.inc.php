@@ -1,7 +1,5 @@
 <?php
-	/* File : Rest.inc.php
-	 * Author : Arun Kumar Sekar
-	*/
+	
 	class REST {
 		
 		public $_allow = array();
